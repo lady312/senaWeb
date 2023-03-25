@@ -15,7 +15,8 @@
       "@services/*": ["../src/app/services/*"],
       "@components/*": ["../src/app/components/*"],
       "@models/*": ["../src/app/models/*"],
-      "@bootstrap/*": ["../src/app/bootstrap/*"]
+      "@bootstrap/*": ["../src/app/bootstrap/*"],
+      "@competencias/*": ["../src/app/pages/competencias/*"]
     }
   },
   "angularCompilerOptions": {

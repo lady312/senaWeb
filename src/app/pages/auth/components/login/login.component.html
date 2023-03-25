@@ -13,7 +13,7 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="icon-user"></i></span>
                     </div>
-                    <input type="text" class="form-control" placeholder="ejemplo@mail.com" autocomplete="usuario"
+                    <input type="text" class="form-control" placeholder="ejemplo@gmail.com" autocomplete="usuario"
                       formControlName="usuario">
                   </div>
                   <alert *ngIf="usuarioField.hasError('required') && usuarioField.dirty" type="danger">
@@ -46,8 +46,5 @@
     </div>
   </main>
 </div>
-<app-company
- *ngIf="showListCompanies"
- [activationCompanyUsers]="activationCompanyUsers"
- (onSelect)="selectCompany($event)"
- ></app-company>
+<app-company *ngIf="showListCompanies" [activationCompanyUsers]="activationCompanyUsers"
+  (onSelect)="selectCompany($event)"></app-company>

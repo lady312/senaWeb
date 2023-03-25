@@ -1,10 +1,10 @@
 import { Routes } from '@angular/router';
 import { NavegacionModel } from '../models/navegacion.model';
-import { GESTION_MEDIO_PAGO, GESTION_PROCESOS, GESTION_ROLES, GESTION_ROL_PERMISOS, GESTION_TIPO_DOCUMENTOS, GESTION_TIPO_PAGO, GESTION_TIPO_TRANSACCION } from './permissions';
+import { GESTION_MEDIO_PAGO, GESTION_PROCESOS, GESTION_ROLES, GESTION_ROL_PERMISOS, GESTION_TIPO_DOCUMENTOS, GESTION_TIPO_PAGO, GESTION_TIPO_TRANSACCION, GESTION_PAGO_NOMINA, GESTION_COMPETENCIA } from './permissions';
 
 export const navItems: NavegacionModel[] = [
   {
-    name: "Roles",
+    name: 'Roles',
     url: 'add_roles',
     icon: 'icon-drop',
     permiso: GESTION_ROLES
@@ -51,6 +51,18 @@ export const navItems: NavegacionModel[] = [
     icon: 'icon-drop',
     permiso: GESTION_TIPO_TRANSACCION
   },
+  {
+    name: "Pagos Nomina Supervisor",
+    url: 'gestionar_nomina_supervisor',
+    icon: 'icon_drop',
+    permiso: GESTION_PAGO_NOMINA,
+  },
+  {
+    name: "Competencia",
+    url: 'gestionar_competencia', //URL que mostrará la vista
+    icon: 'icon_drop',
+    permiso: GESTION_COMPETENCIA,
+  }
 
 ];
 
@@ -99,5 +111,13 @@ export const routesNav: Routes = [
   {
     path: 'add_usuarios',
     loadChildren: () => import('../pages/usuario/usuario.module').then(m => m.UsuarioModule)
+  },
+  {
+    path: 'gestionar_nomina_supervisor',
+    loadChildren: () => import('../pages/usuario/usuario.module').then(m => m.UsuarioModule)
+  },
+  {
+    path: 'gestionar_competencia',
+    loadChildren: () => import('../pages/competencias/competencias.module').then(m => m.CompetenciasModule)
   }
 ];

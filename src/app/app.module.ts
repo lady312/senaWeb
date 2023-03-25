@@ -22,7 +22,10 @@ import { P404Component } from './pages/error/404.component';
 import { P500Component } from './pages/error/500.component';
 // Import containers
 import { DefaultLayoutComponent } from './templates';
+import { RouterModule } from '@angular/router';
 
+// import { CompetenciasComponent } from './pages/competencias/components/competencias/competencias.component';
+// import { CompetenciasListComponent } from './pages/competencias/components/competencias-list/competencias-list.component';
 
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
@@ -51,13 +54,16 @@ const APP_CONTAINERS = [
     IconSetModule.forRoot(),
     SnotifyModule,
     HttpClientModule,
-    SweetAlert2Module.forRoot()
+    SweetAlert2Module.forRoot(),
+    RouterModule,
   ],
   declarations: [
     AppComponent,
     ...APP_CONTAINERS,
     P404Component,
     P500Component,
+    // CompetenciasComponent,
+    // CompetenciasListComponent,
   ],
   providers: [
     {
