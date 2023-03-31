@@ -1,0 +1,92 @@
+<div class="modal-body">
+  <div class="card-header">
+    <strong>Registrar Resultado</strong>
+  </div>
+  <div class="card-body">
+
+    <form class="resultadoFormulario" [formGroup]="formResultado" class="was-validated" novalidate>
+
+      <div class="form-group row">
+        <label class="col-md-4 col-form-label" for="name">Nombre Resultado</label>
+        <div class="col-md-7">
+          <input
+            type="text"
+            onkeyup="javascript:this.value=this.value.toUpperCase();"
+            placeholder="Ingrese el nombre del resultado"
+            class="form-control is-valid"
+            formControlName='nombreResultado'>
+          <div class="valid-feedback" *ngIf="!nombreResultadoField.hasError('required')">
+            Valor válido
+          </div>
+        </div>
+        <div class="invalid-feedback">
+          Por favor ingresé un valor válido para el nombre de la competencia
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-md-4 col-form-label" for="detalle">Detalle</label>
+        <div class="col-md-7">
+          <textarea type="text" rows="9" onkeyup="javascript:this.value=this.value.toUpperCase();"
+            placeholder="Detalle Resultadio..." class="form-control is-valid" formControlName='detalleResultado'
+            required></textarea>
+          <div class="valid-feedback" *ngIf="!detalleResultadoField.hasError('required')">
+            Valor valido
+          </div>
+        </div>
+
+        <div class="invalid-feedback">
+          Por favor ingrese un valor valido para el detalle
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-md-4 col-form-label" for="fechaInicioResultado">Detalle</label>
+        <div class="col-md-7">
+          <textarea type="date" rows="9" placeholder="Fecha Inicio..." class="form-control is-valid" formControlName='fechaInicioResultado'
+            required></textarea>
+          <div class="valid-feedback" *ngIf="!fechaInicioResultadoField.hasError('required')">
+            Valor valido
+          </div>
+        </div>
+        <div class="invalid-feedback">
+          Por favor ingrese un valor valido para la fecha inicio
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-md-4 col-form-label" for="fechaFinalResultado">Fecha Inicio Resultado</label>
+        <div class="col-md-7">
+          <textarea type="date" rows="9";
+            placeholder="Fecha Final..." class="form-control is-valid" formControlName='fechaFinalResultado'
+            required></textarea>
+          <div class="valid-feedback" *ngIf="!fechaFinalResultadoField.hasError('required')">
+          </div>
+        </div>
+        <div class="invalid-feedback">
+          Por favor ingrese un valor valido para la fecha de inicio
+        </div>
+      </div>
+
+    </form>
+
+    <div class="card-footer">
+      <button
+        type="submit"
+        class="btn btn-sm btn-primary"
+        (click)="guardarResultado()"
+        [disabled]="formResultado.invalid">
+        <i class="fa fa-dot-circle-o"></i> Aceptar
+      </button>
+      <button
+        type="reset"
+        class="btn btn-sm btn-danger"
+        (click)="closeModal()">
+        <i class="fa fa-ban"></i>
+        Cancelar
+      </button>
+    </div>
+  </div>
+</div>
+
+

@@ -14,7 +14,7 @@ export class ListProcesoComponent {
   @Output() delete: EventEmitter<number> = new EventEmitter();
   @Output() create: EventEmitter<void> = new EventEmitter();
 
-  numReg = 5;
+  numReg = 10;
   pageActual = 0;
 
   constructor() {
