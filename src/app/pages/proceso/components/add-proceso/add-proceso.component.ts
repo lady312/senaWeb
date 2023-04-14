@@ -31,7 +31,6 @@ export class AddProcesoComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
     this.setProceso()
   }
 

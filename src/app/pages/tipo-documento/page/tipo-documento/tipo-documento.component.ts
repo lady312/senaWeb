@@ -10,7 +10,7 @@ import { UINotificationService } from '@services/uinotification.service';
 })
 export class TipoDocumentoComponent implements OnInit {
 
-  private showModalTipoDoc = false;
+  public showModalTipoDoc = false;
 
   tipoDocumento: TipoDocumentoModel = null;
   tipoDocumentos: TipoDocumentoModel[] = [];

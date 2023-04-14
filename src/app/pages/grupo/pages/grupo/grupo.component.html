@@ -1,0 +1,18 @@
+<app-grupos-list
+  [grupos]="grupos"
+  (delete)="eliminarGrupo($event)"
+  (update)="actualizarGrupo($event)"
+  (create)="createGrupo()"></app-grupos-list>
+
+<app-custom-modal
+  title="Gestión Grupo"
+  [(show)]="showModalGrupo">
+
+  <app-grupos
+    *ngIf="showModalGrupo"
+    [grupo]="grupo"
+    (store)="guardarGrupo($event)"
+    (cancel)="reset()">
+  </app-grupos>
+
+</app-custom-modal>

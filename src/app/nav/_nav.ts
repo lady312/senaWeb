@@ -1,6 +1,14 @@
 import { Routes } from '@angular/router';
 import { NavegacionModel } from '../models/navegacion.model';
-import { GESTION_MEDIO_PAGO, GESTION_PROCESOS, GESTION_ROLES, GESTION_ROL_PERMISOS, GESTION_TIPO_DOCUMENTOS, GESTION_TIPO_PAGO, GESTION_TIPO_TRANSACCION } from './permissions';
+import { GESTION_MEDIO_PAGO, 
+         GESTION_PROCESOS, 
+         GESTION_ROLES, 
+         GESTION_ROL_PERMISOS, 
+         GESTION_TIPO_DOCUMENTOS, 
+         GESTION_TIPO_PAGO, 
+         GESTION_TIPO_TRANSACCION, 
+         GESTION_GRUPO, 
+         GESTION_TIPO_GRUPO } from './permissions';
 
 export const navItems: NavegacionModel[] = [
   {
@@ -51,6 +59,18 @@ export const navItems: NavegacionModel[] = [
     icon: 'icon-drop',
     permiso: GESTION_TIPO_TRANSACCION
   },
+  {
+    name: "Grupo",
+    url: 'grupos',
+    icon: 'icon-drop',
+    permiso: GESTION_GRUPO
+  },
+  {
+    name: "Tipo grupos",
+    url: 'tipogrupos',
+    icon: 'icon-drop',
+    permiso: GESTION_TIPO_GRUPO
+  }
 
 ];
 
@@ -99,5 +119,13 @@ export const routesNav: Routes = [
   {
     path: 'add_usuarios',
     loadChildren: () => import('../pages/usuario/usuario.module').then(m => m.UsuarioModule)
+  },
+  {
+    path: 'grupos',
+    loadChildren: () => import('../pages/grupo/grupo.module').then(m => m.GrupoModule)
+  },
+  {
+    path: 'tipogrupos',
+    loadChildren: () => import('../pages/tipo-grupo/tipoGrupo.module').then(m => m.TipogrupoModule)
   }
 ];

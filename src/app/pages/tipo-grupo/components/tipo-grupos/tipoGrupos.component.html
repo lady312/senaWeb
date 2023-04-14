@@ -1,0 +1,29 @@
+<div class="modal-body" >
+  <div class="card-header">
+    <strong>Registrar tipo de grupo</strong>
+  </div>
+  <div class="card-body">
+    <form class="procesoFormulario" [formGroup]="formTipoGrupo" class="was-validated" novalidate >
+      <div class="form-floating mb-3">
+        <input onkeyup="javascript:this.value=this.value.toUpperCase();" type="text" class="form-control"
+          id="floatingInput" placeholder="tipo de grupo"  formControlName='nombreTipoGrupo'>
+        <label for="floatingInput">Tipo de grupo</label>
+        <div class="valid-feedback" *ngIf="!nombreTipoGrupoField.hasError('required')">
+          Valor válido
+        </div>
+        <div class="invalid-feedback">
+          por favor ingresé un valor válido para el tipo de grupo
+        </div>
+      </div>
+    </form>
+    <div class="card-footer text-center">
+      <button type="submit" class="btn btn-sm btn-primary" (click)="guardarTipoGrupo()" [disabled]="formTipoGrupo.invalid">
+        <i class="fa fa-dot-circle-o"></i> Aceptar
+      </button>
+      <button type="reset" class="btn btn-sm btn-danger" (click)="closeModal()">
+        <i class="fa fa-ban"></i>
+        Cancelar
+      </button>
+    </div>
+  </div>
+</div>

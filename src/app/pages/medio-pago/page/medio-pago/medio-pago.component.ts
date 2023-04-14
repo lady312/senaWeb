@@ -9,6 +9,7 @@ import { UINotificationService } from '@services/uinotification.service';
   styleUrls: ['./medio-pago.component.scss']
 })
 export class MedioPagoComponent implements OnInit {
+
   private showModalMedioPago = false;
 
   medioPago: MedioPagoModel = null;
@@ -29,7 +30,7 @@ export class MedioPagoComponent implements OnInit {
         this.medioPagos = medioPago;
       }, error => {
         this._uiNotificationService.error("Error de conexión");
-      });
+    });
   }
 
   eliminarMedioPago(medioPagoId: number) {
