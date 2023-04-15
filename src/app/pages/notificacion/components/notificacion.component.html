@@ -1,9 +1,9 @@
-<div class="div-principal col-lg-12 grid-margin stretch-card">
-  <div class="card">
-    <div class="card-body">
+<div class="div-principal col-lg-12 grid-margin stretch-card" >
+  <div class="card style mt-3" >
+    <div class="card-body style">
       <div class="col-lg-8">
-        <div class="card">
-          <div class="card-header">
+        <div class="card style">
+          <div class="card-header style" >
             <i class="fa fa-align-justify"></i> Notificaciones
             <select #nreg class="form-control col-lg-1" (change)="enviarNumeroRegistros($event.target.value) ">
               <option>10</option>
@@ -15,7 +15,7 @@
           <div class="card-body">
             <div class="div table-container ">
               <table class="table table-striped table-hover table-responsive">
-                <thead>
+                <thead >
                   <tr class="table-info">
                     <th>Remitente</th>
                     <th>Asunto</th>
@@ -36,10 +36,6 @@
                     <ng-template #estado>
                       <td>Leido</td>
                     </ng-template>
-
-
-
-
 
                   </tr>
                 </tbody>

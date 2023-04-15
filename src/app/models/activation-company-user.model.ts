@@ -1,5 +1,5 @@
 import { EmpresaModel } from '@models/empresa.model';
-import { RolModel } from './rol.model';
+import { RolModel } from '@models/rol.model';
 
 export interface ActivationCompanyUserModel {
   id?: number;

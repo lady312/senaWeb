@@ -14,6 +14,7 @@ export class CustomModalComponent implements OnInit {
 
   @Output() showChange: EventEmitter<boolean> = new EventEmitter();
   @Input()
+
   set show(val: boolean) {
     if (val == this._show) return;
     this._show = val;
@@ -41,8 +42,6 @@ export class CustomModalComponent implements OnInit {
     this.showChange.emit(value)
   }
 
-  ngOnInit(): void {
-    // console.log("inicio")
-  }
+  ngOnInit(): void {}
 
 }

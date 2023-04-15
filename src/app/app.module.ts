@@ -22,7 +22,7 @@ import { P404Component } from './pages/error/404.component';
 import { P500Component } from './pages/error/500.component';
 // Import containers
 import { DefaultLayoutComponent } from './templates';
-
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -36,6 +36,7 @@ const APP_CONTAINERS = [
 
 @NgModule({
   imports: [
+    FormsModule,
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,

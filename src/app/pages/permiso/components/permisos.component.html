@@ -1,10 +1,9 @@
 <div class="col-md-12 grid-margin">
-  <div class="card">
-    <div class="card-header" style="font-weight: bold;">
+  <div class="card style">
+    <div class="card-header style" style="font-weight: bold;">
 
       <i class="fa fa-align-justify"></i>Asignación de Permisos
       <select #nreg class="form-control col-lg-2" (change)="enviarNumeroRegistros($event.target.value) ">
-        <!-- <option>1</option> -->
         <option>10</option>
         <option>15</option>
         <option>20</option>
@@ -15,18 +14,8 @@
     <div class="card-body">
 
       <form [formGroup]="form" class="forms-sample" (ngSubmit)="guardarPermiso()">
-        <!-- <h4 class="card-title">ASIGNACIÓN DE PERMISOS</h4> -->
-        <!-- <ngb-tabset (click)="menusByrol()" class="tab-basic vertical-tab">
-        <ngb-tab  *ngFor="let rol of roles" title="{{rol.nombreRol}}" >
-          <ng-template ngbTabContent  >
-
-            <input type="hidden" value="{{rol.id}}" id="idRol">
-
-
-          </ng-template>
-        </ngb-tab>
-      </ngb-tabset> -->
-        <div class="form-group col-md-12" style="margin-left: -3%">
+        
+        <div class="form-group m-5" style="margin-left: -3%">
           <label for="rol" style="font-weight: bold;">Empresas</label>
           <select class="form-control border-primary " id="company" formControlName="company"
             (change)="rolesByCompany()">
@@ -41,7 +30,7 @@
             <span style="color:red" *ngIf="rol.errors.required">Debe seleccionar una empresa </span>
           </div>
         </div>
-        <div class="form-group col-md-12" style="margin-left: -3%">
+        <div class="form-group  m-5" style="margin-left: -3%">
           <label for="rol" style="font-weight: bold;">Roles</label>
           <select class="form-control border-primary " id="rol" formControlName="rol" (change)="menusByrol()">
             <option [value]="null">Seleccione un rol </option>
@@ -63,12 +52,10 @@
                 <th>Acciones</th>
               </tr>
             </thead>
-            <!-- <tbody *ngFor="let m of menus; let indice=index"> -->
-
+            
             <tbody>
-              <!-- <tr *ngFor="let f of m.funcionalidades"> -->
 
-              <tr *ngFor="let m of menus; let indice=index">
+              <tr *ngFor="let m of menus; let indice=index" data-aos="fade-left">
 
                 <td>{{ m.name }}</td>
                 <td>{{ m.description }}</td>
@@ -76,21 +63,7 @@
                 <app-custom-switch [(checked)]="m.checked" size="8">
 
                 </app-custom-switch>
-                <!-- <div *ngIf=" m.checked == true">
-                  <td style="text-align: center">
-                    <input style="margin-top: 0%;margin-left: 2%;" type="checkbox" class="form-check-input"
-                    id="materialChecked2" (click)="toogleInput($event,m.id)" checked>
-
-                  </td>
-                </div> -->
-
-                <!-- <div *ngIf="m.checked==false">
-                  <td style="text-align: center">
-                    <input style="margin-top: 0%;margin-left: 2%;" type="checkbox" class="form-check-input"
-                      id="materialChecked2" (click)="toogleInput($event,m.id)">
-
-                  </td>
-                </div> -->
+                
 
               </tr>
             </tbody>

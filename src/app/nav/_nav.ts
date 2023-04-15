@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { Routes } from "@angular/router";
 import { NavegacionModel } from "@models/navegacion.model";
 import {
@@ -11,6 +12,19 @@ import {
   GESTION_COMPETENCIA,
   GESTION_JORNADA
 } from "./permissions";
+=======
+import { Routes } from '@angular/router';
+import { NavegacionModel } from '../models/navegacion.model';
+import { GESTION_MEDIO_PAGO, 
+         GESTION_PROCESOS, 
+         GESTION_ROLES, 
+         GESTION_ROL_PERMISOS, 
+         GESTION_TIPO_DOCUMENTOS, 
+         GESTION_TIPO_PAGO, 
+         GESTION_TIPO_TRANSACCION, 
+         GESTION_GRUPO, 
+         GESTION_TIPO_GRUPO } from './permissions';
+>>>>>>> a509124f95f42e0765974f4d23ef976021522d54
 
 export const navItems: NavegacionModel[] = [
   {
@@ -62,6 +76,7 @@ export const navItems: NavegacionModel[] = [
     permiso: GESTION_TIPO_TRANSACCION,
   },
   {
+<<<<<<< HEAD
     name: "Competencia",
     url: "add_competencia",
     icon: "icon-menu",
@@ -73,6 +88,20 @@ export const navItems: NavegacionModel[] = [
     icon:"cil-note-add",
     permiso: GESTION_JORNADA,
   }
+=======
+    name: "Grupo",
+    url: 'grupos',
+    icon: 'icon-drop',
+    permiso: GESTION_GRUPO
+  },
+  {
+    name: "Tipo grupos",
+    url: 'tipogrupos',
+    icon: 'icon-drop',
+    permiso: GESTION_TIPO_GRUPO
+  }
+
+>>>>>>> a509124f95f42e0765974f4d23ef976021522d54
 ];
 
 export const routesNav: Routes = [
@@ -136,6 +165,7 @@ export const routesNav: Routes = [
       ),
   },
   {
+<<<<<<< HEAD
     path: "add_usuarios",
     loadChildren: () =>
       import("../pages/usuario/usuario.module").then((m) => m.UsuarioModule),
@@ -159,4 +189,17 @@ export const routesNav: Routes = [
         (m) => m.JornadaModule
       ),
   },
+=======
+    path: 'add_usuarios',
+    loadChildren: () => import('../pages/usuario/usuario.module').then(m => m.UsuarioModule)
+  },
+  {
+    path: 'grupos',
+    loadChildren: () => import('../pages/grupo/grupo.module').then(m => m.GrupoModule)
+  },
+  {
+    path: 'tipogrupos',
+    loadChildren: () => import('../pages/tipo-grupo/tipoGrupo.module').then(m => m.TipogrupoModule)
+  }
+>>>>>>> a509124f95f42e0765974f4d23ef976021522d54
 ];

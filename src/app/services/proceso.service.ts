@@ -49,13 +49,14 @@ export class ProcesoService {
     return this._coreService.post<ProcesoModel>('procesos', proceso);
   }
 
-
   eliminarProceso(procesoId: number) {
     return this._coreService.delete('procesos/' + procesoId);
   }
+
   actualizarProceso(proceso: ProcesoModel) {
     proceso.nombreProceso = proceso.nombreProceso.toUpperCase();
     proceso.descripcion = proceso.descripcion.toUpperCase();
     return this._coreService.put('procesos/' + proceso.id, proceso);
   }
+  
 }
