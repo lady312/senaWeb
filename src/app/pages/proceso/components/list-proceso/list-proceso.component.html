@@ -1,9 +1,16 @@
 <div class="div-principal col-lg-12 grid-margin stretch-card">
+<<<<<<< HEAD
   <div class="card">
     <div class="card-header">
       <i class="fa fa-align-justify"> Procesos Registrados</i>
         <input style="width: 506px;" class="form-control me-2 " type="search" [(ngModel)]="query" (keyup)="filter()" placeholder="Buscar proceso" ><i class="cil-search"></i>
       <select #nreg class="form-control col-lg-1" (change)="enviarNumeroRegistros($event.target.value)">
+=======
+  <div class="card style">
+    <div class="card-header style">
+      <i class="fa fa-align-justify"></i> Procesos Registrados
+      <select #nreg class="form-control col-lg-1" (change)="enviarNumeroRegistros($event.target.value) ">
+>>>>>>> e25b57a366c7850aeb9e7f10cff6aef013825696
         <option>10</option>
         <option>15</option>
         <option>20</option>
@@ -11,9 +18,14 @@
       </select>
     </div>
     <div class="card-body">
+<<<<<<< HEAD
       <!-- <input type="text" [(ngModel)]="query" (keyup)="filter()" placeholder="Buscar proceso"> -->
       <div class="div table-container ">
         <table class="table table-striped table-hover table-responsive">
+=======
+      <div class="div table-container style">
+        <table class="table table-striped table-hover table-responsive style">
+>>>>>>> e25b57a366c7850aeb9e7f10cff6aef013825696
           <thead>
             <tr class="table-info">
               <th>Código</th>
@@ -22,8 +34,14 @@
               <th>Acciones</th>
             </tr>
           </thead>
+<<<<<<< HEAD
           <tbody class="tabla">
             <tr *ngFor="let proceso of procesosFiltrados  of procesos| paginate: { itemsPerPage: this.numReg, currentPage: pageActual }">
+=======
+          <tbody>
+            <tr *ngFor="let proceso of procesos | paginate: { itemsPerPage: this.numReg, currentPage: pageActual }" data-aos="fade-down">
+              <!-- <div *ngIf="rol.estado.id !=3"> -->
+>>>>>>> e25b57a366c7850aeb9e7f10cff6aef013825696
               <td>{{proceso.id}}</td>
               <td>{{proceso.nombreProceso}}</td>
               <td>{{proceso.descripcion}}</td>

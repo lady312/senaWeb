@@ -1,0 +1,100 @@
+<div class="modal-body" style="background: rgb(246, 244, 244);">
+  <div class="card-header" style="background: rgb(246, 244, 244);">
+    <strong>Registrar Grupo</strong>
+  </div>
+  <div data-aos="fade-down" class="card-body" style="background: rgb(246, 244, 244);">
+    <form data-aos="fade-down" class="tipoDocFormulario" [formGroup]="formGrupo" class="was-validated" novalidate>
+      <div class="form-floating mb-3">
+        <input data-aos="fade-down" type="Text" onkeyup="javascript:this.value=this.value.toUpperCase();" class="form-control"
+          id="floatingInput" placeholder="name@example.com" formControlName='nombre'>
+        <label data-aos="fade-down" for="floatingInput">Nombre</label>
+        <div class="valid-feedback" *ngIf="!nombreField.hasError('required')">
+          Valor válido
+        </div>
+        <div class="invalid-feedback">
+          Por favor ingresé un valor válido para el nombre del grupo
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="form-floating mb-3">
+            <input data-aos="fade-down" type="date" onkeyup="javascript:this.value=this.value.toUpperCase();" class="form-control"
+              id="fechaInicial" placeholder="name@example.com" formControlName='fechaInicial' #fechaInicialInput>
+            <label for="fechaInicial">Fecha inicial</label>
+            <div class="valid-feedback" *ngIf="!fechaInicialField.hasError('required')">
+              Valor válido
+            </div>
+            <div class="invalid-feedback">
+              Por favor ingresé un valor válido para la fecha inicial
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6">
+          <div class="form-floating mb-3">
+            <input data-aos="fade-down" type="date" onkeyup="javascript:this.value=this.value.toUpperCase();" class="form-control"
+              id="floatingInput" placeholder="name@example.com" formControlName='fechaFinal' #fechaFinalInput>
+            <label for="floatingInput">Fecha final</label>
+            <div class="valid-feedback" *ngIf="!fechaFinalField.hasError('required')">
+              Valor válido
+            </div>
+            <div class="invalid-feedback">
+              Por favor ingresé un valor válido para la fecha final
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-floating">
+        <textarea data-aos="fade-down" class="form-control" onkeyup="javascript:this.value=this.value.toUpperCase();" style="height: 100px"
+          placeholder="Leave a comment here" id="floatingTextarea" formControlName='observacion' required></textarea>
+        <label for="floatingTextarea">Observación</label>
+        <div class="valid-feedback" *ngIf="!observacion.hasError('required')">
+          Valor valido
+        </div>
+        <div class="invalid-feedback">
+          Por favor ingrese un valor valido para la descripción
+        </div>
+      </div>
+      <div class="row mb-2">
+        <div class="col-sm-10">
+          <div class="form-floating">
+            <select data-aos="fade-down" class="form-select" id="tipoGrupo" aria-label="Floating label select example"
+              formControlName="idTipoGrupo">
+              <option data-aos="fade-down" selected>Selecionar tipo de grupo</option>
+              <option data-aos="fade-down" *ngFor='let tipoGrupo of tipoGrupos' [ngValue]="tipoGrupo.id">{{tipoGrupo.nombreTipoGrupo}}</option><!--Renderizar este select con lo que hay en la base de datos-->
+            </select>
+            <label for="tipoGrupo">Tipo de grupo</label>
+            <div class="valid-feedback" *ngIf="!idTipoGrupo.hasError('required')">
+              Valor válido
+            </div>
+            <div class="invalid-feedback">
+              Por favor ingresé un valor válido para el tipo de grupo
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-2 mt-2">
+          <button type="button" class="btn btn-success rounded-circle" (click)="agregar()" >+</button>
+        </div>
+      </div>
+    </form>
+
+    <app-custom-modal 
+      title="Gestión Grupo" 
+      [(show)]="showModalTipoGrupo">
+      <app-tipogrupos 
+        [tipoGrupos]="tipoGrupos"
+        (store)="guardarTipoGrupo($event)" 
+        (cancel)="reset()">
+      </app-tipogrupos>
+    </app-custom-modal>
+
+    <div class="card-footer text-center">
+      <button type="submit" class="btn btn-success"  (click)="guardarGrupo()" [disabled]="formGrupo.invalid">
+        <i class="fa fa-dot-circle-o"></i> Aceptar
+      </button>
+      <button type="reset" class="btn btn-danger" (click)="closeModal()">
+        <i class="fa fa-ban"></i>
+        Cancelar
+      </button>
+    </div>
+  </div>
+</div>

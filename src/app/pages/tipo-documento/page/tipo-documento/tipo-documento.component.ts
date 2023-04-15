@@ -12,10 +12,15 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./tipo-documento.component.scss']
 })
 export class TipoDocumentoComponent implements OnInit {
+<<<<<<< HEAD
   isPopupVisible = false;
   @Output() onNuevoProceso = new EventEmitter<void>();
   @Output()
   private showModalTipoDoc = false;
+=======
+
+  public showModalTipoDoc = false;
+>>>>>>> e25b57a366c7850aeb9e7f10cff6aef013825696
 
   tipoDocumento: TipoDocumentoModel = null;
   tipoDocumentos: TipoDocumentoModel[] = [];

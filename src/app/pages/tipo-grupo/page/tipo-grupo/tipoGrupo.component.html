@@ -1,0 +1,16 @@
+<app-tipogrupos-list
+  [tipoGrupos]="tipoGrupos"
+  (delete)="eliminarTipoGrupo($event)"
+  (update)="actualizarTipoGrupo($event)"
+  (create)="createTipoGrupo()"></app-tipogrupos-list>
+
+<app-custom-modal
+  title="Gestión tipo de grupo"
+  [(show)]="showModalTipoGrupo">
+  <app-tipogrupos
+    *ngIf="showModalTipoGrupo"
+    [tipoGrupo]="tipoGrupo"
+    (store)="guardarTipoGrupo($event)"
+    (cancel)="resetTipoGrupo()">
+  </app-tipogrupos>
+</app-custom-modal>

@@ -1,0 +1,17 @@
+<app-list-competencia
+  [competencia]="competencias"
+  (delete)="eliminarCompetencia($event)"
+  (update)="actualizarCompetencia($event)"
+  (create)="createCompetencia()"
+>
+</app-list-competencia>
+
+<app-custom-modal title="Gestión Competencia" [(show)]="showModalCompetencia">
+  <app-add-competencia
+    *ngIf="showModalCompetencia"
+    [competencia]="competencia"
+    (store)="guardarCompetencia($event)"
+    (cancel)="reset()"
+  >
+  </app-add-competencia>
+</app-custom-modal>

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { EmpresaModel } from '@models/empresa.model';
 import { PersonaModel } from '../../models/persona.model';
 import { navItems } from '../../nav/_nav';
-import { CoreService } from '../../services/core.service';
+import { CoreService } from '@services/core.service';
 
 @Component({
   selector: 'app-dashboard',
