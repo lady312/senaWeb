@@ -24,6 +24,14 @@ import { P500Component } from './pages/error/500.component';
 import { DefaultLayoutComponent } from './templates';
 import { RouterModule } from '@angular/router';
 
+
+
+
+
+
+
+
+
 // import { CompetenciasComponent } from './pages/competencias/components/competencias/competencias.component';
 // import { CompetenciasListComponent } from './pages/competencias/components/competencias-list/competencias-list.component';
 
@@ -62,9 +70,17 @@ const APP_CONTAINERS = [
     ...APP_CONTAINERS,
     P404Component,
     P500Component,
+
+
+
+
+
+
+
     // CompetenciasComponent,
     // CompetenciasListComponent,
   ],
+
   providers: [
     {
       provide: LocationStrategy,

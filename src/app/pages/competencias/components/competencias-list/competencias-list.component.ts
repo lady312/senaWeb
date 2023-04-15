@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { CompetenciaModel } from '@models/Competencia.model';
+import { CompetenciaModel } from '@models/competencia.model';
 
 @Component({
   selector: 'app-competencias-list',

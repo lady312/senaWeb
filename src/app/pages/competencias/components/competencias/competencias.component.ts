@@ -11,9 +11,9 @@ import { CompetenciaModel } from '@models/competencia.model';
   templateUrl: './competencias.component.html',
   styleUrls: ['./competencias.component.scss']
 })
-export class CompetenciasComponent {
+export class CompetenciasComponent implements OnInit {
 
-  @Input() rol: CompetenciaModel;//actualizar
+  @Input() rol: CompetenciaModel; // actualizar
 
   @Output() store: EventEmitter<CompetenciaModel> = new EventEmitter();
   @Output() cancel: EventEmitter<void> = new EventEmitter();
@@ -37,7 +37,7 @@ export class CompetenciasComponent {
 
   ngOnInit(): void {
     // this.traerEmpresas();
-    this.setRol()
+    this.setRol();
   }
 
   // traerEmpresas() {
@@ -62,7 +62,7 @@ export class CompetenciasComponent {
       this.formRol.patchValue({
         nombreCompetencia: this.rol.nombreCompetencia,
         detalleCompetencia: this.rol.detalleCompetencia
-      })
+      });
     }
   }
 
@@ -98,7 +98,7 @@ export class CompetenciasComponent {
       id: this.rol?.id,
       detalleCompetencia: this.getControl('detalleCompetencia').value,
       nombreCompetencia: this.getControl('nombreCompetencia').value
-    }
+    };
   }
 
 

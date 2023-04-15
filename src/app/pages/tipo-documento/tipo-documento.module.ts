@@ -9,13 +9,19 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { ComunModule } from '@components/comun.module';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
-
+import { NgIf } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
+import { ProcesoModule } from '../proceso/proceso.module';
+import { ProcesoComponent } from '../proceso/page/proceso/proceso.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     TipoDocumentoComponent,
     AddTipoDocumentoComponent,
     ListTipoDocumentoComponent
+
+
   ],
   imports: [
     CommonModule,
@@ -23,7 +29,15 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
     ReactiveFormsModule,
     NgxPaginationModule,
     ComunModule,
+    HttpClientModule ,
+    NgIf,
+    ProcesoModule,
+    FormsModule,
     SweetAlert2Module.forChild()
-  ]
+  ],
+  entryComponents: [ProcesoComponent],
+
 })
-export class TipoDocumentoModule { }
+export class TipoDocumentoModule {
+
+ }

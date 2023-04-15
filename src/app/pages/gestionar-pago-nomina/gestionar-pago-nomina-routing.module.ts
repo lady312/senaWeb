@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { ListarPagosNominaComponent } from './components/listar-pagos-nomina/listar-pagos-nomina.component';
 
 const routes: Routes = [
-  { 
+  {
     path: '',
     component: ListarPagosNominaComponent,
 

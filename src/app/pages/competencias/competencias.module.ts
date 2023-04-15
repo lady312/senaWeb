@@ -15,7 +15,7 @@ import { CompetenciaComponent } from './page/competencia/competencia.component';
 
 
 @NgModule({
-  exports:[
+  exports: [
     CompetenciasComponent
   ],
   declarations: [

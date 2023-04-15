@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CompetenciaModel } from '@models/Competencia.model';
+import { CompetenciaModel } from '@models/competencia.model';
 import { CoreService } from './core.service';
 
 
@@ -23,19 +23,15 @@ export class CompetenciaService {
   }
 
   crearCompetencia(competencia: CompetenciaModel) {
-    competencia.nombreCompetencia = competencia.nombreCompetencia.toUpperCase();
-    competencia.detalleCompetencia = competencia.detalleCompetencia.toUpperCase();
-    return this._coreService.post<CompetenciaModel>('competencia', competencia);
+    return this._coreService.post<CompetenciaModel>('competencias/', competencia);
   }
 
   actualizarCompetencia(competencia: CompetenciaModel) {
-    competencia.nombreCompetencia = competencia.nombreCompetencia.toUpperCase();
-    competencia.detalleCompetencia = competencia.detalleCompetencia.toUpperCase();
-    return this._coreService.put('competencia/update/' + competencia.id, competencia);
+    return this._coreService.put('competencias/' + competencia.id, competencia);
   }
 
   eliminarCompetencia(competenciaId: number) {
-    return this._coreService.delete('competencia/delete/' + competenciaId);
+    return this._coreService.delete('competencias/' + competenciaId);
   }
 
 }

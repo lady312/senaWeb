@@ -9,13 +9,17 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { ComunModule } from '@components/comun.module';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { FormsModule } from '@angular/forms';
+
+
+
 
 
 @NgModule({
   declarations: [
     AddProcesoComponent,
     ListProcesoComponent,
-    ProcesoComponent
+    ProcesoComponent,
   ],
   imports: [
     CommonModule,
@@ -23,7 +27,16 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
     ReactiveFormsModule,
     NgxPaginationModule,
     ComunModule,
+    FormsModule,
     SweetAlert2Module.forChild()
+  ],
+  exports: [
+AddProcesoComponent,
+ProcesoComponent,
+ListProcesoComponent,
+
   ]
 })
-export class ProcesoModule { }
+export class ProcesoModule {
+
+}

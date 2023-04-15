@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter} from '@angular/core';
 import { ProcesoModel } from '@models/proceso.model';
 import { ProcesoService } from '@services/proceso.service';
 import { UINotificationService } from '@services/uinotification.service';
+
 
 @Component({
   selector: 'app-proceso',
@@ -9,16 +10,23 @@ import { UINotificationService } from '@services/uinotification.service';
   styleUrls: ['./proceso.component.scss']
 })
 export class ProcesoComponent implements OnInit {
-
+  @Output() onChangeFilter = new EventEmitter<Object>();
   private showModalProceso = false;
-
+  search: string;
   proceso: ProcesoModel = null;
   procesos: ProcesoModel[] = [];
+  afiliacionesEstado: ProcesoModel[];
+  private _filters = {};
+
 
   constructor(
     private _uiNotificationService: UINotificationService,
-    private _procesoService: ProcesoService
+    private _procesoService: ProcesoService,
+
+
+
   ) { }
+
 
   ngOnInit(): void {
     this.getProcesos();
@@ -29,14 +37,14 @@ export class ProcesoComponent implements OnInit {
       .subscribe(proceso => {
         this.procesos = proceso;
       }, error => {
-        this._uiNotificationService.error("Error de conexión");
+        this._uiNotificationService.error('Error de conexión');
       });
   }
 
   eliminarProceso(procesoId: number) {
     this._procesoService.eliminarProceso(procesoId).subscribe(() => {
       this.getProcesos();
-    })
+    });
   }
 
   actualizarProceso(proceso: ProcesoModel) {
@@ -59,7 +67,7 @@ export class ProcesoComponent implements OnInit {
       this._procesoService.crearProceso(proceso).subscribe(rol => {
         this.getProcesos();
         this.reset();
-      })
+      });
     }
   }
 

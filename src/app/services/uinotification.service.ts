@@ -14,7 +14,7 @@ export class UINotificationService {
     titleMaxLength: 20,
     bodyMaxLength: 80,
     position: SnotifyPosition.rightBottom,
-  }
+  };
 
   constructor(private _notificationService: SnotifyService) { }
 

@@ -6,12 +6,13 @@ import { CoreService } from './core.service';
   providedIn: 'root'
 })
 export class TipoDocumentoService {
-
-  // tipoDocumento: RolModel;
+  documento: TipoDocumentoModel;
   permisos: number;
+
   constructor(
-    private _coreService: CoreService
+    private _coreService: CoreService,
   ) { }
+
 
   public tipoDocument(estado: number, proceso: number) {
     const state = estado;

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CompetenciaModel } from '@models/Competencia.model';
+import { CompetenciaModel } from '@models/competencia.model';
 import { CompetenciaService } from '@services/competencia.service';
 import { UINotificationService } from '@services/uinotification.service';
 
@@ -8,7 +8,7 @@ import { UINotificationService } from '@services/uinotification.service';
   templateUrl: './competencia.component.html',
   styleUrls: ['./competencia.component.scss']
 })
-export class CompetenciaComponent {
+export class CompetenciaComponent  implements OnInit {
 
   private showModalRol = false;
 
@@ -29,14 +29,14 @@ export class CompetenciaComponent {
       .subscribe(roles => {
         this.roles = roles;
       }, error => {
-        this._uiNotificationService.error("Error de conexión");
+        this._uiNotificationService.error('Error de conexión');
       });
   }
 
   eliminarRol(rolId: number) {
     this._rolService.eliminarCompetencia(rolId).subscribe(() => {
       this.getRoles();
-    })
+    });
   }
 
   actualizarRol(rol: CompetenciaModel) {
@@ -44,22 +44,22 @@ export class CompetenciaComponent {
     this.showModalRol = true;
   }
 
-  createRol(){
+  createRol() {
     this.rol = null;
     this.showModalRol = true;
   }
 
   guardarRol(rol: CompetenciaModel) {
     if (rol.id) {
-      this._rolService.actualizarCompetencia(rol).subscribe(rol => {
+      this._rolService.actualizarCompetencia(rol).subscribe(() => {
         this.getRoles();
         this.reset();
       });
     } else {
-      this._rolService.crearCompetencia(rol).subscribe(rol => {
+      this._rolService.crearCompetencia(rol).subscribe(() => {
         this.getRoles();
         this.reset();
-      })
+      });
     }
   }
 

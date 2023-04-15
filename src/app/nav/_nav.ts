@@ -1,6 +1,11 @@
 import { Routes } from '@angular/router';
 import { NavegacionModel } from '../models/navegacion.model';
-import { GESTION_MEDIO_PAGO, GESTION_PROCESOS, GESTION_ROLES, GESTION_ROL_PERMISOS, GESTION_TIPO_DOCUMENTOS, GESTION_TIPO_PAGO, GESTION_TIPO_TRANSACCION, GESTION_PAGO_NOMINA, GESTION_COMPETENCIA } from './permissions';
+import { GESTION_MEDIO_PAGO,
+  GESTION_PROCESOS,
+   GESTION_ROLES, GESTION_ROL_PERMISOS,
+   GESTION_TIPO_DOCUMENTOS,
+    GESTION_TIPO_PAGO,
+    GESTION_TIPO_TRANSACCION, GESTION_PAGO_NOMINA } from './permissions';
 
 export const navItems: NavegacionModel[] = [
   {
@@ -10,68 +15,60 @@ export const navItems: NavegacionModel[] = [
     permiso: GESTION_ROLES
   },
   {
-    name: "Permisos",
+    name: 'Permisos',
     url: 'add_permission',
     icon: 'icon-drop',
     permiso: GESTION_ROL_PERMISOS
   },
   {
-    name: "Procesos",
+    name: 'Procesos',
     url: 'add_proceso',
     icon: 'icon-drop',
     permiso: GESTION_PROCESOS
   },
   {
-    name: "Tipo Documentos",
+    name: 'Tipo Documentos',
     url: 'add_tipo_documento',
     icon: 'icon-drop',
     permiso: GESTION_TIPO_DOCUMENTOS
   },
   {
-    name: "Medios de Pago",
+    name: 'Medios de Pago',
     url: 'add_medio_pago',
     icon: 'icon-drop',
     permiso: GESTION_MEDIO_PAGO
   },
   {
-    name: "Tipos de Pago",
+    name: 'Tipos de Pago',
     url: 'add_tipo_pago',
     icon: 'icon-drop',
     permiso: GESTION_TIPO_PAGO
   },
   {
-    name: "Tipos de Transacción",
+    name: 'Tipos de Transacción',
     url: 'add_tipo_transaccion',
     icon: 'icon-drop',
     permiso: GESTION_TIPO_TRANSACCION
   },
   {
-    name: "Usuarios",
+    name: 'Usuarios',
     url: 'add_usuarios',
     icon: 'icon-drop',
     permiso: GESTION_TIPO_TRANSACCION
   },
   {
-    name: "Pagos Nomina Supervisor",
+    name: 'Pagos Nomina Supervisor',
     url: 'gestionar_nomina_supervisor',
     icon: 'icon_drop',
     permiso: GESTION_PAGO_NOMINA,
   },
-  {
-    name: "Competencia",
-    url: 'gestionar_competencia', //URL que mostrará la vista
-    icon: 'icon_drop',
-    permiso: GESTION_COMPETENCIA,
-  }
+
 
 ];
 
 
 export const routesNav: Routes = [
-  // {
-  //   path: 'dashboard',
-  //   loadChildren: () => import('../pages/home/home.module').then(m => m.HomeModule)
-  // },
+
   {
     path: 'dashboard',
     loadChildren: () => import('../pages/notificacion/notificacion.module').then(m => m.NotificacionModule)
@@ -119,5 +116,8 @@ export const routesNav: Routes = [
   {
     path: 'gestionar_competencia',
     loadChildren: () => import('../pages/competencias/competencias.module').then(m => m.CompetenciasModule)
-  }
+  },
+
+
+
 ];
