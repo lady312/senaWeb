@@ -1,41 +1,33 @@
-import { Injectable } from '@angular/core';
-import { CoreService } from './core.service';
-import { JornadaModel } from '@models/jornada.model';
+import { Injectable } from "@angular/core";
+import { CoreService } from "./core.service";
+import { JornadaModel } from "@models/jornada.model";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class JornadaService {
-
   JornadaModel: JornadaModel;
 
-  constructor(
-    private _coreService: CoreService
-  ) { }
+  constructor(private _coreService: CoreService) {}
 
   public traerJornada() {
-    return this._coreService.get<JornadaModel[]>('jornada');
-  }
-  public getJornadaById(id) {
-    return this._coreService.get<JornadaModel>('jornada/' + id);
+    return this._coreService.get<JornadaModel[]>("jornadas");
   }
 
-  crearJornada(Jornada: JornadaModel) {
-    Jornada.nombreJornada = Jornada.nombreJornada.toUpperCase();
-    Jornada.descripcionJornada = Jornada.descripcionJornada.toUpperCase();
-    Jornada.descripcionJornada = Jornada.descripcionJornada.toUpperCase();
-    Jornada.dias = Jornada.dias.toUpperCase();
-    return this._coreService.post<JornadaModel>('jornada', Jornada);
+  public getJornadaById(id: number) {
+    return this._coreService.get<JornadaModel>("jornadas/" + id);
   }
 
-  eliminarJornada(JornadaId: number) {
-    return this._coreService.delete('jornada/' + JornadaId);
+  crearJornada(jornada: JornadaModel) {
+    jornada.nombreJornada = jornada.nombreJornada.toUpperCase();
+    return this._coreService.post<JornadaModel>("jornadas", jornada);
   }
 
-  actualizarJornada(Jorn: JornadaModel) {
-    Jorn.nombreJornada = Jorn.nombreJornada.toUpperCase();
-    Jorn.descripcionJornada = Jorn.descripcionJornada.toUpperCase();
-    Jorn.dias = Jorn.dias.toUpperCase();
-    return this._coreService.put('jornada/' + Jorn.id, Jorn);
+  eliminarJornada(jornadaId: number) {
+    return this._coreService.delete("jornadas/" + jornadaId);
+  }
+  actualizarJornada(jorn: JornadaModel) {
+    jorn.nombreJornada = jorn.nombreJornada.toUpperCase();
+    return this._coreService.put("jornadas/" + jorn.id, jorn);
   }
 }

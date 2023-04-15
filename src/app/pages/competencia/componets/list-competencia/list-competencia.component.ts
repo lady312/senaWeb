@@ -17,6 +17,10 @@ export class ListCompetenciaComponent {
 
   numReg = 10;
   pageActual = 0;
+  constructor(
+    ) {
+      console.log(this.competencia, 'holaaaaaaaa');
+    }
 
   enviarNumeroRegistros(num: number) {
     this.numReg = num;

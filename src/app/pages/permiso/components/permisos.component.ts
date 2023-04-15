@@ -1,21 +1,25 @@
-import { Component, OnInit } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
-import { EmpresaModel } from '@models/empresa.model';
+import { Component, OnInit } from "@angular/core";
+import {
+  UntypedFormBuilder,
+  UntypedFormControl,
+  UntypedFormGroup,
+  Validators,
+} from "@angular/forms";
+import { EmpresaModel } from "@models/empresa.model";
 // import { FuncionalidadService } from '@services/funcionalidad.service';
-import { PermisoModel } from '@models/permiso.model';
-import { RolModel } from '@models/rol.model';
-import { EmpresaService } from '@services/empresa.service';
-import { MenuService } from '@services/menu.service';
-import { PermisosService } from '@services/permisos.service';
-import { RolesService } from '@services/roles.service';
-import { UINotificationService } from '@services/uinotification.service';
-import { AlertComponent } from 'ngx-bootstrap/alert/public_api';
-
+import { PermisoModel } from "@models/permiso.model";
+import { RolModel } from "@models/rol.model";
+import { EmpresaService } from "@services/empresa.service";
+import { MenuService } from "@services/menu.service";
+import { PermisosService } from "@services/permisos.service";
+import { RolesService } from "@services/roles.service";
+import { UINotificationService } from "@services/uinotification.service";
+import { AlertComponent } from "ngx-bootstrap/alert/public_api";
 
 @Component({
-  selector: 'app-permisos',
-  templateUrl: './permisos.component.html',
-  styleUrls: ['./permisos.component.css']
+  selector: "app-permisos",
+  templateUrl: "./permisos.component.html",
+  styleUrls: ["./permisos.component.css"],
 })
 export class PermisosComponent implements OnInit {
   pageActual: number = 1;
@@ -41,7 +45,6 @@ export class PermisosComponent implements OnInit {
     this.fun = new Array();
     // this.permisions = new Array();
     this.enviarNumeroRegistros(10);
-
   }
 
   ngOnInit(): void {
@@ -56,119 +59,128 @@ export class PermisosComponent implements OnInit {
 
     this.findRoles();
 
-    this.permisosService.traerPermisos().subscribe((data: any) => {
-      this.menus = data;
-    }, error => {
-      console.log('There was an error while retrieving data !!!', error);
-    });
-
+    this.permisosService.traerPermisos().subscribe(
+      (data: any) => {
+        this.menus = data;
+        console.log(data, "holllllllllllllllllllllllll");
+      },
+      (error) => {
+        console.log("There was an error while retrieving data !!!", error);
+      }
+    );
   }
+
   enviarNumeroRegistros(num: number) {
     this.numReg = num;
   }
 
-
   traerEmpresas() {
-    this.empresaService.traerEmpresas().subscribe((data: any) => {
-      this.empresas = data;
-
-
-    },
-      error => {
-        console.log('There was an error while retrieving data !!!', error);
-      });
+    this.empresaService.traerEmpresas().subscribe(
+      (data: any) => {
+        this.empresas = data;
+        console.log(this.empresas, "traer empresas");
+      },
+      (error) => {
+        console.log("There was an error while retrieving data !!!", error);
+      }
+    );
   }
+
   traerfunc() {
-    this.permisosService.traerPermisos().subscribe((data: any) => {
-      this.func = data;
-      console.log(this.func, 'funcionalidades')
-
-    },
-      error => {
-        console.log('There was an error while retrieving data !!!', error);
-      });
+    this.permisosService.traerPermisos().subscribe(
+      (data: any) => {
+        this.func = data;
+        console.log(this.func, "funcionalidades");
+      },
+      (error) => {
+        console.log("There was an error while retrieving data !!!", error);
+      }
+    );
   }
-
 
   menusByrol() {
     this.permissionsByrole();
   }
 
   findRoles() {
-    this.menuService.findRoles().subscribe((data: any[]) => {
-
-      console.log(data, 'findRoles');
-    },
-      error => {
-        console.log('There was an error while retrieving data !!!', error);
-      });
-
+    this.menuService.findRoles().subscribe(
+      (data: any[]) => {
+        console.log(data, "findRoles");
+      },
+      (error) => {
+        console.log("There was an error while retrieving data !!!", error);
+      }
+    );
   }
 
   rolesByCompany() {
-    this.rolService.rolByCompany(document.getElementById('company')['value']).subscribe((data: any) => {
-
-      this.objRol = data;
-      console.log(data, 'menu permi');
-
-    },
-      error => {
-        console.log('There was an error while retrieving data !!!', error);
-      });
+    this.rolService
+      .rolByCompany(document.getElementById("company")["value"])
+      .subscribe(
+        (data: any) => {
+          this.objRol = data;
+          console.log(data, "menu permi");
+        },
+        (error) => {
+          console.log("There was an error while retrieving data !!!", error);
+        }
+      );
   }
 
   permissionsByrole() {
     this.permisions = [];
 
-    this.permisosService.permissionsRole(document.getElementById('rol')['value']).subscribe((data: any) => {
+    this.permisosService
+      .permissionsRole(document.getElementById("rol")["value"])
+      .subscribe(
+        (data: any) => {
+          this.permisions = data;
 
-      this.permisions = data;
-
-      this.menus = this.menus.map(havePermission => {
-        havePermission.checked = (this.permisions.findIndex(p => p === havePermission.name) !== -1)
-        return havePermission;
-      });
-      console.log(this.menus, 'menu permi');
-
-      console.log(this.permisions, 'data permisions');
-
-    },
-      error => {
-        console.log('There was an error while retrieving data !!!', error);
-      });
+          this.menus = this.menus.map((havePermission) => {
+            havePermission.checked =
+              this.permisions.findIndex((p) => p === havePermission.name) !== -1;
+            return havePermission;
+          });
+          console.log(this.menus, "menu permispsssssssssssss");
+          console.log(this.permisions, "data permisions");
+        },
+        (error) => {
+          console.log("There was an error while retrieving data !!!", error);
+        }
+      );
   }
 
   form: UntypedFormGroup = new UntypedFormGroup({
-
-    rol: new UntypedFormControl('', Validators.required),
-    company: new UntypedFormControl('', Validators.required),
+    rol: new UntypedFormControl("", Validators.required),
+    company: new UntypedFormControl("", Validators.required),
   });
 
-
   guardarPermiso() {
-
-    this.fun = this.menus.filter(m => m.checked).map(menu => menu.id);
-    console.log(this.fun, ' fun nuevo');
+    this.fun = this.menus.filter((m) => m.checked).map((menu) => menu.id);
+    console.log(this.fun, " fun nuevo");
     if (this.fun.length !== 0) {
-
       if (this.form.valid) {
         const obj: any = new Object();
         obj.idRol = this.form.value.rol;
         // obj.idRol = 1;
         obj.funciones = this.fun;
         // console.log(obj);
-        this.permisosService.guardar(obj).subscribe((data: any) => {
-          console.log(data, 'bien')
+        this.permisosService.guardar(obj).subscribe(
+          (data: any) => {
+            console.log(data, "bien");
 
-          this._uiNotificationService.success('Se guardo la configuración exitosamente ');
-          this.form.reset();
-          this.fun = [];
-          this.menus = [];
-          // window.location.reload();
-        },
-          error => {
-            console.log('There was an error while retrieving data !!!', error);
-          });
+            this._uiNotificationService.success(
+              "Se guardo la configuración exitosamente "
+            );
+            this.form.reset();
+            this.fun = [];
+            this.menus = [];
+            // window.location.reload();
+          },
+          (error) => {
+            console.log("There was an error while retrieving data !!!", error);
+          }
+        );
       } else {
         // this.alerts.push({
         //   type: 'danger',
@@ -177,7 +189,7 @@ export class PermisosComponent implements OnInit {
         //   msgStr: 'Error!'
         // });
         // alert('Por favor revise los campos');
-        this._uiNotificationService.error('Debe seleccionar un rol');
+        this._uiNotificationService.error("Debe seleccionar un rol");
       }
     } else {
       // this.alerts.push({
@@ -187,19 +199,14 @@ export class PermisosComponent implements OnInit {
       //   msgStr: 'Error!'
       // });
 
-      this._uiNotificationService.error('No hay Cambios');
+      this._uiNotificationService.error("No hay Cambios");
     }
-
-
   }
   onClosed(dismissedAlert: AlertComponent): void {
-    this.alerts = this.alerts.filter(alert => alert !== dismissedAlert);
+    this.alerts = this.alerts.filter((alert) => alert !== dismissedAlert);
   }
 
-  get rol() { return this.form.get('rol') }
-
-
-
+  get rol() {
+    return this.form.get("rol");
+  }
 }
-
-

@@ -1,7 +1,5 @@
 import { Routes } from "@angular/router";
 import { NavegacionModel } from "@models/navegacion.model";
-import { ResultadoComponent } from "../pages/resultado/page/resultado/resultado.component";
-import { ResultadoModule } from "../pages/resultado/resultado.module";
 import {
   GESTION_MEDIO_PAGO,
   GESTION_PROCESOS,
@@ -11,7 +9,6 @@ import {
   GESTION_TIPO_PAGO,
   GESTION_TIPO_TRANSACCION,
   GESTION_COMPETENCIA,
-  GESTION_RESULTADOS,
   GESTION_JORNADA
 } from "./permissions";
 
@@ -71,15 +68,9 @@ export const navItems: NavegacionModel[] = [
     permiso: GESTION_COMPETENCIA,
   },
   {
-    name: "Gestion Resultados",
-    url: "add_resultados",
-    icon:"cil-history",
-    permiso: GESTION_RESULTADOS,
-  },
-  {
     name: "Gestion Jornada",
     url: "add_jornada",
-    icon:"cil-history",
+    icon:"cil-note-add",
     permiso: GESTION_JORNADA,
   }
 ];
@@ -159,13 +150,6 @@ export const routesNav: Routes = [
     loadChildren: () =>
       import("../pages/competencia/competencia.module").then(
         (m) => m.CompetenciaModule
-      ),
-  },
-  {
-    path: "add_resultado",
-    loadChildren: () =>
-      import("../pages/resultado/resultado.module").then(
-        (m) => m.ResultadoModule
       ),
   },
   {

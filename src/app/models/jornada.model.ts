@@ -1,9 +1,12 @@
+import { DiaJornadaModel } from "./dia_jornada.model";
 export interface JornadaModel {
-  id: number;
-  nombreJornada: string;
-  descripcionJornada: string;
-  horaInicial: string;
-  horaFinal: string;
-  dias: string;
-  numHoras: number;
+
+  id?: number;
+  nombreJornada?: string;
+  descripcion?: string;
+  horaInicial?: string;
+  horaFinal?: string;
+  numeroHoras?: number;
+
+  diaJornada?: DiaJornadaModel[];
 }

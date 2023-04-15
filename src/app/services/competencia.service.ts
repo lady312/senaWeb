@@ -26,13 +26,13 @@ export class CompetenciaService {
     return this._coreService.post<CompetenciaModel>('competencia', Competencia);
   }
 
-  eliminarCompetencia(CompetenciaId: number) {
-    return this._coreService.delete('competencia/' + CompetenciaId);
+  eliminarCompetencia(competenciaId: number) {
+    return this._coreService.delete('competencia/' + competenciaId);
   }
 
-  actualizarCompetencia(Compe: CompetenciaModel) {
-    Compe.nombreCompetencia = Compe.nombreCompetencia.toUpperCase();
-    Compe.detalle = Compe.detalle.toUpperCase();
-    return this._coreService.put('competencia/' + Compe.id, Compe);
+  actualizarCompetencia(compe: CompetenciaModel) {
+    compe.nombreCompetencia = compe.nombreCompetencia.toUpperCase();
+    compe.detalle = compe.detalle.toUpperCase();
+    return this._coreService.put('competencia/' + compe.id, compe);
   }
 }

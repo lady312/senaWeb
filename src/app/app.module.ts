@@ -22,9 +22,7 @@ import { P404Component } from './pages/error/404.component';
 import { P500Component } from './pages/error/500.component';
 // Import containers
 import { DefaultLayoutComponent } from './templates';
-import { AddJornadaComponent } from './pages/jornada/components/add-jornada/add-jornada.component';
-import { ListJornadaComponent } from './pages/jornada/components/list-jornada/list-jornada.component';
-import { JornadaComponent } from './pages/jornada/page/jornada/jornada.component'
+
 
 
 
@@ -60,10 +58,7 @@ const APP_CONTAINERS = [
     AppComponent,
     ...APP_CONTAINERS,
     P404Component,
-    P500Component,
-    AddJornadaComponent,
-    ListJornadaComponent,
-    JornadaComponent,
+    P500Component
   ],
   providers: [
     {

@@ -21,7 +21,6 @@ export class PermisosService {
       .pipe(map(response => response as Object[]));
   }
 
-
   public traerPermisos() {
     return this._coreService.get<PermisoModel[]>('permisos');
   }
@@ -32,7 +31,6 @@ export class PermisosService {
   // }
 
   public permissionsRole(idRol: number) {
-
     return this._coreService.get<any[]>('permisos_rol?rol=' + idRol);
   }
 }
