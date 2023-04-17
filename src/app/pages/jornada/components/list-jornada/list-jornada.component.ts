@@ -1,12 +1,12 @@
-import { Component, EventEmitter, Input, Output } from "@angular/core";
-import { UntypedFormGroup } from "@angular/forms";
-import { JornadaModel } from "@models/jornada.model";
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { UntypedFormGroup } from '@angular/forms';
+import { JornadaModel } from '@models/jornada.model';
 @Component({
-  selector: "app-list-jornada",
-  templateUrl: "./list-jornada.component.html",
-  styleUrls: ["./list-jornada.component.scss"],
+  selector: 'app-list-jornada',
+  templateUrl: './list-jornada.component.html',
+  styleUrls: ['./list-jornada.component.scss'],
 })
-export class ListJornadaComponent {
+export class ListJornadaComponent implements OnInit {
   @Input() jornadas: JornadaModel[] = [];
   @Input() jornada: JornadaModel;
 
@@ -25,10 +25,10 @@ export class ListJornadaComponent {
     ) {
     this.jornada = {
       id: null,
-      horaFinal: "",
+      horaFinal: '',
       horaInicial: null,
       descripcion: null,
-      nombreJornada: "",
+      nombreJornada: '',
       numeroHoras: null,
     };
   }

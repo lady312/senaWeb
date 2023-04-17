@@ -38,14 +38,9 @@ export class AddProcesoComponent implements OnInit {
     this.buildForm();
   }
 
-<<<<<<< HEAD
    ngOnInit(): void {
 
 this.setProceso();
-=======
-  ngOnInit(): void {
-    this.setProceso()
->>>>>>> e25b57a366c7850aeb9e7f10cff6aef013825696
   }
 
 

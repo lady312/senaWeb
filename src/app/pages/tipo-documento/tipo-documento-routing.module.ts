@@ -3,19 +3,14 @@ import { RouterModule, Routes } from '@angular/router';
 import { TipoDocumentoComponent } from './page/tipo-documento/tipo-documento.component';
 import { CommonModule } from '@angular/common';
 import { AddProcesoComponent } from '../proceso/components/add-proceso/add-proceso.component';
-import { ProcesoModule } from '../proceso/proceso.module';
-import { ProcesoComponent } from '../proceso/page/proceso/proceso.component';
+
 
 const routes: Routes = [
   {
     path: '',
     component: TipoDocumentoComponent, pathMatch: 'full',
   },
-  // {
-  //   path: 'nuevoProceso',
-  //   component :  AddProcesoComponent , pathMatch: 'full'
 
-  // },
   {
     path: 'procesos',
    component:  AddProcesoComponent, pathMatch: 'full',

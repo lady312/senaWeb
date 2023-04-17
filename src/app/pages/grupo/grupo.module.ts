@@ -13,7 +13,7 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { TipogrupoModule } from '../tipo-grupo/tipoGrupo.module';
 
 @NgModule({
-  exports:[
+  exports: [
     GruposComponent
   ],
   declarations: [

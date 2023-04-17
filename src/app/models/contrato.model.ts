@@ -16,5 +16,5 @@ export interface ContratoModel {
   idpersona?: number;
 
   persona?: PersonaModel;
-  tipoContrato?: TipoContratoModel
+  tipoContrato?: TipoContratoModel;
 }

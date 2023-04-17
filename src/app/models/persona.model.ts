@@ -30,5 +30,5 @@ export interface PersonaModel {
     ciudadUbicacion?: CiudadModel;
 
     asignacionRolPersona?: AsignacionRolPersonaModel;
-    contrato?: ContratoModel
+    contrato?: ContratoModel;
 }

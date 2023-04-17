@@ -64,5 +64,5 @@ export class ProcesoService {
     proceso.descripcion = proceso.descripcion.toUpperCase();
     return this._coreService.put('procesos/' + proceso.id, proceso);
   }
-  
+
 }

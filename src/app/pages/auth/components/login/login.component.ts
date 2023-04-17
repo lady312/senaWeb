@@ -65,16 +65,16 @@ export class LoginComponent implements OnInit {
             this._uiNotificationService.error('No tiene un perfil activo');
           } else if (response.length === 1) {
             this.selectCompany(response[0].id);
-            this._uiNotificationService.success("Inicio de session correcto");
+            this._uiNotificationService.success('Inicio de session correcto');
           } else if (response.length > 1) {
             this.activationCompanyUsers = response;
-            this._uiNotificationService.success("Inicio de session correcto");
+            this._uiNotificationService.success('Inicio de session correcto');
           }
         },
         (e) => {
-          if (e.status == 401 || e.status == 400) {
+          if (e.status === 401 || e.status === 400) {
             this._uiNotificationService.clearAll();
-            this._uiNotificationService.error("Usuario o contraseña invalida");
+            this._uiNotificationService.error('Usuario o contraseña invalida');
           }
         }
       );
@@ -87,7 +87,7 @@ export class LoginComponent implements OnInit {
 
   recoverPassword() {
     this._uiNotificationService.clearAll();
-    this._uiNotificationService.success("Por favor comuníquese con el administrador.");
+    this._uiNotificationService.success('Por favor comuníquese con el administrador.');
   }
 
 }

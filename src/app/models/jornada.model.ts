@@ -1,4 +1,4 @@
-import { DiaJornadaModel } from "./dia_jornada.model";
+import { DiaJornadaModel } from './dia_jornada.model';
 export interface JornadaModel {
 
   id?: number;

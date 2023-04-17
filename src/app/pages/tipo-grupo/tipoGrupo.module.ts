@@ -16,7 +16,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     TipogruposListComponent,
     TipogrupoComponent
   ],
-  exports:[
+  exports: [
     [TipogruposComponent,
     TipogruposListComponent,
     TipogrupoComponent]
