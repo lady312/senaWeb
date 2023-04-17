@@ -1,5 +1,5 @@
-import { DiaModel } from "./dia.model";
-import { JornadaModel } from "./jornada.model";
+import { DiaModel } from './dia.model';
+import { JornadaModel } from './jornada.model';
 
 
 export interface DiaJornadaModel {
@@ -7,6 +7,6 @@ export interface DiaJornadaModel {
   idDia?: number;
   idJornada?: number;
 
-//objetos de dia y jornada
+// objetos de dia y jornada
   dia?: DiaModel[];
 }

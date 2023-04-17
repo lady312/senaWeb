@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { GrupoModel } from '@models/grupo.model';
 import { CoreService } from './core.service';
-import { TipoGrupoModel } from '@models/tipogrupo.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 

@@ -1,5 +1,5 @@
-import { INavData } from "@coreui/angular";
+import { INavData } from '@coreui/angular';
 
-export interface NavegacionModel extends INavData{
-  permiso:string;
+export interface NavegacionModel extends INavData {
+  permiso: string;
 }

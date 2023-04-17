@@ -1,21 +1,21 @@
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {
   UntypedFormBuilder,
   UntypedFormGroup,
   Validators,
-} from "@angular/forms";
-import { DiaModel } from "@models/dia.model";
-import { DiaService } from "@services/dia.service";
-import { UINotificationService } from "@services/uinotification.service";
-import { debounceTime } from "rxjs/operators";
-import { DiaJornadaModel } from "@models/dia_jornada.model";
-import { JornadaModel } from "@models/jornada.model";
-import { DiaJornadaService } from "@services/dia-jornada.service";
+} from '@angular/forms';
+import { DiaModel } from '@models/dia.model';
+import { DiaService } from '@services/dia.service';
+import { UINotificationService } from '@services/uinotification.service';
+import { debounceTime } from 'rxjs/operators';
+import { DiaJornadaModel } from '@models/dia_jornada.model';
+import { JornadaModel } from '@models/jornada.model';
+import { DiaJornadaService } from '@services/dia-jornada.service';
 
 @Component({
-  selector: "app-add-jornada",
-  templateUrl: "./add-jornada.component.html",
-  styleUrls: ["./add-jornada.component.scss"],
+  selector: 'app-add-jornada',
+  templateUrl: './add-jornada.component.html',
+  styleUrls: ['./add-jornada.component.scss'],
 })
 export class AddJornadaComponent implements OnInit {
   @Input() jorandas: JornadaModel[] = [];
@@ -41,10 +41,10 @@ export class AddJornadaComponent implements OnInit {
   ) {
     this.jornada = {
       id: null,
-      horaFinal: "",
+      horaFinal: '',
       horaInicial: null,
       descripcion: null,
-      nombreJornada: "",
+      nombreJornada: '',
       numeroHoras: null,
     };
     this.buildForm();
@@ -57,19 +57,19 @@ export class AddJornadaComponent implements OnInit {
   }
 
   get nombreJornadaField() {
-    return this.formJornada.get("nombreJornada");
+    return this.formJornada.get('nombreJornada');
   }
   get horaInicialField() {
-    return this.formJornada.get("horaInicial");
+    return this.formJornada.get('horaInicial');
   }
   get horaFinalField() {
-    return this.formJornada.get("horaFinal");
+    return this.formJornada.get('horaFinal');
   }
   get numHorasField() {
-    return this.formJornada.get("numeroHoras");
+    return this.formJornada.get('numeroHoras');
   }
   get descripcionField() {
-    return this.formJornada.get("descripcion");
+    return this.formJornada.get('descripcion');
   }
 
   closeModal() {
@@ -80,10 +80,10 @@ export class AddJornadaComponent implements OnInit {
   private buildForm() {
     this.formJornada = this._formBuilder.group({
       id: [0],
-      nombreJornada: ["", [Validators.nullValidator]],
-      horaInicial: ["", [Validators.required]],
-      horaFinal: ["", [Validators.required]],
-      numeroHoras: ["", [Validators.required]],
+      nombreJornada: ['', [Validators.nullValidator]],
+      horaInicial: ['', [Validators.required]],
+      horaFinal: ['', [Validators.required]],
+      numeroHoras: ['', [Validators.required]],
       dataDia: this._formBuilder.array([]),
     });
     this.formJornada.valueChanges.pipe(debounceTime(350)).subscribe((data) => {
@@ -110,14 +110,14 @@ export class AddJornadaComponent implements OnInit {
         this.diasSeman = dias;
       },
       (error) => {
-        this._uiNotificationService.error("Error de conexión");
+        this._uiNotificationService.error('Error de conexión');
       }
     );
   }
 
   calcularCantidadH() {
-    const horaInicial = this.formJornada.get("horaInicial").value;
-    const horaFinal = this.formJornada.get("horaFinal").value;
+    const horaInicial = this.formJornada.get('horaInicial').value;
+    const horaFinal = this.formJornada.get('horaFinal').value;
 
     if (horaInicial && horaFinal) {
       const horaInicialDate = new Date(`01/01/2000 ${horaInicial}`);
@@ -129,14 +129,14 @@ export class AddJornadaComponent implements OnInit {
         diff += 24 * 60 * 60 * 1000;
       }
       const diffHoras = diff / (60 * 60 * 1000);
-      this.formJornada.get("numeroHoras").setValue(diffHoras.toFixed(2));
+      this.formJornada.get('numeroHoras').setValue(diffHoras.toFixed(2));
     } else {
-      this.formJornada.get("numeroHoras").setValue(null);
+      this.formJornada.get('numeroHoras').setValue(null);
     }
   }
 
   get totalDiasSeleccionados() {
-    return this.diasSeman.filter((d) => d["checked"]).length;
+    return this.diasSeman.filter((d) => d['checked']).length;
   }
 
   setJornada() {
@@ -157,22 +157,22 @@ export class AddJornadaComponent implements OnInit {
   }
 
   getJornada(): JornadaModel {
-    let description = "";
+    let description = '';
     const diaJornadas: DiaJornadaModel[] = this.diasSeman
-      .filter((d) => d["checked"])
+      .filter((d) => d['checked'])
       .map((d) => {
-        description += d.dia + " | | ";
+        description += d.dia + ' | | ';
         return {
           idDia: d.id,
         };
       });
     return {
       id: this.jorna?.id,
-      nombreJornada: this.getControl("nombreJornada").value,
+      nombreJornada: this.getControl('nombreJornada').value,
       descripcion: description,
-      horaInicial: this.getControl("horaInicial").value,
-      horaFinal: this.getControl("horaFinal").value,
-      numeroHoras: this.getControl("numeroHoras").value,
+      horaInicial: this.getControl('horaInicial').value,
+      horaFinal: this.getControl('horaFinal').value,
+      numeroHoras: this.getControl('numeroHoras').value,
       diaJornada: diaJornadas,
     };
   }
@@ -181,19 +181,19 @@ export class AddJornadaComponent implements OnInit {
     this.todosLosDias = allDays;
     if (allDays) {
       this.diasSeman.map((dia) => {
-        dia["checked"] = true;
+        dia['checked'] = true;
         return dia;
       });
     } else {
       this.diasSeman.map((dia) => {
-        dia["checked"] = false;
+        dia['checked'] = false;
         return dia;
       });
     }
   }
 
   changeDia(checked: boolean, index: number) {
-    this.diasSeman[index]["checked"] = checked;
+    this.diasSeman[index]['checked'] = checked;
     this.todosLosDias = this.totalDiasSeleccionados === 7;
   }
 
@@ -215,7 +215,7 @@ export class AddJornadaComponent implements OnInit {
         }
       },
       (error) => {
-        console.log("There was an error while retrieving data !!!", error);
+        console.log('There was an error while retrieving data !!!', error);
       }
     );
   }

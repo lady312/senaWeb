@@ -17,12 +17,8 @@ export class ListProcesoComponent {
   @Output() delete: EventEmitter<number> = new EventEmitter();
   @Output() create: EventEmitter<void> = new EventEmitter();
 
-<<<<<<< HEAD
   procesosFiltrados: any[] = [];
   numReg = 5;
-=======
-  numReg = 10;
->>>>>>> e25b57a366c7850aeb9e7f10cff6aef013825696
   pageActual = 0;
 
 

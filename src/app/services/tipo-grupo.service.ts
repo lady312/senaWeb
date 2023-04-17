@@ -27,7 +27,7 @@ export class TipoGrupoService {
   eliminarTipoGrupo(tipoGrupoId: number) {
     return this._coreService.delete('tipogrupos/' + tipoGrupoId);
   }
-  
+
   actualizarTipoGrupo(tipoGrupo: TipoGrupoModel) {
     tipoGrupo.nombreTipoGrupo = tipoGrupo.nombreTipoGrupo.toUpperCase();
     return this._coreService.put('tipogrupos/' + tipoGrupo.id, tipoGrupo);
