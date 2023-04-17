@@ -16,7 +16,11 @@ import { GESTION_MEDIO_PAGO,
         GESTION_ACTIVIDAD_PROYECTO,
         GESTION_PROYECTO_FORMATIVO,
         GESTION_PRO,
-        } from './permissions';
+          GESTION_PAGO_NOMINA,
+          GESTION_SEDE,
+          GESTION_AREA,
+          GESTION_INFRAESTRUCTURA,
+ } from './permissions';
 
 export const navItems: NavegacionModel[] = [
   {
@@ -66,6 +70,30 @@ export const navItems: NavegacionModel[] = [
     url: 'add_usuarios',
     icon: 'icon-drop',
     permiso: GESTION_TIPO_TRANSACCION,
+  },
+  {
+    name: "Pagos Nomina Supervisor",
+    url: 'gestionar_nomina_supervisor',
+    icon: 'icon_drop',
+    permiso: GESTION_PAGO_NOMINA,
+  },
+  {
+    name: "Sedes",
+    url: 'gestionar_sede', //URL que mostrará la vista
+    icon: 'icon-home',
+    permiso: GESTION_SEDE,
+  },
+  {
+    name: "Area",
+    url: 'gestionar_area', //URL que mostrará la vista
+    icon: 'icon-home',
+    permiso: GESTION_AREA,
+  },
+  {
+    name: "Infraestructura",
+    url: 'gestionar_infraestructura', //URL que mostrará la vista
+    icon: 'icon-home',
+    permiso: GESTION_INFRAESTRUCTURA,
   },
   {
     name: 'Grupo',
@@ -206,7 +234,23 @@ export const routesNav: Routes = [
     loadChildren: () => import('../pages/usuario/usuario.module').then(m => m.UsuarioModule)
   },
   {
-    path: 'grupos',
+    path: 'gestionar_nomina_supervisor',
+    loadChildren: () => import('../pages/usuario/usuario.module').then(m => m.UsuarioModule)
+  },
+  {
+    path: 'gestionar_sede',
+    loadChildren: () => import('../pages/sede/sede.module').then(m => m.SedeModule)
+  },
+  {
+    path: 'gestionar_area',
+    loadChildren: () => import('../pages/area/area.module').then(m => m.AreaModule)
+  },
+  {
+    path: 'gestionar_infraestructura',
+    loadChildren: () => import('../pages/infraestructura/infraestructura.module').then(m => m.InfraestructuraModule)
+  },
+  {
+      path: 'grupos',
     loadChildren: () => import('../pages/grupo/grupo.module').then(m => m.GrupoModule)
   },
   {

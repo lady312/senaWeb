@@ -1,0 +1,160 @@
+<div class="div-principal col-lg-12 grid-margin stretch-card">
+  <div class="card">
+    <div class="card-header">
+      <div class="row
+        justify-content-between
+        d-block
+        d-sm-inline">
+        <div class="col">
+          <div class="row justify-content-around">
+            <div class="col">
+              Departamento:
+              <select
+                class="form-control"
+                (change)="enviarIdDep(
+                  $event.target.value
+                )">
+                <option [value]="0">
+                  Elija un departamento
+                </option>
+                <option
+                    *ngFor="let dep of departamentos"
+                    [value]="dep.id">
+                    {{dep.descripcion}}
+                  </option>
+              </select>
+            </div>
+            <div class="col">
+              Ciudad:
+              <select
+                class="form-control"
+                (change)="enviaridCiudad(
+                  $event.target.value
+                )"
+                [disabled]="ciudadSelect">
+                <option [value]="0">
+                  Elija una ciudad
+                </option>
+                <option
+                  *ngFor="let ciudad of ciudades"
+                  [value]="ciudad.id">
+                  {{ciudad.descripcion}}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="row
+                justify-content-between
+                align-items-center">
+            <div class="col
+                  justify-content-around
+                  align-items-center">
+              <i class="fa fa-align-justify"></i>
+              Sedes Registradas
+              <select
+                #nreg
+                class="form-control col col-lg-2"
+                (change)="enviarNumeroRegistros(
+                  $event.target.value
+                )">
+                <option>10</option>
+                <option>15</option>
+                <option>20</option>
+                <option>25</option>
+              </select>
+            </div>
+            <div class="col">
+              <form
+                class="input-group"
+                (submit)="buscarSede()">
+                <input
+                  type="search"
+                  [(ngModel)]="nombreSede"
+                  name="nombreSede"
+                  class="form-control rounded"
+                  placeholder='Introduzca el nombre de la sede'>
+                  <button
+                    type="submit"
+                    class="btn btn-success">
+                    <!--Icono de lupa-->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                      <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                    </svg>
+                    Buscar
+                  </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="div table-container">
+          <table class="table table-striped table-hover table-responsive">
+              <thead>
+                  <tr class="table-info">
+                      <th>ID</th>
+                      <th>Sede</th>
+                      <th>Dirección</th>
+                      <th>Teléfono</th>
+                      <th>Descripción</th>
+                      <th>Ciudad</th>
+                      <th>Acciones</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr *ngFor="let sede of sedes
+                      | paginate: {
+                                      itemsPerPage:numReg,
+                                      currentPage:pageActual
+                                  }">
+                      <td>{{sede.id}}</td>
+                      <td>{{sede.nombreSede}}</td>
+                      <td>{{sede.direccion}}</td>
+                      <td>{{sede.telefono}}</td>
+                      <td>
+                        <span
+                          class="badge badge-primary"
+                          style="cursor:pointer"
+                          (click)="verInfo(sede)">
+                          Ver Info
+                        </span>
+                      </td>
+                      <td>{{sede.ciudad.descripcion}}</td>
+                      <td>
+                          <span
+                              class="badge badge-primary"
+                              style="cursor: pointer;"
+                              (click)="actualizar(sede)">
+                              Actualizar
+                          </span>
+                          <span
+                              class="badge badge-danger"
+                              style="cursor:pointer"
+                              [swal]="{
+                                  title:'¿Desea eliminar?',
+                                  showCancelButton: true
+                              }"
+                              (confirm)=" eliminar(sede.id)">
+                              Eliminar
+                          </span>
+                      </td>
+                  </tr>
+              </tbody>
+              <button
+                  type="button"
+                  class="btn btn-success mr-10 btn-sm"
+                  (click)="agregar()">
+                  Agregar
+              </button>
+          </table>
+          <span>
+              <pagination-controls (pageChange)="pageActual=$event">
+              </pagination-controls>
+          </span>
+      </div>
+    </div>
+  </div>
+</div>

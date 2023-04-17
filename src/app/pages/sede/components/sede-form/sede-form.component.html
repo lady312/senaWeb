@@ -1,0 +1,176 @@
+<div class="modal-body">
+  <div class="card-header">
+    <strong>{{title}}</strong>
+  </div>
+  <div class="card-body">
+    <form
+      class="sedeFormulario"
+      [formGroup]="formSede"
+      class="was-validated"
+      novalidate>
+      <div class="form-group row">
+        <label
+          class="col-md-4 col-form-label"
+          for="nameF"
+          >
+          Sede
+        </label>
+        <div class="col-md-7">
+          <input
+            type="text"
+            onkeyup="javascript:this.value=this.value.toUpperCase();"
+            placeholder="Ingrese el nombre de la sede"
+            class="form-control is-valid"
+            formControlName='nombreSede'
+            id="nameF"
+            required>
+            <div
+              class="valid-feedback"
+              *ngIf="!nombreSedeField.hasError('required')">
+              Valor Válido
+            </div>
+        </div>
+        <div class="invalid-feedback">
+          Por favor ingresé un valor válido para el nombre de la sede
+        </div>
+      </div>
+      <div class="form-group row">
+        <label
+          class="col-md-4 col-form-label"
+          for="direccionF"
+          >
+          Dirección
+        </label>
+        <div class="col-md-7">
+          <input
+            type="text"
+            onkeyup="javascript:this.value=this.value.toUpperCase();"
+            placeholder="Ingrese la dirección"
+            class="form-control is-valid"
+            formControlName="direccion"
+            id="direccionF"
+            required>
+            <div
+              class="valid-feedback"
+              *ngIf="!direccionField.hasError('required')">
+              Valor Válido
+            </div>
+        </div>
+        <div class="invalid-feedback">
+          Por favor ingresé una dirección valida
+        </div>
+      </div>
+      <div class="form-group row">
+        <label
+          class="col-md-4 col-form-label"
+          for="telefonoF"
+          >
+          Teléfono
+        </label>
+        <div class="col-md-7">
+          <input
+            type="text"
+            onkeyup="javascript:this.value=this.value.toUpperCase();"
+            placeholder="Ingrese un teléfono"
+            class="form-control is-valid"
+            formControlName="telefono"
+            id="direccionF"
+            required>
+            <div
+              class="valid-feedback"
+              *ngIf="!telefonoField.hasError('required')">
+              Valor Válido
+            </div>
+        </div>
+        <div class="invalid-feedback">
+          Por favor ingresé un teléfono valido
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="col col-md-6">
+          <label
+            class="row-form-label"
+            for="depF">
+            Departamento
+          </label>
+          <select
+            class="form-control"
+            id="depF"
+            formControlName="idDepartamento"
+            (change)="enviarIdDep(
+              $event.target.value
+            )"
+            required>
+            <option
+              *ngFor="let dep of departamentos"
+              [value]="dep.id">
+              {{dep.descripcion}}
+            </option>
+          </select>
+        </div>
+        <div class="col col-md-6">
+          <label
+            class="row-from-label"
+            for="ciudadF">
+            Ciudad:
+          </label>
+          <select
+            class="form-control"
+            id="ciudadF"
+            formControlName="idCiudad"
+            required>
+            <option
+              *ngFor="let ciudad of ciudades"
+              [value]="ciudad.id">
+              {{ciudad.descripcion}}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label
+          class="col-md-4 col-form-label"
+          for="descF">
+          Descripción
+        </label>
+        <div class="col-md-7">
+          <textarea
+            type="text"
+            id="descF"
+            rows="9"
+            onkeyup="javascript:this.value=this.value.toLowerCase();"
+            placeholder="Ingrese mas información..."
+            class="form-control is-valid"
+            formControlName='descripcion'
+            required>
+          </textarea>
+          <div
+            class="valid-feedback"
+            *ngIf="!descripcionField.hasError('required')">
+            Valor válido
+          </div>
+        </div>
+        <div class="invalid-feedback">
+          Por favor ingrese una descripción
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="card-footer">
+    <button
+      type="submit"
+      class="btn btn-sm btn-primary"
+      (click)="guardarSede()"
+      [disabled]="formSede.invalid">
+      <i class="fa fa-dot-circle-o"></i>
+      Aceptar
+    </button>
+    <button
+      type="reset"
+      class="btn btn-sm btn-danger"
+      (click)="closeModal()">
+      <i class="fa fa-ban"></i>
+      Cancelar
+    </button>
+  </div>
+</div>

@@ -1,0 +1,173 @@
+<div class="modal-body">
+    <div class="card-header">
+        {{title}}
+    </div>
+    <div class="card-body">
+        <form
+            class="infrFormulario"
+            [formGroup]="formInfra"
+            class="was-validated"
+            novalidate>
+            <div class="form-group row">
+                <label
+                  class="col-md-4 col-form-label"
+                  for="nameF"
+                  >
+                  Infraestructura
+                </label>
+                <div class="col-md-7">
+                  <input
+                    type="text"
+                    onkeyup="javascript:this.value=this.value.toUpperCase();"
+                    placeholder="Ingrese el nombre de la infraestructura"
+                    class="form-control is-valid"
+                    formControlName='nombreInfraestructura'
+                    id="nameF"
+                    required>
+                    <div
+                      class="valid-feedback"
+                      *ngIf="!nombreInfraField.hasError('required')">
+                      Valor Válido
+                    </div>
+                </div>
+                <div class="invalid-feedback">
+                  Por favor ingresé un valor válido para el nombre de la infraestructura
+                </div>
+            </div>
+            <div class="form-group row">
+                <label
+                  class="col-md-4 col-form-label"
+                  for="capacidadF"
+                  >
+                  Capacidad
+                </label>
+                <div class="col-md-7">
+                  <input
+                    type="text"
+                    onkeyup="javascript:this.value=this.value.toUpperCase();"
+                    placeholder="Ingrese la capacidad"
+                    class="form-control is-valid"
+                    formControlName='capacidad'
+                    id="capacidadF"
+                    required>
+                    <div
+                      class="valid-feedback"
+                      *ngIf="!capacidadField.hasError('required')">
+                      Valor Válido
+                    </div>
+                </div>
+                <div class="invalid-feedback">
+                  Por favor ingresé una capacidad válida
+                </div>
+            </div>
+            <div class="form-group row 
+                justify-content-around">
+                <div class="col col-md-5">
+                    <div class="row">
+                        <label
+                            class="row-form-label"
+                            for="ciudadF">
+                            Ciudad
+                        </label>
+                        <select
+                            class="form-control"
+                            id="ciudadF"
+                            formControlName="idCiudad"
+                            (change)="enviarIdCiudad(
+                              $event.target.value
+                            )"
+                            required>
+                            <option
+                              *ngFor="let ciudad of ciudades"
+                              [value]="ciudad.id">
+                              {{ciudad.descripcion}}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <label
+                        class="row-from-label"
+                        for="sedeF">
+                        Sede
+                      </label>
+                      <select
+                        class="form-control"
+                        id="sedeF"
+                        formControlName="idSede"
+                        required>
+                        <option
+                          *ngFor="let sede of sedes"
+                          [value]="sede.id">
+                          {{sede.nombreSede}}
+                        </option>
+                      </select>
+                    </div>
+                </div>
+                <div class="col col-md-5">
+                    <div class="row">
+                        <label
+                        class="row-from-label"
+                        for="areaF">
+                        Área
+                      </label>
+                      <select
+                        class="form-control"
+                        id="areaF"
+                        formControlName="idArea"
+                        required>
+                        <option
+                          *ngFor="let area of areas"
+                          [value]="area.id">
+                          {{area.nombreArea}}
+                        </option>
+                      </select>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label
+                  class="col-md-4 col-form-label"
+                  for="descF">
+                  Descripción
+                </label>
+                <div class="col-md-7">
+                  <textarea
+                    type="text"
+                    id="descF"
+                    rows="9"
+                    onkeyup="javascript:this.value=this.value.toLowerCase();"
+                    placeholder="Ingrese mas información..."
+                    class="form-control is-valid"
+                    formControlName='descripcion'
+                    required>
+                  </textarea>
+                  <div
+                    class="valid-feedback"
+                    *ngIf="!descripcionField.hasError('required')">
+                    Valor válido
+                  </div>
+                </div>
+                <div class="invalid-feedback">
+                  Por favor ingrese una descripción
+                </div>
+              </div>
+        </form>
+    </div>
+    <div class="card-footer">
+        <button
+            type="submit"
+            class="btn btn-sm btn-primary"
+            (click)="guardarInfraestructura()"
+            [disabled]="formInfra.invalid">
+            <i class="fa fa-dot-circle-o"></i>
+            Aceptar
+      </button>
+      <button
+            type="reset"
+            class="btn btn-sm btn-danger"
+            (click)="closeModal()">
+            <i class="fa fa-ban"></i>
+            Cancelar
+      </button>
+    </div>
+</div>

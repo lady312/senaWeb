@@ -52,7 +52,7 @@ export class NotificacionComponent implements OnInit {
     this.notificacion = [];
     this.notificacionService.traerNotificaciones()
       .subscribe(notificacion => {
-        console.log(notificacion, 'not');
+        //console.log(notificacion, 'not');
 
         this.notificacion = notificacion;
         notificacion.forEach((value) => {
@@ -107,7 +107,7 @@ export class NotificacionComponent implements OnInit {
     this.traerNotificaciones();
     this._coreService.persona.subscribe(persona => {
       this.persona = persona;
-      console.log(persona, 'persona');
+      //console.log(persona, 'persona');
     });
   }
 
@@ -152,10 +152,10 @@ export class NotificacionComponent implements OnInit {
     this.notificacionService.actualizarEstado(notificacion.id)
       .subscribe(estadoUpdate => {
         this.traerNotificaciones();
-        console.log(estadoUpdate, 'estado update')
+        //console.log(estadoUpdate, 'estado update')
       },
         error => {
-          console.log(error, 'error');
+          //console.log(error, 'error');
           // this.alerts.push({
           //   type: 'danger',
           //   msg: 'La actualización no pudo completarce',

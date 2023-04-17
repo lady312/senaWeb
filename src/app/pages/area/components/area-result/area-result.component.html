@@ -1,0 +1,56 @@
+<div
+  *ngIf="resultadoBusqueda; else notFound"
+  class="modal-body">
+  <div
+    class="card-header
+    justify-content-center">
+    <strong>{{resultadoBusqueda.id}}: {{resultadoBusqueda.nombreArea}}</strong>
+  </div>
+  <div
+    class="card-body">
+    <div class="row">
+      <div class="col">
+        <b>Código:</b>
+      </div>
+      <div class="col">
+        <p>{{resultadoBusqueda.codigo}}</p>
+      </div>
+    </div>
+  </div>
+  <div class="row card-footer justify-content-around">
+    <button
+      class="btn btn-success col col-md-2"
+      (click)="actualizar()">
+      Actualizar
+    </button>
+    <button
+      class="col btn btn-danger col col-md-2"
+      (click)="eliminar()">
+      Eliminar
+    </button>
+    <button
+      class="col btn btn-primary col col-md-2"
+      (click)="cerrarConsulta()">
+      Cerrar
+    </button>
+  </div>
+</div>
+<ng-template
+  #notFound
+  class="modal-body">
+  <div
+    class="card-header
+      justify-content-center">
+    <strong>No se encontraron Resultados</strong>
+  </div>
+  <div class="card-body">
+    <p>Pruebe introduciendo otro nombre</p>
+  </div>
+  <div class="card-footer">
+    <button
+      class="btn btn-primary"
+      (click)="cerrarConsulta()">
+      Cerrar
+    </button>
+  </div>
+</ng-template>

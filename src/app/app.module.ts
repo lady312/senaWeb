@@ -26,11 +26,6 @@ import { RouterModule } from '@angular/router';
 
 import { FormsModule } from '@angular/forms';
 
-
-
-
-
-
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
 };
@@ -65,14 +60,7 @@ const APP_CONTAINERS = [
     AppComponent,
     ...APP_CONTAINERS,
     P404Component,
-    P500Component,
-
-
-
-
-
-
-
+    P500Component
   ],
 
   providers: [

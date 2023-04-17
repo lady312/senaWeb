@@ -1,4 +1,4 @@
-<div
+<div 
   bsModal
   #myModal="bs-modal"
   class="modal fade"
@@ -6,9 +6,9 @@
   role="dialog"
   aria-labelledby="myModalLabel"
   aria-hidden="true">
-  <div class="modal-dialog style" role="document">
-    <div class="modal-content style">
-      <div class="modal-header style">
+  <div class="modal-dialog" [ngClass]="[customClassSize]" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
         <h4 class="modal-title">{{ title }}</h4>
         <button type="button" class="close" (click)="closeModal()" aria-label="Close">
           <span aria-hidden="true">&times;</span>

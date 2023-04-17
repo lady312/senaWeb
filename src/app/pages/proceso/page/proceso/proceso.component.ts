@@ -10,9 +10,9 @@ import { UINotificationService } from '@services/uinotification.service';
   styleUrls: ['./proceso.component.scss']
 })
 export class ProcesoComponent implements OnInit {
-  @Output() onChangeFilter = new EventEmitter<Object>();
-  private showModalProceso = false;
-  search: string;
+
+  protected showModalProceso = false;
+
   proceso: ProcesoModel = null;
   procesos: ProcesoModel[] = [];
   afiliacionesEstado: ProcesoModel[];

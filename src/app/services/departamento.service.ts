@@ -13,12 +13,8 @@ export class DepartamentoService {
     private _coreService: CoreService
   ) { }
 
-  public traerDepartamentos() {
+  traerDepartamentos() {
      return this._coreService.get<DepartamentoModel[]>( 'departamentos');
   }
-
-
-
-
 
 }
