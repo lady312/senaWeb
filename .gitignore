@@ -43,3 +43,7 @@ Thumbs.db
 src/environments/environment.prod.ts
 src/environments/environment.ts
 /*.sh
+
+# librerias y json-pakage
+/node_modules
+/package-lock.json
