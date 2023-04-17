@@ -1,8 +1,11 @@
+
+
 <app-list-tipo-documento
   [tipoDocumentos]="tipoDocumentos"
   (delete)="eliminarTipoDoc($event)"
   (update)="actualizarTipoDoc($event)"
-  (create)="createTipoDoc()"></app-list-tipo-documento>
+  (create)="createTipoDoc()">
+</app-list-tipo-documento>
 
 <app-custom-modal
   title="Gestión Tipo Documento"
@@ -14,3 +17,5 @@
     (cancel)="reset()">
   </app-add-tipo-documento>
 </app-custom-modal>
+
+

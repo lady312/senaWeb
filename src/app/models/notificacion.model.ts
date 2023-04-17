@@ -1,5 +1,5 @@
-import { EstadoModel } from "./estado.model";
-import { PersonaModel } from "./persona.model";
+import { EstadoModel } from './estado.model';
+import { PersonaModel } from './persona.model';
 
 export interface TipoNotificacion {
   id: number;
@@ -20,7 +20,7 @@ export interface NotificacionModel {
   metadatainfo: Text;
   idTipoIdentificacion: number;
 
-  estado?: EstadoModel
+  estado?: EstadoModel;
 
   idTipoNotificacion?: number;
 

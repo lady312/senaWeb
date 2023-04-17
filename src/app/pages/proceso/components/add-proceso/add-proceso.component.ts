@@ -3,6 +3,8 @@ import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms
 import { ProcesoModel } from '@models/proceso.model';
 import { UINotificationService } from '@services/uinotification.service';
 import { debounceTime } from 'rxjs/operators';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { FormGroup, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-add-proceso',
@@ -10,8 +12,12 @@ import { debounceTime } from 'rxjs/operators';
   styleUrls: ['./add-proceso.component.scss']
 })
 export class AddProcesoComponent implements OnInit {
-  @Input() proceso: ProcesoModel;//actualizar
-
+  myForm = new FormGroup({
+    myControlName: new FormControl()
+  });
+  procesosfiltrado = [];
+  busqueda: string;
+  @Input() proceso: ProcesoModel; // actualizar
   @Output() store: EventEmitter<ProcesoModel> = new EventEmitter();
   @Output() cancel: EventEmitter<void> = new EventEmitter();
 
@@ -19,7 +25,9 @@ export class AddProcesoComponent implements OnInit {
 
   constructor(
     private formBuilder: UntypedFormBuilder,
-    private _uiNotificationService: UINotificationService
+    private _uiNotificationService: UINotificationService,
+    private modalService: NgbModal,
+
   ) {
     this.proceso = {
       id: null,
@@ -36,6 +44,7 @@ export class AddProcesoComponent implements OnInit {
 
 
   get nombreProcesoField() {
+    console.log('holasoy smith');
     return this.formProceso.get('nombreProceso');
   }
 
@@ -48,7 +57,7 @@ export class AddProcesoComponent implements OnInit {
       this.formProceso.patchValue({
         nombreProceso: this.proceso.nombreProceso,
         descripcion: this.proceso.descripcion
-      })
+      });
     }
   }
 
@@ -83,6 +92,10 @@ export class AddProcesoComponent implements OnInit {
       id: this.proceso?.id,
       descripcion: this.getControl('descripcion').value,
       nombreProceso: this.getControl('nombreProceso').value
-    }
+    };
   }
+  openAddProcesoModal() {
+    this.modalService.open(AddProcesoComponent);
+  }
+
 }

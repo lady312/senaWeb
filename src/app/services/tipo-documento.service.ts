@@ -6,12 +6,13 @@ import { CoreService } from './core.service';
   providedIn: 'root'
 })
 export class TipoDocumentoService {
-
-  // tipoDocumento: RolModel;
+  documento: TipoDocumentoModel;
   permisos: number;
+
   constructor(
-    private _coreService: CoreService
+    private _coreService: CoreService,
   ) { }
+
 
   public tipoDocument(estado: number, proceso: number) {
     const state = estado;
@@ -30,11 +31,11 @@ export class TipoDocumentoService {
     return this._coreService.post<TipoDocumentoModel>('tipo_documentos', tipoDocumento);
   }
 
-
   eliminarTipoDocumento(tipoDocId: number) {
     // const url = `${this.path}/${todoId}`;
     return this._coreService.delete('tipo_documentos/' + tipoDocId);
   }
+
   actualizarTipoDocumento(tipoDocumento: TipoDocumentoModel) {
     tipoDocumento.tituloDocumento = tipoDocumento.tituloDocumento.toUpperCase();
     return this._coreService.put('tipo_documentos/' + tipoDocumento.id, tipoDocumento);

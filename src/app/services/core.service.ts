@@ -5,7 +5,7 @@ import { AuthModel } from '@models/auth.model';
 import { EmpresaModel } from '@models/empresa.model';
 import { PersonaModel } from '@models/persona.model';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { ActivationCompanyUserModel } from '../models/activation-company-user.model';
+import { ActivationCompanyUserModel } from '@models/activation-company-user.model';
 import { environment } from './../../environments/environment';
 
 const API_URL = environment.url;
@@ -25,7 +25,7 @@ export class CoreService {
     private _tokenService: HttpXsrfTokenExtractor
   ) { }
 
-  public get<T>(url: String, data: String | Object = ""): Observable<T> {
+  public get<T>(url: String, data: String | Object = ''): Observable<T> {
     return this.httpClient.get<T>(
       API_URL + url + this.getData(data),
       this.getConfig()
@@ -36,7 +36,7 @@ export class CoreService {
 
     const header = {
       'Accept': 'application/json'
-    }
+    };
     const token = this._tokenService.getToken();
 
     if (token) {
@@ -55,10 +55,10 @@ export class CoreService {
   }
 
   public put<T>(url: String, data: any = {}): Observable<T> {
-    if (typeof (data.append) === "function") {
-      data.append('_method', "PUT");
+    if (typeof (data.append) === 'function') {
+      data.append('_method', 'PUT');
     } else {
-      data._method = "PUT";
+      data._method = 'PUT';
     }
     return this.httpClient.post<T>(API_URL + url, data, this.getConfig());
   }
@@ -75,8 +75,8 @@ export class CoreService {
       }).subscribe(response => {
         success(response);
       }, err => {
-        error(err)
-      })
+        error(err);
+      });
     });
   }
 
@@ -103,9 +103,9 @@ export class CoreService {
   }
 
   private getData(data: String | Object): String {
-    let dataUrl = "?";
-    if (typeof (data) === "string") {
-      if (data.trim() == '') {
+    let dataUrl = '?';
+    if (typeof (data) === 'string') {
+      if (data.trim() === '') {
         return '';
       }
       dataUrl += data;
@@ -113,11 +113,11 @@ export class CoreService {
       const keys = Object.keys(data);
       keys.forEach((key, index) => {
         if (index > 0) {
-          dataUrl += "&";
+          dataUrl += '&';
         }
         dataUrl += `${key}=${data[key]}`;
       });
     }
-    return dataUrl.replace("??", "?").trim();
+    return dataUrl.replace('??', '?').trim();
   }
 }

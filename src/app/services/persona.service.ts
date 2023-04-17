@@ -20,7 +20,7 @@ export class PersonaService {
   }
 
   public traerPersonas(data = {}) {
-    return this._coreService.get<PersonaModel[]>('personas', data)
+    return this._coreService.get<PersonaModel[]>('personas', data);
   }
 
 
@@ -46,7 +46,7 @@ export class PersonaService {
   }
 
   updateProfile(persona: PersonaModel, fotoAvatar: FileList) {
-    let data = new FormData();
+    const data = new FormData();
 
     if (persona.email) {
       data.append('email', persona.email);
@@ -62,13 +62,13 @@ export class PersonaService {
     }
 
     if (persona.ciudadNac && persona.ciudadNac.id) {
-      data.append('idciudadNac', persona.ciudadNac.id + "");
+      data.append('idciudadNac', persona.ciudadNac.id + '');
     }
     if (persona.ciudad && persona.ciudad.id) {
-      data.append('idciudad', persona.ciudad.id + "");
+      data.append('idciudad', persona.ciudad.id + '');
     }
     if (persona.ciudadUbicacion && persona.ciudadUbicacion.id) {
-      data.append('idciudadUbicacion', persona.ciudadUbicacion.id + "");
+      data.append('idciudadUbicacion', persona.ciudadUbicacion.id + '');
     }
 
     if (fotoAvatar) {

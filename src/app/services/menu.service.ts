@@ -6,7 +6,9 @@ import { CoreService } from './core.service';
 @Injectable({
   providedIn: 'root'
 })
-export class MenuService {
+export class
+
+MenuService {
   menu: MenuModel;
   permisos: number;
   constructor(

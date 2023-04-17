@@ -24,9 +24,7 @@ import { P500Component } from './pages/error/500.component';
 import { DefaultLayoutComponent } from './templates';
 import { RouterModule } from '@angular/router';
 
-// import { CompetenciasComponent } from './pages/competencias/components/competencias/competencias.component';
-// import { CompetenciasListComponent } from './pages/competencias/components/competencias-list/competencias-list.component';
-
+import { FormsModule } from '@angular/forms';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
@@ -55,7 +53,8 @@ const APP_CONTAINERS = [
     SnotifyModule,
     HttpClientModule,
     SweetAlert2Module.forRoot(),
-    RouterModule
+    RouterModule,
+    FormsModule
   ],
   declarations: [
     AppComponent,
@@ -63,6 +62,7 @@ const APP_CONTAINERS = [
     P404Component,
     P500Component
   ],
+
   providers: [
     {
       provide: LocationStrategy,

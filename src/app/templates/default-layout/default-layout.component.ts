@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { EmpresaModel } from '@models/empresa.model';
 import { PersonaModel } from '../../models/persona.model';
 import { navItems } from '../../nav/_nav';
-import { CoreService } from '../../services/core.service';
+import { CoreService } from '@services/core.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -20,20 +20,20 @@ export class DefaultLayoutComponent implements OnInit {
     this._coreService.getUserAuthenticated();
 
     this._coreService.persona.subscribe(persona => {
-      this.persona = persona
-    })
+      this.persona = persona;
+    });
 
     this._coreService.empresa.subscribe(company => {
       if (company) {
-        this.company = company
+        this.company = company;
       }
-    })
+    });
 
     this._coreService.permissions.subscribe(permission => {
       this.navItems = navItems.filter(permissionNav => {
         return permission.indexOf(permissionNav.permiso) !== -1;
-      })
-    })
+      });
+    });
   }
 
   toggleMinimize(e) {
@@ -41,7 +41,7 @@ export class DefaultLayoutComponent implements OnInit {
   }
 
   logout() {
-    window.location.href = "/login"
+    window.location.href = '/login';
   }
 
   get hasLogo() {
@@ -49,7 +49,7 @@ export class DefaultLayoutComponent implements OnInit {
   }
 
   get logoFull() {
-    return { src: this.company.rutaLogoUrl, class: 'logo--company' }
+    return { src: this.company.rutaLogoUrl, class: 'logo--company' };
   }
 
   get logoMinimized() {
@@ -62,21 +62,21 @@ export class DefaultLayoutComponent implements OnInit {
     }
     let name = '';
     if (this.persona.nombre1) {
-      name += this.persona.nombre1
+      name += this.persona.nombre1;
     }
     if (this.persona.nombre2) {
-      name += this.persona.nombre2
+      name += this.persona.nombre2;
     }
     if (this.persona.apellido1) {
-      name += this.persona.apellido1
+      name += this.persona.apellido1;
     }
     if (this.persona.apellido2) {
-      name += this.persona.apellido2
+      name += this.persona.apellido2;
     }
     return name;
   }
 
   get avatar() {
-    return this.persona ? this.persona.rutaFotoUrl : ''
+    return this.persona ? this.persona.rutaFotoUrl : '';
   }
 }
