@@ -1,0 +1,17 @@
+<app-list-programa
+  [programas]="programas"
+  (delete)="eliminarProgramas($event)"
+  (update)="actualizarProgramas($event)"
+  (create)="createProgramas()">
+</app-list-programa>
+
+<app-custom-modal
+  title="Gestión Programas"
+  [(show)]="showModalPrograma">
+  <app-add-programa
+    *ngIf="showModalPrograma"
+    [programa]="programa"
+    (store)="guardarProgramas($event)"
+    (cancel)="reset()">
+  </app-add-programa>
+</app-custom-modal>
