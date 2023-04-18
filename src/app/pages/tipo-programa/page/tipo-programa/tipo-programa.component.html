@@ -1,0 +1,16 @@
+<app-list-tipo-programa
+  [tipoPs]="tipoPs"
+  (delete)="eliminarTipoP($event)"
+  (update)="actualizarTipoP($event)"
+  (create)="createTipoP()"></app-list-tipo-programa>
+
+<app-custom-modal
+  title="Gestión Tipo Programas"
+  [(show)]="showModalTipoP">
+  <app-add-tipo-programa
+    *ngIf="showModalTipoP"
+    [tipoP]="tipoP"
+    (store)="guardarTipoP($event)"
+    (cancel)="reset()">
+  </app-add-tipo-programa>
+</app-custom-modal>

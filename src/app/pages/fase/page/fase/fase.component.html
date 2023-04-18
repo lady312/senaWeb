@@ -1,0 +1,18 @@
+<app-list-fase
+  [fases]="fases"
+  (delete)="eliminarFase($event)"
+  (update)="actualizarFace($event)"
+  (create)="createFase()">
+</app-list-fase>
+
+<app-custom-modal
+  title="Gestión fases"
+  [(show)]="showModalFase">
+  <app-add-fase
+    *ngIf="showModalFase"
+    [fase]="fase"
+    (store)="guardarFase($event)"
+    (cancel)="reset()">
+  </app-add-fase>
+</app-custom-modal>
+
