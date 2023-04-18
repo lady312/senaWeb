@@ -1,0 +1,100 @@
+<div class="modal-body">
+  <div class="card-header">
+    <strong>Registrar programa</strong>
+  </div>
+  <div class="card-body">
+    <form class="programaFormulario" [formGroup]="formPrograma" class="was-validated" novalidate>
+      
+
+      <!-- campos de nombre-->
+      <div class="form-group row">
+        <label class="col-md-4 col-form-label" for="nombrePrograma">Programa</label>
+        <div class="col-md-7">
+          <input
+            type="text"
+            onkeyup="javascript:this.value=this.value.toUpperCase();"
+            placeholder="Ingrese el nombre del programa"
+            class="form-control is-valid"
+            formControlName='nombrePrograma'>
+          <div class="valid-feedback" *ngIf="!nombreProgramaField.hasError('required')">
+            Valor válido
+          </div>
+        </div>
+        <div class="invalid-feedback">
+          por favor ingresé un valor válido para el nombre
+        </div>
+      </div>
+
+
+      <!-- campos de codigo programa-->
+      <div class="form-group row">
+        <label class="col-md-4 col-form-label" for="codigoPrograma">Código</label>
+        <div class="col-md-7">
+          <input
+            type="text"
+            onkeyup="javascript:this.value=this.value.toUpperCase();"
+            placeholder="Ingrese el codigo del programa"
+            class="form-control is-valid"
+            formControlName='codigoPrograma'>
+          <div class="valid-feedback" *ngIf="!codigoPrograma.hasError('required')">
+            Valor válido
+          </div>
+        </div>
+        <div class="invalid-feedback">
+          por favor ingresé un valor válido para el codigo
+        </div>
+      </div>
+
+      <!-- campos de descripcion-->
+      <div class="form-group row">
+        <label class="col-md-4 col-form-label" for="descripcionPrograma">Descripción</label>
+        <div class="col-md-7">
+          <textarea type="text" rows="9" onkeyup="javascript:this.value=this.value.toUpperCase();"
+            placeholder="Descripcion..." class="form-control is-valid" formControlName='descripcionPrograma'
+            required></textarea>
+          <div class="valid-feedback" *ngIf="!descripcion.hasError('required')">
+            Valor valido
+          </div>
+        </div>
+        <div class="invalid-feedback">
+          por favor ingrese un valor valido para la descripción
+        </div>
+      </div>
+      <!-- campo para tipo programa -->
+      <div class="form-group row">
+        <label class="col-md-4 col-form-label" for="idTipoPrograma">Tipo Programa</label>
+        <div class="col-md-7">
+          <select class="form-select" formControlName='idTipoPrograma'>
+            <option [ngValue]="null">Seleccionar programa </option>
+            <option *ngFor='let tipoPrograma of tipoProgramas' [ngValue]="tipoPrograma.id">{{tipoPrograma.nombreTipoPrograma}}</option>
+          </select>
+          <div class="valid-feedback" *ngIf="!idTipoPrograma.hasError('required')">
+            Valor válido
+          </div>
+        </div>
+        <div class="invalid-feedback">
+          por favor ingresé un valor válido el tipo de programa
+        </div>
+      </div>
+
+      
+
+    </form>
+    <div class="card-footer">
+      <button
+        type="submit"
+        class="btn btn-sm btn-primary"
+        (click)="guardarPrograma()"
+        [disabled]="formPrograma.invalid">
+        <i class="fa fa-dot-circle-o"></i> Aceptar
+      </button>
+      <button
+        type="reset"
+        class="btn btn-sm btn-danger"
+        (click)="closeModal()">
+        <i class="fa fa-ban"></i>
+        Cancelar
+      </button>
+    </div>
+  </div>
+</div>

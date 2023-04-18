@@ -1,0 +1,17 @@
+<app-list-actividad-proyecto
+  [actividadProyectos]="actividadProyectos"
+  (delete)="eliminarActividadProyecto($event)"
+  (update)="actualizarActividadProyecto($event)"
+  (create)="createActividadProyecto()">
+</app-list-actividad-proyecto>
+
+<app-custom-modal
+  title="Gestión actividad Proyectos"
+  [(show)]="showModalActividad">
+  <app-add-actividad-proyecto
+    *ngIf="showModalActividad"
+    [actividadProyecto]="actividadProyecto"
+    (store)="guardarProgramas($event)"
+    (cancel)="reset()">
+  </app-add-actividad-proyecto>
+</app-custom-modal>
