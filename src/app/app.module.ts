@@ -73,5 +73,5 @@ const APP_CONTAINERS = [
     SnotifyService
   ],
   bootstrap: [AppComponent]
-})
+} )
 export class AppModule { }
