@@ -23,10 +23,10 @@ export class InfraestructuraListComponent {
   @Output() ciudadId = new EventEmitter<number>();
   @Output() filtro = new EventEmitter<{idSede:number,idArea:number}>();
   @Output() busqueda = new EventEmitter<InfraestructuraModel>();
+  @Output() cancel = new EventEmitter<void>();
 
   ciudad:CiudadModel;
-  sedeSelect:boolean=true;
-  nombreInfra:string='';
+  campoBusqueda:string='';
 
   areaId:number=0;
   sedeId:number=0;
@@ -38,7 +38,8 @@ export class InfraestructuraListComponent {
     this.sedes=[];
   }
 
-  enviarNumeroRegistros(num: number){
+  enviarNumeroRegistros(event:any){
+    const num = event.target.value
     this.numReg = num;
   }
 
@@ -54,28 +55,69 @@ export class InfraestructuraListComponent {
   verInfo(infr:InfraestructuraModel){
     this.info.emit(infr);
   }
-  enviarIdCiudad(idCiudad:number){
-    if(idCiudad>0){
-      this.sedeSelect=false;
+  enviarIdCiudad(event:any){
+    let idCiudad:number;
+    if (isNaN(event)) {
+      idCiudad = event.target.value;
     }else{
-      this.sedeSelect=true;
-      this.sedeId=0;
-      this.filtro.emit({idSede:this.sedeId,idArea:this.areaId});
+      idCiudad = event;
     }
     this.ciudadId.emit(idCiudad);
   }
-  filtrarBySede(idSede:number){
+  filtrarBySede(event:any){
+    let idSede:number;
+    if (isNaN(event)) {
+      idSede = event.target.value;
+    }else{
+      idSede = event;
+    }
     this.sedeId=idSede;
     this.filtro.emit({idSede:this.sedeId,idArea:this.areaId});
   }
-  filtrarByArea(idArea:number){
+  filtrarByArea(event:any){
+    let idArea:number;
+    if (isNaN(event)) {
+      idArea = event.target.value;
+    }else{
+      idArea = event;
+    }
     this.areaId=idArea;
     this.filtro.emit({idSede:this.sedeId,idArea:this.areaId});
   }
   //revisar
   buscarInfraestructura(){
-    const busqueda:InfraestructuraModel = this.infraestructuras.find(infr=>
-      infr.nombreInfraestructura.toUpperCase()===this.nombreInfra.toUpperCase());
-      this.busqueda.emit(busqueda);
+    let infraestructura:InfraestructuraModel;
+    let sede:SedeModel;
+    let area:AreaModel;
+    let ciudad:CiudadModel;
+    infraestructura = this.infraestructuras.find(infr=>
+      infr.nombreInfraestructura.toUpperCase()===this.campoBusqueda.toUpperCase());
+    if(infraestructura){
+      this.busqueda.emit(infraestructura);
+      return;
+    }
+    sede = this.sedes.find(sede=>
+      sede.nombreSede.toUpperCase()===this.campoBusqueda.toUpperCase());
+    if(sede){
+      this.filtrarBySede(sede.id);
+      return;
+    }
+    area = this.areas.find(area=>
+      area.nombreArea.toUpperCase()===this.campoBusqueda.toUpperCase());
+    if(area){
+      this.filtrarByArea(area.id);
+      return;
+    }
+    ciudad = this.ciudades.find(ciudad=>
+      ciudad.descripcion.toUpperCase()===this.campoBusqueda.toUpperCase());
+    if(ciudad){
+      this.enviarIdCiudad(ciudad.id);
+      return;
+    }
+    this.cancel.emit();
+  }
+
+  cancelarBusqueda(){
+    this.cancel.emit();
   }
 }

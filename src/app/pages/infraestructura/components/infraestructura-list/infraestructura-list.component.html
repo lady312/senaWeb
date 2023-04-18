@@ -6,64 +6,6 @@
           justify-content-between
           d-block
           d-sm-inline">
-         <div class="col">
-            <div class="row justify-content-around">
-              <div class="col">
-                <div class="row">
-                  Ciudad:
-                  <select
-                    class="form-control"
-                    (change)="enviarIdCiudad(
-                      $event.target.value
-                    )">
-                    <option [value]="0">
-                      Elija una ciudad
-                    </option>
-                    <option
-                        *ngFor="let ciudad of ciudades"
-                        [value]="ciudad.id">
-                        {{ciudad.descripcion}}
-                      </option>
-                    </select>
-                </div>
-                <div class="row">
-                  Sede:
-                  <select
-                    class="form-control"
-                    (change)="filtrarBySede(
-                      $event.target.value
-                    )"
-                    [disabled]="sedeSelect">
-                    <option [value]="0">
-                      Elija una sede
-                    </option>
-                    <option
-                      *ngFor="let sede of sedes"
-                      [value]="sede.id">
-                      {{sede.nombreSede}}
-                    </option>
-                  </select>
-                </div>
-              </div>
-              <div class="col">
-                Área:
-                <select
-                  class="form-control"
-                  (change)="filtrarByArea(
-                    $event.target.value
-                  )">
-                  <option [value]="0">
-                    Elija un área
-                  </option>
-                  <option
-                    *ngFor="let area of areas"
-                    [value]="area.id">
-                    {{area.nombreArea}}
-                  </option>
-                </select>
-              </div>
-            </div>
-          </div>
           <div class="col">
             <div class="row
                   justify-content-between
@@ -76,9 +18,7 @@
                 <select
                   #nreg
                   class="form-control col col-lg-2"
-                  (change)="enviarNumeroRegistros(
-                    $event.target.value
-                  )">
+                  (change)="enviarNumeroRegistros($event)">
                   <option>10</option>
                   <option>15</option>
                   <option>20</option>
@@ -91,10 +31,33 @@
                   (submit)="buscarInfraestructura()">
                   <input
                     type="search"
-                    [(ngModel)]="nombreInfra"
+                    [(ngModel)]="campoBusqueda"
                     name="nombreInfr"
+                    list="busqueda-list"
                     class="form-control rounded"
-                    placeholder='Introduzca el nombre de la infraestructura'>
+                    placeholder='Escriba: Ciudad,Sede,Area o Infraestructura'>
+                    <datalist id="busqueda-list">
+                      <option
+                        *ngFor="let infr of infraestructuras" 
+                        [value]="infr.nombreInfraestructura">
+                        {{infr.nombreInfraestructura}}
+                      </option>
+                      <option
+                        *ngFor="let sede of sedes"
+                        [value]="sede.nombreSede">
+                        {{sede.nombreSede}}
+                      </option>
+                      <option
+                        *ngFor="let area of areas"
+                        [value]="area.nombreArea">
+                        {{area.nombreArea}}
+                      </option>
+                      <option
+                        *ngFor="let ciudad of ciudades"
+                        [value]="ciudad.descripcion">
+                        {{ciudad.descripcion}}
+                      </option>
+                    </datalist>
                     <button
                       type="submit"
                       class="btn btn-success">
@@ -103,6 +66,12 @@
                         <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
                       </svg>
                       Buscar
+                    </button>
+                    <button
+                      type="reset"
+                      class="btn btn-primary"
+                      (click)="cancelarBusqueda()">
+                      Ver todo
                     </button>
                 </form>
               </div>
@@ -144,9 +113,14 @@
                 <td>
                   {{infr.sede.nombreSede}}
                 </td>
-                <td>
+                <td *ngIf="infr.area else noArea">
                   {{infr.area.nombreArea}}
                 </td>
+                <ng-template #noArea>
+                  <td>
+                    Sin area
+                  </td>
+                </ng-template>
                 <td>
                   <span
                     class="badge badge-primary"

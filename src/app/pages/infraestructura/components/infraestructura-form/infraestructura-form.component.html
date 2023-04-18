@@ -60,69 +60,74 @@
                   Por favor ingresé una capacidad válida
                 </div>
             </div>
-            <div class="form-group row 
-                justify-content-around">
-                <div class="col col-md-5">
-                    <div class="row">
-                        <label
-                            class="row-form-label"
-                            for="ciudadF">
-                            Ciudad
-                        </label>
-                        <select
-                            class="form-control"
-                            id="ciudadF"
-                            formControlName="idCiudad"
-                            (change)="enviarIdCiudad(
-                              $event.target.value
-                            )"
-                            required>
-                            <option
-                              *ngFor="let ciudad of ciudades"
-                              [value]="ciudad.id">
-                              {{ciudad.descripcion}}
-                            </option>
-                        </select>
-                    </div>
-                    <div class="row">
-                        <label
-                        class="row-from-label"
-                        for="sedeF">
-                        Sede
-                      </label>
-                      <select
-                        class="form-control"
-                        id="sedeF"
-                        formControlName="idSede"
-                        required>
-                        <option
-                          *ngFor="let sede of sedes"
-                          [value]="sede.id">
-                          {{sede.nombreSede}}
-                        </option>
-                      </select>
-                    </div>
-                </div>
-                <div class="col col-md-5">
-                    <div class="row">
-                        <label
-                        class="row-from-label"
-                        for="areaF">
-                        Área
-                      </label>
-                      <select
-                        class="form-control"
-                        id="areaF"
-                        formControlName="idArea"
-                        required>
-                        <option
-                          *ngFor="let area of areas"
-                          [value]="area.id">
-                          {{area.nombreArea}}
-                        </option>
-                      </select>
-                    </div>
-                </div>
+            <div class="form-group row">
+              <label
+                class="col-md-4 col-form-label"
+                for="sedeF"
+                >
+                Sede:
+              </label>
+              <div class="col-md-7">
+                <input
+                  class="form-control"
+                  type="text" 
+                  id="sedeF" 
+                  list="sede-list"
+                  (change)="selectIdSede($event)"
+                  name="idSede"
+                  formControlName="idSede"
+                  placeholder="Seleccione una sede"
+                  required>
+                <datalist id="sede-list">
+                  <option 
+                    *ngFor="let sede of sedes"
+                    [value]="sede.nombreSede">
+                    {{sede.nombreSede}}
+                  </option>
+                </datalist>
+                <div
+                    class="valid-feedback"
+                    *ngIf="!idSedeField.hasError('required')">
+                    Valor Válido
+                  </div>
+              </div>
+              <div class="invalid-feedback">
+                Por favor ingresé una sede
+              </div>
+            </div>
+            <div class="form-group row">
+              <label
+                class="col-md-4 col-form-label"
+                for="areaF"
+                >
+                Area:
+              </label>
+              <div class="col-md-7">
+                <input
+                  class="form-control"
+                  type="text" 
+                  id="areaF" 
+                  list="area-list"
+                  (change)="selectIdArea($event)"
+                  name="idArea"
+                  formControlName="idArea"
+                  placeholder="Seleccione una sede">
+                <datalist id="area-list">
+                  <option 
+                    *ngFor="let area of areas"
+                    [value]="area.nombreArea">
+                    {{area.nombreArea}}
+                  </option>
+                </datalist>
+                <div
+                    class="valid-feedback"
+                    *ngIf="!idAreaField.hasError('required')">
+                    Valor Válido
+                  </div>
+              </div>
+              <div class="invalid-feedback">
+                Por favor ingresé un área
+              </div>
             </div>
             <div class="form-group row">
                 <label
