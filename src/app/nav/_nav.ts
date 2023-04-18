@@ -16,7 +16,6 @@ import { GESTION_MEDIO_PAGO,
         GESTION_ACTIVIDAD_PROYECTO,
         GESTION_PROYECTO_FORMATIVO,
         GESTION_PRO,
-          GESTION_PAGO_NOMINA,
           GESTION_SEDE,
           GESTION_AREA,
           GESTION_INFRAESTRUCTURA,
@@ -71,12 +70,7 @@ export const navItems: NavegacionModel[] = [
     icon: 'icon-drop',
     permiso: GESTION_TIPO_TRANSACCION,
   },
-  {
-    name: "Pagos Nomina Supervisor",
-    url: 'gestionar_nomina_supervisor',
-    icon: 'icon_drop',
-    permiso: GESTION_PAGO_NOMINA,
-  },
+ 
   {
     name: "Sedes",
     url: 'gestionar_sede', //URL que mostrará la vista
