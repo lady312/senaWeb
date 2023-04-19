@@ -26,7 +26,6 @@ export class InfraestructuraListComponent {
   @Output() cancel = new EventEmitter<void>();
 
   ciudad:CiudadModel;
-  campoBusqueda:string='';
 
   areaId:number=0;
   sedeId:number=0;
@@ -85,31 +84,31 @@ export class InfraestructuraListComponent {
     this.filtro.emit({idSede:this.sedeId,idArea:this.areaId});
   }
   //revisar
-  buscarInfraestructura(){
+  buscarInfraestructura(event:string){
     let infraestructura:InfraestructuraModel;
     let sede:SedeModel;
     let area:AreaModel;
     let ciudad:CiudadModel;
     infraestructura = this.infraestructuras.find(infr=>
-      infr.nombreInfraestructura.toUpperCase()===this.campoBusqueda.toUpperCase());
+      infr.nombreInfraestructura.toUpperCase()===event.toUpperCase());
     if(infraestructura){
       this.busqueda.emit(infraestructura);
       return;
     }
     sede = this.sedes.find(sede=>
-      sede.nombreSede.toUpperCase()===this.campoBusqueda.toUpperCase());
+      sede.nombreSede.toUpperCase()===event.toUpperCase());
     if(sede){
       this.filtrarBySede(sede.id);
       return;
     }
     area = this.areas.find(area=>
-      area.nombreArea.toUpperCase()===this.campoBusqueda.toUpperCase());
+      area.nombreArea.toUpperCase()===event.toUpperCase());
     if(area){
       this.filtrarByArea(area.id);
       return;
     }
     ciudad = this.ciudades.find(ciudad=>
-      ciudad.descripcion.toUpperCase()===this.campoBusqueda.toUpperCase());
+      ciudad.descripcion.toUpperCase()===event.toUpperCase());
     if(ciudad){
       this.enviarIdCiudad(ciudad.id);
       return;

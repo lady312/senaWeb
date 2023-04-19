@@ -100,7 +100,7 @@ export class InfraestructuraFormComponent implements OnInit{
       id:[0],
       nombreInfraestructura:['',Validators.required],
       capacidad:['',Validators.required],
-      descripcion:['',Validators.required],
+      descripcion:[''],
       idSede:['',Validators.required],
       idArea:['',Validators.required]
     });

@@ -32,11 +32,14 @@
   size="lg"
   title="Información de la infraestructura"
   [(show)]="showInfoInfr">
-  <app-infraestructura-info
+  <app-infraestructura-result
     *ngIf="showInfoInfr"
-    [infraestructura]="infraestructura"
-    (cerrar)="reset()">
-  </app-infraestructura-info>
+    [resultadoBusqueda]="infraestructura"
+    (update)="actualizarInfraestructura($event)"
+    (delete)="eliminarInfraestructura($event)"
+    (close)="closeBusqueda()"
+    (cancel)="reset()">>
+  </app-infraestructura-result>
 </app-custom-modal>
 
 <app-custom-modal

@@ -111,7 +111,8 @@
                   (change)="selectIdArea($event)"
                   name="idArea"
                   formControlName="idArea"
-                  placeholder="Seleccione una sede">
+                  placeholder="Seleccione una sede"
+                  required>
                 <datalist id="area-list">
                   <option 
                     *ngFor="let area of areas"
@@ -143,8 +144,7 @@
                     onkeyup="javascript:this.value=this.value.toLowerCase();"
                     placeholder="Ingrese mas información..."
                     class="form-control is-valid"
-                    formControlName='descripcion'
-                    required>
+                    formControlName='descripcion'>
                   </textarea>
                   <div
                     class="valid-feedback"
