@@ -9,7 +9,17 @@ import { GESTION_MEDIO_PAGO,
          GESTION_TIPO_PAGO,
          GESTION_TIPO_TRANSACCION,
          GESTION_GRUPO,
-         GESTION_TIPO_GRUPO, GESTION_JORNADA  } from './permissions';
+         GESTION_TIPO_GRUPO, GESTION_JORNADA,
+         GESTION_TIPO_PROGRAMAS,
+        GESTION_PROGRAMAS,
+        GESTION_FASES,
+        GESTION_ACTIVIDAD_PROYECTO,
+        GESTION_PROYECTO_FORMATIVO,
+        GESTION_PRO,
+          GESTION_SEDE,
+          GESTION_AREA,
+          GESTION_INFRAESTRUCTURA,
+ } from './permissions';
 
 export const navItems: NavegacionModel[] = [
   {
@@ -60,6 +70,25 @@ export const navItems: NavegacionModel[] = [
     icon: 'icon-drop',
     permiso: GESTION_TIPO_TRANSACCION,
   },
+ 
+  {
+    name: "Sedes",
+    url: 'gestionar_sede', //URL que mostrará la vista
+    icon: 'icon-home',
+    permiso: GESTION_SEDE,
+  },
+  {
+    name: "Area",
+    url: 'gestionar_area', //URL que mostrará la vista
+    icon: 'icon-home',
+    permiso: GESTION_AREA,
+  },
+  {
+    name: "Infraestructura",
+    url: 'gestionar_infraestructura', //URL que mostrará la vista
+    icon: 'icon-home',
+    permiso: GESTION_INFRAESTRUCTURA,
+  },
   {
     name: 'Grupo',
     url: 'grupos',
@@ -77,6 +106,42 @@ export const navItems: NavegacionModel[] = [
     url: 'add_jornada',
     icon: 'cil-note-add',
     permiso: GESTION_JORNADA,
+  },
+  {
+    name: "Tipos de Programa",
+    url: 'add_tipo_programa',
+    icon: 'icon-drop',
+    permiso: GESTION_TIPO_PROGRAMAS
+  },
+  {
+    name: "Programas",
+    url: 'add_programa',
+    icon: 'icon-drop',
+    permiso: GESTION_PROGRAMAS
+  },
+   {
+    name: "Fases",
+    url: 'add_fases',
+    icon: 'icon-drop',
+    permiso: GESTION_FASES
+  },
+  {
+    name: "Actividad Proyecto",
+    url: 'add_actividad_proyecto',
+    icon: 'icon-drop',
+    permiso: GESTION_ACTIVIDAD_PROYECTO
+  },
+  {
+    name: "Proyecto Formativo",
+    url: 'add_proyecto_formativo',
+    icon: 'icon-drop',
+    permiso: GESTION_PROYECTO_FORMATIVO
+  },
+  {
+    name: "Gestión Programas",
+    url: 'add_gestion_programa',
+    icon: 'icon-drop',
+    permiso: GESTION_PRO
   },
 
 
@@ -163,12 +228,52 @@ export const routesNav: Routes = [
     loadChildren: () => import('../pages/usuario/usuario.module').then(m => m.UsuarioModule)
   },
   {
-    path: 'grupos',
+    path: 'gestionar_nomina_supervisor',
+    loadChildren: () => import('../pages/usuario/usuario.module').then(m => m.UsuarioModule)
+  },
+  {
+    path: 'gestionar_sede',
+    loadChildren: () => import('../pages/sede/sede.module').then(m => m.SedeModule)
+  },
+  {
+    path: 'gestionar_area',
+    loadChildren: () => import('../pages/area/area.module').then(m => m.AreaModule)
+  },
+  {
+    path: 'gestionar_infraestructura',
+    loadChildren: () => import('../pages/infraestructura/infraestructura.module').then(m => m.InfraestructuraModule)
+  },
+  {
+      path: 'grupos',
     loadChildren: () => import('../pages/grupo/grupo.module').then(m => m.GrupoModule)
   },
   {
     path: 'tipogrupos',
     loadChildren: () => import('../pages/tipo-grupo/tipoGrupo.module').then(m => m.TipogrupoModule)
-  }
+  },
+  {
+    path: 'add_tipo_programa',
+    loadChildren: () => import('../pages/tipo-programa/tipo-programa.module').then(m => m.TipoProgramaModule)
+  },
+  {
+    path: 'add_programa',
+    loadChildren: () => import('../pages/programa/programa.module').then(m => m.ProgramaModule)
+  },
+  {
+    path: 'add_fases',
+    loadChildren: () => import('../pages/fase/fase.module').then(m => m.FaseModule)
+  },
+  {
+    path: 'add_actividad_proyecto',
+    loadChildren: () => import('../pages/actividad-proyecto/actividad-proyecto.module').then(m => m.ActividadProyectoModule)
+  },
+  {
+    path: 'add_proyecto_formativo',
+    loadChildren: () => import('../pages/proyecto-formativo/proyecto-formativo.module').then(m => m.ProyectoFormativoModule)
+  },
+  {
+    path: 'add_gestion_programa',
+    loadChildren: () => import('../pages/gestion-programa/gestion-programa.module').then(m => m.GestionProgramaModule)
+  },
 
 ];

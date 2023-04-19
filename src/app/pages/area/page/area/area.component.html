@@ -1,0 +1,32 @@
+<app-area-list
+    [areas]="areas"
+    (delete)="eliminarArea($event)"
+    (update)="actualizarArea($event)"
+    (create)="crearArea()"
+    (busqueda)="buscarArea($event)">
+</app-area-list>
+
+<app-custom-modal
+    title="Gestionar Area"
+    [(show)]="showFormArea">
+    <app-area-form
+        *ngIf="showFormArea"
+        [area]="area"
+        [title]="formTitle"
+        (store)="guardarArea($event)"
+        (cancel)="reset()">
+    </app-area-form>
+</app-custom-modal>
+
+<app-custom-modal
+  title="Resultado de la busqueda"
+  [(show)]="showResultadoBusqueda">
+  <app-area-result
+    *ngIf="showResultadoBusqueda"
+    [resultadoBusqueda]="resultadoBusqueda"
+    (update)="actualizarArea($event)"
+    (delete)="eliminarArea($event)"
+    (close)="closeBusqueda()"
+    (cancel)="reset()">
+  </app-area-result>
+</app-custom-modal>

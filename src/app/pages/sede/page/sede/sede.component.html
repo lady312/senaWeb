@@ -1,0 +1,52 @@
+<app-sede-list
+    [sedes]="sedes"
+    [departamentos]="departamentos"
+    [ciudades]="ciudades"
+    (delete)="eliminarSede($event)"
+    (update)="actualizarSede($event)"
+    (create)="crearSede()"
+    (depId)="getCiudadesByDep($event)"
+    (ciudadId)="getSedesByCiudad($event)"
+    (info)="verInfoSede($event)"
+    (busqueda)="buscarSede($event)">
+</app-sede-list>
+
+<app-custom-modal
+  title="Gestionar sede"
+  [(show)]="showFormSede">
+  <app-sede-form
+    *ngIf="showFormSede"
+    [sede]="sede"
+    [ciudades]="ciudades"
+    [departamentos]="departamentos"
+    [title]="formTitle"
+    (store)="guardarSede($event)"
+    (depId)="getCiudadesByDep($event)"
+    (cancel)="reset()">
+  </app-sede-form>
+</app-custom-modal>
+
+<app-custom-modal
+  size="lg"
+  title="Información de la sede:"
+  [(show)]="showInfoSede">
+  <app-sede-info
+    *ngIf="showInfoSede"
+    [sede]="sede"
+    (cerrar)="reset()">
+  </app-sede-info>
+</app-custom-modal>
+
+<app-custom-modal
+  size="lg"
+  title="Resultado de la busqueda"
+  [(show)]="showResultadoBusqueda">
+  <app-sede-result
+    *ngIf="showResultadoBusqueda"
+    [resultadoBusqueda]="resultadoBusqueda"
+    (update)="actualizarSede($event)"
+    (delete)="eliminarSede($event)"
+    (close)="closeBusqueda()"
+    (cancel)="reset()">
+  </app-sede-result>
+</app-custom-modal>

@@ -1,0 +1,100 @@
+<div class="div-principal col-lg-12 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-header">
+        <div class="col">
+          <div class="row
+                justify-content-between
+                align-items-center">
+            <div class="col
+                  justify-content-around
+                  align-items-center">
+              <i class="fa fa-align-justify"></i>
+              Sedes Registradas
+              <select
+                #nreg
+                class="form-control col col-lg-2"
+                (change)="enviarNumeroRegistros(
+                  $event.target.value
+                )">
+                <option>10</option>
+                <option>15</option>
+                <option>20</option>
+                <option>25</option>
+              </select>
+            </div>
+            <div class="col">
+              <form
+                class="input-group"
+                (submit)="buscarArea()">
+                <input
+                  type="search"
+                  [(ngModel)]="nombreArea"
+                  name="nombreArea"
+                  class="form-control rounded"
+                  placeholder='Introduzca el nombre del área'>
+                  <button
+                    type="submit"
+                    class="btn btn-success">
+                    <!--Icono de lupa-->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                      <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                    </svg>
+                    Buscar
+                  </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    <div class="card-body">
+          <div class="div table-container">
+            <table class="table table-striped table-hover table-responsive">
+                <thead>
+                  <tr class="table-info">
+                    <th>ID</th>
+                    <th>Área</th>
+                    <th>Código</th>
+                    <th>Acciones</th>
+                  </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let area of areas| paginate: { itemsPerPage: this.numReg,currentPage: pageActual}">
+              <td>{{area.id}}</td>
+              <td>{{area.nombreArea}}</td>
+              <td>{{area.codigo}}</td>
+              <td>
+                <span
+                    class="badge badge-primary"
+                    style="cursor: pointer;"
+                    (click)="actualizar(area)">
+                    Actualizar
+                </span>
+                <span
+                    class="badge badge-danger"
+                    style="cursor:pointer"
+                    [swal]="{ title:'¿Desea eliminar?', showCancelButton: true }"
+                    (confirm)=" eliminar(area.id)">
+                  Eliminar
+                </span>
+              </td>
+            </tr>
+        </tbody>
+        <button
+            type="button"
+            class="btn btn-success mr-10 btn-sm"
+            (click)="agregar()">
+            Agregar
+        </button>
+    </table>
+    <span>
+        <pagination-controls (pageChange)="pageActual=$event">
+        </pagination-controls>
+      </span>
+    </div>
+  </div>
+</div>
+
+
+
+</div>
+

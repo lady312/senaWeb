@@ -1,0 +1,54 @@
+<div class="div-principal col-lg-12 grid-margin stretch-card"></div>  
+  <div class="card">
+    <div class="card-header">
+      <i class="fa fa-align-justify"></i>gestion Programas Registrados
+      <select #nreg class="form-control col-lg-1" (change)="enviarNumeroRegistros($event.target.value) ">
+        <option>10</option>
+        <option>15</option>
+        <option>20</option>
+        <option>25</option>
+      </select>
+    </div>
+      
+    <div class="card-body">
+      <div class="card-header">
+        <strong>Gestion Programa</strong>
+      </div>
+      <div class="div table-container ">
+        <div class="form-group col">
+          <label class="col-md-4 col-form-label" for="idPrograma" >Programa</label>
+          <div class="col-md-12">
+            <select class="form-control border-primary form-select" [(ngModel)]="selectedProgramId" (change)="capturarId()">
+              <option [ngValue]="null">Seleccionar programa </option>
+              <option *ngFor='let programa of programas' [ngValue]="programa.id">{{programa.nombrePrograma}}</option>
+            </select>
+          </div>
+
+          <div class="invalid-feedback">
+            por favor ingresé un valor válido para programa
+          </div><br>
+
+          <table class="table table-striped table-hover table-responsive" *ngIf="selectedProgram">
+            <tbody>
+              <tr>
+                <th scope="row">Nombre:</th><td>{{selectedProgram.nombrePrograma}}</td>
+                <th scope="row">Código:</th><td>{{selectedProgram.codigoPrograma}}</td>
+              </tr>
+             
+              <tr>
+                <th scope="row">Tipo Programa:</th><td>{{selectedProgram.tipoPrograma.nombreTipoPrograma}}</td>
+                <th scope="row">Estado:</th><td>{{selectedProgram.estado.estado}}</td>
+              </tr>
+             
+              <tr>
+                <th scope="row">Descripción:</th><td>{{selectedProgram.descripcionPrograma}}</td>
+                <th></th><th></th>
+              </tr>
+            </tbody>
+          </table>
+
+      </div>
+    </div>
+  </div>
+</div>
+

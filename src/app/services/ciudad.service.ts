@@ -6,16 +6,16 @@ import { CoreService } from './core.service';
   providedIn: 'root'
 })
 export class CiudadService {
-  ciudad: CiudadModel;
+
   constructor(
     private _coreService: CoreService
   ) { }
 
-  public traerCiudades() {
+  traerCiudades() {
      return this._coreService.get<CiudadModel[]>('ciudades');
   }
 
-  public ciudadesByDep(iddepartamento: number) {
+  ciudadesByDep(iddepartamento: number) {
     const url = `ciudades/departamento/${iddepartamento}`;
     return this._coreService.get<CiudadModel[]>(url);
 

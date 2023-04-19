@@ -1,0 +1,59 @@
+<div class="modal-body">
+    <div class="card-header">
+      <strong>Registrar Fase</strong>
+    </div>
+    <div class="card-body">
+      <form class="faseFormulario" [formGroup]="formFase" class="was-validated" novalidate>
+        <div class="form-group row">
+          <label class="col-md-4 col-form-label" for="nombreFase">Fase</label>
+          <div class="col-md-7">
+            <input
+              type="text"
+              onkeyup="javascript:this.value=this.value.toUpperCase();"
+              placeholder="Ingrese el nombre de la fase"
+              class="form-control is-valid"
+              formControlName='nombreFase'>
+            <div class="valid-feedback" *ngIf="!nombreFaseField.hasError('required')">
+              Valor válido
+            </div>
+          </div>
+          <div class="invalid-feedback">
+            por favor ingresé un valor válido para la fase
+          </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-4 col-form-label" for="codigoFase">Código</label>
+            <div class="col-md-7">
+              <input
+                type="text"
+                onkeyup="javascript:this.value=this.value.toUpperCase();"
+                placeholder="Ingrese el codigo de la fase"
+                class="form-control is-valid"
+                formControlName='codigoFase'>
+              <div class="valid-feedback" *ngIf="!codigoFaseField.hasError('required')">
+                Valor válido
+              </div>
+            </div>
+            <div class="invalid-feedback">
+              por favor ingresé un valor válido para el nombre del proceso
+            </div>
+          </div>
+      </form>
+      <div class="card-footer">
+        <button
+          type="submit"
+          class="btn btn-sm btn-primary"
+          (click)="guardarFase()"
+          [disabled]="formFase.invalid">
+          <i class="fa fa-dot-circle-o"></i> Aceptar
+        </button>
+        <button
+          type="reset"
+          class="btn btn-sm btn-danger"
+          (click)="closeModal()">
+          <i class="fa fa-ban"></i>
+          Cancelar
+        </button>
+      </div>
+    </div>
+  </div>

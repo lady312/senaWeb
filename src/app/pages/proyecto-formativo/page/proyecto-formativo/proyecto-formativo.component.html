@@ -1,0 +1,17 @@
+<app-list-proyecto-formativo
+  [proyectos]="proyectos"
+  (delete)="eliminarProyecto($event)"
+  (update)="actualizarProyecto($event)"
+  (create)="createProyecto()">
+</app-list-proyecto-formativo>
+
+<app-custom-modal
+  title="Gestión Proyectos"
+  [(show)]="showModalProyecto">
+  <app-add-proyecto-formativo
+    *ngIf="showModalProyecto"
+    [proyecto]="proyecto"
+    (store)="guardarProyecto($event)"
+    (cancel)="reset()">
+  </app-add-proyecto-formativo>
+</app-custom-modal>

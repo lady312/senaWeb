@@ -38,9 +38,8 @@ export class AddProcesoComponent implements OnInit {
     this.buildForm();
   }
 
-   ngOnInit(): void {
-
-this.setProceso();
+  ngOnInit(): void {
+    this.setProceso()
   }
 
 
@@ -72,8 +71,7 @@ this.setProceso();
     this.formProceso.valueChanges
       .pipe(
         debounceTime(350),
-      )
-      .subscribe(data => {
+      ).subscribe(data => {
       });
   }
 
