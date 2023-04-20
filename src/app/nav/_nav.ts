@@ -97,13 +97,13 @@ export const navItems: NavegacionModel[] = [
   {
     name: 'Grupo',
     url: 'grupos',
-    icon: 'icon-drop',
+    icon: 'cil-group',
     permiso: GESTION_GRUPO
   },
   {
     name: 'Tipo grupos',
     url: 'tipogrupos',
-    icon: 'icon-drop',
+    icon: 'cil-user',
     permiso: GESTION_TIPO_GRUPO
   },
   {
