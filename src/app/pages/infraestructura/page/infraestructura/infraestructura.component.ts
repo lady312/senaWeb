@@ -41,6 +41,7 @@ export class InfraestructuraComponent implements OnInit{
     this.getInfraestructuras();
     this.getCiudades();
     this.getAreas();
+    this.getSedes();
   }
 
   getInfraestructuras(){
@@ -56,14 +57,21 @@ export class InfraestructuraComponent implements OnInit{
       this.ciudades=ciudades;
     });
   }
+  getSedes(){
+    this._sedeService.traerSedes().subscribe(sedes=>{
+      this.sedes=sedes;
+    })
+  }
   getSedesByCiudad(idCiudad:number){
     this._sedeService.sedesByCiudad(idCiudad).subscribe(sedes=>{
-      if(sedes){
-        this.sedes=sedes;
-      }else{
-        this.sedes=[];
-      }
-    })
+      this.sedes=sedes;
+      this.infreaestructuras=[];
+      this.sedes.forEach(sede=>{
+        this._infraestructuraService.infrBySede(sede.id).subscribe(infr=>{
+          this.infreaestructuras=this.infreaestructuras.concat(infr);
+        });
+      });
+    });
   }
   getAreas(){
     this._areaService.traerAreas().subscribe(areas=>{

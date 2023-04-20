@@ -9,21 +9,21 @@
   (ciudadId)="getSedesByCiudad($event)"
   (filtro)="filtrarInfraestructuras($event)"
   (info)="verInfoInfraestructura($event)"
-  (busqueda)="buscarInfraestructura($event)">
+  (busqueda)="buscarInfraestructura($event)"
+  (cancel)="getInfraestructuras()">
 </app-infraestructura-list>
 
 <app-custom-modal
+  size="lg"
   title="Gestionar Infraestructura"
   [(show)]="showFormInfr">
   <app-infraestructura-form
     *ngIf="showFormInfr"
     [infraestructura]="infraestructura"
     [areas]="areas"
-    [ciudades]="ciudades"
     [sedes]="sedes"
     [title]="formTitle"
     (store)="guardarInfraestructura($event)"
-    (ciudadId)="getSedesByCiudad($event)"
     (cancel)="reset()">
   </app-infraestructura-form>
 </app-custom-modal>
@@ -32,11 +32,14 @@
   size="lg"
   title="Información de la infraestructura"
   [(show)]="showInfoInfr">
-  <app-infraestructura-info
+  <app-infraestructura-result
     *ngIf="showInfoInfr"
-    [infraestructura]="infraestructura"
-    (cerrar)="reset()">
-  </app-infraestructura-info>
+    [resultadoBusqueda]="infraestructura"
+    (update)="actualizarInfraestructura($event)"
+    (delete)="eliminarInfraestructura($event)"
+    (close)="closeBusqueda()"
+    (cancel)="reset()">>
+  </app-infraestructura-result>
 </app-custom-modal>
 
 <app-custom-modal

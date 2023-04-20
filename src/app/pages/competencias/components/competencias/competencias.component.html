@@ -1,0 +1,80 @@
+<div class="modal-body">
+  <div class="card-header">
+    <strong>Registrar competencia</strong>
+  </div>
+  <div class="card-body">
+    <form class="rolFormulario" [formGroup]="formCompetencia" class="was-validated" novalidate>
+      <div class="form-group row">
+        <label class="col-md-4 col-form-label" for="name">Competencia</label>
+        <div class="col-md-7">
+          <input
+            type="text"
+            onkeyup="javascript:this.value=this.value.toUpperCase();"
+            placeholder="Ingrese el nombre de la competencia"
+            class="form-control is-valid"
+            formControlName='nombreCompetencia'>
+          <div class="valid-feedback" *ngIf="!nombreCompetenciaField.hasError('required')">
+            Valor válido
+          </div>
+        </div>
+        <div class="invalid-feedback">
+          por favor ingresé un valor válido para el nombre del rol
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-md-4 col-form-label" for="name">Código</label>
+        <div class="col-md-7">
+          <input
+            type="text"
+            onkeyup="javascript:this.value=this.value.toUpperCase();"
+            placeholder="Ingrese la descripción de la competencia"
+            class="form-control is-valid"
+            formControlName='codigoCompetencia'>
+          <div class="valid-feedback" *ngIf="!codigoCompetenciaField.hasError('required')">
+            Valor válido
+          </div>
+        </div>
+        <div class="invalid-feedback">
+          por favor ingresé un valor válido para el nombre del rol
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-md-4 col-form-label" for="idActividadProyecto">Actividad proyecto</label>
+        <div class="col-md-7">
+          <select class="form-control is-valid" formControlName='idActividadProyecto'>
+            <option [ngValue]="null">Seleccionar actividad proyecto</option>
+            <option *ngFor='let Ap of actividadProyecto' [ngValue]="Ap.id">{{Ap.nombreActividadProyecto}}</option>
+          </select>
+          <div class="valid-feedback" *ngIf="!idActividadProyecto.hasError('required')">
+            Valor válido
+          </div>
+        </div>
+        <div class="invalid-feedback">
+          por favor ingresé un valor válido 
+        </div>
+      </div>
+
+
+    </form>
+    <div class="card-footer">
+      <button
+        type="submit"
+        class="btn btn-sm btn-primary"
+        (click)="guardarCompetencia()"
+        [disabled]="formCompetencia.invalid">
+        <i class="fa fa-dot-circle-o"></i> Aceptar
+      </button>
+      <button
+        type="reset"
+        class="btn btn-sm btn-danger"
+        (click)="closeModal()">
+        <i class="fa fa-ban"></i>
+        Cancelar
+      </button>
+    </div>
+  </div>
+</div>
+
+

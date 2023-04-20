@@ -1,0 +1,17 @@
+<app-list-actividad-aprendizaje
+  [actividadAprendizajes]="actividadAprendizajes"
+  (delete)="elminarActividadAprendizaje($event)"
+  (update)="actualizarActividadAprendizaje($event)"
+  (create)="createActividadAprendizaje()">
+</app-list-actividad-aprendizaje>
+
+<app-custom-modal
+  title="Gestión actividad aprendizaje"
+  [(show)]="showModalAA">
+  <app-add-actividad-aprendizaje
+    *ngIf="showModalAA"
+    [actividadAprendizaje]="actividadAprendizaje"
+    (store)="guardarActividadAprendizaje($event)"
+    (cancel)="reset()">
+  </app-add-actividad-aprendizaje>
+</app-custom-modal>

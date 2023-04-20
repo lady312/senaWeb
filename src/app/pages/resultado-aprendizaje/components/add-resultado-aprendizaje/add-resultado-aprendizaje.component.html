@@ -1,0 +1,63 @@
+<div class="modal-body">
+  <div class="card-header">
+    <strong>Registrar resultado aprendizaje</strong>
+  </div>
+  <div class="card-body">
+    <form class="rolFormulario" [formGroup]="formRap" class="was-validated" novalidate>
+      <div class="form-group row">
+        <label class="col-md-4 col-form-label" for="name">Resultado de aprendizaje</label>
+        <div class="col-md-7">
+          <input
+            type="text"
+            onkeyup="javascript:this.value=this.value.toUpperCase();"
+            placeholder="Ingrese el nombre del resultado aprendizaje"
+            class="form-control is-valid"
+            formControlName='rap'>
+          <div class="valid-feedback" *ngIf="!nombreRapField.hasError('required')">
+            Valor válido
+          </div>
+        </div>
+        <div class="invalid-feedback">
+          por favor ingresé un valor válido para el nombre 
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-md-4 col-form-label" for="name">Código rap</label>
+        <div class="col-md-7">
+          <input
+            type="text"
+            onkeyup="javascript:this.value=this.value.toUpperCase();"
+            placeholder="Ingrese el código del rap"
+            class="form-control is-valid"
+            formControlName='codigoRap'>
+          <div class="valid-feedback" *ngIf="!codigoRapField.hasError('required')">
+            Valor válido
+          </div>
+        </div>
+        <div class="invalid-feedback">
+          por favor ingresé un valor válido
+        </div>
+      </div>
+
+
+    </form>
+    <div class="card-footer">
+      <button
+        type="submit"
+        class="btn btn-sm btn-primary"
+        (click)="guardarRap()"
+        [disabled]="formRap.invalid">
+        <i class="fa fa-dot-circle-o"></i> Aceptar
+      </button>
+      <button
+        type="reset"
+        class="btn btn-sm btn-danger"
+        (click)="closeModal()">
+        <i class="fa fa-ban"></i>
+        Cancelar
+      </button>
+    </div>
+  </div>
+</div>
+
