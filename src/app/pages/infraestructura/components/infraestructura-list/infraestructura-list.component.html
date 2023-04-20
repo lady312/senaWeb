@@ -1,112 +1,99 @@
 <div class="div-principal col-lg-12 grid-margin stretch-card">
   <div class="card">
     <div class="card-header">
-      <div
-        class="row
-          justify-content-between
-          d-block
-          d-sm-inline">
-         <div class="col">
-            <div class="row justify-content-around">
-              <div class="col">
-                <div class="row">
-                  Ciudad:
-                  <select
-                    class="form-control"
-                    (change)="enviarIdCiudad(
-                      $event.target.value
-                    )">
-                    <option [value]="0">
-                      Elija una ciudad
-                    </option>
-                    <option
-                        *ngFor="let ciudad of ciudades"
-                        [value]="ciudad.id">
-                        {{ciudad.descripcion}}
-                      </option>
-                    </select>
-                </div>
-                <div class="row">
-                  Sede:
-                  <select
-                    class="form-control"
-                    (change)="filtrarBySede(
-                      $event.target.value
-                    )"
-                    [disabled]="sedeSelect">
-                    <option [value]="0">
-                      Elija una sede
-                    </option>
-                    <option
-                      *ngFor="let sede of sedes"
-                      [value]="sede.id">
-                      {{sede.nombreSede}}
-                    </option>
-                  </select>
-                </div>
-              </div>
-              <div class="col">
-                Área:
-                <select
-                  class="form-control"
-                  (change)="filtrarByArea(
-                    $event.target.value
-                  )">
-                  <option [value]="0">
-                    Elija un área
-                  </option>
-                  <option
-                    *ngFor="let area of areas"
-                    [value]="area.id">
-                    {{area.nombreArea}}
-                  </option>
-                </select>
-              </div>
-            </div>
+      <div class="row
+          d-flex
+          flex-wrap-wrap
+          flex-colunm
+          justify-conted-between
+          align-items-center">
+          <div class="col-6">
+            <label for="areaSF">
+              Área:
+            </label>
+            <select
+              class="form-select"
+              (change)="filtrarByArea($event)"
+              id="areaSf">
+              <option selected value="0">
+                Filtrar por área
+              </option>
+              <option
+                *ngFor="let area of areas"
+                [value]="area.id">
+                {{area.nombreArea}}
+              </option>
+            </select>
           </div>
-          <div class="col">
-            <div class="row
-                  justify-content-between
-                  align-items-center">
-              <div class="col
-                    justify-content-around
-                    align-items-center">
-                <i class="fa fa-align-justify"></i>
-                Sedes Registradas
-                <select
-                  #nreg
-                  class="form-control col col-lg-2"
-                  (change)="enviarNumeroRegistros(
-                    $event.target.value
-                  )">
-                  <option>10</option>
-                  <option>15</option>
-                  <option>20</option>
-                  <option>25</option>
-                </select>
-              </div>
-              <div class="col">
-                <form
-                  class="input-group"
-                  (submit)="buscarInfraestructura()">
-                  <input
-                    type="search"
-                    [(ngModel)]="nombreInfra"
-                    name="nombreInfr"
-                    class="form-control rounded"
-                    placeholder='Introduzca el nombre de la infraestructura'>
-                    <button
-                      type="submit"
-                      class="btn btn-success">
-                      <!--Icono de lupa-->
-                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-                      </svg>
-                      Buscar
-                    </button>
-                </form>
-              </div>
-            </div>
+          <div class="col-6">
+            <label for="sedeSF">
+              Sede:
+            </label>
+            <select
+              class="form-select"
+              (change)="filtrarBySede($event)"
+              id="sedeSf">
+              <option selected value="0">
+                Filtrar por sede
+              </option>
+              <option
+                *ngFor="let sede of sedes"
+                [value]="sede.id">
+                {{sede.nombreSede}}
+              </option>
+            </select>
+          </div>
+      </div>
+      <div class="row
+          d-flex
+          flex-wrap-wrap
+          flex-colunm
+          justify-conted-between
+          align-items-center">
+          <div class="col-6
+              justify-content-around
+              align-items-center">
+            <i class="fa fa-align-justify"></i>
+            Sedes Registradas
+            <select
+              #nreg
+              class="form-select col col-lg-2"
+              (change)="enviarNumeroRegistros($event)">
+              <option>10</option>
+              <option>15</option>
+              <option>20</option>
+              <option>25</option>
+            </select>
+          </div>
+          <div class="col-6">
+            <app-campo-busqueda
+              [message]="'Escriba: Ciudad,Sede,Area o Infraestructura'"
+              [lista]="'busqueda-list'"
+              (busqueda)="buscarInfraestructura($event)"
+              (cancel)="cancelarBusqueda()">
+              <datalist id="busqueda-list">
+                <option
+                  *ngFor="let infr of infraestructuras" 
+                  [value]="infr.nombreInfraestructura">
+                  {{infr.nombreInfraestructura}}
+                </option>
+                <option
+                  *ngFor="let sede of sedes"
+                  [value]="sede.nombreSede">
+                  {{sede.nombreSede}}
+                </option>
+                <option
+                  *ngFor="let area of areas"
+                  [value]="area.nombreArea">
+                  {{area.nombreArea}}
+                </option>
+                <option
+                  *ngFor="let ciudad of ciudades"
+                  [value]="ciudad.descripcion">
+                  {{ciudad.descripcion}}
+                </option>
+              </datalist>
+            </app-campo-busqueda>
           </div>
       </div>
     </div>
@@ -144,9 +131,14 @@
                 <td>
                   {{infr.sede.nombreSede}}
                 </td>
-                <td>
+                <td *ngIf="infr.area else noArea">
                   {{infr.area.nombreArea}}
                 </td>
+                <ng-template #noArea>
+                  <td>
+                    Sin area
+                  </td>
+                </ng-template>
                 <td>
                   <span
                     class="badge badge-primary"

@@ -13,6 +13,8 @@ import { CustomPaginationComponent } from './custom-table-serve/custom-paginatio
 import { CustomTableServeComponent } from './custom-table-serve/custom-table-serve.component';
 import { CustomTableComponent } from './custom-table/custom-table.component';
 import { FormCustomMessagesComponent } from './form-custom-messages/form-custom-messages.component';
+import { CampoBusquedaComponent } from './campo-busqueda/campo-busqueda.component';
+import { ListInputDirective } from './directives/list-input.directive';
 
 
 @NgModule({
@@ -22,7 +24,7 @@ import { FormCustomMessagesComponent } from './form-custom-messages/form-custom-
     CarouselModule.forRoot(),
     ModalModule,
     CommonModule,
-    NgxPaginationModule
+    NgxPaginationModule,
   ],
   exports: [
     CustomSearchComponent,
@@ -32,7 +34,9 @@ import { FormCustomMessagesComponent } from './form-custom-messages/form-custom-
     FormCustomMessagesComponent,
     CustomTableServeComponent,
     CustomSwitchComponent,
-    CustomTableComponent
+    CustomTableComponent,
+    CampoBusquedaComponent,
+    ListInputDirective
   ],
   declarations: [
     CustomSearchComponent,
@@ -43,7 +47,9 @@ import { FormCustomMessagesComponent } from './form-custom-messages/form-custom-
     CustomTableServeComponent,
     CustomPaginationComponent,
     CustomSwitchComponent,
-    CustomTableComponent
+    CustomTableComponent,
+    CampoBusquedaComponent,
+    ListInputDirective
   ]
 })
 export class ComunModule { }

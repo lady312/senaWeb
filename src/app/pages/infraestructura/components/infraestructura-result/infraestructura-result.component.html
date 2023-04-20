@@ -32,11 +32,14 @@
         <p>{{resultadoBusqueda.capacidad}}</p>
       </div>
     </div>
-    <div class="row">
+    <div 
+      *ngIf="resultadoBusqueda.descripcion"
+      class="row">
       <div class="col">
         <b>Información:</b>
       </div>
-      <div class="col col-md-6">
+      <div
+        class="col col-md-6">
         <textarea cols="30" rows="7" [disabled]="true">
           {{resultadoBusqueda.descripcion}}
         </textarea>
