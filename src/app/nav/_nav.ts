@@ -140,7 +140,7 @@ export const navItems: NavegacionModel[] = [
   {
     name: "Gestión Programas",
     url: 'add_gestion_programa',
-    icon: 'icon-drop',
+    icon: 'cil-folder-open',
     permiso: GESTION_PRO
   },
 

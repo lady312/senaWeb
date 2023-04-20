@@ -9,6 +9,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { ComunModule } from '@components/comun.module';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { TipoProgramaModule } from '../tipo-programa/tipo-programa.module';
 
 
 @NgModule({
@@ -25,6 +26,7 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
     NgxPaginationModule,
     ComunModule,
     SweetAlert2Module.forChild(),
+    TipoProgramaModule
   ]
 })
 export class ProgramaModule { }
