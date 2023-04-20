@@ -1,0 +1,18 @@
+<app-list-resultado-aprendizaje
+  [rap]="raps"
+  (delete)="eliminarRap($event)"
+  (update)="actualizarRap($event)"
+  (create)="createRap()"
+  ></app-list-resultado-aprendizaje>
+
+<app-custom-modal
+  title="Gestion resultado aprendizaje"
+  [(show)]="showModalRap">
+  <app-add-resultado-aprendizaje
+    *ngIf="showModalRap"
+    [rap]="rap"
+    (store)="guardarRap($event)"
+    (cancel)="reset()"
+    >
+  </app-add-resultado-aprendizaje>
+</app-custom-modal>

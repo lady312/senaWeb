@@ -1,5 +1,11 @@
-.cil-search{
-  position: relative;
-  left: 770px;
-  top: -28px;
+@media (max-width: 768px) {
+  
+  .input-group > * {
+    margin-bottom: 1rem;
+  }
+  .btn{
+    margin-bottom: 1rem;
+    
+  }
 }
+

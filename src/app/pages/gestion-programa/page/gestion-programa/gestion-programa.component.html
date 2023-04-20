@@ -18,7 +18,7 @@
         <div class="form-group col">
           <label class="col-md-4 col-form-label" for="idPrograma" >Programa</label>
           <div class="col-md-12">
-            <select class="form-control border-primary form-select" [(ngModel)]="selectedProgramId" (change)="capturarId()">
+            <select class="form-control border-primary form-select" [(ngModel)]="selectedProgramId" (change)="capturarIdPrograma()" (ngModelChange)="filterProjects()">
               <option [ngValue]="null">Seleccionar programa </option>
               <option *ngFor='let programa of programas' [ngValue]="programa.id">{{programa.nombrePrograma}}</option>
             </select>
@@ -46,7 +46,31 @@
               </tr>
             </tbody>
           </table>
+        
+          <!-- select para pryecto formativo -->
+          <label class="col-md-4 col-form-label" for="idPrograma" >Proyecto formativo</label>
+          <div class="col-md-12">
+            <select class="form-control border-primary form-select" [(ngModel)]="selectedProyectoId" (change)="capturarIdProyecto()">
+              <option [ngValue]="null">Seleccionar programa </option>
+              <option *ngFor="let proyecto of filteredProjects" [ngValue]="proyecto.id">{{proyecto.nombre}}</option>
+            </select>
+          </div><br>
 
+          <!-- tabla de proyecto formativo -->
+          <table class="table table-striped table-hover table-responsive" *ngIf="selectedProyecto">
+            <tbody>
+              <tr>
+                <th scope="row">Nombre:</th><td>{{selectedProyecto.nombre}}</td>
+                <th scope="row">Código:</th><td>{{selectedProyecto.codigo}}</td>
+              </tr>
+             
+              <tr>
+                <th scope="row">programa:</th><td>{{selectedProyecto.Programas.nombrePrograma}}</td>
+                <th scope="row"></th><td></td>
+              </tr>
+             
+            </tbody>
+          </table>
       </div>
     </div>
   </div>

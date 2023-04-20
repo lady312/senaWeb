@@ -15,15 +15,15 @@ export class InfraestructuraFormComponent implements OnInit{
   
   @Input() infraestructura:InfraestructuraModel;
   @Input() areas:AreaModel[]=[];
-  @Input() ciudades:CiudadModel[]=[];
   @Input() sedes: SedeModel[]=[];
   @Input() title: string;
 
   @Output() store = new EventEmitter<InfraestructuraModel>();
   @Output() cancel = new EventEmitter<void>();
-  @Output() ciudadId =new EventEmitter<number>();
 
   formInfra: UntypedFormGroup;
+  idSede:number=0;
+  idArea:number=0;
 
   constructor(
     private formBuilder:UntypedFormBuilder
@@ -41,7 +41,7 @@ export class InfraestructuraFormComponent implements OnInit{
 
   ngOnInit(): void {
     this.setInfraestructura();
-    this.enviarIdCiudad(this.idCiudadField.value);
+    this.setIndexes(this.infraestructura);
   }
 
   get nombreInfraField(){
@@ -52,9 +52,6 @@ export class InfraestructuraFormComponent implements OnInit{
   }
   get descripcionField(){
     return this.formInfra.get('descripcion');
-  }
-  get idCiudadField(){
-    return this.formInfra.get('idCiudad');
   }
   get idSedeField(){
     return this.formInfra.get('idSede');
@@ -69,21 +66,43 @@ export class InfraestructuraFormComponent implements OnInit{
         nombreInfraestructura:this.infraestructura.nombreInfraestructura,
         capacidad:this.infraestructura.capacidad,
         descripcion: this.infraestructura.descripcion,
-        idCiudad:this.infraestructura.sede.idCiudad ? this.infraestructura.sede.idCiudad:null,
-        idSede:this.infraestructura.idSede ? this.infraestructura.idSede:null,
-        idArea:this.infraestructura.idArea ? this.infraestructura.idArea:null
+        idSede:this.infraestructura.sede.nombreSede ? this.infraestructura.sede.nombreSede:null,
       });
+      if(this.infraestructura.area){
+        this.formInfra.patchValue({
+          idArea:this.infraestructura.area.nombreArea ? this.infraestructura.area.nombreArea:null
+        });
+      }
     }
+  }
+  setIndexes(infr:InfraestructuraModel){
+    if(infr){
+      this.idSede=infr.idSede;
+      if(infr.area){
+        this.idArea=infr.idArea;
+      }
+    }
+  }
+  selectIdSede(event:any){
+    const value = event.target.value;
+    const sede = this.sedes.find(sede=>
+      sede.nombreSede.toLowerCase()===value.toLowerCase());
+    this.idSede=sede.id;
+  }
+  selectIdArea(event:any){
+    const value = event.target.value;
+    const area = this.areas.find(area=>
+      area.nombreArea.toLowerCase()===value.toLowerCase());
+    this.idArea=area.id;
   }
   private buildForm(){
     this.formInfra=this.formBuilder.group({
       id:[0],
       nombreInfraestructura:['',Validators.required],
       capacidad:['',Validators.required],
-      descripcion:['',Validators.required],
-      idCiudad:[0,Validators.required],
-      idSede:[0,Validators.required],
-      idArea:[0,Validators.required]
+      descripcion:[''],
+      idSede:['',Validators.required],
+      idArea:['',Validators.required]
     });
     this.formInfra.valueChanges
     .pipe(
@@ -109,13 +128,9 @@ export class InfraestructuraFormComponent implements OnInit{
       nombreInfraestructura:this.getControl('nombreInfraestructura').value,
       capacidad:this.getControl('capacidad').value,
       descripcion:this.getControl('descripcion').value,
-      idSede:this.getControl('idSede').value,
-      idArea:this.getControl('idArea').value
+      idSede:this.idSede,
+      idArea:this.idArea
     }
-  }
-
-  enviarIdCiudad(idCiudad:number){
-    this.ciudadId.emit(idCiudad);
   }
   
 }
