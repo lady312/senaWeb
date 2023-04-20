@@ -19,6 +19,7 @@ import { GESTION_MEDIO_PAGO,
           GESTION_SEDE,
           GESTION_AREA,
           GESTION_INFRAESTRUCTURA,
+          CALENDARIO1
  } from './permissions';
 
 export const navItems: NavegacionModel[] = [
@@ -143,7 +144,12 @@ export const navItems: NavegacionModel[] = [
     icon: 'icon-drop',
     permiso: GESTION_PRO
   },
-
+  {
+    name: "Calendario",
+    url: "add_calendario1",
+    icon: "icon-drop",
+    permiso: CALENDARIO1,
+  },
 
 ];
 
@@ -275,5 +281,8 @@ export const routesNav: Routes = [
     path: 'add_gestion_programa',
     loadChildren: () => import('../pages/gestion-programa/gestion-programa.module').then(m => m.GestionProgramaModule)
   },
-
+  {
+    path: 'add_calendario1',
+    loadChildren: () => import('../pages/calendario1/calendario1.module').then((m) => m.Calendario1Module)
+  }
 ];

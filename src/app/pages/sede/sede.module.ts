@@ -14,7 +14,8 @@ import { SedeResultComponent } from './components/sede-result/sede-result.compon
 
 @NgModule({
   exports:[
-    SedeComponent
+    SedeComponent,
+    SedeFormComponent
   ],
   declarations: [
     SedeComponent,

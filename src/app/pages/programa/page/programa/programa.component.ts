@@ -10,7 +10,7 @@ import { UINotificationService } from '@services/uinotification.service';
 })
 export class ProgramaComponent {
 
-  private showModalPrograma = false;
+  protected showModalPrograma = false;
 
   programa: ProgramaModel = null;
   programas: ProgramaModel[] = [];
