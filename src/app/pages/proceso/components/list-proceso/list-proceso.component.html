@@ -2,7 +2,10 @@
   <div class="card">
     <div class="card-header">
       <i class="fa fa-align-justify"> Procesos Registrados</i>
-        <input style="width: 506px;" class="form-control me-2 " type="search" [(ngModel)]="query" (keyup)="filter()" placeholder="Buscar proceso" ><i class="cil-search"></i>
+      <div class="input-group mb-3 " style="width: 660px;">
+        <input class="form-control " type="search" [(ngModel)]="query" (keyup)="filter()" placeholder="Buscar proceso" aria-label="Buscar proceso" >
+        <button class="btn btn-primary" type="button"><i class="cil-search"></i></button>
+      </div>
       <select #nreg class="form-control col-lg-1" (change)="enviarNumeroRegistros($event.target.value)">
         <option>10</option>
         <option>15</option>
