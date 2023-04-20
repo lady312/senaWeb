@@ -19,6 +19,11 @@ import { GESTION_MEDIO_PAGO,
           GESTION_SEDE,
           GESTION_AREA,
           GESTION_INFRAESTRUCTURA,
+
+          GESTION_COMPETENCIA, //importaciones 
+          GESTION_ACTIVIDAD_APRENDIZAJE,//importaciones 
+          GESTION_RESULTADO_APRENDIZAJE,//importaciones
+       
  } from './permissions';
 
 export const navItems: NavegacionModel[] = [
@@ -143,6 +148,28 @@ export const navItems: NavegacionModel[] = [
     icon: 'cil-folder-open',
     permiso: GESTION_PRO
   },
+  {
+    name: "Competencia",
+    url: 'gestionar_competencia', //muestra la vista para competencia ''''''''''''''''''''
+    icon: 'cil-institution',
+    permiso: GESTION_COMPETENCIA,
+  },
+
+  {
+    name: "Actividad aprendizaje",
+    url: 'add_actividad_aprendizaje',//muestra la vista para actividad aprendizaje''''''''''''''''''''
+    icon: 'cil-color-border',
+    permiso: GESTION_ACTIVIDAD_APRENDIZAJE
+  },
+
+  {
+    name: "Resultado aprendizaje",
+    url: 'add_resultado_aprendizaje',//muestra la vista para resultado aprendizaje''''''''''''''''''''
+    icon: 'cil-columns',
+    permiso: GESTION_RESULTADO_APRENDIZAJE
+  },
+
+
 
 
 ];
@@ -274,6 +301,20 @@ export const routesNav: Routes = [
   {
     path: 'add_gestion_programa',
     loadChildren: () => import('../pages/gestion-programa/gestion-programa.module').then(m => m.GestionProgramaModule)
+  },
+
+
+  {
+    path: 'gestionar_competencia',
+    loadChildren: () => import('../pages/competencias/competencias.module').then(m => m.CompetenciasModule)//ruta como tal que se muestra en el nav (barra de navegacion)
+  },
+  {
+    path: 'add_resultado_aprendizaje',
+    loadChildren: () => import('../pages/resultado-aprendizaje/resultado-aprendizaje.module').then(m => m.ResultadoAprendizajeModule)
+  },
+  {
+    path: 'add_actividad_aprendizaje',
+    loadChildren: () => import('../pages/actividad-aprendizaje/actividad-aprendizaje.module').then(m => m.ActividadAprendizajeModule)
   },
 
 ];
