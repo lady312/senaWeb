@@ -19,11 +19,15 @@ import { GESTION_MEDIO_PAGO,
           GESTION_SEDE,
           GESTION_AREA,
           GESTION_INFRAESTRUCTURA,
+<<<<<<< HEAD
+          CALENDARIO1
+=======
 
           GESTION_COMPETENCIA, //importaciones 
           GESTION_ACTIVIDAD_APRENDIZAJE,//importaciones 
           GESTION_RESULTADO_APRENDIZAJE,//importaciones
        
+>>>>>>> 6a8fb26ca26fdafb4fb0c14992853e3be3dcbbb3
  } from './permissions';
 
 export const navItems: NavegacionModel[] = [
@@ -149,6 +153,13 @@ export const navItems: NavegacionModel[] = [
     permiso: GESTION_PRO
   },
   {
+<<<<<<< HEAD
+    name: "Calendario",
+    url: "add_calendario1",
+    icon: "icon-drop",
+    permiso: CALENDARIO1,
+  },
+=======
     name: "Competencia",
     url: 'gestionar_competencia', //muestra la vista para competencia ''''''''''''''''''''
     icon: 'cil-institution',
@@ -171,6 +182,7 @@ export const navItems: NavegacionModel[] = [
 
 
 
+>>>>>>> 6a8fb26ca26fdafb4fb0c14992853e3be3dcbbb3
 
 ];
 
@@ -302,6 +314,12 @@ export const routesNav: Routes = [
     path: 'add_gestion_programa',
     loadChildren: () => import('../pages/gestion-programa/gestion-programa.module').then(m => m.GestionProgramaModule)
   },
+<<<<<<< HEAD
+  {
+    path: 'add_calendario1',
+    loadChildren: () => import('../pages/calendario1/calendario1.module').then((m) => m.Calendario1Module)
+  }
+=======
 
 
   {
@@ -317,4 +335,5 @@ export const routesNav: Routes = [
     loadChildren: () => import('../pages/actividad-aprendizaje/actividad-aprendizaje.module').then(m => m.ActividadAprendizajeModule)
   },
 
+>>>>>>> 6a8fb26ca26fdafb4fb0c14992853e3be3dcbbb3
 ];
