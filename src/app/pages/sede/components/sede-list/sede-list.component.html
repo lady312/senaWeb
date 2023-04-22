@@ -11,9 +11,7 @@
               Departamento:
               <select
                 class="form-control"
-                (change)="enviarIdDep(
-                  $event.target.value
-                )">
+                (change)="enviarIdDep($event)">
                 <option [value]="0">
                   Elija un departamento
                 </option>
@@ -28,10 +26,7 @@
               Ciudad:
               <select
                 class="form-control"
-                (change)="enviaridCiudad(
-                  $event.target.value
-                )"
-                [disabled]="ciudadSelect">
+                (change)="enviaridCiudad($event)">
                 <option [value]="0">
                   Elija una ciudad
                 </option>
@@ -56,9 +51,7 @@
               <select
                 #nreg
                 class="form-control col col-lg-2"
-                (change)="enviarNumeroRegistros(
-                  $event.target.value
-                )">
+                (change)="enviarNumeroRegistros($event)">
                 <option>10</option>
                 <option>15</option>
                 <option>20</option>
@@ -66,25 +59,29 @@
               </select>
             </div>
             <div class="col">
-              <form
-                class="input-group"
-                (submit)="buscarSede()">
-                <input
-                  type="search"
-                  [(ngModel)]="nombreSede"
-                  name="nombreSede"
-                  class="form-control rounded"
-                  placeholder='Introduzca el nombre de la sede'>
-                  <button
-                    type="submit"
-                    class="btn btn-success">
-                    <!--Icono de lupa-->
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                      <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-                    </svg>
-                    Buscar
-                  </button>
-              </form>
+              <app-campo-busqueda
+                [message]="'Escriba: Departamento,Ciudad o Sede'"
+                [lista]="'busqueda-list'"
+                (busqueda)="buscarSede($event)"
+                (cancel)="cancelarBusqueda()">
+                <datalist id="busqueda-list">
+                  <option
+                    *ngFor="let sede of sedes"
+                    [value]="sede.nombreSede">
+                    {{sede.nombreSede}}
+                  </option>
+                  <option
+                    *ngFor="let ciudad of ciudades"
+                    [value]="ciudad.descripcion">
+                    {{ciudad.descripcion}}
+                  </option>
+                  <option
+                    *ngFor="let dep of departamentos"
+                    [value]="dep.descripcion">
+                    {{dep.descripcion}}
+                  </option>
+                </datalist>
+              </app-campo-busqueda>
             </div>
           </div>
         </div>
