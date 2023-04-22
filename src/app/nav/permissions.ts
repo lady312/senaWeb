@@ -19,11 +19,8 @@ export const GESTION_PROGRAMAS = 'GESTION_PROGRAMAS';
 export const GESTION_FASES = 'GESTION_FASES';
 export const GESTION_ACTIVIDAD_PROYECTO = 'GESTION_ACTIVIDAD_PROYECTO';
 export const GESTION_PROYECTO_FORMATIVO = 'GESTION_PROYECTO_FORMATIVO';
-<<<<<<< HEAD
 export const GESTION_PRO = 'GESTION_PRO';
 export const CALENDARIO1 = 'CALENDARIO1';
-=======
-export const GESTION_PRO = 'GESTION_PRO'
 
 export const GESTION_COMPETENCIA      = 'GESTION_COMPETENCIA'; //se crea constante exportable de COMPETENCIA
 export const GESTION_ACTIVIDAD_APRENDIZAJE = 'GESTION_ACTIVIDAD_APRENDIZAJE';//se crea constante exportable pra el nav.ts que sera una vistad de Aa
@@ -34,5 +31,4 @@ export const GESTION_RESULTADO_APRENDIZAJE = 'GESTION_RESULTADO_APRENDIZAJE';//s
 
 ;
 
->>>>>>> 6a8fb26ca26fdafb4fb0c14992853e3be3dcbbb3
 
