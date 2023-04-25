@@ -15,8 +15,7 @@ import { CustomTableComponent } from './custom-table/custom-table.component';
 import { FormCustomMessagesComponent } from './form-custom-messages/form-custom-messages.component';
 import { CampoBusquedaComponent } from './campo-busqueda/campo-busqueda.component';
 import { ListInputDirective } from './directives/list-input.directive';
-
-
+import { ViewCalendarComponent } from './view-calendar/view-calendar.component';
 @NgModule({
   imports: [
     FormsModule,
@@ -24,7 +23,7 @@ import { ListInputDirective } from './directives/list-input.directive';
     CarouselModule.forRoot(),
     ModalModule,
     CommonModule,
-    NgxPaginationModule,
+    NgxPaginationModule
   ],
   exports: [
     CustomSearchComponent,
@@ -36,7 +35,8 @@ import { ListInputDirective } from './directives/list-input.directive';
     CustomSwitchComponent,
     CustomTableComponent,
     CampoBusquedaComponent,
-    ListInputDirective
+    ListInputDirective,
+    ViewCalendarComponent
   ],
   declarations: [
     CustomSearchComponent,
@@ -49,7 +49,8 @@ import { ListInputDirective } from './directives/list-input.directive';
     CustomSwitchComponent,
     CustomTableComponent,
     CampoBusquedaComponent,
-    ListInputDirective
+    ListInputDirective,
+    ViewCalendarComponent
   ]
 })
 export class ComunModule { }

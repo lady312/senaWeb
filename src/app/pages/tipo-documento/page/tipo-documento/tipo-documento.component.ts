@@ -15,7 +15,7 @@ export class TipoDocumentoComponent implements OnInit {
   isPopupVisible = false;
   @Output() onNuevoProceso = new EventEmitter<void>();
   @Output()
-  private showModalTipoDoc = false;
+  public showModalTipoDoc = false;
 
   tipoDocumento: TipoDocumentoModel = null;
   tipoDocumentos: TipoDocumentoModel[] = [];

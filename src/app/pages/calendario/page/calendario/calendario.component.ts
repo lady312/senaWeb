@@ -1,7 +1,8 @@
+import { CalendarioService } from '@services/calendario.service';
+
 import { Component, OnInit } from '@angular/core';
-import { Calendario1Model } from '@models/calendario1.model';
+import { CalendarioModel } from '@models/calendario.model';
 import { SedeModel } from '@models/sede.model';
-import { Calendario1Service } from '@services/calendario1.service';
 import { UINotificationService } from '@services/uinotification.service';
 import { SedeService } from '@services/sede.service';
 import { CiudadService } from '@services/ciudad.service';
@@ -16,17 +17,14 @@ import { InfraestructuraModel } from '@models/infraestructura.model';
 import { InfraestructuraService } from '@services/infraestructura.service';
 import { AreaService } from '@services/area.service';
 import { AreaModel } from '@models/area.model';
-
-
-
 @Component({
-  selector: 'app-calendario1',
-  templateUrl: './calendario1.component.html',
-  styleUrls: ['./calendario1.component.scss']
+  selector: 'app-calendario',
+  templateUrl: './calendario.component.html',
+  styleUrls: ['./calendario.component.scss']
 })
-export class Calendario1Component implements OnInit {
+export class CalendarioComponent implements OnInit {
 
-  protected showModalCalendario1 = false;
+  protected showModalCalendario = false;
   protected showModalCalendario2 = false;
   protected showModalCalendario3 = false;
   protected showModalCalendario4 = false;
@@ -34,20 +32,21 @@ export class Calendario1Component implements OnInit {
   protected showModalGrupo = false;
   protected showModalPrograma:boolean = false;
   protected showFormInfr:boolean = false;
-  
 
-  calendario2: Calendario1Model = null;
-  calendario3: Calendario1Model = null;
-  calendario4: Calendario1Model = null;
+
+  calendario2: CalendarioModel = null;
+  calendario3: CalendarioModel = null;
+  calendario4: CalendarioModel = null;
   sede: SedeModel = null;
   grupo: GrupoModel = null;
   programa : ProgramaModel = null;
   infraestructura:InfraestructuraModel =null;
   area :AreaModel = null;
-  
 
-  calendarios1: Calendario1Model[] = [];
+
+  calendarios1: CalendarioModel[] = [];
   sedes: SedeModel[]=[];
+  formTitle: string;
   ciudades: CiudadModel[]=[];
   departamentos: DepartamentoModel[]=[];
   grupos: GrupoModel[]=[];
@@ -57,7 +56,7 @@ export class Calendario1Component implements OnInit {
   infreaestructuras:InfraestructuraModel[]=[];
   constructor(
     private _uiNotificationService: UINotificationService,
-    private _calendario1Service: Calendario1Service,
+    private _CalendarioService: CalendarioService,
     private _sedeService: SedeService,
     private _ciudadService: CiudadService,
     private _departamentoService: DepartamentoService,
@@ -65,8 +64,8 @@ export class Calendario1Component implements OnInit {
     private _programaService :ProgramaService,
     private _infraestructuraService : InfraestructuraService,
     private _areaService : AreaService
-    
-    
+
+
   ) { }
 
   ngOnInit(): void {
@@ -110,7 +109,7 @@ getGrupo(){
   .subscribe(grupos =>{
     this.grupos = grupos;
   })
-  
+
 }
 
 getPrograma() {
@@ -151,7 +150,7 @@ getSedesByCiudad(idCiudad:number){
 
 
  //crear
-  createCalendario1() {
+  createCalendario() {
     this.sede = null;
     this.showFormSede = true;
   }
@@ -159,7 +158,7 @@ getSedesByCiudad(idCiudad:number){
     this.grupo = null;
     this.showModalGrupo = true;
   }
- 
+
   createCalendario3() {
     this.programa = null;
     this.showModalPrograma = true;
@@ -168,7 +167,7 @@ getSedesByCiudad(idCiudad:number){
   this.infraestructura = null;
   this.showFormInfr = true;
   }
- 
+
 guardarSede(sede:SedeModel){
   this._sedeService.guardarSede(sede).subscribe(()=>{
     this.sede=sede;
@@ -176,7 +175,7 @@ guardarSede(sede:SedeModel){
   })
 }
 guardarGrupo(grupo: GrupoModel) {
-  
+
   if (grupo.id) {
     this._gruposService.actualizarGrupo(grupo).subscribe(gr => {
       this.getGrupo();
@@ -220,7 +219,7 @@ guardarInfraestructura(event:InfraestructuraModel){
 
   //Eliminar
   reset() {
-   
+
     this.sede = null;
     this.showFormSede = false;
     this.grupo = null;
@@ -230,5 +229,5 @@ guardarInfraestructura(event:InfraestructuraModel){
     this.showFormInfr = false;
     this.infraestructura = null;
   }
- 
+
 }

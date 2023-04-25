@@ -36,6 +36,9 @@ import { FormsModule } from '@angular/forms';
     SweetAlert2Module.forChild()
   ],
   entryComponents: [ProcesoComponent],
+  exports: [
+    TipoDocumentoComponent
+  ]
 
 })
 export class TipoDocumentoModule {

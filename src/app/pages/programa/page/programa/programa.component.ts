@@ -29,7 +29,7 @@ export class ProgramaComponent {
       .subscribe(programa => {
         this.programas = programa;
       }, error => {
-        this._uiNotificationService.error("Error de conexión");
+      this._uiNotificationService.error("Error de conexión");
       });
   }
 

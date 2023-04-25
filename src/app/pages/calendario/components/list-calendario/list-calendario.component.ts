@@ -1,18 +1,18 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Calendario1Model } from '@models/calendario1.model';
+import { CalendarioModel } from '@models/calendario.model';
 
 
 @Component({
-  selector: 'app-list-calendario1',
-  templateUrl: './list-calendario1.component.html',
-  styleUrls: ['./list-calendario1.component.scss']
+  selector: 'app-list-calendario',
+  templateUrl: './list-calendario.component.html',
+  styleUrls: ['./list-calendario.component.scss']
 })
-export class ListCalendario1Component {
+export class ListCalendarioComponent {
 
 
-  @Input() calendarios1: Calendario1Model[] = [];
+  @Input() calendarios: CalendarioModel[] = [];
 
-  @Output() update: EventEmitter<Calendario1Model> = new EventEmitter();
+  @Output() update: EventEmitter<CalendarioModel> = new EventEmitter();
   @Output() delete: EventEmitter<number> = new EventEmitter();
   @Output() create: EventEmitter<void> = new EventEmitter();
   @Output() create1: EventEmitter<void> = new EventEmitter();
@@ -30,12 +30,12 @@ export class ListCalendario1Component {
     this.numReg = num;
   }
 
-  actualizar(calendario1: Calendario1Model) {
-    this.update.emit(calendario1);
+  actualizar(Calendario: CalendarioModel) {
+    this.update.emit(Calendario);
   }
 
-  eliminar(idcalendario1: number) {
-    this.delete.emit(idcalendario1);
+  eliminar(idCalendario: number) {
+    this.delete.emit(idCalendario);
   }
 
   sede() {

@@ -19,11 +19,11 @@ import {  GESTION_MEDIO_PAGO,
           GESTION_SEDE,
           GESTION_AREA,
           GESTION_INFRAESTRUCTURA,
-          CALENDARIO1,
-          GESTION_COMPETENCIA, //importaciones 
-          GESTION_ACTIVIDAD_APRENDIZAJE,//importaciones 
+          CALENDARIO,
+          GESTION_COMPETENCIA, //importaciones
+          GESTION_ACTIVIDAD_APRENDIZAJE,//importaciones
           GESTION_RESULTADO_APRENDIZAJE,//importaciones
-       
+
  } from './permissions';
 
 export const navItems: NavegacionModel[] = [
@@ -75,7 +75,7 @@ export const navItems: NavegacionModel[] = [
     icon: 'icon-drop',
     permiso: GESTION_TIPO_TRANSACCION,
   },
- 
+
   {
     name: "Sedes",
     url: 'gestionar_sede', //URL que mostrará la vista
@@ -124,7 +124,7 @@ export const navItems: NavegacionModel[] = [
     icon: 'icon-drop',
     permiso: GESTION_PROGRAMAS
   },
-   {
+  {
     name: "Fases",
     url: 'add_fases',
     icon: 'icon-drop',
@@ -150,9 +150,9 @@ export const navItems: NavegacionModel[] = [
   },
   {
     name: "Calendario",
-    url: "add_calendario1",
+    url: "add_calendario",
     icon: "icon-drop",
-    permiso: CALENDARIO1,
+    permiso: CALENDARIO,
   },
   {
     name: "Competencia",
@@ -167,17 +167,12 @@ export const navItems: NavegacionModel[] = [
     icon: 'cil-color-border',
     permiso: GESTION_ACTIVIDAD_APRENDIZAJE
   },
-
   {
     name: "Resultado aprendizaje",
     url: 'add_resultado_aprendizaje',//muestra la vista para resultado aprendizaje''''''''''''''''''''
     icon: 'cil-columns',
     permiso: GESTION_RESULTADO_APRENDIZAJE
   },
-
-
-
-
 ];
 
 export const routesNav: Routes = [
@@ -308,8 +303,8 @@ export const routesNav: Routes = [
     loadChildren: () => import('../pages/gestion-programa/gestion-programa.module').then(m => m.GestionProgramaModule)
   },
   {
-    path: 'add_calendario1',
-    loadChildren: () => import('../pages/calendario1/calendario1.module').then((m) => m.Calendario1Module)
+    path: 'add_calendario',
+    loadChildren: () => import('../pages/calendario/calendario.module').then((m) => m.CalendarioModule)
   },
   {
     path: 'gestionar_competencia',
@@ -323,5 +318,4 @@ export const routesNav: Routes = [
     path: 'add_actividad_aprendizaje',
     loadChildren: () => import('../pages/actividad-aprendizaje/actividad-aprendizaje.module').then(m => m.ActividadAprendizajeModule)
   },
-
 ];
