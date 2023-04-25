@@ -13,7 +13,6 @@ import { debounceTime } from 'rxjs/operators';
 export class SedeFormComponent implements OnInit{
 
   @Input() sede:SedeModel;
-  @Input() departamentos: DepartamentoModel[]=[];
   @Input() ciudades: CiudadModel[]=[];
   @Input() title:string;
 
@@ -22,6 +21,7 @@ export class SedeFormComponent implements OnInit{
   @Output() depId = new EventEmitter<number>();
 
   formSede: UntypedFormGroup;
+  idCiudad:number=0;
   
   constructor(
     private formBuilder:UntypedFormBuilder
@@ -39,7 +39,7 @@ export class SedeFormComponent implements OnInit{
 
   ngOnInit(): void {
     this.setSede();
-    this.enviarIdDep(this.idDepartamentoField.value);
+    this.setIndexes(this.sede);
   }
 
   get nombreSedeField(){
@@ -55,10 +55,7 @@ export class SedeFormComponent implements OnInit{
     return this.formSede.get('descripcion');
   }
   get idCiudadField(){
-    return this.formSede.get('idSede');
-  }
-  get idDepartamentoField(){
-    return this.formSede.get('idDepartamento');
+    return this.formSede.get('idCiudad');
   }
 
   setSede(){
@@ -68,10 +65,20 @@ export class SedeFormComponent implements OnInit{
         direccion:this.sede.direccion,
         telefono:this.sede.telefono,
         descripcion:this.sede.descripcion,
-        idCiudad:this.sede.idCiudad ? this.sede.idCiudad:null,
-        idDepartamento:this.sede.ciudad.idDepartamento ? this.sede.ciudad.idDepartamento:null
+        idCiudad:this.sede.ciudad.descripcion ? this.sede.ciudad.descripcion:null
       });
     }
+  }
+  setIndexes(sede:SedeModel){
+    if(sede){
+      this.idCiudad = sede.idCiudad;
+    }
+  }
+  selectIdCiudad(event:any){
+    const value = event.target.value;
+    const ciudad = this.ciudades.find(ciudad=>
+      (ciudad.descripcion.toLowerCase()===value.toLowerCase()));
+      this.idCiudad=ciudad.id;
   }
   private buildForm(){
     this.formSede = this.formBuilder.group({
@@ -79,9 +86,8 @@ export class SedeFormComponent implements OnInit{
       nombreSede: ['',[Validators.required]],
       direccion: ['',[Validators.required]],
       telefono: ['',[Validators.required]],
-      descripcion: ['',[Validators.required]],
-      idCiudad: [0,[Validators.required]],
-      idDepartamento: [0,[Validators.required]]
+      descripcion: [''],
+      idCiudad: ['',[Validators.required]],
     });
 
     this.formSede.valueChanges
@@ -110,12 +116,8 @@ export class SedeFormComponent implements OnInit{
       direccion:this.getControl('direccion').value,
       telefono:this.getControl('telefono').value,
       descripcion:this.getControl('descripcion').value,
-      idCiudad:this.getControl('idCiudad').value
+      idCiudad:this.idCiudad
     }
-  }
-
-  enviarIdDep(idDep:number){
-    this.depId.emit(idDep);
   }
 
 }

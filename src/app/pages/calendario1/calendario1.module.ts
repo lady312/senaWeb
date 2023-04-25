@@ -16,6 +16,7 @@ import { GrupoModule } from '../grupo/grupo.module';
 import { ProgramaModule } from '../programa/programa.module';
 import { AddProgramaComponent } from '../programa/components/add-programa/add-programa.component';
 import { InfraestructuraFormComponent } from '../infraestructura/components/infraestructura-form/infraestructura-form.component';
+import { InfraestructuraModule } from '../infraestructura/infraestructura.module';
 
 
 
@@ -28,7 +29,6 @@ import { InfraestructuraFormComponent } from '../infraestructura/components/infr
     AddCalendario3Component,
     AddCalendario4Component,
     AddProgramaComponent,
-    InfraestructuraFormComponent
   ],
   imports: [
     CommonModule,
@@ -38,7 +38,7 @@ import { InfraestructuraFormComponent } from '../infraestructura/components/infr
     ComunModule,
     SedeModule,
     GrupoModule,
-    
+    InfraestructuraModule
     
   ]
 })

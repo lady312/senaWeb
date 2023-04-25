@@ -14,7 +14,6 @@
     *ngIf="showFormSede"
     [sede]="sede"
     [ciudades]="ciudades"
-    [departamentos]="departamentos"
     [title]="'Crear Sede'"
     (store)="guardarSede($event)"
     (cancel)="reset()">
@@ -58,11 +57,9 @@
     *ngIf="showFormInfr"
     [infraestructura]="infraestructura"
     [areas]="areas"
-    [ciudades]="ciudades"
     [sedes]="sedes"
     [title]="'Crear infraestructura'"
     (store)="guardarInfraestructura($event)"
-    (ciudadId)="getSedesByCiudad($event)"
     (cancel)="reset()">
   </app-infraestructura-form>
 </app-custom-modal>

@@ -13,7 +13,8 @@ import { InfraestructuraFormComponent } from './components/infraestructura-form/
 
 @NgModule({
   exports:[
-    InfraestructuraComponent
+    InfraestructuraComponent,
+    InfraestructuraFormComponent
   ],
   declarations: [
     InfraestructuraComponent,

@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { AreaModel } from '@models/area.model';
-import { CiudadModel } from '@models/ciudad.model';
 import { InfraestructuraModel } from '@models/infraestructura.model';
 import { SedeModel } from '@models/sede.model';
 import { debounceTime } from 'rxjs/operators';
