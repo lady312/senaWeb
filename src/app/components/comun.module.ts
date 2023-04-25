@@ -16,6 +16,8 @@ import { FormCustomMessagesComponent } from './form-custom-messages/form-custom-
 import { CampoBusquedaComponent } from './campo-busqueda/campo-busqueda.component';
 import { ListInputDirective } from './directives/list-input.directive';
 import { ViewCalendarComponent } from './view-calendar/view-calendar.component';
+import {FullCalendarModule} from '@fullcalendar/angular';
+import { SelectsModule } from './selects/selects.module';
 @NgModule({
   imports: [
     FormsModule,
@@ -23,7 +25,9 @@ import { ViewCalendarComponent } from './view-calendar/view-calendar.component';
     CarouselModule.forRoot(),
     ModalModule,
     CommonModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    FullCalendarModule
+    
   ],
   exports: [
     CustomSearchComponent,
@@ -36,7 +40,8 @@ import { ViewCalendarComponent } from './view-calendar/view-calendar.component';
     CustomTableComponent,
     CampoBusquedaComponent,
     ListInputDirective,
-    ViewCalendarComponent
+    ViewCalendarComponent,
+    SelectsModule
   ],
   declarations: [
     CustomSearchComponent,

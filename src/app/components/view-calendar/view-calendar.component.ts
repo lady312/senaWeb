@@ -13,6 +13,7 @@ import esLocale from '@fullcalendar/core/locales/es';
   styleUrls: ['./view-calendar.component.css']
 })
 export class ViewCalendarComponent {
+  
   calendarVisible = true;
   calendarOptions: CalendarOptions = {
     locale: esLocale,
