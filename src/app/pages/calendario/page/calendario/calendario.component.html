@@ -1,13 +1,12 @@
-<app-list-calendario1 
-  [calendarios1]="calendarios1" 
-  (create)="createCalendario1()" 
+
+<app-list-calendario
+  [calendarios]="calendarios1"
+  (create)="createCalendario()"
   (create1)="createCalendario2()"
-  (create2)="createCalendario3()" 
+  (create2)="createCalendario3()"
   (create3)="createCalendario4()">
-</app-list-calendario1>
+</app-list-calendario>
 
-
-//sede
 <app-custom-modal title="Sede" [(show)]="showFormSede">
 
     <app-sede-form
@@ -22,7 +21,7 @@
 
 </app-custom-modal>
 
-//grupo
+
 <app-custom-modal
   title="Grupos"
   [(show)]="showModalGrupo">
@@ -36,7 +35,6 @@
 
 </app-custom-modal>
 
-//programa
 
 <app-custom-modal
   title="Programas"
@@ -50,45 +48,21 @@
 </app-custom-modal>
 
 
-
 <app-custom-modal
+  size="lg"
   title="Gestionar Infraestructura"
   [(show)]="showFormInfr">
   <app-infraestructura-form
     *ngIf="showFormInfr"
     [infraestructura]="infraestructura"
     [areas]="areas"
-    [ciudades]="ciudades"
     [sedes]="sedes"
-    [title]="'Crear infraestructura'"
+    [title]="formTitle"
     (store)="guardarInfraestructura($event)"
-    (ciudadId)="getSedesByCiudad($event)"
     (cancel)="reset()">
   </app-infraestructura-form>
 </app-custom-modal>
 
+<view-calendar>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<app-custom-modal title="Ambiente" [(show)]="showModalCalendario4">
-
-    <app-add-calendario4 
-      *ngIf="showModalCalendario4" 
-      [calendario4]="calendario4" 
-      >
-    </app-add-calendario4>
-    
-</app-custom-modal>
-
+</view-calendar>
