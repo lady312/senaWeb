@@ -8,7 +8,8 @@
     (depId)="getCiudadesByDep($event)"
     (ciudadId)="getSedesByCiudad($event)"
     (info)="verInfoSede($event)"
-    (busqueda)="buscarSede($event)">
+    (busqueda)="buscarSede($event)"
+    (cancel)="cancelarBusqueda()">
 </app-sede-list>
 
 <app-custom-modal
@@ -30,11 +31,14 @@
   size="lg"
   title="Información de la sede:"
   [(show)]="showInfoSede">
-  <app-sede-info
+  <app-sede-result
     *ngIf="showInfoSede"
-    [sede]="sede"
-    (cerrar)="reset()">
-  </app-sede-info>
+    [resultadoBusqueda]="sede"
+    (update)="actualizarSede($event)"
+    (delete)="eliminarSede($event)"
+    (close)="closeBusqueda()"
+    (cancel)="reset()">
+  </app-sede-result>
 </app-custom-modal>
 
 <app-custom-modal

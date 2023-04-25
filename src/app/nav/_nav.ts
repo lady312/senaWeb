@@ -16,13 +16,13 @@ import { GESTION_MEDIO_PAGO,
         GESTION_ACTIVIDAD_PROYECTO,
         GESTION_PROYECTO_FORMATIVO,
         GESTION_PRO,
-        GESTION_SEDE,
-        GESTION_AREA,
-        GESTION_INFRAESTRUCTURA,
-        CALENDARIO,
-        GESTION_COMPETENCIA, //importaciones
-        GESTION_ACTIVIDAD_APRENDIZAJE,//importaciones
-        GESTION_RESULTADO_APRENDIZAJE,//importaciones
+          GESTION_SEDE,
+          GESTION_AREA,
+          GESTION_INFRAESTRUCTURA,
+          CALENDARIO,
+          GESTION_COMPETENCIA, //importaciones
+          GESTION_ACTIVIDAD_APRENDIZAJE,//importaciones
+          GESTION_RESULTADO_APRENDIZAJE,//importaciones
 
  } from './permissions';
 
@@ -172,8 +172,7 @@ export const navItems: NavegacionModel[] = [
     url: 'add_resultado_aprendizaje',//muestra la vista para resultado aprendizaje''''''''''''''''''''
     icon: 'cil-columns',
     permiso: GESTION_RESULTADO_APRENDIZAJE
-  }
-
+  },
 ];
 
 export const routesNav: Routes = [
@@ -320,5 +319,4 @@ export const routesNav: Routes = [
     path: 'add_actividad_aprendizaje',
     loadChildren: () => import('../pages/actividad-aprendizaje/actividad-aprendizaje.module').then(m => m.ActividadAprendizajeModule)
   },
-
 ];
