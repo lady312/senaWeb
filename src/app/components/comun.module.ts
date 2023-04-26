@@ -15,7 +15,6 @@ import { CustomTableComponent } from './custom-table/custom-table.component';
 import { FormCustomMessagesComponent } from './form-custom-messages/form-custom-messages.component';
 import { CampoBusquedaComponent } from './campo-busqueda/campo-busqueda.component';
 import { ListInputDirective } from './directives/list-input.directive';
-import { ViewCalendarComponent } from './view-calendar/view-calendar.component';
 import { FullCalendarModule } from '@fullcalendar/angular';
 @NgModule({
   imports: [
@@ -37,8 +36,7 @@ import { FullCalendarModule } from '@fullcalendar/angular';
     CustomSwitchComponent,
     CustomTableComponent,
     CampoBusquedaComponent,
-    ListInputDirective,
-    ViewCalendarComponent
+    ListInputDirective
   ],
   declarations: [
     CustomSearchComponent,
@@ -51,8 +49,7 @@ import { FullCalendarModule } from '@fullcalendar/angular';
     CustomSwitchComponent,
     CustomTableComponent,
     CampoBusquedaComponent,
-    ListInputDirective,
-    ViewCalendarComponent
+    ListInputDirective
   ]
 })
 export class ComunModule { }
