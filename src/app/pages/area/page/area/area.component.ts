@@ -11,6 +11,9 @@ import { UINotificationService } from '@services/uinotification.service';
 
 export class AreaComponent implements OnInit{
 
+  //Almacena consultas previas para evitar que se hagan demaciadas consultas
+  private cache = new Map<number, { areas: AreaModel[] }>();
+
   protected showFormArea:boolean= false;
   protected formTitle:string;
   protected showResultadoBusqueda:boolean=false;
@@ -25,15 +28,27 @@ export class AreaComponent implements OnInit{
   ){}
 
   ngOnInit():void{
+    this.iniciarCache()
     this.getAreas();
   }
-
+  iniciarCache(){
+    this.cache.set(0,{areas:null});
+  }
   getAreas(){
-    this._areaService.traerAreas().subscribe(areas=>{
-      this.areas=areas;
-    },error=>{
-      this._uiNotificationService.error("Error de conexión");
-    });
+    const cacheAreas = this.cache.get(0).areas;
+    if(cacheAreas){
+      if(this.areas!==cacheAreas){
+        this.areas=cacheAreas;
+      } 
+    }else{
+      this._areaService.traerAreas().subscribe(areas=>{
+        this.areas=areas;
+        this.cache.get(0).areas=this.areas;
+      },error=>{
+        this._uiNotificationService.error("Error de conexión");
+      });
+    }
+    
   }
 
   eliminarArea(event:number){

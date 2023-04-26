@@ -15,7 +15,11 @@ import { UINotificationService } from '@services/uinotification.service';
 export class SedeComponent implements OnInit{
 
   //Almacena consultas previas para evitar que se hagan demaciadas consultas
-  private cache = new Map<number, { ciudades: CiudadModel[], sedesPorCiudad: Map<number, { sedes: SedeModel[] }> }>();
+  private cache = new Map<number, { 
+    ciudades: CiudadModel[], 
+    sedesPorCiudad: Map<number, { 
+      sedes: SedeModel[] }> 
+  }>();
 
   protected showFormSede:boolean = false;
   protected formTitle:string;
@@ -42,7 +46,11 @@ export class SedeComponent implements OnInit{
     this.getDepartametos();
   }
   iniciarCache(){
-    this.cache.set(0, { ciudades: null, sedesPorCiudad: new Map<number, { sedes: SedeModel[] }>() });
+    this.cache.set(0, { 
+      ciudades: null, 
+      sedesPorCiudad: new Map<number, { 
+        sedes: SedeModel[] 
+    }>() });
   }
   getSedes(){
     const sedesPorCiudad = this.cache.get(0).sedesPorCiudad.get(0);
@@ -101,10 +109,16 @@ export class SedeComponent implements OnInit{
           this.cache.get(idDep).sedesPorCiudad.set(idCiudad,{sedes:this.sedes});
         }
       }else{
-        const cacheCiudades:CiudadModel[]=this.ciudades.filter(ciudad=>ciudad.idDepartamento==idDep);
-        const cacheSedes:SedeModel[]=this.sedes.filter(sede=>(sede.idCiudad==idCiudad));
+        const cacheCiudades:CiudadModel[]=this.ciudades.filter(ciudad=>
+          ciudad.idDepartamento==idDep);
+        const cacheSedes:SedeModel[]=this.sedes.filter(sede=>
+          (sede.idCiudad==idCiudad));
         this.sedes=cacheSedes;
-        this.cache.set(idDep,{ciudades:cacheCiudades,sedesPorCiudad:new Map<number, { sedes: SedeModel[] }>()});
+        this.cache.set(idDep,{
+          ciudades:cacheCiudades,
+          sedesPorCiudad:new Map<number, { 
+            sedes: SedeModel[] 
+        }>()});
         this.cache.get(idDep).sedesPorCiudad.set(idCiudad,{sedes:cacheSedes});
       }
     }else{
@@ -133,7 +147,11 @@ export class SedeComponent implements OnInit{
           this.sedes=[];
         }
         this.ciudades=ciudades;
-        this.cache.set(idDep,{ciudades:ciudades,sedesPorCiudad:new Map<number, { sedes: SedeModel[] }>()})
+        this.cache.set(idDep,{
+          ciudades:ciudades,
+          sedesPorCiudad:new Map<number, { 
+            sedes: SedeModel[] 
+        }>()})
         this.cache.get(idDep).sedesPorCiudad.set(0,{sedes:this.sedes});
       }
     }else{
