@@ -8,6 +8,9 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { ComunModule } from '@components/comun.module';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { FormsModule} from '@angular/forms';
+import { CompetenciaComponent } from '../competencias/page/competencia/competencia.component';
+import { CompetenciasModule } from '../competencias/competencias.module';
+import { ActividadProyectoModule } from '../actividad-proyecto/actividad-proyecto.module';
 
 
 @NgModule({
@@ -21,7 +24,11 @@ import { FormsModule} from '@angular/forms';
     NgxPaginationModule,
     ComunModule,
     SweetAlert2Module.forChild(),
-    FormsModule
-  ]
+    FormsModule,
+    CompetenciasModule,
+    ActividadProyectoModule
+  ],
+
+  entryComponents:[CompetenciaComponent],
 })
 export class GestionProgramaModule { }
