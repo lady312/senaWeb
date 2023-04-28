@@ -33,7 +33,9 @@
 
   <div class="container" style="margin-left: 250px;" *ngIf="!mostrarElemento">
 
+    <h1 style="margin-left: 120px; margin-top: -50px; font-size: 30px;" class="display-6">Selecciona un ficha</h1>
 
+<br>
       <input style="width: 506px;" class="form-control me-2 " type="search" [(ngModel)]="query" (keyup)="filter()" placeholder="Buscar Ficha" >
 
 <br>
@@ -90,6 +92,11 @@
 <!--  inicio del container evento  -->
 
   <div class="container"  style="margin-left: 250px;" *ngIf="mostrarElemento">
+
+
+    <h1 style="margin-left: 120px; margin-top: -50px; font-size: 30px;" class="display-6">Selecciona un Evento</h1>
+      <br>
+
 
 
     <input style="width: 506px;" class="form-control me-2 " type="search" [(ngModel)]="query" (keyup)="filter()" placeholder="Buscar evento" >

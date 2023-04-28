@@ -31,6 +31,9 @@ export class AddProyectoFormativoComponent {
       nombre: '',
       codigo: '',
       idPrograma:null,
+      tiempoEstimado:null,
+      numeroTotalRaps:null,
+      idCentroFormacion:null,
     };
     this.buildForm();
   }
@@ -60,6 +63,18 @@ export class AddProyectoFormativoComponent {
   get idPrograma() {
     return this.formProyecto.get('idPrograma');
   }
+
+  get tiempoEstimado() {
+    return this.formProyecto.get('tiempoEstimado');
+  }
+
+  get numeroTotalRaps() {
+    return this.formProyecto.get('numeroTotalRaps');
+  }
+
+  get idCentroFormacion() {
+    return this.formProyecto.get('idCentroFormacion');
+  }
   
 
   setProyecto() {
@@ -67,7 +82,10 @@ export class AddProyectoFormativoComponent {
       this.formProyecto.patchValue({
         nombre: this.proyecto.nombre,
         codigo: this.proyecto.codigo,
-        idPrograma: this.proyecto.idPrograma
+        idPrograma: this.proyecto.idPrograma,
+        tiempoEstimado: this.proyecto.tiempoEstimado,
+        numeroTotalRaps: this.proyecto.numeroTotalRaps,
+        idCentroFormacion: this.proyecto.idCentroFormacion
       })
     }
   }
@@ -77,7 +95,10 @@ export class AddProyectoFormativoComponent {
       id: [0],
       nombre: ['', [Validators.required]],
       codigo: ['', [Validators.required]],
-      idPrograma: ['', [Validators.required]]
+      idPrograma: ['', [Validators.required]],
+      tiempoEstimado: ['', [Validators.required]],
+      numeroTotalRaps: ['', [Validators.required]],
+      idCentroFormacion: ['', [Validators.required]]
     });
 
     this.formProyecto.valueChanges
@@ -85,6 +106,7 @@ export class AddProyectoFormativoComponent {
         debounceTime(350),
       )
       .subscribe(data => {
+        console.log(data);
       });
   }
 
@@ -106,6 +128,11 @@ export class AddProyectoFormativoComponent {
       idPrograma: this.getControl('idPrograma').value,
       nombre: this.getControl('nombre').value,
       codigo: this.getControl('codigo').value,
+      tiempoEstimado: this.getControl('tiempoEstimado').value,
+      numeroTotalRaps: this.getControl('numeroTotalRaps').value,
+      idCentroFormacion: this.getControl('idCentroFormacion').value
+
+      
     }
   }
 }
