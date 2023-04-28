@@ -40,7 +40,7 @@
               *ngFor="let grupo of gruposFiltrados of grupos | paginate: { itemsPerPage: this.numReg, currentPage: pageActual }">
               <td>{{ grupo.id }}</td>
               <td>{{ grupo?.programa?.nombrePrograma || 'Programa no disponible' }}</td>
-              <td>{{ grupo?.nivel?.nivel || 'Nivel de formacion no disponible'}}</td>
+              <td *ngFor="let grup of grupo?.nivel?.nivel">{{ grup?.nivel || 'Nivel de formacion no disponible'}}</td>
               <td>{{ grupo.nombre || 'Nombre no disponible'}}</td>
               <td>{{ grupo?.lider.email || 'Lider no disponible ' }}</td>
               <td>{{ grupo?.tipoFormacion?.nombreTipoFormacion || 'Tipo de formación no disponible'}}</td>

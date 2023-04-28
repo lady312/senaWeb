@@ -3,8 +3,6 @@ import {
   Component,
   ChangeDetectorRef,
   Input,
-  ViewChild,
-  OnInit,
 } from "@angular/core";
 import {
   CalendarOptions,
@@ -22,6 +20,8 @@ import esLocale from "@fullcalendar/core/locales/es";
 import { JornadaModel } from "@models/jornada.model";
 import { GrupoModel } from "@models/grupo.model";
 import { addDays } from "@fullcalendar/core/internal";
+import { GrupoJornadaModel } from "@models/grupo_jornada.model";
+import { UsuarioModel } from "@models/usuario.model";
 
 @Component({
   selector: "view-calendar",
@@ -29,8 +29,14 @@ import { addDays } from "@fullcalendar/core/internal";
   styleUrls: ["./view-calendar.component.css"],
 })
 export class ViewCalendarComponent {
+
+  //prueba con grupo y jornada
   @Input() jornadas: JornadaModel[];
   @Input() grupos: GrupoModel[];
+//grupo y jornada
+  @Input() gruposJornadas: GrupoJornadaModel[];
+  @Input() listUsers: UsuarioModel[];
+
   Eventos: EventInput[]=[];
   calendarVisible = true;
   calendarOptions: CalendarOptions = {
@@ -57,29 +63,28 @@ export class ViewCalendarComponent {
   currentEvents: EventApi[] = [];
   constructor(private changeDetector: ChangeDetectorRef) {}
 
-  crearEventos() {
+  crearEventosGrupoJornada() {
+
+    //const fechaConHora = new Date(`${fecha.toISOString().slice(0, 10)}T${hora}`);
+
     let Eventos: EventInput[] = [];
-    this.grupos.forEach((grupo) => {
-      const fInit = new Date(grupo.fechaInicial);
-      const fEnd = new Date(grupo.fechaFinal);
+
+    this.gruposJornadas.forEach((gruposJornadas) => {
+      const fInit:Date = new Date(gruposJornadas.grupo.fechaInicial);
+      const fEnd:Date = new Date(gruposJornadas.grupo.fechaFinal);
+      const hInit:string = gruposJornadas.jornada.horaInicial
+      const hEnd:string =gruposJornadas.jornada.horaFinal;
       for (let fecha = fInit; fecha <= fEnd; fecha = addDays(fecha, 1)) {
+        const grupo= this.grupos.find(grupo=>(grupo.id==gruposJornadas.idGrupo));
+        //const lider= this.listUsers.find(lider=>(lider.id==grupo.idLider));
         Eventos.push({
           id: createEventId(),
-          title: grupo.nombre,
-          start: new Date(
-            fecha.getFullYear(),
-            fecha.getMonth(),
-            fecha.getDay(),
-            0,
-            0
-          ),
-          end: new Date(
-            fecha.getFullYear(),
-            fecha.getMonth(),
-            fecha.getDay(),
-            23,
-            59
-          ),
+          title: gruposJornadas.grupo.nombre,
+          jornada: gruposJornadas.jornada.nombreJornada,
+          start: new Date(`${fecha.toISOString().slice(0,10)}T${hInit}`),
+          end: new Date(`${fecha.toISOString().slice(0,10)}T${hEnd}`),
+          infra: grupo.infraestructura.nombreInfraestructura,
+          //lider: lider.persona.nombre1+' '+lider.persona.nombre2
         });
       }
     });
