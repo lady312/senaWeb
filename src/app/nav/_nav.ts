@@ -19,7 +19,7 @@ import { GESTION_MEDIO_PAGO,
           GESTION_SEDE,
           GESTION_AREA,
           GESTION_INFRAESTRUCTURA,
- } from './permissions';
+} from './permissions';
 
 export const navItems: NavegacionModel[] = [
   {

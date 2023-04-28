@@ -25,6 +25,8 @@ import { DefaultLayoutComponent } from './templates';
 import { RouterModule } from '@angular/router';
 
 import { FormsModule } from '@angular/forms';
+import { FullCalendarModule } from '@fullcalendar/angular';
+import { CalendarioComponent } from './components/calendario/calendario.component';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
@@ -54,13 +56,15 @@ const APP_CONTAINERS = [
     HttpClientModule,
     SweetAlert2Module.forRoot(),
     RouterModule,
-    FormsModule
+    FormsModule,
+    FullCalendarModule
   ],
   declarations: [
     AppComponent,
     ...APP_CONTAINERS,
     P404Component,
-    P500Component
+    P500Component,
+    CalendarioComponent
   ],
 
   providers: [
