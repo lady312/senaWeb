@@ -32,8 +32,8 @@
         </div>
       </div>
 
-
-      <div class="form-floating mb-3"><!--El lider debe ser nullable-->
+      <!--El lider debe ser nullable-->
+      <div class="form-floating mb-3">
         <select class="form-select" id="lider" aria-label="Floating label select example" formControlName="idLider">
           <option selected>Selecionar lider</option>
           <option *ngFor='let lider of lideres' [ngValue]="lider.id">{{ lider.email }}</option>
@@ -46,6 +46,14 @@
           Por favor ingresé un valor válido para el lider
         </div>
       </div>
+
+
+      <!-- <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+        <option selected>Seleccionar lider</option>
+        <option value="Gustavo">Gustavo</option>
+        <option value="David Lozada">David Lozada</option>
+        <option value="Angelica Guerrero">Angelica Guerrero</option>
+      </select> -->
 
 
       <div class="form-floating mb-3">

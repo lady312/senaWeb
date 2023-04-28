@@ -54,7 +54,7 @@ export class GruposComponent implements OnInit {
   @Input() grupo:             GrupoModel;
   tipoGrupoForm:              FormGroup;
   formGrupo:                  UntypedFormGroup;
-  grupos:                     TipoGrupoModel[] = [];
+  // grupos:                     TipoGrupoModel[] = [];
 
   constructor(
     private formBuilder: UntypedFormBuilder, // construccion de form controles
@@ -79,7 +79,7 @@ export class GruposComponent implements OnInit {
       fechaFinal: null,
       observacion: '',
       idTipoGrupo: null,
-      tipogrupo: null,
+      tipo_grupo: null,
 
       idPrograma: null,
       programa:null,
@@ -91,16 +91,16 @@ export class GruposComponent implements OnInit {
       infraestructura:null,
 
       idNivel:null,
-      nivel:null,
+      nivel_formacion:null,
 
       idTipoFormacion:null,
-      tipoFormacion:null,
+      tipo_formacion:null,
 
       idEstado:null,
-      estado:null,
+      estado_grupo:null,
 
       idTipoOferta:null,
-      tipoOferta:null,
+      tipo_oferta:null,
       
     };
     this.buildForm();
@@ -264,7 +264,7 @@ export class GruposComponent implements OnInit {
         observacion:       this.grupo.observacion,
 
         idTipoGrupo:       this.grupo.idTipoGrupo,
-        tipogrupo:         this.grupo.tipogrupo,
+        tipogrupo:         this.grupo.tipo_grupo,
 
         idLider:           this.grupo.idLider,
         lider:             this.grupo.lider,
@@ -276,16 +276,16 @@ export class GruposComponent implements OnInit {
         infraestructura:   this.grupo.infraestructura,
 
         idNivel:           this.grupo.idNivel,
-        nivel:             this.grupo.nivel,
+        nivel:             this.grupo.nivel_formacion,
 
         idTipoFormacion:   this.grupo.idTipoFormacion,
-        tipoFormacion:     this.grupo.tipoFormacion,
+        tipoFormacion:     this.grupo.tipo_formacion,
 
         idEstado:          this.grupo.idEstado,
-        estado:            this.grupo.estado,
+        estado:            this.grupo.estado_grupo,
 
         idTipoOferta:      this.grupo.idTipoOferta,
-        tipoOferta:        this.grupo.tipoOferta,
+        tipoOferta:        this.grupo.tipo_oferta,
  
       })
     }
