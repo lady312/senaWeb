@@ -13,7 +13,8 @@ import { InfraestructuraFormComponent } from './components/infraestructura-form/
 
 @NgModule({
   exports:[
-    InfraestructuraComponent
+    InfraestructuraComponent,
+    InfraestructuraFormComponent
   ],
   declarations: [
     InfraestructuraComponent,
@@ -29,6 +30,6 @@ import { InfraestructuraFormComponent } from './components/infraestructura-form/
     NgxPaginationModule,
     ComunModule,
     SweetAlert2Module.forChild()
-  ]
+  ],
 })
 export class InfraestructuraModule { }

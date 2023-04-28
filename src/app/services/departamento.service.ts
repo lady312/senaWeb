@@ -16,5 +16,9 @@ export class DepartamentoService {
   traerDepartamentos() {
      return this._coreService.get<DepartamentoModel[]>( 'departamentos');
   }
+  traerDepartamento(id:number){
+    const url:string= `departamentos/${id}`;
+    return this._coreService.get<DepartamentoModel>(url);
+  }
 
 }

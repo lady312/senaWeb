@@ -10,7 +10,8 @@ import { UINotificationService } from "@services/uinotification.service";
   styleUrls: ["./jornada.component.scss"],
 })
 export class JornadaComponent {
-  private showModalJornada = false;
+
+  public showModalJornada = false;
 
   jornada: JornadaModel = null;
   jornadas: JornadaModel[] = [];
