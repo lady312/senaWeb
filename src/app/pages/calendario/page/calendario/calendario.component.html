@@ -1,9 +1,15 @@
 <app-list-calendario
   [calendarios]="calendarios"
+  [gruposList]="grupos"
+  [infraestructuras]="infraestructuras"
+  [sedes]="sedes"
   (create)="createCalendario()"
   (create1)="createCalendario2()"
   (create2)="createCalendario3()"
   (create3)="createCalendario4()"
+  (idGrupo)="getGruposJornadaByIdGrupo($event)"
+  (idInfraestructura)="getGruposJornadaByIdInfra($event)"
+  (idSede)="getByIdSede($event)"
 >
 </app-list-calendario>
 

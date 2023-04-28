@@ -13,4 +13,7 @@ export class GrupoJornadaService {
   traerGruposJornada(){
     return this._coreService.get<GrupoJornadaModel[]>('gruposjornada');
   }
+  crearGrupoJornada(grupoJornada:GrupoJornadaModel){
+    return this._coreService.post<GrupoJornadaModel>('gruposjornada',grupoJornada);
+  }
 }

@@ -22,6 +22,7 @@ import { GrupoModel } from "@models/grupo.model";
 import { addDays } from "@fullcalendar/core/internal";
 import { GrupoJornadaModel } from "@models/grupo_jornada.model";
 import { UsuarioModel } from "@models/usuario.model";
+import { SedeModel } from "@models/sede.model";
 
 @Component({
   selector: "view-calendar",
@@ -36,6 +37,8 @@ export class ViewCalendarComponent {
 //grupo y jornada
   @Input() gruposJornadas: GrupoJornadaModel[];
   @Input() listUsers: UsuarioModel[];
+
+  @Input() sedes: SedeModel;
 
   Eventos: EventInput[]=[];
   calendarVisible = true;
@@ -76,7 +79,7 @@ export class ViewCalendarComponent {
       const hEnd:string =gruposJornadas.jornada.horaFinal;
       for (let fecha = fInit; fecha <= fEnd; fecha = addDays(fecha, 1)) {
         const grupo= this.grupos.find(grupo=>(grupo.id==gruposJornadas.idGrupo));
-        //const lider= this.listUsers.find(lider=>(lider.id==grupo.idLider));
+        //const lider= this.listUsers.find(lider=>(lider.id==lider.id));
         Eventos.push({
           id: createEventId(),
           title: gruposJornadas.grupo.nombre,

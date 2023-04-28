@@ -1,5 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CalendarioModel } from '@models/calendario.model';
+import { GrupoModel } from '@models/grupo.model';
+import { InfraestructuraModel } from '@models/infraestructura.model';
+import { SedeModel } from '@models/sede.model';
 
 
 @Component({
@@ -11,6 +14,9 @@ export class ListCalendarioComponent {
 
 
   @Input() calendarios: CalendarioModel[] = [];
+  @Input() gruposList:GrupoModel[] = [];
+  @Input() infraestructuras:InfraestructuraModel[]=[];
+  @Input() sedes: SedeModel[]=[];
 
   @Output() update: EventEmitter<CalendarioModel> = new EventEmitter();
   @Output() delete: EventEmitter<number> = new EventEmitter();
@@ -18,7 +24,10 @@ export class ListCalendarioComponent {
   @Output() create1: EventEmitter<void> = new EventEmitter();
   @Output() create2: EventEmitter<void> = new EventEmitter();
   @Output() create3: EventEmitter<void> = new EventEmitter();
-
+  @Output() idGrupo: EventEmitter<number> = new EventEmitter();
+  @Output() idJornada: EventEmitter<number> = new EventEmitter();
+  @Output() idInfraestructura: EventEmitter<number> = new EventEmitter();
+  @Output() idSede: EventEmitter<number> = new EventEmitter();
 
   numReg = 5;
   pageActual = 0;
@@ -50,4 +59,18 @@ export class ListCalendarioComponent {
   ambientes() {
     this.create3.emit();
   }
+
+  enviarIdGrupo(event:any){
+    const idGrupo:number = event.target.value;
+    this.idGrupo.emit(idGrupo);
+  }
+  enviarIdInfra(event:any){
+    const idInfra:number = event.target.value;
+    this.idInfraestructura.emit(idInfra);
+  }
+  enviarIdSede(event:any){
+    const idSede:number = event.target.value;
+    this.idSede.emit(idSede);
+  }
+
 }

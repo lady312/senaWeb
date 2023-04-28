@@ -24,6 +24,7 @@ import { GrupoJornadaService } from "@services/grupo-jornada.service";
 import { GrupoJornadaModel } from "@models/grupo_jornada.model";
 import { UsuarioService } from "@services/usuario.service";
 import { UsuarioModel } from "@models/usuario.model";
+import { AsignacionJornadaGrupoModel } from "@models/asignacion-jornada-grupo.model";
 
 interface formacion {
   fecha?: Date;
@@ -175,8 +176,55 @@ export class CalendarioComponent implements OnInit {
 
   getUsuarios() {
     this._usuarioService.traerUsuarios().subscribe((usuario) => {
-      this.usuarios=usuario;
+      this.usuarios = usuario;
     });
+  }
+
+
+  getGruposJornadaByIdGrupo(event: number) {
+    const grupo = this.grupos.find((grupo) => grupo.id == event);
+    if (grupo) {
+      this.gruposJornada = this.gruposJornada.filter(
+        (grupoJornada) => grupoJornada.idGrupo == grupo.id
+      );
+    } else {
+      this.getGruposJornada();
+    }
+  }
+  getByIdSede(event: number) {
+    const sede = this.sedes.find((sede) => sede.id == event);
+    if (sede) {
+      this.sedes = this.sedes.filter(
+        (sede) => sede.id == sede.id
+      );
+    } else {
+      this.getGruposJornada();
+    }
+  }
+  getGruposJornadaByIdInfra(event: number) {
+    const infra = this.infraestructuras.find((infra) => infra.id == event);
+    if (infra) {
+      const grupos = this.grupos.filter(
+        (grupo) => grupo.idInfraestructura == infra.id
+      );
+      if (grupos) {
+        let gruposJornada: GrupoJornadaModel[] = [];
+        grupos.forEach((grupo) => {
+          gruposJornada = gruposJornada.concat(
+            this.gruposJornada.filter(
+              (grupoJornada) => grupoJornada.idGrupo == grupo.id
+            )
+          );
+        });
+        if (gruposJornada) {
+          this.gruposJornada = gruposJornada;
+        } else {
+          this.gruposJornada = [];
+        }
+      }
+    } else {
+      this.getGruposJornada();
+    }
   }
 
   createCalendario() {
