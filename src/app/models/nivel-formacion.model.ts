@@ -1,4 +1,4 @@
 export interface NivelFormacionModel {
-  id: number;
+  id?: number;
   nivel?: string;
 }

@@ -17,6 +17,8 @@ import { InfraestructuraModel } from '@models/infraestructura.model';
 import { InfraestructuraService } from '@services/infraestructura.service';
 import { AreaService } from '@services/area.service';
 import { AreaModel } from '@models/area.model';
+import { JornadaService } from '@services/jornada.service';
+import { JornadaModel } from '@models/jornada.model';
 @Component({
   selector: 'app-calendario',
   templateUrl: './calendario.component.html',
@@ -43,6 +45,7 @@ export class CalendarioComponent implements OnInit {
   infraestructura:InfraestructuraModel =null;
   area :AreaModel = null;
 
+  jornada: JornadaModel[]=[];
 
   calendarios1: CalendarioModel[] = [];
   sedes: SedeModel[]=[];
@@ -63,9 +66,8 @@ export class CalendarioComponent implements OnInit {
     private _gruposService : GruposService,
     private _programaService :ProgramaService,
     private _infraestructuraService : InfraestructuraService,
-    private _areaService : AreaService
-
-
+    private _areaService : AreaService,
+    private _jornadaService: JornadaService
   ) { }
 
   ngOnInit(): void {
@@ -88,6 +90,7 @@ this._sedeService.traerSedes()
 })
 
 }
+
 getCiudades(){
   this._ciudadService.traerCiudades()
   .subscribe(ciudades =>{

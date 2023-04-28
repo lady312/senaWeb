@@ -2,10 +2,8 @@ import { Component, Input, OnInit, EventEmitter, Output } from '@angular/core';
 import { EstadoGrupoModel } from '@models/estado-grupo.model';
 import { GrupoModel } from '@models/grupo.model';
 import { InfraestructuraModel } from '@models/infraestructura.model';
-import { JornadaModel } from '@models/jornada.model';
 import { NivelFormacionModel } from '@models/nivel-formacion.model';
 import { ProgramaModel } from '@models/programa.model';
-import { RolModel } from '@models/rol.model';
 import { TipoFormacionModel } from '@models/tipo-formacion.model';
 import { TipoOfertaModel } from '@models/tipo-oferta.model';
 import { TipoGrupoModel } from '@models/tipogrupo.model';
@@ -132,14 +130,23 @@ export class GrupoComponent {
     this.reset();
   }
 
-  guardarInfraestructura(infraestructura: InfraestructuraModel)
-  {
-    this._infraestructuraService.guardarInfraestructura(infraestructura).subscribe(infra => {
-      this.infraestructuras.push(infra);
-      this.guardarInfraestructura(this.infraestructura);
-    })
-    this.reset();
-  }
+  // guardarInfraestructura(infraestructura: InfraestructuraModel)
+  // {
+  //   this._infraestructuraService.guardarInfraestructura(infraestructura).subscribe(infra => {
+  //     this.infraestructuras.push(infra);
+  //     this.guardarInfraestructura(this.infraestructura);
+  //   })
+  //   this.reset();
+  // }
+
+  // guardarNivelFormacion(infraestructura: InfraestructuraModel)
+  // {
+  //   this._nivelFormacion.guardarInfraestructura(infraestructura).subscribe(infra => {
+  //     this.infraestructuras.push(infra);
+  //     this.guardarInfraestructura(this.infraestructura);
+  //   })
+  //   this.reset();
+  // }
 
   reset() {
     this.grupo = null;

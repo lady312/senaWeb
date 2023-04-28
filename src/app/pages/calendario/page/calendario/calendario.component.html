@@ -13,7 +13,6 @@
     *ngIf="showFormSede"
     [sede]="sede"
     [ciudades]="ciudades"
-    [departamentos]="departamentos"
     [title]="'Crear Sede'"
     (store)="guardarSede($event)"
     (cancel)="reset()">
@@ -49,7 +48,6 @@
 
 
 <app-custom-modal
-  size="lg"
   title="Gestionar Infraestructura"
   [(show)]="showFormInfr">
   <app-infraestructura-form
@@ -62,7 +60,8 @@
     (cancel)="reset()">
   </app-infraestructura-form>
 </app-custom-modal>
+<view-calendar
+[jornadas]="jornada"></view-calendar>
 
 <view-calendar>
-
 </view-calendar>

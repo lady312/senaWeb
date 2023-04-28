@@ -1,12 +1,11 @@
-import { JornadaModel } from './jornada.model';
-import { ProgramaModel } from './programa.model';
-import { UsuarioModel } from './usuario.model';
-import { InfraestructuraModel } from './infraestructura.model';
+import { ProgramaModel } from '@models/programa.model';
+import { UsuarioModel } from '@models/usuario.model';
+import { InfraestructuraModel } from '@models/infraestructura.model';
 import { TipoGrupoModel } from '@models/tipogrupo.model';
-import { NivelFormacionModel } from './nivel-formacion.model';
-import { TipoFormacionModel } from './tipo-formacion.model';
-import { TipoOfertaModel } from './tipo-oferta.model';
-import { EstadoGrupoModel } from './estado-grupo.model';
+import { NivelFormacionModel } from '@models/nivel-formacion.model';
+import { TipoFormacionModel } from '@models/tipo-formacion.model';
+import { TipoOfertaModel } from '@models/tipo-oferta.model';
+import { EstadoGrupoModel } from '@models/estado-grupo.model';
 
 export interface GrupoModel {
   id: number;

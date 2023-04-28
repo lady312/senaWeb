@@ -1,21 +1,21 @@
 
 import { Routes } from '@angular/router';
 import { NavegacionModel } from '../models/navegacion.model';
-import { GESTION_MEDIO_PAGO,
-        GESTION_PROCESOS,
-        GESTION_ROLES,
-        GESTION_ROL_PERMISOS,
-        GESTION_TIPO_DOCUMENTOS,
-        GESTION_TIPO_PAGO,
-        GESTION_TIPO_TRANSACCION,
-        GESTION_GRUPO,
-        GESTION_TIPO_GRUPO, GESTION_JORNADA,
-        GESTION_TIPO_PROGRAMAS,
-        GESTION_PROGRAMAS,
-        GESTION_FASES,
-        GESTION_ACTIVIDAD_PROYECTO,
-        GESTION_PROYECTO_FORMATIVO,
-        GESTION_PRO,
+import {  GESTION_MEDIO_PAGO,
+          GESTION_PROCESOS,
+          GESTION_ROLES,
+          GESTION_ROL_PERMISOS,
+          GESTION_TIPO_DOCUMENTOS,
+          GESTION_TIPO_PAGO,
+          GESTION_TIPO_TRANSACCION,
+          GESTION_GRUPO,
+          GESTION_TIPO_GRUPO, GESTION_JORNADA,
+          GESTION_TIPO_PROGRAMAS,
+          GESTION_PROGRAMAS,
+          GESTION_FASES,
+          GESTION_ACTIVIDAD_PROYECTO,
+          GESTION_PROYECTO_FORMATIVO,
+          GESTION_PRO,
           GESTION_SEDE,
           GESTION_AREA,
           GESTION_INFRAESTRUCTURA,
@@ -243,7 +243,6 @@ export const routesNav: Routes = [
     loadChildren: () =>
       import('../pages/usuario/usuario.module').then((m) => m.UsuarioModule),
   },
-
   {
     path: 'add_jornada',
     loadChildren: () =>
@@ -251,7 +250,7 @@ export const routesNav: Routes = [
         (m) => m.JornadaModule
       ),
   },
-{
+  {
     path: 'add_usuarios',
     loadChildren: () => import('../pages/usuario/usuario.module').then(m => m.UsuarioModule)
   },

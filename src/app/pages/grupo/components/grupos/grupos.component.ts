@@ -43,11 +43,11 @@ export class GruposComponent implements OnInit {
 
   public showModalTipoGrupo = false;
   tipoGrupo:                  TipoGrupoModel = null;
-  @Input() programas:         ProgramaModel[] = [];
-  @Input() niveles:           NivelFormacionModel[] = [];
   @Input() tipoGrupos:        TipoGrupoModel[] = [];
   @Input() lideres:           UsuarioModel[] = [];
+  @Input() programas:         ProgramaModel[] = [];
   @Input() infraestructuras:  InfraestructuraModel [] = [];
+  @Input() niveles:           NivelFormacionModel[] = [];
   @Input() tipoFormaciones:   TipoFormacionModel[] = [];
   @Input() estados:           EstadoGrupoModel[] = [];
   @Input() tipoOfertas:       TipoOfertaModel[] = [];
@@ -61,12 +61,11 @@ export class GruposComponent implements OnInit {
     private datePipe: DatePipe, //Fecha
     private cdr: ChangeDetectorRef,
     private _tipoGrupoService: TipoGrupoService, //Servicio TipoGrupo
-    private _programaService: ProgramaService,
-    private _jornadaService: JornadaService,
-    private _infraestructuraService: InfraestructuraService,
     private _liderService: UsuarioService,
-    private _tipoFormacionService: TipoFormacionService,
+    private _programaService: ProgramaService,
+    private _infraestructuraService: InfraestructuraService,
     private _nivelFormacionService: NivelFormacionService,
+    private _tipoFormacionService: TipoFormacionService,
     private _estadoService: EstadoGrupoService,
     private _tipoOfertaService: TipoOfertaService,
     private _uiNotificationService: UINotificationService, //nofitificacion
@@ -110,10 +109,13 @@ export class GruposComponent implements OnInit {
   ngOnInit(): void {
     this.traerTipoGrupos();
     this.traerProgramas();
-    // this.traerJornadas();
+    this.traerNivelesFormacion();
     this.traerInfraestructuras();
+    this.traerTipoFormaciones();
     this.traerLideres();
     this.setGrupo();
+    this.traerEstados();
+    this.traerTipoOfertas();
   }
 
   guardarTipoGrupo(tipoGrupo: TipoGrupoModel) {
