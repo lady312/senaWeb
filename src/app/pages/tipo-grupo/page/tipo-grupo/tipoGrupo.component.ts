@@ -6,11 +6,11 @@ import { UINotificationService } from '@services/uinotification.service';
 
 @Component({
   selector: 'app-tipogrupo',
-  templateUrl: './tipogrupo.component.html',
-  styleUrls: ['./tipogrupo.component.scss']
+  templateUrl: './tipoGrupo.component.html',
+  styleUrls: ['./tipoGrupo.component.scss']
 })
 export class TipogrupoComponent implements OnInit {
-  
+
   public showModalTipoGrupo = false;
 
   @Input() tipoGrupos: TipoGrupoModel[] = [];
@@ -69,5 +69,5 @@ export class TipogrupoComponent implements OnInit {
     this.tipoGrupo = null;
     this.showModalTipoGrupo = false;
   }
- 
+
 }

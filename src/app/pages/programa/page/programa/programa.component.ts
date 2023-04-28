@@ -10,7 +10,7 @@ import { UINotificationService } from '@services/uinotification.service';
 })
 export class ProgramaComponent {
 
-  private showModalPrograma = false;
+  protected showModalPrograma = false;
 
   programa: ProgramaModel = null;
   programas: ProgramaModel[] = [];
@@ -29,7 +29,7 @@ export class ProgramaComponent {
       .subscribe(programa => {
         this.programas = programa;
       }, error => {
-        this._uiNotificationService.error("Error de conexión");
+      this._uiNotificationService.error("Error de conexión");
       });
   }
 

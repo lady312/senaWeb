@@ -21,18 +21,18 @@ export class SedeListComponent{
    @Output() depId = new EventEmitter<number>();
    @Output() ciudadId = new EventEmitter<number>();
    @Output() busqueda = new EventEmitter<SedeModel>();
+   @Output() cancel = new EventEmitter<void>();
 
   departamento:DepartamentoModel;
-  ciudadSelect:boolean=true;
-  nombreSede:string='';
 
   numReg:number=10;
-  pageActual:number=0
+  pageActual:number=0;
+
   constructor(){
     this.ciudades=[];
   }
-  enviarNumeroRegistros(num: number){
-    this.numReg = num;
+  enviarNumeroRegistros(event:any){
+    this.numReg = event.target.value;
   }
   actualizar(sede:SedeModel){
     this.update.emit(sede);
@@ -46,24 +46,53 @@ export class SedeListComponent{
   verInfo(sede:SedeModel){
     this.info.emit(sede);
   }
-  enviarIdDep(idDep:number){
-      if(idDep>0){
-        this.ciudadSelect=false;
+  enviarIdDep(event:any){
+      let idDep:number;
+      if(isNaN(event)){
+        idDep = event.target.value
       }else{
-        this.ciudadSelect=true;
-        this.ciudadId.emit(0);
+        idDep = event;
       }
       this.depId.emit(idDep);
   }
-  enviaridCiudad(idCiudad:number){
+  enviaridCiudad(event:any){
+    let idCiudad:number;
+    if(isNaN(event)){
+      idCiudad = event.target.value
+    }else{
+      idCiudad = event
+    }
     this.ciudadId.emit(idCiudad);
   }
 
   //revisar
-  buscarSede(){
-    const busqueda:SedeModel = this.sedes.find(sede=>
-        sede.nombreSede.toUpperCase()===this.nombreSede.toUpperCase());
-    this.busqueda.emit(busqueda);
+  buscarSede(event:string){
+    let sede:SedeModel;
+    let ciudad:CiudadModel;
+    let departamento:DepartamentoModel;
+    sede = this.sedes.find(sede=>
+      sede.nombreSede.toUpperCase()===event.toUpperCase());
+    if(sede){
+      this.busqueda.emit(sede);
+      return;
+    }
+    ciudad = this.ciudades.find(ciudad=>
+      ciudad.descripcion.toUpperCase()===event.toLocaleUpperCase());
+    if(ciudad){
+      this.ciudadId.emit(ciudad.id);
+      return;
+    }
+    departamento = this.departamentos.find(departamento=>
+      departamento.descripcion.toUpperCase()===event.toUpperCase());
+    if(departamento){
+      this.depId.emit(departamento.id);
+      return;
+    }
+    this.cancel.emit();
+  }
+
+  cancelarBusqueda(){
+    this.cancel.emit();
   }
 
 }

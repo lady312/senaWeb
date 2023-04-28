@@ -44,7 +44,6 @@ export class AddProcesoComponent implements OnInit {
 
 
   get nombreProcesoField() {
-    console.log('holasoy smith');
     return this.formProceso.get('nombreProceso');
   }
 

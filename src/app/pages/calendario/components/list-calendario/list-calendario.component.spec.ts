@@ -1,18 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ListCalendarioComponent } from './list-calendario.component';
 
-import { SedeInfoComponent } from './sede-info.component';
-
-describe('SedeInfoComponent', () => {
-  let component: SedeInfoComponent;
-  let fixture: ComponentFixture<SedeInfoComponent>;
+describe('ListCalendarioComponent', () => {
+  let component: ListCalendarioComponent;
+  let fixture: ComponentFixture<ListCalendarioComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SedeInfoComponent ]
+      declarations: [ ListCalendarioComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(SedeInfoComponent);
+    fixture = TestBed.createComponent(ListCalendarioComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

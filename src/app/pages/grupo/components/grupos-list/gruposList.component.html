@@ -11,16 +11,9 @@
     </div>
     <div class="card-body">
 
-        <div class="container">
-          <div class="row height d-flex justify-content-center align-items-center">
-            <div class="col-md-12">
-              <div class="search">
-                <i class="fa fa-search"></i>
-                <input type="text" class="form-control" type="search" [(ngModel)]="query" name="query" (keyup)="filter()"
-                  placeholder="Busquemos grupos!!!">
-              </div>
-            </div>
-          </div>
+        <div class="input-group mb-3">
+          <input class="form-control" type="search" [(ngModel)]="query" (keyup)="filter()" placeholder="Buscar grupos" aria-label="Buscar grupo">
+          <button class="btn btn-primary" type="button"><i class="cil-search"></i></button>
         </div>
 
       <div class="div table-container">
@@ -28,22 +21,36 @@
           <thead>
             <tr class="table-info text-center">
               <th>Id</th>
+              <th>Programa</th>
+              <th>Nivel formativo</th>
               <th>Nombre del grupo</th>
-              <th style="width: 100px !important;">Fecha de inicio</th>
+              <th>Lider</th>
+              <th>Tipo de formación</th>
+              <th>Estado</th>
+              <th>Tipo de oferta</th>
+              <th>Fecha de inicio</th>
               <th>Fecha de finalización</th>
               <th>Observacion</th>
               <th>Tipo grupo</th>
+              <th>Infraestructura</th>
               <th>Acciones</th>
           </thead>
           <tbody>
             <tr data-aos="fade-up"
               *ngFor="let grupo of gruposFiltrados of grupos | paginate: { itemsPerPage: this.numReg, currentPage: pageActual }">
               <td>{{ grupo.id }}</td>
-              <td>{{ grupo.nombre }}</td>
-              <td>{{ grupo.fechaInicial | date:'d-MMMM-y' }}</td>
+              <td>{{ grupo?.programa?.nombrePrograma || 'Programa no disponible' }}</td>
+              <td>{{ grupo?.nivel?.nivel || 'Nivel de formacion no disponible'}}</td>
+              <td>{{ grupo.nombre || 'Nombre no disponible'}}</td>
+              <td>{{ grupo?.lider.email || 'Lider no disponible ' }}</td>
+              <td>{{ grupo?.tipoFormacion?.nombreTipoFormacion || 'Tipo de formación no disponible'}}</td>
+              <td>{{ grupo?.estado?.estado || 'Estado no disponible'}}</td>
+              <td>{{ grupo?.tipoOferta?.nombreOferta || 'Tipo de oferta no disponible'}}</td>
+              <td>{{ grupo.fechaInicial | date:'d-MMMM-y' || 'Fecha inicial no disponible'}}</td>
               <td>{{ grupo.fechaFinal | date:'d-MMMM-y' }}</td>
               <td>{{ grupo.observacion || 'No se encuentra alguna observación'}}</td>
               <td>{{ grupo?.tipogrupo?.nombreTipoGrupo || 'Tipo de grupo no disponible' }}</td>
+              <td>{{ grupo?.infraestructura?.nombreInfraestructura }}</td>
               <td>
                 <span class="badge badge-primary" style="cursor: pointer;" (click)="actualizar(grupo)">Actualizar</span>
                 <span class="badge badge-danger" style="cursor: pointer;"

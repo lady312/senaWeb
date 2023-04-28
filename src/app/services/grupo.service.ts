@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class GruposService {
-  // tipoDocumento: RolModel;
+  
   private headerCustom?: HttpHeaders;
   permisos: number;
   grupos: any[];
@@ -29,12 +29,38 @@ export class GruposService {
   }
 
   crearGrupo(grupo: GrupoModel) {
-    grupo.nombre       = grupo.nombre.toUpperCase();
-    grupo.fechaInicial = grupo.fechaInicial;
-    grupo.fechaFinal   = grupo.fechaFinal;
-    grupo.observacion  = grupo.observacion.toUpperCase();
-    grupo.idTipoGrupo  = grupo.idTipoGrupo;
-    grupo.tipogrupo    = grupo.tipogrupo;
+    grupo.nombre            = grupo.nombre.toUpperCase();
+    // grupo.fechaInicial      = grupo.fechaInicial;
+    // grupo.fechaFinal        = grupo.fechaFinal;
+    grupo.observacion       = grupo.observacion.toUpperCase();
+
+    // grupo.idTipoGrupo       = grupo.idTipoGrupo;
+    // grupo.tipogrupo         = grupo.tipogrupo;
+
+    // grupo.idLider           = grupo.idLider;
+    // grupo.lider             = grupo.lider;
+
+
+    // grupo.idPrograma        = grupo.idPrograma;
+    // grupo.programa          = grupo.programa;
+    
+
+    // grupo.idInfraestructura = grupo.idInfraestructura;
+    // grupo.infraestructura   = grupo.infraestructura;
+
+    // grupo.idNivel           = grupo.idNivel;
+    // grupo.nivel             = grupo.nivel;
+ 
+
+    // grupo.idTipoFormacion   = grupo.idTipoFormacion;
+    // grupo.tipoFormacion     = grupo.tipoFormacion;
+
+    // grupo.idEstado          = grupo.idEstado;
+    // grupo.estado            = grupo.estado;
+
+    // grupo.idTipoOferta      = grupo.idTipoOferta;
+    // grupo.tipoOferta        = grupo.tipoOferta;
+    
 
     return this._coreService.post<GrupoModel>('grupos', grupo);
   }
@@ -44,11 +70,37 @@ export class GruposService {
   }
 
   actualizarGrupo(grupo: GrupoModel) {
-    grupo.nombre       = grupo.nombre.toUpperCase();
-    grupo.fechaInicial = grupo.fechaInicial;
-    grupo.fechaFinal   = grupo.fechaFinal;
-    grupo.observacion  = grupo.observacion.toUpperCase();
-    grupo.idTipoGrupo  = grupo.idTipoGrupo;
+    grupo.nombre            = grupo.nombre.toUpperCase();
+    // grupo.fechaInicial      = grupo.fechaInicial;
+    // grupo.fechaFinal        = grupo.fechaFinal;
+    grupo.observacion       = grupo.observacion.toUpperCase();
+
+    // grupo.idTipoGrupo       = grupo.idTipoGrupo;
+    // grupo.tipogrupo         = grupo.tipogrupo;
+
+    // grupo.idLider           = grupo.idLider;
+    // grupo.lider             = grupo.lider;
+
+
+    // grupo.idPrograma        = grupo.idPrograma;
+    // grupo.programa          = grupo.programa;
+    
+
+    // grupo.idInfraestructura = grupo.idInfraestructura;
+    // grupo.infraestructura   = grupo.infraestructura;
+
+    // grupo.idNivel           = grupo.idNivel;
+    // grupo.nivel             = grupo.nivel;
+ 
+
+    // grupo.idTipoFormacion   = grupo.idTipoFormacion;
+    // grupo.tipoFormacion     = grupo.tipoFormacion;
+
+    // grupo.idEstado          = grupo.idEstado;
+    // grupo.estado            = grupo.estado;
+
+    // grupo.idTipoOferta      = grupo.idTipoOferta;
+    // grupo.tipoOferta        = grupo.tipoOferta;
     return this._coreService.put('grupos/' + grupo.id, grupo);
   }
 
