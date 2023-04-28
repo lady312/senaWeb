@@ -6,6 +6,7 @@ import { TipoGrupoService } from '@services/tipo-grupo.service';
 import { ActivatedRoute } from '@angular/router';
 import { UINotificationService } from '@services/uinotification.service';
 import { Router } from '@angular/router';
+import { NivelFormacionModel } from '@models/nivel-formacion.model';
 
 @Component({
   selector: 'app-grupos-list',
@@ -18,6 +19,8 @@ export class GruposListComponent {
   obtenergrupo: any;
   grupo: GrupoModel;
   tiposGrupo: TipoGrupoModel[] = [];
+  nivel: NivelFormacionModel[] = [];
+
   private _filters = {};
   selectedRow: any;
   gruposSearch: any[] = [];
@@ -25,7 +28,7 @@ export class GruposListComponent {
   gruposFiltrados: any[] = [];
   query: string;
 
-  @Input() grupos: GrupoModel[] = [];
+  @Input()  grupos: GrupoModel[] = [];
   @Output() update: EventEmitter<GrupoModel> = new EventEmitter();
   @Output() delete: EventEmitter<number> = new EventEmitter();
   @Output() create: EventEmitter<void> = new EventEmitter();
@@ -65,6 +68,15 @@ export class GruposListComponent {
     if (this.grupo && this.grupo.idTipoGrupo) {
       const tipoGrupo = this.tiposGrupo.find(t => t.id === this.grupo.idTipoGrupo);
       return tipoGrupo ? tipoGrupo.nombreTipoGrupo : 'Desconocido';
+    } else {
+      return 'Desconocido';
+    }
+  }
+
+  obtenerNivelFormativo(): string {
+    if (this.grupo && this.grupo.idNivel) {
+      const nivel = this.nivel.find(t => t.id === this.grupo.idNivel);
+      return nivel ? nivel.nivel : 'Desconocido';
     } else {
       return 'Desconocido';
     }

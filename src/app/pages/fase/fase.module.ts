@@ -9,6 +9,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { ComunModule } from '@components/comun.module';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { SelectsModule } from '@components/selects/selects.module';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
     ReactiveFormsModule,
     NgxPaginationModule,
     ComunModule,
-    SweetAlert2Module.forChild()
+    SweetAlert2Module.forChild(),
+    SelectsModule
   ]
 })
 export class FaseModule { }

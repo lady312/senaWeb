@@ -20,6 +20,11 @@
                 <th>Descripción</th>
                 <th>Tipo programa</th>
                 <th>Estado</th>
+                <th>total horas</th>
+                <th>Etapa Lectiva</th>
+                <th>Etapa Productiva</th>
+                <th>Créditos Lectiva</th>
+                <th>Créditos Productiva</th>
                 <th>Acciones</th>
             </thead>
             <tbody>
@@ -30,6 +35,11 @@
                 <td>{{programa.descripcionPrograma}}</td>
                 <td>{{programa.tipoPrograma.nombreTipoPrograma}}</td>
                 <td>{{programa.estado.estado}}</td>
+                <td>{{programa.totalHoras}}</td>
+                <td>{{programa.etapaLectiva}}</td>
+                <td>{{programa.etapaProductiva}}</td>
+                <td>{{programa.creditosLectiva}}</td>
+                <td>{{programa.creditosProductiva}}</td>
                 <td>
                   <span class="badge badge-primary" style="cursor: pointer;"
                     (click)="actualizar(programa)">Actualizar</span>
