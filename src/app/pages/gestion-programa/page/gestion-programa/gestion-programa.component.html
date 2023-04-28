@@ -12,37 +12,54 @@
       
     <div class="card-body">
       <div class="card-header">
-        <strong>Gestion Programa</strong>
+        <strong>Gestión Programa</strong>
       </div>
       <div class="div table-container ">
         <div class="form-group col">
           <label class="col-md-4 col-form-label" for="idPrograma" >Programa</label>
-          <div class="col-md-12">
+          <div class="col-md-11">
             <select class="form-control border-primary form-select" [(ngModel)]="selectedProgramId" (change)="capturarIdPrograma()" (ngModelChange)="filterProjects()">
               <option [ngValue]="null">Seleccionar programa </option>
               <option *ngFor='let programa of programas' [ngValue]="programa.id">{{programa.nombrePrograma}}</option>
             </select>
           </div>
-
+          <button class="btn btn-success rounded-circle m-3"  style="position: relative; left: 90%; top: -51px;" (click)="agregar()">+</button>
           <div class="invalid-feedback">
             por favor ingresé un valor válido para programa
           </div><br>
+          <app-custom-modal title="Gestión tipo Programa"
+      [(show)]="showModalProgramas">
+      <app-add-programa
+        [programa]="programa"
+        (store)="guardarProgramas($event)"
+        (cancel)="reset()">
+      </app-add-programa>
+    </app-custom-modal>
+
 
           <table class="table table-striped table-hover table-responsive" *ngIf="selectedProgram">
             <tbody>
               <tr>
                 <th scope="row">Nombre:</th><td>{{selectedProgram.nombrePrograma}}</td>
                 <th scope="row">Código:</th><td>{{selectedProgram.codigoPrograma}}</td>
+                <th scope="row">Tipo Programa:</th><td>{{selectedProgram.tipoPrograma.nombreTipoPrograma}}</td>
               </tr>
              
               <tr>
-                <th scope="row">Tipo Programa:</th><td>{{selectedProgram.tipoPrograma.nombreTipoPrograma}}</td>
                 <th scope="row">Estado:</th><td>{{selectedProgram.estado.estado}}</td>
+                <th scope="row">Total Horas:</th><td>{{selectedProgram.totalHoras}}</td>
+                <th scope="row">Etapa Lectiva:</th><td>{{selectedProgram.etapaLectiva}}</td>
               </tr>
              
+              <tr>
+                <th scope="row">Etapa Productiva:</th><td>{{selectedProgram.etapaProductiva}}</td>
+                <th scope="row">Creditos Lectiva:</th><td>{{selectedProgram.creditosLectiva}}</td>
+                <th scope="row">Creditos Productiva:</th><td>{{selectedProgram.creditosProductiva}}</td>
+              </tr>
               <tr>
                 <th scope="row">Descripción:</th><td>{{selectedProgram.descripcionPrograma}}</td>
-                <th></th><th></th>
+                <th></th><td></td>
+                <th></th><td></td>
               </tr>
             </tbody>
           </table>
@@ -62,11 +79,13 @@
               <tr>
                 <th scope="row">Nombre:</th><td>{{selectedProyecto.nombre}}</td>
                 <th scope="row">Código:</th><td>{{selectedProyecto.codigo}}</td>
+                <th scope="row">programa:</th><td>{{selectedProyecto.Programas.nombrePrograma}}</td>
               </tr>
              
               <tr>
-                <th scope="row">programa:</th><td>{{selectedProyecto.Programas.nombrePrograma}}</td>
-                <th scope="row"></th><td></td>
+                <th scope="row">Tiempo Estimado:</th><td>{{selectedProyecto.tiempoEstimado}}</td>
+                <th scope="row">N° Total Raps:</th><td>{{selectedProyecto.numeroTotalRaps}}</td>
+                <th scope="row">Centro Formación:</th><td>{{selectedProyecto.idCentroFormacion}}</td>
               </tr>
              
             </tbody>

@@ -13,13 +13,17 @@ import { TipoProgramaService } from '@services/tipo-programa.service';
 })
 export class AddProgramaComponent implements OnInit {
 
+  @Input() tipoPrograma: TipoProgramaModel ;//actualizar
+  @Input() tipoProgramas: TipoProgramaModel [] = [];
   @Input() programa: ProgramaModel;//actualizar
-
   @Output() store: EventEmitter<ProgramaModel> = new EventEmitter();
   @Output() cancel: EventEmitter<void> = new EventEmitter();
-
+  @Output() create: EventEmitter<void> = new EventEmitter();
   formPrograma: UntypedFormGroup;
-  tipoProgramas: TipoProgramaModel[] = [];
+  formTipoProgramas: UntypedFormGroup;
+  showModalTipoProgramas = false;
+  TipoPrograma: TipoProgramaModel = null; 
+
 
   constructor(
     private formBuilder: UntypedFormBuilder,
@@ -32,15 +36,93 @@ export class AddProgramaComponent implements OnInit {
       codigoPrograma: '',
       descripcionPrograma:'',
       idTipoPrograma:null,
-      idEstado:1
-
+      idEstado:1,
+      totalHoras:null,
+      etapaLectiva:null,
+      etapaProductiva:null,
+      creditosLectiva:null,
+      creditosProductiva:null
     };
     this.buildForm();
+
+    this.tipoPrograma = {
+      id:null,
+      nombreTipoPrograma:'',
+      descripcion:''
+    };
+    this.buildForms();
   }
 
+  get nombreTipoProgramaField() {
+    return this.formTipoProgramas.get('nombreTipoPrograma');
+  }
+
+  get descripcionField() {
+    return this.formTipoProgramas.get('descripcion');
+  }
+
+  setTipoProgramas() {
+    if (this.tipoPrograma) {
+      this.formTipoProgramas.patchValue({
+        nombreTipoPrograma: this.tipoPrograma.nombreTipoPrograma,
+        descripcion: this.tipoPrograma.descripcion
+      })
+    }
+  }
+
+  private buildForms() {
+    this.formTipoProgramas = this.formBuilder.group({
+      id: [0],
+      nombreTipoPrograma: ['', [Validators.required]],
+      descripcion: ['', [Validators.required]],
+    });
+
+    this.formTipoProgramas.valueChanges
+      .pipe(
+        debounceTime(350),
+      )
+      .subscribe(data => {
+      });
+  }
+
+  guardarTipoProgramas(tipoPrograma: TipoProgramaModel) {
+
+    this.TipoProgramaService.crearTipoPrograma(tipoPrograma).subscribe(tipoPrograma => {
+      this.tipoProgramas.push(tipoPrograma);
+      this.reset();
+    });
+  }
+
+  closeModals() {
+    this.cancel.emit();
+  }
+
+  private getControls(nombreTipoPrograma: string) {
+    return this.formTipoProgramas.controls[nombreTipoPrograma];
+  }
+
+  getTipoProgramas(): TipoProgramaModel {
+    return {
+      id: this.tipoPrograma?.id,
+      descripcion: this.getControls('descripcion').value,
+      nombreTipoPrograma: this.getControls('nombreTipoPrograma').value
+    }
+  }
+
+  reset() {
+    this.TipoPrograma = null;
+    this.showModalTipoProgramas = false;
+  }
+
+  agregar(){
+    this.showModalTipoProgramas = true;
+    this.create.emit;
+  }
+  
+  // ----------------------------------------------------------------------------
   ngOnInit(): void {
     this.traerTipoPrograma();
-    this.setPrograma()
+    this.setPrograma();
   }
 
   traerTipoPrograma() {
@@ -66,15 +148,40 @@ export class AddProgramaComponent implements OnInit {
   get idTipoPrograma() {
     return this.formPrograma.get('idTipoPrograma');
   }
-  
 
+  get totalHoras() {
+    return this.formPrograma.get('totalHoras');
+  }
+
+  get etapaLectiva() {
+    return this.formPrograma.get('etapaLectiva');
+  }
+  
+  get etapaProductiva() {
+    return this.formPrograma.get('etapaProductiva');
+  }
+
+  get creditosLectiva() {
+    return this.formPrograma.get('creditosLectiva');
+  }
+
+  get creditosProductiva() {
+    return this.formPrograma.get('creditosProductiva');
+  }
+
+  
   setPrograma() {
     if (this.programa) {
       this.formPrograma.patchValue({
         nombrePrograma: this.programa.nombrePrograma,
         codigoPrograma: this.programa.codigoPrograma,
         descripcionPrograma: this.programa.descripcionPrograma,
-        idTipoPrograma: this.programa.idTipoPrograma
+        idTipoPrograma: this.programa.idTipoPrograma,
+        totalHoras:this.programa.totalHoras,
+        etapaLectiva:this.programa.etapaLectiva,
+        etapaProductiva:this.programa.etapaProductiva,
+        creditosLectiva:this.programa.creditosLectiva,
+        creditosProductiva:this.programa.creditosProductiva
       })
     }
   }
@@ -85,14 +192,19 @@ export class AddProgramaComponent implements OnInit {
       nombrePrograma: ['', [Validators.required]],
       codigoPrograma: ['', [Validators.required]],
       descripcionPrograma: ['', [Validators.required]],
-      idTipoPrograma: ['', [Validators.required]]
+      idTipoPrograma: ['', [Validators.required]],
+      totalHoras:['', [Validators.required]],
+      etapaLectiva:['', [Validators.required]],
+      etapaProductiva:['', [Validators.required]],
+      creditosLectiva:['', [Validators.required]],
+      creditosProductiva:['', [Validators.required]]
     });
 
     this.formPrograma.valueChanges
       .pipe(
         debounceTime(350),
       )
-      .subscribe(data => {
+      .subscribe((data) => {
       });
   }
 
@@ -115,7 +227,12 @@ export class AddProgramaComponent implements OnInit {
       nombrePrograma: this.getControl('nombrePrograma').value,
       codigoPrograma: this.getControl('codigoPrograma').value,
       descripcionPrograma: this.getControl('descripcionPrograma').value,
-      idEstado: 1
+      idEstado: 1,
+      totalHoras:this.getControl('totalHoras').value,
+      etapaLectiva:this.getControl('etapaLectiva').value,
+      etapaProductiva:this.getControl('etapaProductiva').value,
+      creditosLectiva:this.getControl('creditosLectiva').value,
+      creditosProductiva:this.getControl('creditosProductiva').value,
     }
   }
 }

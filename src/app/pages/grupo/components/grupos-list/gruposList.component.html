@@ -40,16 +40,16 @@
               *ngFor="let grupo of gruposFiltrados of grupos | paginate: { itemsPerPage: this.numReg, currentPage: pageActual }">
               <td>{{ grupo.id }}</td>
               <td>{{ grupo?.programa?.nombrePrograma || 'Programa no disponible' }}</td>
-              <td>{{ grupo?.nivel?.nivel || 'Nivel de formacion no disponible'}}</td>
+              <td>{{ grupo.nivel_formacion?.nivel }}</td>
               <td>{{ grupo.nombre || 'Nombre no disponible'}}</td>
-              <td>{{ grupo?.lider.email || 'Lider no disponible ' }}</td>
-              <td>{{ grupo?.tipoFormacion?.nombreTipoFormacion || 'Tipo de formación no disponible'}}</td>
-              <td>{{ grupo?.estado?.estado || 'Estado no disponible'}}</td>
-              <td>{{ grupo?.tipoOferta?.nombreOferta || 'Tipo de oferta no disponible'}}</td>
+              <td>{{ grupo?.lider.persona.nombre1 || 'Lider no disponible ' }}</td>
+              <td>{{ grupo?.tipo_formacion?.nombreTipoFormacion || 'Tipo de formación no disponible'}}</td>
+              <td>{{ grupo?.estado_grupo.nombreEstado || 'Estado no disponible'}}</td>
+              <td>{{ grupo?.tipo_oferta?.nombreOferta || 'Tipo de oferta no disponible'}}</td>
               <td>{{ grupo.fechaInicial | date:'d-MMMM-y' || 'Fecha inicial no disponible'}}</td>
               <td>{{ grupo.fechaFinal | date:'d-MMMM-y' }}</td>
               <td>{{ grupo.observacion || 'No se encuentra alguna observación'}}</td>
-              <td>{{ grupo?.tipogrupo?.nombreTipoGrupo || 'Tipo de grupo no disponible' }}</td>
+              <td>{{ grupo.tipo_grupo.nombreTipoGrupo || 'Tipo de grupo no disponible' }}</td>
               <td>{{ grupo?.infraestructura?.nombreInfraestructura }}</td>
               <td>
                 <span class="badge badge-primary" style="cursor: pointer;" (click)="actualizar(grupo)">Actualizar</span>
