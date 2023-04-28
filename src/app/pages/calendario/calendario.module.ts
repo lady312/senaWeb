@@ -10,11 +10,14 @@ import { InfraestructuraModule } from '../infraestructura/infraestructura.module
 import { ProgramaModule } from '../programa/programa.module';
 import { CalendarioComponent } from './page/calendario/calendario.component';
 import { ListCalendarioComponent } from './components/list-calendario/list-calendario.component';
+import { FullCalendarModule } from '@fullcalendar/angular';
+import { ViewCalendarComponent } from './components/view-calendar/view-calendar.component';
 
 @NgModule({
   declarations: [
     CalendarioComponent,
-    ListCalendarioComponent
+    ListCalendarioComponent,
+    ViewCalendarComponent
   ],
   imports: [
     CommonModule,
@@ -25,7 +28,8 @@ import { ListCalendarioComponent } from './components/list-calendario/list-calen
     SedeModule,
     GrupoModule,
     InfraestructuraModule,
-    ProgramaModule
+    ProgramaModule,
+    FullCalendarModule
   ]
 })
 export class CalendarioModule { }
