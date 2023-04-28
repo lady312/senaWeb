@@ -3,8 +3,8 @@ import { TipoGrupoModel } from '@models/tipogrupo.model';
 
 @Component({
   selector: 'app-tipogrupos-list',
-  templateUrl: './tipogrupos-list.component.html',
-  styleUrls: ['./tipogrupos-list.component.scss']
+  templateUrl: './tipoGrupos-list.component.html',
+  styleUrls: ['./tipoGrupos-list.component.scss']
 })
 export class TipogruposListComponent {
 

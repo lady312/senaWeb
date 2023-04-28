@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
-import { RegionalModel } from '@models/regional.model';
+import { RegionalModel } from '@models/RegionalModel';
 import { UINotificationService } from '@services/uinotification.service';
 import { debounceTime } from 'rxjs/operators';
 

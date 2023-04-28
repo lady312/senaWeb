@@ -25,6 +25,9 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
     NgxPaginationModule,
     ComunModule,
     SweetAlert2Module.forChild(),
+  ],
+  exports:[
+    AddProgramaComponent
   ]
 })
 export class ProgramaModule { }

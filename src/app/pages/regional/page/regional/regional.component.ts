@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { RegionalModel } from '@models/regional.model';
+import { RegionalModel } from '@models/RegionalModel';
 import { RegionalService } from '@services/regional.service';
 import { UINotificationService } from '@services/uinotification.service';
 

@@ -23,6 +23,11 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
     ComunModule,
     NgxPaginationModule,
     ReactiveFormsModule
-  ]
+  ],
+  exports: [
+    AddCentroFormacionComponent,
+    ListCentroFormacionComponent,
+    CentroFormacionComponent
+  ],
 })
 export class CentroFormacionModule { }

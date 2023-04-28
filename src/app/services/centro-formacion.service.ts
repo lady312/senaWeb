@@ -13,24 +13,24 @@ export class CentroFormacionService {
   ) { }
 
   public traerCentroFormacion() {
-    return this._coreService.get<CentroFormacionModel[]>('centro-formacion');
+    return this._coreService.get<CentroFormacionModel[]>('centroFormacion');
   }
 
 
   crearCentroFormacion(centroFormacionModel: CentroFormacionModel) {
     centroFormacionModel.nombreCentro= centroFormacionModel.nombreCentro.toUpperCase();
     centroFormacionModel.idRegional = centroFormacionModel.idRegional;
-    return this._coreService.post<CentroFormacionModel>('centro-formacion', centroFormacionModel);
+    return this._coreService.post<CentroFormacionModel>('centroFormacion', centroFormacionModel);
   }
 
 
   eliminarCentroFormacion(centroFormacionId: number) {
-    return this._coreService.delete('centro_formacion/' + centroFormacionId);
+    return this._coreService.delete('centroFormacion/' + centroFormacionId);
   }
 
   
   actualizarCentroFormacion(centroFormacion: CentroFormacionModel) {
     centroFormacion.nombreCentro = centroFormacion.nombreCentro.toUpperCase();
-    return this._coreService.put('centro_formacion/' + centroFormacion.id, centroFormacion);
+    return this._coreService.put('centroFormacion/' + centroFormacion.id, centroFormacion);
   }
 }

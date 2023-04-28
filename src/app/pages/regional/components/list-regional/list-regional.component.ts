@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { RegionalModel } from '@models/regional.model';
+import { RegionalModel } from '@models/RegionalModel';
 
 @Component({
   selector: 'app-list-regional',

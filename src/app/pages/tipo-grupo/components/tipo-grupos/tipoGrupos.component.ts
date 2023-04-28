@@ -8,8 +8,8 @@ import { GrupoModel } from '@models/grupo.model';
 
 @Component({
   selector: 'app-tipogrupos',
-  templateUrl: './tipogrupos.component.html',
-  styleUrls: ['./tipogrupos.component.scss'],
+  templateUrl: './tipoGrupos.component.html',
+  styleUrls: ['./tipoGrupos.component.scss'],
 })
 
 export class TipogruposComponent{
@@ -83,5 +83,5 @@ export class TipogruposComponent{
       nombreTipoGrupo: this.getControl('nombreTipoGrupo').value,
     }
   }
-  
+
 }

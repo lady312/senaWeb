@@ -16,6 +16,16 @@ import { UINotificationService } from '@services/uinotification.service';
 })
 export class InfraestructuraComponent implements OnInit{
 
+  //Almacena consultas previas para evitar que se hagan demaciadas consultas
+  private cache = new Map<number, {
+    areas:AreaModel[],
+    sedes:SedeModel[],
+    infrsSedeArea:Map<number,
+      Map<number,{
+        infrs:InfraestructuraModel[]
+      }>> 
+  }>();
+
   protected showFormInfr:boolean = false;
   protected formTitle:string;
   protected showInfoInfr:boolean = false;
@@ -38,59 +48,244 @@ export class InfraestructuraComponent implements OnInit{
   ){}
 
   ngOnInit(): void {
+    this.iniciarCache();
     this.getInfraestructuras();
     this.getCiudades();
     this.getAreas();
+    this.getSedes();
   }
-
+  iniciarCache(){
+    this.cache.set(0,{
+      areas:null,
+      sedes:null,
+      infrsSedeArea:new Map<number, 
+        Map<number,{
+          infrs:InfraestructuraModel[]
+        }>>()});
+    this.cache.get(0).infrsSedeArea.set(0,new Map<number,{
+      infrs:InfraestructuraModel[]}>());
+    this.cache.get(0).infrsSedeArea.get(0).set(0,{infrs:null});
+  }
   getInfraestructuras(){
-    this._infraestructuraService.traerInfraestructuras().subscribe(infrs=>{
-      this.infreaestructuras=infrs;
-    },error=>{
-      this._uiNotificationService.error('Error de Conexión');
-    });
+    const cacheInfrs:InfraestructuraModel[] = this.cache.get(0).infrsSedeArea.get(0).get(0).infrs;
+    if(cacheInfrs){
+      if(this.infreaestructuras!==cacheInfrs){
+        this.infreaestructuras=cacheInfrs;
+      }
+    }else{
+      this._infraestructuraService.traerInfraestructuras().subscribe(infrs=>{
+        this.infreaestructuras=infrs;
+        this.cache.get(0).infrsSedeArea.get(0).get(0).infrs=this.infreaestructuras;
+      },error=>{
+        this._uiNotificationService.error('Error de Conexión');
+      });
+    }
+ 
   }
 
   getCiudades(){
     this._ciudadService.traerCiudades().subscribe(ciudades=>{
       this.ciudades=ciudades;
+    },error=>{
+      this._uiNotificationService.error('Error de conexión ciudades')
     });
   }
-  getSedesByCiudad(idCiudad:number){
-    this._sedeService.sedesByCiudad(idCiudad).subscribe(sedes=>{
-      if(sedes){
-        this.sedes=sedes;
-      }else{
-        this.sedes=[];
-      }
-    })
-  }
-  getAreas(){
-    this._areaService.traerAreas().subscribe(areas=>{
-      this.areas=areas;
-    });
-  }
-  filtrarInfraestructuras(SedeArea:{idSede:number,idArea:number}){
-    const idSede:number=SedeArea.idSede;
-    const porSede:boolean = (idSede > 0);
-    const idArea:number = SedeArea.idArea;
-    const porArea:boolean = ( idArea> 0);
-    if(porSede && porArea){
-      this._infraestructuraService.infrBySedeArea(idSede,idArea).subscribe(infrs=>{
-        this.infreaestructuras=infrs;
-      });
-    }else if(porSede){
-      this._infraestructuraService.infrBySede(idSede).subscribe(infrs=>{
-        this.infreaestructuras=infrs;
-      });
-    }else if(porArea){
-      if(this.sedes){
-        this._infraestructuraService.infrByArea(idArea).subscribe(infrs=>{
-          this.infreaestructuras=infrs;
-        });
+  getSedes(){
+    const cacheSedes:SedeModel[]=this.cache.get(0).sedes;
+    if(cacheSedes){
+      if(this.sedes!==cacheSedes){
+        this.sedes=cacheSedes;
       }
     }else{
+      this._sedeService.traerSedes().subscribe(sedes=>{
+        this.sedes=sedes;
+        this.cache.get(0).sedes=this.sedes;
+      },error=>{
+        this._uiNotificationService.error('Error de conexión sedes');
+      });
+    }
+
+  }
+  getAreas(){
+    const cacheAreas:AreaModel[]=this.cache.get(0).areas;
+    if(cacheAreas){
+      if(this.areas!==cacheAreas){
+        this.areas=cacheAreas;
+      }
+    }else{
+      this._areaService.traerAreas().subscribe(areas=>{
+        this.areas=areas;
+        this.cache.get(0).areas=this.areas;
+      },error=>{
+        this._uiNotificationService.error('Error de conexión areas');
+      });
+    }
+  }
+  getSedesByCiudad(idCiudad:number){
+    this.getSedes();
+    this.getInfraestructuras();
+    const ciudad:CiudadModel=this.ciudades.find(ciudad=>ciudad.id==idCiudad);
+    if(ciudad){
+      const cacheCiudad = this.cache.get(idCiudad);
+      if(cacheCiudad){
+        this.sedes = cacheCiudad.sedes;
+        this.infreaestructuras = cacheCiudad.infrsSedeArea.get(0).get(0).infrs;
+      }else{
+        const sedes:SedeModel[] = this.sedes.filter(sede=>(sede.idCiudad==idCiudad));
+        let infrs:InfraestructuraModel[]=[];
+        sedes.forEach(sede=>{
+          infrs=infrs.concat(this.infreaestructuras.filter(infr=>(infr.idSede==sede.id)));
+        });
+        if(infrs){
+          this.infreaestructuras=infrs;
+        }else{
+          this.infreaestructuras=[];
+        }
+        this.sedes=sedes;
+        this.cache.set(idCiudad,{sedes:this.sedes,areas:this.areas,infrsSedeArea:new Map<number,Map<number,{infrs:InfraestructuraModel[]}>>()});
+        this.cache.get(idCiudad).infrsSedeArea.set(0,new Map<number,{infrs:InfraestructuraModel[]}>());
+        this.cache.get(idCiudad).infrsSedeArea.get(0).set(0,{infrs:this.infreaestructuras});
+      }
+    }else{
+      this.sedes=this.cache.get(0).sedes;
+      this.infreaestructuras=this.cache.get(0).infrsSedeArea.get(0).get(0).infrs;
+    }
+  }
+
+  filtrarInfraestructuras(SedeArea:{idSede:number,idArea:number}){
+    this.getInfraestructuras();
+    this.getSedes();
+    const sede:SedeModel = this.sedes.find(sede=>(sede.id==SedeArea.idSede));
+    const area:AreaModel = this.areas.find(area=>(area.id==SedeArea.idArea));
+    if(sede && area){
+      this.filtrarPorSedeYArea(sede,area);
+    }else if(sede){
+      this.filtrarPorsede(sede);
+    }else if(area){
+      this.filtrarPorArea(area);
+    }else{
       this.getInfraestructuras();
+    }
+  }
+  filtrarPorSedeYArea(sede:SedeModel,area:AreaModel){
+    const idCiudad:number = sede.idCiudad;
+    const cacheCiudad = this.cache.get(idCiudad);
+    if(cacheCiudad){
+      const cacheSede = cacheCiudad.infrsSedeArea.get(sede.id);
+      if(cacheSede){
+        const cacheArea = cacheSede.get(area.id);
+        if(cacheArea){
+          const cacheInfrs = cacheArea.infrs;
+          if(this.infreaestructuras!==cacheInfrs){
+            this.infreaestructuras=cacheInfrs;
+          }
+        }else{
+          const infrs = this.infreaestructuras.filter(infr=>
+            (infr.idSede==sede.id)&&(infr.idArea==area.id));
+          if(infrs){
+            this.infreaestructuras=infrs;
+          }else{
+            this.infreaestructuras=[];
+          }
+          this.cache.get(idCiudad).sedes=this.sedes;
+          this.cache.get(idCiudad).areas=this.areas;
+          this.cache.get(idCiudad).infrsSedeArea
+              .get(sede.id).set(area.id,{infrs:this.infreaestructuras});
+        }
+      }else{
+        const infrs = this.infreaestructuras.filter(infr=>
+          (infr.idSede==sede.id)&&(infr.idArea==area.id));
+        if(infrs){
+          this.infreaestructuras=infrs;
+        }else{
+          this.infreaestructuras=[];
+        }
+        this.cache.get(idCiudad).sedes=this.sedes;
+        this.cache.get(idCiudad).areas=this.areas;
+        this.cache.get(idCiudad).infrsSedeArea
+            .set(sede.id,new Map<number,{infrs:InfraestructuraModel[]}>())
+        this.cache.get(idCiudad).infrsSedeArea
+            .get(sede.id).set(area.id,{infrs:this.infreaestructuras});
+      }
+    }else{
+      const infrs = this.infreaestructuras.filter(infr=>
+        (infr.idSede==sede.id)&&(infr.idArea==area.id));
+      if(infrs){
+        this.infreaestructuras=infrs;
+      }else{
+        this.infreaestructuras=[];
+      }
+      this.cache.set(idCiudad,{
+        areas:this.areas,
+        sedes:this.sedes,
+        infrsSedeArea:new Map<number,
+        Map<number,{infrs:InfraestructuraModel[]}>>()
+      })
+      this.cache.get(idCiudad).infrsSedeArea
+          .set(sede.id,new Map<number,{infrs:InfraestructuraModel[]}>())
+      this.cache.get(idCiudad).infrsSedeArea
+          .get(sede.id).set(area.id,{infrs:this.infreaestructuras});
+    }
+  }
+  filtrarPorsede(sede:SedeModel){
+    const idCiudad:number = sede.idCiudad;
+    const cacheCiudad = this.cache.get(idCiudad);
+    if(cacheCiudad){
+      const cacheSede = cacheCiudad.infrsSedeArea.get(sede.id);
+      if(cacheSede){
+        const cacheInfrs = cacheSede.get(0).infrs;
+        if(this.infreaestructuras!==cacheInfrs){
+          this.infreaestructuras=cacheInfrs;
+        }
+      }else{
+        const infrs = this.infreaestructuras.filter(infr=>
+          infr.idSede==sede.id);
+        if(infrs){
+          this.infreaestructuras=infrs;
+        }else{
+          this.infreaestructuras=[];
+        }
+        this.cache.get(idCiudad).infrsSedeArea.set(sede.id,
+          new Map<number,{infrs:InfraestructuraModel[]}>());
+        this.cache.get(idCiudad).infrsSedeArea.get(sede.id)
+            .set(0,{infrs:this.infreaestructuras});
+      }
+    }else{
+      const infrs = this.infreaestructuras.filter(infr=>
+        infr.idSede==sede.id);
+      if(infrs){
+        this.infreaestructuras=infrs;
+      }else{
+        this.infreaestructuras=[];
+      }
+      this.cache.set(idCiudad,{
+        areas:this.areas,
+        sedes:this.sedes,
+        infrsSedeArea:new Map<number,Map<number,{infrs:InfraestructuraModel[]}>>()
+      });
+      this.cache.get(idCiudad).infrsSedeArea.set(sede.id,
+        new Map<number,{infrs:InfraestructuraModel[]}>());
+      this.cache.get(idCiudad).infrsSedeArea.get(sede.id)
+          .set(0,{infrs:this.infreaestructuras});
+    }
+  }
+  filtrarPorArea(area:AreaModel){
+    const cacheArea = this.cache.get(0).infrsSedeArea.get(0).get(area.id);
+    if(cacheArea){
+      const cacheInfrs = cacheArea.infrs
+      if(this.infreaestructuras!==cacheInfrs){
+        this.infreaestructuras=cacheInfrs;
+      }
+    }else{
+      const infrs=this.infreaestructuras.filter(infr=>
+        infr.idArea==area.id
+      );
+      if(infrs){
+        this.infreaestructuras=infrs;
+      }else{
+        this.infreaestructuras=[];
+      }
+      this.cache.get(0).infrsSedeArea.get(0).set(area.id,{infrs:this.infreaestructuras});
     }
   }
   eliminarInfraestructura(event:number){
@@ -102,10 +297,6 @@ export class InfraestructuraComponent implements OnInit{
     this.formTitle = 'Editar Infraestructura';
     this.infraestructura = event;
     this.showFormInfr = true;
-  }
-  crearInfraestructura(){
-    this.formTitle = 'Añadir infraestructura';
-    this.showFormInfr =true;
   }
   guardarInfraestructura(event:InfraestructuraModel){
     if(event.id){
@@ -119,6 +310,10 @@ export class InfraestructuraComponent implements OnInit{
         this.reset();
       });
     }
+  }
+  crearInfraestructura(){
+    this.formTitle = 'Añadir infraestructura';
+    this.showFormInfr =true;
   }
   verInfoInfraestructura(event:InfraestructuraModel){
     this.infraestructura = event;

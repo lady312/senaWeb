@@ -1,6 +1,8 @@
 import { Component,EventEmitter,Input,OnInit, Output } from '@angular/core';
 import { ProgramaModel } from '@models/programa.model';
+import { ProyectoFormativoModel } from '@models/proyecto-formativo.model ';
 import { ProgramaService } from '@services/programa.service';
+import { ProyectoFormativoService } from '@services/proyecto-formativo.service';
 import { UINotificationService } from '@services/uinotification.service';
 
 @Component({
@@ -10,9 +12,14 @@ import { UINotificationService } from '@services/uinotification.service';
 })
 export class GestionProgramaComponent  implements OnInit{
   selectedProgram: ProgramaModel;
+  selectedProyecto: ProyectoFormativoModel;
   selectedProgramId: number;
+  selectedProyectoId: number;// lista de proyectos formativos disponibles
+  filteredProjects: ProyectoFormativoModel[] = []; // lista de proyectos formativos filtrados según el programa seleccionado
+
 
   @Input() programas: ProgramaModel[] = [];
+  @Input() proyectos: ProyectoFormativoModel[] = [];
 
   @Output() update: EventEmitter<ProgramaModel> = new EventEmitter();
   @Output() delete: EventEmitter<number> = new EventEmitter();
@@ -22,6 +29,7 @@ export class GestionProgramaComponent  implements OnInit{
 
   constructor(
     private programaService: ProgramaService,
+    private proyectoFormativoService: ProyectoFormativoService,
     private _uiNotificationService: UINotificationService
   ){
 
@@ -29,8 +37,21 @@ export class GestionProgramaComponent  implements OnInit{
 
   ngOnInit():void {
     this.traerPrograma();
+    this.traerProyectoFormativo(Number);
   }
- 
+
+  //traer proyecto formativo
+  traerProyectoFormativo(capturarId){
+    this.proyectoFormativoService.traerProyecto()
+    .subscribe((proyecto:ProyectoFormativoModel[])=>{
+      this.proyectos = proyecto;
+    }, error=>{
+      this._uiNotificationService.error('Error de conexión')
+    });
+  }
+
+
+  //traer programa
   traerPrograma() {
     this.programaService.traerProgramas()
       .subscribe((programa: ProgramaModel[]) => {
@@ -41,14 +62,21 @@ export class GestionProgramaComponent  implements OnInit{
   }
 
 
-  capturarId(){
+  capturarIdPrograma(){
     this.selectedProgram = this.programas.find(program => program.id === this.selectedProgramId);
+  }
+
+  capturarIdProyecto(){
+    this.selectedProyecto = this.proyectos.find(proyecto => proyecto.id === this.selectedProyectoId);
+  }
+
+  filterProjects() {
+    this.filteredProjects = this.proyectos.filter(project => project.idPrograma === this.selectedProgramId);
   }
 
 
   enviarNumeroRegistros(id: number) {
     this.numReg = id;
-    console.log(id,'puto id');
   }
 
   agregar() {

@@ -14,6 +14,13 @@ import { UINotificationService } from '@services/uinotification.service';
 })
 export class SedeComponent implements OnInit{
 
+  //Almacena consultas previas para evitar que se hagan demaciadas consultas
+  private cache = new Map<number, { 
+    ciudades: CiudadModel[], 
+    sedesPorCiudad: Map<number, { 
+      sedes: SedeModel[] }> 
+  }>();
+
   protected showFormSede:boolean = false;
   protected formTitle:string;
   protected showInfoSede:boolean = false;
@@ -32,58 +39,141 @@ export class SedeComponent implements OnInit{
     private _departamentoService: DepartamentoService,
     private _ciudadService: CiudadService
   ){}
-
   ngOnInit():void{
+    this.iniciarCache();
     this.getSedes();
+    this.getCiudades();
     this.getDepartametos();
   }
+  iniciarCache(){
+    this.cache.set(0, { 
+      ciudades: null, 
+      sedesPorCiudad: new Map<number, { 
+        sedes: SedeModel[] 
+    }>() });
+  }
   getSedes(){
-    this._sedeService.traerSedes().subscribe(sedes=>{
-      this.sedes=sedes;
-    },error=>{
-      this._uiNotificationService.error("Error de Conexión");
-    })
+    const sedesPorCiudad = this.cache.get(0).sedesPorCiudad.get(0);
+    if(sedesPorCiudad && sedesPorCiudad.sedes){
+      const cacheSedes:SedeModel[]=sedesPorCiudad.sedes
+      if(this.sedes!==cacheSedes){
+        this.sedes=cacheSedes;
+      }
+    }else{
+      this._sedeService.traerSedes().subscribe(sedes=>{
+        this.sedes=sedes;
+        this.cache.get(0).sedesPorCiudad.set(0,{sedes:this.sedes});
+      },error=>{
+        this._uiNotificationService.error("Error de Conexión en sedes");
+      });
+    }
+  }
+  getCiudades(){
+    const cacheCiudades:CiudadModel[] = this.cache.get(0).ciudades;
+    if(cacheCiudades){
+      if(this.ciudades!==cacheCiudades){
+        this.ciudades=cacheCiudades;
+      }
+    }else{
+      this._ciudadService.traerCiudades().subscribe(ciudades=>{
+        this.ciudades=ciudades;
+        this.cache.get(0).ciudades=this.ciudades;
+      },error=>{
+        this._uiNotificationService.error("Error de conexión en ciudades");
+      })
+    }
   }
   getDepartametos(){
     this._departamentoService.traerDepartamentos().subscribe(departamentos=>{
       this.departamentos=departamentos;
+    },error=>{
+      this._uiNotificationService.error("Error de conexión en departamentos");
     });
   }
-  getCiudadesByDep(idDep:number){
-    if(idDep>0){
-      this._ciudadService.ciudadesByDep(idDep).subscribe(ciudades=>{
-        this.ciudades=ciudades;
-      });
-    }else{
-      this.ciudades=[];
-    }
-  }
   getSedesByCiudad(idCiudad:number){
-    if(idCiudad>0){
-      this._sedeService.sedesByCiudad(idCiudad).subscribe(sedes=>{
-        this.sedes=sedes;
-      });
+    this.getSedes();
+    const ciudad:CiudadModel = this.ciudades.find(ciudad=>(ciudad.id==idCiudad));
+    if(ciudad){
+      const idDep:number = ciudad.idDepartamento;
+      const cacheByDep= this.cache.get(idDep);
+
+      if(cacheByDep){
+        const cacheByCiudad = cacheByDep.sedesPorCiudad.get(idCiudad);
+        if(cacheByCiudad){
+          const cacheSedes:SedeModel[]=cacheByCiudad.sedes;
+          if(this.sedes!==cacheSedes){
+            this.sedes=cacheSedes;
+          }
+        }else{
+          this.sedes=this.sedes.filter(sede=>(sede.idCiudad==idCiudad));
+          this.cache.get(idDep).sedesPorCiudad.set(idCiudad,{sedes:this.sedes});
+        }
+      }else{
+        const cacheCiudades:CiudadModel[]=this.ciudades.filter(ciudad=>
+          ciudad.idDepartamento==idDep);
+        const cacheSedes:SedeModel[]=this.sedes.filter(sede=>
+          (sede.idCiudad==idCiudad));
+        this.sedes=cacheSedes;
+        this.cache.set(idDep,{
+          ciudades:cacheCiudades,
+          sedesPorCiudad:new Map<number, { 
+            sedes: SedeModel[] 
+        }>()});
+        this.cache.get(idDep).sedesPorCiudad.set(idCiudad,{sedes:cacheSedes});
+      }
     }else{
-      this.getSedes();
+      this.sedes=this.cache.get(0).sedesPorCiudad.get(0).sedes;
     }
+    
+  }
+  getCiudadesByDep(idDep:number){
+    this.getSedes();
+    this.getCiudades();
+    const dep:DepartamentoModel= this.departamentos.find(dep=>(dep.id==idDep));
+    if(dep){
+      const cacheDep = this.cache.get(idDep);
+      if(cacheDep){
+        this.ciudades = cacheDep.ciudades;
+        this.sedes = cacheDep.sedesPorCiudad.get(0).sedes;
+      }else{
+        const ciudades:CiudadModel[] = this.ciudades.filter(ciudad=>(ciudad.idDepartamento==idDep));
+        let sedes:SedeModel[] = [];
+        ciudades.forEach(ciudad=>{
+          sedes=sedes.concat(this.sedes.filter(sede=>(sede.idCiudad==ciudad.id)));
+        });
+        if(sedes){
+          this.sedes=sedes;
+        }else{
+          this.sedes=[];
+        }
+        this.ciudades=ciudades;
+        this.cache.set(idDep,{
+          ciudades:ciudades,
+          sedesPorCiudad:new Map<number, { 
+            sedes: SedeModel[] 
+        }>()})
+        this.cache.get(idDep).sedesPorCiudad.set(0,{sedes:this.sedes});
+      }
+    }else{
+      this.ciudades=this.cache.get(0).ciudades;
+      this.sedes=this.cache.get(0).sedesPorCiudad.get(0).sedes;
+    }
+    
   }
   eliminarSede(event:number){
     this._sedeService.borrarSede(event).subscribe(()=>{
       this.getSedes();
     })
   }
-
   actualizarSede(event:SedeModel){
     this.formTitle='Editar sede';
     this.sede=event;
     this.showFormSede=true;
   }
-
   crearSede(){
     this.showFormSede=true;
     this.formTitle='Añadir sede';
   }
-
   guardarSede(event:SedeModel){
     if(event.id){
       this._sedeService.actualizarSede(event).subscribe(()=>{
@@ -106,7 +196,8 @@ export class SedeComponent implements OnInit{
     this.resultadoBusqueda=event;
   }
   closeBusqueda(){
-    this.showResultadoBusqueda=false;
+    this.showResultadoBusqueda=false
+    this.showInfoSede=false;
     this.resultadoBusqueda=null;
   }
   reset(){
@@ -117,5 +208,7 @@ export class SedeComponent implements OnInit{
     this.formTitle = '';
     this.sede=null;
   }
-
+  cancelarBusqueda(){
+    this.getSedes();
+  }
 }
