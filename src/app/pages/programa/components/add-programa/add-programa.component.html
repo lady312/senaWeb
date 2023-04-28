@@ -68,20 +68,118 @@
             <option [ngValue]="null">Seleccionar programa </option>
             <option *ngFor='let tipoPrograma of tipoProgramas' [ngValue]="tipoPrograma.id">{{tipoPrograma.nombreTipoPrograma}}</option>
           </select>
-          <div class="valid-feedback" *ngIf="!idTipoPrograma.hasError('required')">
-            Valor válido
-          </div>
+          <button class="btn btn-success rounded-circle m-1"  style="position: relative; left: 100%; top: -42px;" (click)="agregar()">+</button>
         </div>
         <div class="invalid-feedback">
           por favor ingresé un valor válido el tipo de programa
         </div>
       </div>
-      <app-add-tipo-programa (create)="createTipoP()">
-      </app-add-tipo-programa>
 
-      
+       <!-- campos de total horas programa -->
+       <div class="form-group row">
+        <label class="col-md-4 col-form-label" for="totalHoras">Total Horas</label>
+        <div class="col-md-7">
+          <input
+            type="number"
+            onkeyup="javascript:this.value=this.value"
+            placeholder="Ingrese el total de horas"
+            class="form-control is-valid"
+            formControlName='totalHoras'>
+          <div class="valid-feedback" *ngIf="!totalHoras.hasError('required')">
+            Valor válido
+          </div>
+        </div>
+        <div class="invalid-feedback">
+          por favor ingresé un valor válido para el tatal de horas
+        </div>
+      </div>
 
+      <!-- campos de etapa lectiva programa-->
+      <div class="form-group row">
+        <label class="col-md-4 col-form-label" for="etapaLectiva">Etapa Lectiva</label>
+        <div class="col-md-7">
+          <input
+            type="number"
+            onkeyup="javascript:this.value=this.value"
+            placeholder="Ingrese horas etapa lectiva"
+            class="form-control is-valid"
+            formControlName='etapaLectiva'>
+          <div class="valid-feedback" *ngIf="!etapaLectiva.hasError('required')">
+            Valor válido
+          </div>
+        </div>
+        <div class="invalid-feedback">
+          por favor ingresé un valor válido para la etapa lectiva
+        </div>
+      </div>
+
+      <!-- campos de etapa productiva programa-->
+      <div class="form-group row">
+        <label class="col-md-4 col-form-label" for="etapaProductiva">Etapa Productiva</label>
+        <div class="col-md-7">
+          <input
+            type="number"
+            onkeyup="javascript:this.value=this.value"
+            placeholder="Ingrese horas etapa productiva"
+            class="form-control is-valid"
+            formControlName='etapaProductiva'>
+          <div class="valid-feedback" *ngIf="!etapaProductiva.hasError('required')">
+            Valor válido
+          </div>
+        </div>
+        <div class="invalid-feedback">
+          por favor ingresé un valor válido para la etapa productiva
+        </div>
+      </div>
+
+      <!-- campos de creditos lectiva programa-->
+      <div class="form-group row">
+        <label class="col-md-4 col-form-label" for="creditosLectiva">Creditos Lectiva</label>
+        <div class="col-md-7">
+          <input
+            type="number"
+            onkeyup="javascript:this.value=this.value"
+            placeholder="Ingrese horas creditos Lectiva"
+            class="form-control is-valid"
+            formControlName='creditosLectiva'>
+          <div class="valid-feedback" *ngIf="!creditosLectiva.hasError('required')">
+            Valor válido
+          </div>
+        </div>
+        <div class="invalid-feedback">
+          por favor ingresé un valor válido para los creditos lectiva
+        </div>
+      </div>
+
+      <!-- campos de creditos productiva programa-->
+      <div class="form-group row">
+        <label class="col-md-4 col-form-label" for="creditosProductiva">Creditos Productiva</label>
+        <div class="col-md-7">
+          <input
+            type="number"
+            onkeyup="javascript:this.value=this.value"
+            placeholder="Ingrese horas creditos productiva"
+            class="form-control is-valid"
+            formControlName='creditosProductiva'>
+          <div class="valid-feedback" *ngIf="!creditosProductiva.hasError('required')">
+            Valor válido
+          </div>
+        </div>
+        <div class="invalid-feedback">
+          por favor ingresé un valor válido para los creditos productiva
+        </div>
+      </div>
     </form>
+
+    <app-custom-modal title="Gestión tipo Programa"
+      [(show)]="showModalTipoProgramas">
+      <app-add-tipo-programa
+        [tipoP]="tipoPrograma"
+        (store)="guardarTipoProgramas($event)"
+        (cancel)="reset()">
+      </app-add-tipo-programa>
+    </app-custom-modal>
+
     <div class="card-footer">
       <button
         type="submit"

@@ -6,4 +6,9 @@ export interface ProgramaModel {
     descripcionPrograma: string;
     idTipoPrograma:number;
     idEstado:number;
+    totalHoras:number;
+    etapaLectiva:number;
+    etapaProductiva:number;
+    creditosLectiva:number;
+    creditosProductiva:number;
   }

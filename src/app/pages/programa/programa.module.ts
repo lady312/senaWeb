@@ -10,6 +10,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { ComunModule } from '@components/comun.module';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { TipoProgramaModule } from '../tipo-programa/tipo-programa.module';
+import { TipoProgramaComponent } from '../tipo-programa/page/tipo-programa/tipo-programa.component';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -26,7 +28,15 @@ import { TipoProgramaModule } from '../tipo-programa/tipo-programa.module';
     NgxPaginationModule,
     ComunModule,
     SweetAlert2Module.forChild(),
-    TipoProgramaModule
-  ]
+    TipoProgramaModule,
+    FormsModule
+  ],
+  entryComponents: [TipoProgramaComponent],
+
+  exports:[
+    AddProgramaComponent,
+    ListProgramaComponent,
+    ProgramaComponent
+  ],
 })
 export class ProgramaModule { }

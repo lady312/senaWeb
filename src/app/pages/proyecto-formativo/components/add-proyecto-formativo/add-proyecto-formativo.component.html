@@ -50,7 +50,7 @@
         <div class="form-group row">
           <label class="col-md-4 col-form-label" for="idPrograma">Programa</label>
           <div class="col-md-7">
-            <select class="form-control is-valid" formControlName='idPrograma'>
+            <select class="form-select" formControlName='idPrograma'>
               <option [ngValue]="null">Seleccionar programa </option>
               <option *ngFor='let programa of Programas' [ngValue]="programa.id">{{programa.nombrePrograma}}</option>
             </select>
@@ -62,8 +62,64 @@
             por favor ingresé un valor válido para programa
           </div>
         </div>
+
+
+        <!-- campos de tiempo estimado-->
+        <div class="form-group row">
+          <label class="col-md-4 col-form-label" for="tiempoEstimado">Tiempo Estimado</label>
+          <div class="col-md-7">
+            <input
+              type="number"
+              onkeyup="javascript:this.value=this.value"
+              placeholder="Ingrese el tiempo estimado"
+              class="form-control is-valid"
+              formControlName='tiempoEstimado'>
+            <div class="valid-feedback" *ngIf="!tiempoEstimado.hasError('required')">
+              Valor válido
+            </div>
+          </div>
+          <div class="invalid-feedback">
+            por favor ingresé un valor válido para el tiempo estimado
+          </div>
+        </div>
   
-        
+      <!-- campos de numero total raps-->
+      <div class="form-group row">
+        <label class="col-md-4 col-form-label" for="numeroTotalRaps">Numero de Raps</label>
+        <div class="col-md-7">
+          <input
+            type="number"
+            onkeyup="javascript:this.value=this.value"
+            placeholder="Ingrese el numero total de raps"
+            class="form-control is-valid"
+            formControlName='numeroTotalRaps'>
+          <div class="valid-feedback" *ngIf="!numeroTotalRaps.hasError('required')">
+            Valor válido
+          </div>
+        </div>
+        <div class="invalid-feedback">
+          por favor ingresé un valor válido para el numero total de raps
+        </div>
+      </div>
+
+      <!-- campos de id centro de formacion-->
+      <div class="form-group row">
+        <label class="col-md-4 col-form-label" for="idCentroFormacion">Centro de Formación</label>
+        <div class="col-md-7">
+          <input
+            type="number"
+            onkeyup="javascript:this.value=this.value"
+            placeholder="Ingrese el centro de formacion"
+            class="form-control is-valid"
+            formControlName='idCentroFormacion'>
+          <div class="valid-feedback" *ngIf="!idCentroFormacion.hasError('required')">
+            Valor válido
+          </div>
+        </div>
+        <div class="invalid-feedback">
+          por favor ingresé un valor válido para el centro de formacion
+        </div>
+      </div>
   
       </form>
       <div class="card-footer">

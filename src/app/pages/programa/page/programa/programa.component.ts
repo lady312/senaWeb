@@ -62,7 +62,8 @@ export class ProgramaComponent {
       })
     }
   }
-
+  
+      
   reset() {
     this.programa = null;
     this.showModalPrograma = false;
