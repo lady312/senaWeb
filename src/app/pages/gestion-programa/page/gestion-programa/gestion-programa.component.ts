@@ -50,28 +50,25 @@ export class GestionProgramaComponent  implements OnInit{
   @Output() cancel: EventEmitter<void> = new EventEmitter();
 
   
-  
-  competenciasVisibles = new Map<number, boolean>();
-
-
   formCompetencia: UntypedFormGroup;
   formPrograma: UntypedFormGroup;
   formActividadProyecto: UntypedFormGroup;
 
+
   fases: FaseModel[] = [];
   
-
 
   showModalCompetencia = false;
   Competencia: CompetenciaModel = null;
 
- showModalActividad=false;
+  showModalActividad=false;
   ActividadProyecto: ActividadProyectoModel = null;
 
 
 
   numReg = 5;
 
+  
 
   constructor(
     
@@ -81,7 +78,6 @@ export class GestionProgramaComponent  implements OnInit{
     private _uiNotificationService: UINotificationService,
     private _actividadProyectoService: ActividadProyectoService,
     private faseService: FaseService,
-    private cdr: ChangeDetectorRef,
 
     private competenciaService: CompetenciaService, ActividadProyectoService:ActividadProyectoService,
   ){
@@ -103,84 +99,9 @@ export class GestionProgramaComponent  implements OnInit{
       this.buildForms();
     }
   }
-  get nombreActividadProgramaField() {
-    return this.formActividadProyecto.get('nombreActividadProyecto');
-  }
-
-  get idFase() {
-    return this.formActividadProyecto.get('idFase');
-  }
-  get codigoAP() {
-    return this.formActividadProyecto.get('codigoAP');
-  }
-
-  private buildForms() {
-    this.formActividadProyecto = this.formBuilder.group({
-      id: [0],
-      nombreActividadProyecto: ['', [Validators.required]],
-      idFase: ['', [Validators.required]],
-      codigoAP: ['', [Validators.required]],
-    });
-
-    this.formActividadProyecto.valueChanges
-      .pipe(
-        debounceTime(350),
-      )
-      .subscribe(data => {
-      })
-  }
 
 
-  closeModal() {
-    this.cancel.emit();
-  }
-
-
-  private getControl(name: string) {
-    return this.formActividadProyecto.controls[name];
-  }
-
-  getActividadProyecto(): ActividadProyectoModel {
-    return {
-      id: this.actividadProyecto?.id,
-      nombreActividadProyecto: this.getControl('nombreActividadProyecto').value,
-      idFase: this.getControl('idFase').value,
-      codigoAP: this.getControl('codigoAP').value,
-    }
-  }
-  // guardarProgramas(actividadProyecto: ActividadProyectoModel) {
-  //   if (actividadProyecto.id) {
-  //     this._actividadProyectoService.actualizarActividadProyecto(actividadProyecto).subscribe(actividadProyectos => {
-  //       this.getActividadProyecto();
-  //       this.resets();
-       
-  //     });
-  //   } else {
-  //     this._actividadProyectoService.crearActividadProyecto(actividadProyecto).subscribe(actividadProyectos => {
-  //       this.resets();
-  //       this.getActividadProyecto();
-  //       console.log ('hhhhhhhhhhhhhhhh')
-  //     })
-  //     this.showModalActividad=false; 
-  //     this.resets();
-  //   }
-  // }
-
-  guardarProgramas(actidadActividadP: ActividadProyectoModel) {
-    this._actividadProyectoService.crearActividadProyecto(actidadActividadP).subscribe(ActividadProyectos => {
-      this.ActividadProyectos.push(actidadActividadP);
-      this.reset();
-      this.showModalActividad=false;
-    });
-  }
-
-  // iiiiiiiiiiiiiiiiiiiiiiiiiiii
-
-
-
-
-
-  
+//Competencia
   get nombreCompetenciaField() {
     return this.formCompetencia.get('nombreCompetencia');
   }
@@ -192,16 +113,22 @@ export class GestionProgramaComponent  implements OnInit{
     return this. formCompetencia.get('idActividadProyecto');
   }
 
-  setCompetencias() {
-    if (this.competencia) {
-      this.formCompetencia.patchValue({
-        nombreCompetencia: this.competencia.nombreCompetencia,
-        codigoCompetencia: this.competencia.codigoCompetencia,
-        idActividadProyecto: this.competencia.idActividadProyecto,
-
-      })
-    }
+//Activida proyecto
+  get nombreActividadProgramaField() {
+    return this.formActividadProyecto.get('nombreActividadProyecto');
   }
+
+  get idFase() {
+    return this.formActividadProyecto.get('idFase');
+  }
+  get codigoAP() {
+    return this.formActividadProyecto.get('codigoAP');
+  }
+
+
+
+
+  /////////Competencia////////////////
 
   private buildForm() {
     this.formCompetencia = this.formBuilder.group({
@@ -219,45 +146,35 @@ export class GestionProgramaComponent  implements OnInit{
       });
   }
 
-//////////////
-  guardarCompetencia(competencia: CompetenciaModel) {
-    this.competenciaService.crearCompetencia(competencia).subscribe(competencias => {
-      this.Competencias.push(competencia);
-      this.reset();
+//////////////////Actividad Proyecto/////////////////
+  private buildForms() {
+    this.formActividadProyecto = this.formBuilder.group({
+      id: [0],
+      nombreActividadProyecto: ['', [Validators.required]],
+      idFase: ['', [Validators.required]],
+      codigoAP: ['', [Validators.required]],
     });
+
+    this.formActividadProyecto.valueChanges
+      .pipe(
+        debounceTime(350),
+      )
+      .subscribe(data => {
+      })
   }
-  ///////////////////
+
   
 
-  ///////////////////
-
-  closeModals() {
-    this.cancel.emit();
-  }
-
+//Competencia
   private getControls(name: string) {
     return this.formCompetencia.controls[name];
   }
-  reset() {
-    this.Competencia = null;
-    this.showModalCompetencia = false;
+  //Actividad Proyecto
+  private getControl(name: string) {
+    return this.formActividadProyecto.controls[name];
   }
-  //////////////////////////////////////////////////////77
-  resets() {
-    this.  ActividadProyecto = null;
-    this.showModalActividad = false;
-    console.log('hhhhhhhhhhhhhhhhhhhhhhhhiiiiiii')
-  }
-  agregarAp(){
-    this.showModalActividad = true;
-    this.create.emit();
-  }
-  ///////////////////////////////////////////////////////////
 
-  agregarC() {
-    this.showModalCompetencia = true;
-    this.create.emit();
-  }
+
 
 
   getCompetencias(): CompetenciaModel {
@@ -268,6 +185,69 @@ export class GestionProgramaComponent  implements OnInit{
       idActividadProyecto:this.getControls('idActividadProyecto').value,
     }
   }
+  getActividadProyecto(): ActividadProyectoModel {
+    return {
+      id: this.actividadProyecto?.id,
+      nombreActividadProyecto: this.getControl('nombreActividadProyecto').value,
+      idFase: this.getControl('idFase').value,
+      codigoAP: this.getControl('codigoAP').value,
+    }
+  }
+
+
+
+
+
+
+  guardarCompetencia(competencia: CompetenciaModel) {
+    this.competenciaService.crearCompetencia(competencia).subscribe(competencias => {
+      this.Competencias.push(competencia);
+      this.reset();
+    });
+  }
+
+  guardarProgramas(actidadActividadP: ActividadProyectoModel) {
+    this._actividadProyectoService.crearActividadProyecto(actidadActividadP).subscribe(ActividadProyectos => {
+      this.ActividadProyectos.push(actidadActividadP);
+      this.reset();
+      this.showModalActividad=false;
+    });
+  }
+
+  
+  closeModals() {
+    this.cancel.emit();
+  }
+
+  closeModal() {
+    this.cancel.emit();
+  }
+
+
+
+  reset() {
+    this.Competencia = null;
+    this.showModalCompetencia = false;
+  }
+  resets() {
+    this.  ActividadProyecto = null;
+    this.showModalActividad = false;
+  }
+
+
+
+
+  agregarC() {
+    this.showModalCompetencia = true;
+    this.create.emit();
+  }
+  agregarAp(){
+    this.showModalActividad = true;
+    this.create.emit();
+  }
+
+
+ 
 
   ngOnInit():void {
     this.setPrograma();
@@ -278,10 +258,10 @@ export class GestionProgramaComponent  implements OnInit{
     this.traerActividadProyecto();
     this.traerFase();
     this.setActividadProyecto()
-    
- 
   }
 
+
+  //Actividad proyecto
   traerActividadProyecto() {
     this._actividadProyectoService.traerActividadProyecto()
       .subscribe((actividadProyectos:ActividadProyectoModel[]) => {
@@ -290,6 +270,8 @@ export class GestionProgramaComponent  implements OnInit{
         this._uiNotificationService.error('Error de conexión');
       });
   }
+
+  //Fase para la actividad proyecto
   traerFase() {
     this.faseService.traerFase()
       .subscribe((fase: FaseModel[]) => {
@@ -297,6 +279,51 @@ export class GestionProgramaComponent  implements OnInit{
       }, error => {
         this._uiNotificationService.error('Error de conexión');
       });
+  }
+
+   //traer proyecto formativo
+   traerProyectoFormativo(capturarId){
+    this.proyectoFormativoService.traerProyecto()
+    .subscribe((proyecto:ProyectoFormativoModel[])=>{
+      this.proyectos = proyecto;
+    }, error=>{
+      this._uiNotificationService.error('Error de conexión')
+    });
+  }
+
+
+  //traer programa
+  traerPrograma() {
+    this.programaService.traerProgramas()
+      .subscribe((programa: ProgramaModel[]) => {
+        this.programas = programa;
+      }, error => {
+        this._uiNotificationService.error('Error de conexión');
+      });
+  }
+
+  //Traer Competencia
+  traerCompetencia() {
+    this.competenciaService.traerCompetencias()
+      .subscribe((competencia: CompetenciaModel[]) => {
+        this.Competencias = competencia;
+      }, error => {
+        this._uiNotificationService.error('Error de conexión');
+      });
+  }
+
+
+
+
+  setCompetencias() {
+    if (this.competencia) {
+      this.formCompetencia.patchValue({
+        nombreCompetencia: this.competencia.nombreCompetencia,
+        codigoCompetencia: this.competencia.codigoCompetencia,
+        idActividadProyecto: this.competencia.idActividadProyecto,
+
+      })
+    }
   }
   setActividadProyecto() {
     if (this.actividadProyecto) {
@@ -323,26 +350,6 @@ export class GestionProgramaComponent  implements OnInit{
 
 
 
-  //traer proyecto formativo
-  traerProyectoFormativo(capturarId){
-    this.proyectoFormativoService.traerProyecto()
-    .subscribe((proyecto:ProyectoFormativoModel[])=>{
-      this.proyectos = proyecto;
-    }, error=>{
-      this._uiNotificationService.error('Error de conexión')
-    });
-  }
-
-
-  //traer programa
-  traerPrograma() {
-    this.programaService.traerProgramas()
-      .subscribe((programa: ProgramaModel[]) => {
-        this.programas = programa;
-      }, error => {
-        this._uiNotificationService.error('Error de conexión');
-      });
-  }
 ////////////////////////////////////////////////////////////////////////////selet filtros/////////////
   capturarIdPrograma(){
     this.selectedProgram = this.programas.find(program => program.id === this.selectedProgramId);
@@ -358,14 +365,7 @@ export class GestionProgramaComponent  implements OnInit{
 
 //////////////////////////////////////////////////////////////////7
 
-  traerCompetencia() {
-    this.competenciaService.traerCompetencias()
-      .subscribe((competencia: CompetenciaModel[]) => {
-        this.Competencias = competencia;
-      }, error => {
-        this._uiNotificationService.error('Error de conexión');
-      });
-  }
+ 
   
 
   eliminarEtiqueta(competencia: CompetenciaModel): void {
@@ -375,88 +375,33 @@ export class GestionProgramaComponent  implements OnInit{
     }
   }
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////7///////////////////////
+///////////////Funcional etiquetas ///////////////////7
 
-  // eliminarEtiquetaaa(actividadProyecto: ActividadProyectoModel): void {
-  //   const index = this.ActividadProyectos.indexOf(actividadProyecto);
-  //   if (index !== -1) {
-  //     this.ActividadProyectos.splice(index, 1);
-      
-  //     // Ocultar las competencias que contienen la actividad proyecto eliminada
-  //     this.Competencias.forEach((competencia) => {
-        
-  //       if (Array.isArray(competencia.idActividadProyecto) && competencia.idActividadProyecto.some((actividad) => actividad.id === actividadProyecto.id)) {
-  //         cy.visible = false;
-  //       }
-  //     });
-  //   }
-  // }
-  ////////////////////////////////////////////////////////////////7
-  
-//   eliminarEtiquet(actividadProyecto: ActividadProyectoModel): void {
-//     const index = this.ActividadProyectos.indexOf(actividadProyecto);
-//     if (index !== -1) {
-//       this.ActividadProyectos.splice(index, 1);
-      
-//     }
-    
-//   }
-// // }
-
-// eliminarEtiquet(actividadProyecto: ActividadProyectoModel): void {
-//   const index = this.ActividadProyectos.indexOf(actividadProyecto);
-//   if (index !== -1) {
-//     this.ActividadProyectos.splice(index, 1);
-
-//     // Ocultar las competencias que contienen la actividad proyecto eliminada
-//     this.Competencias.forEach((competencia) => {
-//       if (Array.isArray(competencia.idActividadProyecto) && competencia.idActividadProyecto.some((actividad) => actividad.id === actividadProyecto.id)) {
-//         competencia.mostrar= false;
-//       }
-//     });
-//   }
-// }
-
-// eliminarEtiquetaaa(actividadProyecto: ActividadProyectoModel): void {
-//     const index = this.ActividadProyectos.indexOf(actividadProyecto);
-//     if (index !== -1) {
-//       this.ActividadProyectos.splice(index, 1);
-      
-//       // Ocultar las competencias que contienen la actividad proyecto eliminada
-//       this.Competencias.forEach((competencia) => {
-//         if (Array.isArray(competencia.idActividadProyecto) && competencia.idActividadProyecto.some((actividad) => actividad.id === actividadProyecto.id)) {
-//           competencia['mostrar'] = false;
-//         }
-//       });
-//       this.cdr.detectChanges();
-//     }
-//   }
-
-
-eliminarEtiquetaaaa(actividadProyecto: ActividadProyectoModel): void {
+eliminarEtiquet(actividadProyecto: ActividadProyectoModel): void {
   const index = this.ActividadProyectos.indexOf(actividadProyecto);
   if (index !== -1) {
+    // Obtener el ID de la actividad proyecto eliminada
+    const idAP = actividadProyecto.id;
+    
+    // Filtrar las competencias por el ID de la actividad proyecto eliminada
+    const competenciasAEliminar = this.Competencias.filter(c => c.idActividadProyecto === idAP);
+
+    // Eliminar las competencias relacionadas con la actividad proyecto eliminada
+    competenciasAEliminar.forEach(c => {
+      const indexCompetencia = this.Competencias.indexOf(c);
+      if (indexCompetencia !== -1) {
+        this.Competencias.splice(indexCompetencia, 1);
+      }
+    });
+
+    // Eliminar la actividad proyecto de la lista de actividad proyecto a mostrar en la interfaz de usuario
     this.ActividadProyectos.splice(index, 1);
-   
-    this.actualizarListaCompetencias();
-    // Ocultar las competencias que contienen la actividad proyecto eliminada
-    this.Competencias = this.Competencias.filter(c =>
-      c.idActividadProyecto!== actividadProyecto.id ,
-      console.log('jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj')
-    );
     
   }
+  
 }
 
-actualizarListaCompetencias(): void {
-  for (let i = 0; i < this.ActividadProyectos.length; i++) {
-    const simi = this.ActividadProyectos[i].id ;
-    this.Competencias = this.Competencias.filter(c =>
-      c.idActividadProyecto !== simi
-    );
-    console.log('gggggggggggggggggg')
-  }
-}
+
 
 }
 
