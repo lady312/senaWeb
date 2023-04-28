@@ -70,7 +70,8 @@ export class GruposListComponent {
     }
   }
 
-  enviarNumeroRegistros(num: number) {
+  enviarNumeroRegistros(event:any) {
+    const num:number = event.target.value
     this.numReg = num;
   }
 
