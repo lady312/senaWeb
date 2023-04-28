@@ -1,55 +1,45 @@
-
 <app-list-calendario
-  [calendarios]="calendarios1"
+  [calendarios]="calendarios"
   (create)="createCalendario()"
   (create1)="createCalendario2()"
   (create2)="createCalendario3()"
-  (create3)="createCalendario4()">
+  (create3)="createCalendario4()"
+>
 </app-list-calendario>
 
 <app-custom-modal title="Sede" [(show)]="showFormSede">
-
-    <app-sede-form
+  <app-sede-form
     *ngIf="showFormSede"
     [sede]="sede"
     [ciudades]="ciudades"
     [title]="'Crear Sede'"
     (store)="guardarSede($event)"
-    (cancel)="reset()">
-    </app-sede-form>
-
+    (cancel)="reset()"
+  >
+  </app-sede-form>
 </app-custom-modal>
 
-
-<app-custom-modal
-  title="Grupos"
-  [(show)]="showModalGrupo">
-
+<app-custom-modal title="Grupos" [(show)]="showModalGrupo">
   <app-grupos
     *ngIf="showModalGrupo"
     [grupo]="grupo"
     (store)="guardarGrupo($event)"
-    (cancel)="reset()">
+    (cancel)="reset()"
+  >
   </app-grupos>
-
 </app-custom-modal>
 
-
-<app-custom-modal
-  title="Programas"
-  [(show)]="showModalPrograma">
+<app-custom-modal title="Programas" [(show)]="showModalPrograma">
   <app-add-programa
     *ngIf="showModalPrograma"
     [programa]="programa"
     (store)="guardarProgramas($event)"
-    (cancel)="reset()">
+    (cancel)="reset()"
+  >
   </app-add-programa>
 </app-custom-modal>
 
-
-<app-custom-modal
-  title="Gestionar Infraestructura"
-  [(show)]="showFormInfr">
+<app-custom-modal title="Infraestructura" [(show)]="showFormInfr">
   <app-infraestructura-form
     *ngIf="showFormInfr"
     [infraestructura]="infraestructura"
@@ -57,11 +47,10 @@
     [sedes]="sedes"
     [title]="formTitle"
     (store)="guardarInfraestructura($event)"
-    (cancel)="reset()">
+    (cancel)="reset()"
+  >
   </app-infraestructura-form>
 </app-custom-modal>
-<view-calendar
-[jornadas]="jornada"></view-calendar>
 
-<view-calendar>
-</view-calendar>
+<view-calendar
+[grupos]="grupos" [jornadas]="jornadas"></view-calendar>

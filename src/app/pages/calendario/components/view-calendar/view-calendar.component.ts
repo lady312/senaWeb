@@ -1,9 +1,17 @@
-import { Component, ChangeDetectorRef, Input } from "@angular/core";
+import { GruposService } from "./../../../../services/grupo.service";
+import {
+  Component,
+  ChangeDetectorRef,
+  Input,
+  ViewChild,
+  OnInit,
+} from "@angular/core";
 import {
   CalendarOptions,
   DateSelectArg,
   EventClickArg,
   EventApi,
+  EventInput,
 } from "@fullcalendar/core";
 import interactionPlugin from "@fullcalendar/interaction";
 import dayGridPlugin from "@fullcalendar/daygrid";
@@ -12,8 +20,8 @@ import listPlugin from "@fullcalendar/list";
 import { INITIAL_EVENTS, createEventId } from "./event-utils";
 import esLocale from "@fullcalendar/core/locales/es";
 import { JornadaModel } from "@models/jornada.model";
-import { UINotificationService } from "@services/uinotification.service";
-import { JornadaService } from "@services/jornada.service";
+import { GrupoModel } from "@models/grupo.model";
+import { addDays } from "@fullcalendar/core/internal";
 
 @Component({
   selector: "view-calendar",
@@ -21,13 +29,13 @@ import { JornadaService } from "@services/jornada.service";
   styleUrls: ["./view-calendar.component.css"],
 })
 export class ViewCalendarComponent {
-
-  //jornada
-  @Input() jornadas: JornadaModel[] = [];
-
+  @Input() jornadas: JornadaModel[];
+  @Input() grupos: GrupoModel[];
+  Eventos: EventInput[]=[];
   calendarVisible = true;
   calendarOptions: CalendarOptions = {
     locale: esLocale,
+    nowIndicator: true,
     plugins: [interactionPlugin, dayGridPlugin, timeGridPlugin, listPlugin],
     headerToolbar: {
       left: "prev,next today",
@@ -35,7 +43,7 @@ export class ViewCalendarComponent {
       right: "dayGridMonth,timeGridWeek,timeGridDay,listWeek",
     },
     initialView: "dayGridMonth",
-    initialEvents: INITIAL_EVENTS,
+    initialEvents: this.Eventos,
     weekends: true,
     editable: true,
     selectable: true,
@@ -45,18 +53,40 @@ export class ViewCalendarComponent {
     eventClick: this.handleEventClick.bind(this),
     eventsSet: this.handleEvents.bind(this),
   };
+
   currentEvents: EventApi[] = [];
+  constructor(private changeDetector: ChangeDetectorRef) {}
 
-
-    constructor(
-      private changeDetector: ChangeDetectorRef,
-      private _uiNotificationService: UINotificationService,
-      private _jornadaService: JornadaService
-    ) { }
-
-    ngOnInit(): void {
-      this.getJornada();
-    }
+  crearEventos() {
+    let Eventos: EventInput[] = [];
+    this.grupos.forEach((grupo) => {
+      const fInit = new Date(grupo.fechaInicial);
+      const fEnd = new Date(grupo.fechaFinal);
+      for (let fecha = fInit; fecha <= fEnd; fecha = addDays(fecha, 1)) {
+        Eventos.push({
+          id: createEventId(),
+          title: grupo.nombre,
+          start: new Date(
+            fecha.getFullYear(),
+            fecha.getMonth(),
+            fecha.getDay(),
+            0,
+            0
+          ),
+          end: new Date(
+            fecha.getFullYear(),
+            fecha.getMonth(),
+            fecha.getDay(),
+            23,
+            59
+          ),
+        });
+      }
+    });
+    console.log(Eventos);
+    this.Eventos=Eventos;
+    this.calendarOptions.initialEvents=this.Eventos;
+  }
 
   handleCalendarToggle() {
     this.calendarVisible = !this.calendarVisible;
@@ -70,7 +100,6 @@ export class ViewCalendarComponent {
   handleDateSelect(selectInfo: DateSelectArg) {
     const title = prompt("Introduce un nuevo título para tu evento");
     const calendarApi = selectInfo.view.calendar;
-    0;
     calendarApi.unselect(); // clear date selection
 
     if (title) {
@@ -97,19 +126,5 @@ export class ViewCalendarComponent {
   handleEvents(events: EventApi[]) {
     this.currentEvents = events;
     this.changeDetector.detectChanges();
-  }
-
-  getJornada() {
-    this._jornadaService.traerJornada().subscribe(
-      (jornadas) => {
-        this.jornadas = jornadas;
-        this.jornadas.forEach((jornada) => {
-          console.log({dia: jornada.diaJornada, horaInicial: jornada.horaInicial, horaFinal: jornada.horaFinal});
-        });
-      },
-      (error) => {
-        this._uiNotificationService.error("Error de conexión");
-      }
-    );
   }
 }

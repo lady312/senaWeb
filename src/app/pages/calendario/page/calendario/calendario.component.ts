@@ -19,6 +19,13 @@ import { AreaService } from '@services/area.service';
 import { AreaModel } from '@models/area.model';
 import { JornadaService } from '@services/jornada.service';
 import { JornadaModel } from '@models/jornada.model';
+import { Time } from '@angular/common';
+
+interface formacion {
+  fecha?: Date;
+  horaInicial?: Time;
+  horaFinal?: Time;
+}
 @Component({
   selector: 'app-calendario',
   templateUrl: './calendario.component.html',
@@ -45,9 +52,9 @@ export class CalendarioComponent implements OnInit {
   infraestructura:InfraestructuraModel =null;
   area :AreaModel = null;
 
-  jornada: JornadaModel[]=[];
+  jornadas: JornadaModel[]=[];
 
-  calendarios1: CalendarioModel[] = [];
+  calendarios: CalendarioModel[] = [];
   sedes: SedeModel[]=[];
   formTitle: string;
   ciudades: CiudadModel[]=[];
@@ -80,6 +87,7 @@ export class CalendarioComponent implements OnInit {
     this.getInfraestructuras();
     this.getCiudades();
     this.getAreas();
+    this.getJornadas();
   }
 
 //sedes
@@ -106,13 +114,11 @@ getDepartamento(){
 }
 
 //grupos
-
 getGrupo(){
   this._gruposService.traerGrupos()
   .subscribe(grupos =>{
     this.grupos = grupos;
   })
-
 }
 
 getPrograma() {
@@ -123,7 +129,6 @@ getPrograma() {
       this._uiNotificationService.error("Error de conexión");
     });
 }
-
 getInfraestructuras(){
   this._infraestructuraService.traerInfraestructuras()
   .subscribe(infraestructuras =>{
@@ -146,13 +151,12 @@ getSedesByCiudad(idCiudad:number){
     }
   })
 }
-//programa
-//infraestructura
+getJornadas(){
+  this._jornadaService.traerJornada().subscribe(jornadas=>{
+    this.jornadas=jornadas;
+  })
+}
 
-
-
-
- //crear
   createCalendario() {
     this.sede = null;
     this.showFormSede = true;
