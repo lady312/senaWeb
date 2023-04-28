@@ -13,30 +13,29 @@ export interface GrupoModel {
   fechaFinal: Date;
   observacion: string;
 
-  idTipoGrupo: number;
-  tipogrupo?: TipoGrupoModel;
+  idTipoGrupo?: number;
+  tipo_grupo?: TipoGrupoModel;
 
-  idLider: number;
+  idLider?: number;
   lider?: UsuarioModel;
 
-  idPrograma: number;
+  idPrograma?: number;
   programa?: ProgramaModel;
 
-  idInfraestructura: number;
+  idInfraestructura?: number;
   infraestructura?: InfraestructuraModel;
 
-  idNivel:number;
-  nivel?:NivelFormacionModel;
+  idNivel?:number;
+  nivel_formacion?:NivelFormacionModel;
 
-  idTipoFormacion:number;
-  tipoFormacion?:TipoFormacionModel;
+  idTipoFormacion?:number;
+  tipo_formacion?:TipoFormacionModel;
 
-  idEstado:number;
-  estado?:EstadoGrupoModel;
+  idEstado?:number;
+  estado_grupo?:EstadoGrupoModel;
 
   idTipoOferta:number;
   tipoOferta?:TipoOfertaModel;
 
-  
 }
 

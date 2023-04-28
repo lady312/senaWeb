@@ -4,4 +4,7 @@ export interface ProyectoFormativoModel {
     nombre: string;
     codigo:string;
     idPrograma?:number;
+    tiempoEstimado:number;
+    numeroTotalRaps:number;
+    idCentroFormacion:number;
   }

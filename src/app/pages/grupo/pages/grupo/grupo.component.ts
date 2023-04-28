@@ -29,7 +29,7 @@ export class GrupoComponent {
   @Input() usuarios: UsuarioModel[] = [];
   @Input() lideres: UsuarioModel[] = [];
   @Input() infraestructuras: InfraestructuraModel[] = [];
-  @Input() nivelesFormaion: NivelFormacionModel[] = [];
+  @Input() nivelesFormacion: NivelFormacionModel[] = [];
   @Input() tipoFormaciones: TipoFormacionModel[] = [];
   @Input() estados: EstadoGrupoModel[] = [];
   @Input() tipoOfertas: TipoOfertaModel[] = [];
@@ -112,41 +112,8 @@ export class GrupoComponent {
     this.reset();
   }
 
-  guardarLider(usuario: UsuarioModel)
-  {
-    this._usuarioService.crearUsuario(usuario).subscribe(user => {
-      this.usuarios.push(user);
-      this.guardarLider(this.usuario);
-    })
-    this.reset();
-  }
 
-  guardarPrograma(programa: ProgramaModel)
-  {
-    this._programaService.crearProgramas(programa).subscribe(pr => {
-      this.programas.push(pr);
-      this.guardarPrograma(this.programa);
-    })
-    this.reset();
-  }
-
-  // guardarInfraestructura(infraestructura: InfraestructuraModel)
-  // {
-  //   this._infraestructuraService.guardarInfraestructura(infraestructura).subscribe(infra => {
-  //     this.infraestructuras.push(infra);
-  //     this.guardarInfraestructura(this.infraestructura);
-  //   })
-  //   this.reset();
-  // }
-
-  // guardarNivelFormacion(infraestructura: InfraestructuraModel)
-  // {
-  //   this._nivelFormacion.guardarInfraestructura(infraestructura).subscribe(infra => {
-  //     this.infraestructuras.push(infra);
-  //     this.guardarInfraestructura(this.infraestructura);
-  //   })
-  //   this.reset();
-  // }
+  
 
   reset() {
     this.grupo = null;
