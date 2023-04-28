@@ -22,10 +22,11 @@ import {  GESTION_MEDIO_PAGO,
           CALENDARIO,
           GESTION_COMPETENCIA, //importaciones
           GESTION_ACTIVIDAD_APRENDIZAJE,//importaciones
-          GESTION_RESULTADO_APRENDIZAJE,//importaciones
-
- } from './permissions';
-
+          GESTION_RESULTADO_APRENDIZAJE,
+          REGIONAL,
+          CENTRO_FORMACION,//i
+} from './permissions';
+          
 export const navItems: NavegacionModel[] = [
   {
     name: 'Roles',
@@ -173,6 +174,18 @@ export const navItems: NavegacionModel[] = [
     icon: 'cil-columns',
     permiso: GESTION_RESULTADO_APRENDIZAJE
   },
+  {
+    name: "Regional",
+    url: 'add_regional',//muestra la vista para regional''''''''''''''''''''
+    icon: 'cil-columns',
+    permiso: REGIONAL
+  },
+  {
+    name: "Centro Formacion",
+    url: 'add_centro_formacion',//muestra la vista para resultado aprendizaje''''''''''''''''''''
+    icon: 'cil-columns',
+    permiso: CENTRO_FORMACION
+  },
 ];
 
 export const routesNav: Routes = [
@@ -317,5 +330,13 @@ export const routesNav: Routes = [
   {
     path: 'add_actividad_aprendizaje',
     loadChildren: () => import('../pages/actividad-aprendizaje/actividad-aprendizaje.module').then(m => m.ActividadAprendizajeModule)
+  },
+  {
+    path: 'add_regional',
+    loadChildren: () => import('../pages/regional/regional.module').then(m => m.RegionalModule)
+  },
+  {
+    path: 'add_centro_formacion',
+    loadChildren: () => import('../pages/centro-formacion/centro-formacion.module').then(m => m.CentroFormacionModule)
   },
 ];

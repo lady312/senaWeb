@@ -1,0 +1,17 @@
+<app-list-centro-formacion
+[centroFormaciones]="centroFormaciones"
+    (delete)="eliminarCentroFormacion($event)"
+    (update)="actualizarCentroFormacion($event)"
+    (create)="createCentroFormacion()">
+</app-list-centro-formacion>
+
+<app-custom-modal
+    title="Gestión de centros de formacion"
+    [(show)]="showModalCentro">
+    <app-add-centro-formacion
+      *ngIf="showModalCentro"
+        [centroFormacion]="centroFormacionModel"
+        (store)="guardarCentros($event)"
+        (cancel)="reset()">
+    </app-add-centro-formacion>
+</app-custom-modal>

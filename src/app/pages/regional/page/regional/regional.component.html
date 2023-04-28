@@ -1,0 +1,14 @@
+<app-list-regional 
+[regionales]="regionales" 
+(delete)="eliminarRegional($event)" 
+(update)="actualizarRegional($event)"
+(create)="createRegional()">
+</app-list-regional>
+
+
+<app-custom-modal title="Regional" [(show)]="showModalRegional">
+  <app-add-regional *ngIf="showModalRegional" [regional]="regional" (store)="guardarRegional($event)"
+    (cancel)="reset()">
+  </app-add-regional>
+</app-custom-modal>
+
