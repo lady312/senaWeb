@@ -34,8 +34,8 @@ export interface GrupoModel {
   idEstado?:number;
   estado_grupo?:EstadoGrupoModel;
 
-  idTipoOferta:number;
-  tipoOferta?:TipoOfertaModel;
+  idTipoOferta?:number;
+  tipo_oferta?:TipoOfertaModel;
 
 }
 

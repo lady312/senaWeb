@@ -3,6 +3,8 @@ import {
   Component,
   ChangeDetectorRef,
   Input,
+  Output,
+  OnInit,
 } from "@angular/core";
 import {
   CalendarOptions,
@@ -29,7 +31,7 @@ import { SedeModel } from "@models/sede.model";
   templateUrl: "./view-calendar.component.html",
   styleUrls: ["./view-calendar.component.css"],
 })
-export class ViewCalendarComponent {
+export class ViewCalendarComponent implements OnInit{
 
   //prueba con grupo y jornada
   @Input() jornadas: JornadaModel[];
@@ -39,6 +41,8 @@ export class ViewCalendarComponent {
   @Input() listUsers: UsuarioModel[];
 
   @Input() sedes: SedeModel;
+  @Output() Eventtos: EventInput[];
+
 
   Eventos: EventInput[]=[];
   calendarVisible = true;
@@ -62,6 +66,10 @@ export class ViewCalendarComponent {
     eventClick: this.handleEventClick.bind(this),
     eventsSet: this.handleEvents.bind(this),
   };
+
+  ngOnInit(): void {
+    this.crearEventosGrupoJornada();
+  }
 
   currentEvents: EventApi[] = [];
   constructor(private changeDetector: ChangeDetectorRef) {}
@@ -135,4 +143,5 @@ export class ViewCalendarComponent {
     this.currentEvents = events;
     this.changeDetector.detectChanges();
   }
+
 }

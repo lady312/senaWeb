@@ -1,4 +1,3 @@
-<button (click)="crearEventosGrupoJornada()">Mostostar eventos en coonsola</button>
 <div class="demo-app">
   <div class="demo-app-main">
 
@@ -25,11 +24,11 @@
     </div>
     <full-calendar *ngIf="calendarVisible" [options]="calendarOptions">
       <ng-template #eventContent let-arg>
-        <b>{{ arg.timeText }}</b>
-        <i>{{ arg.event.title }}</i>
-        <i>{{arg.event.extendedProps.infra}}</i>
-        <i>{{arg.event.extendedProps.jornada}}</i>
-        <i>{{arg.event.extendedProps.tipoGrupo}}</i>
+        <p>{{ arg.timeText }}</p>
+        <p>{{ arg.event.title }}</p><br>
+        <p>{{arg.event.extendedProps.infra}}</p><br>
+        <p>{{arg.event.extendedProps.jornada}}</p><br>
+        <p>{{arg.event.extendedProps.tipoGrupo}}</p>
       </ng-template>
     </full-calendar>
   </div>

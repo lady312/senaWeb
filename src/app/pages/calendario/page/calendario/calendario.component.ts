@@ -45,6 +45,7 @@ export class CalendarioComponent implements OnInit {
   protected showModalGrupo = false;
   protected showModalPrograma: boolean = false;
   protected showFormInfr: boolean = false;
+  protected showCalendar: boolean =false;
 
   calendario2: CalendarioModel = null;
   calendario3: CalendarioModel = null;
@@ -192,13 +193,15 @@ export class CalendarioComponent implements OnInit {
     }
   }
   getByIdSede(event: number) {
+
     const sede = this.sedes.find((sede) => sede.id == event);
+
     if (sede) {
-      this.sedes = this.sedes.filter(
-        (sede) => sede.id == sede.id
-      );
+      this._infraestructuraService.infrBySede(sede.id).subscribe(infrs=>{
+        this.infraestructuras=infrs;
+      })
     } else {
-      this.getGruposJornada();
+      this.getInfraestructuras();
     }
   }
   getGruposJornadaByIdInfra(event: number) {
@@ -218,13 +221,12 @@ export class CalendarioComponent implements OnInit {
         });
         if (gruposJornada) {
           this.gruposJornada = gruposJornada;
-        } else {
-          this.gruposJornada = [];
         }
       }
     } else {
       this.getGruposJornada();
     }
+    this.showCalendar=true;
   }
 
   createCalendario() {
