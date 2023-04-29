@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { CentroFormacionModel } from '@models/centro-formacion.model';
 import { CiudadModel } from '@models/ciudad.model';
 import { DepartamentoModel } from '@models/departamento.model';
 import { SedeModel } from '@models/sede.model';
+import { CentroFormacionService } from '@services/centro-formacion.service';
 import { CiudadService } from '@services/ciudad.service';
 import { DepartamentoService } from '@services/departamento.service';
 import { SedeService } from '@services/sede.service';
@@ -30,6 +32,7 @@ export class SedeComponent implements OnInit{
   sede:SedeModel;
   sedes:SedeModel[]=[];
 
+  centrosFormacion:CentroFormacionModel[]=[];
   departamentos:DepartamentoModel[]=[];
   ciudades:CiudadModel[]=[];
 
@@ -37,13 +40,15 @@ export class SedeComponent implements OnInit{
     private _uiNotificationService: UINotificationService,
     private _sedeService: SedeService,
     private _departamentoService: DepartamentoService,
-    private _ciudadService: CiudadService
+    private _ciudadService: CiudadService,
+    private _centroFormacionService:CentroFormacionService
   ){}
   ngOnInit():void{
     this.iniciarCache();
     this.getSedes();
     this.getCiudades();
     this.getDepartametos();
+    this.getCentrosFormacion();
   }
   iniciarCache(){
     this.cache.set(0, { 
@@ -67,6 +72,11 @@ export class SedeComponent implements OnInit{
         this._uiNotificationService.error("Error de Conexión en sedes");
       });
     }
+  }
+  getCentrosFormacion(){
+    this._centroFormacionService.traerCentroFormacion().subscribe(centrosF=>{
+      this.centrosFormacion=centrosF;
+    })
   }
   getCiudades(){
     const cacheCiudades:CiudadModel[] = this.cache.get(0).ciudades;
@@ -162,6 +172,12 @@ export class SedeComponent implements OnInit{
   }
   eliminarSede(event:number){
     this._sedeService.borrarSede(event).subscribe(()=>{
+      this.cache=new Map<number, { 
+        ciudades: CiudadModel[], 
+        sedesPorCiudad: Map<number, { 
+          sedes: SedeModel[] }> 
+      }>();
+      this.iniciarCache();
       this.getSedes();
     })
   }
@@ -177,11 +193,23 @@ export class SedeComponent implements OnInit{
   guardarSede(event:SedeModel){
     if(event.id){
       this._sedeService.actualizarSede(event).subscribe(()=>{
+        new Map<number, { 
+          ciudades: CiudadModel[], 
+          sedesPorCiudad: Map<number, { 
+            sedes: SedeModel[] }> 
+        }>();
+        this.iniciarCache();
         this.getSedes();
         this.reset();
       });
     }else{
       this._sedeService.guardarSede(event).subscribe(()=>{
+        new Map<number, { 
+          ciudades: CiudadModel[], 
+          sedesPorCiudad: Map<number, { 
+            sedes: SedeModel[] }> 
+        }>();
+        this.iniciarCache();
         this.getSedes();
         this.reset();
       })

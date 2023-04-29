@@ -1,0 +1,64 @@
+<div class="modal-body">
+    <div class="card-header">
+        <strong>Registrar Centro Formacion</strong>
+    </div>
+    <div class="card-body">
+        <form class="centroFormacionFormulario" [formGroup]="formCentroFormacion" class="was-validated" novalidate>
+        
+    
+        <!-- campos de nombre-->
+        <div class="form-group row">
+            <label class="col-md-4 col-form-label" for="nombreCentro">Centro</label>
+            <div class="col-md-7">
+                <input
+                    type="text"
+                    onkeyup="javascript:this.value=this.value.toUpperCase();"
+                    placeholder="Ingrese el centro"
+                    class="form-control is-valid"
+                    formControlName='nombreCentro'>
+                <div class="valid-feedback" *ngIf="!nombreCentroFormacionField.hasError('required')">
+                    Valor válido
+                </div>
+            </div>
+            <div class="invalid-feedback">
+            por favor ingresé un valor válido para el centro
+            </div>
+        </div>
+    
+    
+        <!-- campos de codigo regional-->
+        <div class="form-group row">
+            <label class="col-md-4 col-form-label" for="idRegional">Regional</label>
+            <div class="col-md-7">
+                <select class="form-control is-valid" formControlName='idRegional'>
+                    <option [ngValue]="null">Seleccionar Regional </option>
+                    <option *ngFor='let regional of regionales' [value]="regional.id">{{regional.nombreRegional}}</option>
+                </select>
+                <div class="valid-feedback" *ngIf="!idRegional.hasError('required')">
+                    Valor válido
+                </div>
+            </div>
+            <div class="invalid-feedback">
+                por favor ingresé un valor para Regional
+            </div>
+        </div>
+    
+    </form>
+        <div class="card-footer">
+            <button
+                type="submit"
+                class="btn btn-sm btn-primary"
+                (click)="guardarCentroFormacion()"
+                [disabled]="formCentroFormacion.invalid">
+                <i class="fa fa-dot-circle-o"></i> Aceptar
+            </button>
+            <button
+                type="reset"
+                class="btn btn-sm btn-danger"
+                (click)="closeModal()">
+                <i class="fa fa-ban"></i>
+                Cancelar
+            </button>
+        </div>
+    </div>
+</div>
