@@ -7,11 +7,22 @@
   (create1)="createCalendario2()"
   (create2)="createCalendario3()"
   (create3)="createCalendario4()"
+  (crearJornada)="createJornada();"
   (idGrupo)="getGruposJornadaByIdGrupo($event)"
   (idInfraestructura)="getGruposJornadaByIdInfra($event)"
   (idSede)="getByIdSede($event)"
 >
 </app-list-calendario>
+
+<app-custom-modal title="Gestión Jornada" [(show)]="showModalJornada">
+  <app-add-jornada
+    *ngIf="showModalJornada"
+    [jorna]="jornada"
+    (store)="guardarJornada($event)"
+    (cancelar)="reset()"
+  >
+  </app-add-jornada>
+</app-custom-modal>
 
 <app-custom-modal title="Sede" [(show)]="showFormSede">
   <app-sede-form

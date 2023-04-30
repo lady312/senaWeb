@@ -46,6 +46,7 @@ export class CalendarioComponent implements OnInit {
   protected showModalPrograma: boolean = false;
   protected showFormInfr: boolean = false;
   protected showCalendar: boolean =false;
+  protected showModalJornada: boolean = false;
 
   calendario2: CalendarioModel = null;
   calendario3: CalendarioModel = null;
@@ -55,6 +56,7 @@ export class CalendarioComponent implements OnInit {
   programa: ProgramaModel = null;
   infraestructura: InfraestructuraModel = null;
   area: AreaModel = null;
+  jornada: JornadaModel = null;
 
   jornadas: JornadaModel[] = [];
 
@@ -246,6 +248,10 @@ export class CalendarioComponent implements OnInit {
     this.infraestructura = null;
     this.showFormInfr = true;
   }
+  createJornada(){
+    this.jornada = null;
+    this.showModalJornada = true;
+  }
 
   guardarSede(sede: SedeModel) {
     this._sedeService.guardarSede(sede).subscribe(() => {
@@ -283,6 +289,12 @@ export class CalendarioComponent implements OnInit {
     }
   }
 
+  guardarJornada(event:JornadaModel){
+    this._jornadaService.crearJornada(event).subscribe(jornada=>{
+      this.getJornadas();
+    });
+  }
+
   guardarInfraestructura(event: InfraestructuraModel) {
     if (event.id) {
       this._infraestructuraService
@@ -311,5 +323,7 @@ export class CalendarioComponent implements OnInit {
     this.showModalPrograma = false;
     this.showFormInfr = false;
     this.infraestructura = null;
+    this.jornada = null;
+    this.showModalJornada = false;
   }
 }

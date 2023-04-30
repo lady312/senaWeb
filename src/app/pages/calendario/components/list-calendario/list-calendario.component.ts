@@ -24,6 +24,7 @@ export class ListCalendarioComponent {
   @Output() create1: EventEmitter<void> = new EventEmitter();
   @Output() create2: EventEmitter<void> = new EventEmitter();
   @Output() create3: EventEmitter<void> = new EventEmitter();
+  @Output() crearJornada: EventEmitter<void> = new EventEmitter();
   @Output() idGrupo: EventEmitter<number> = new EventEmitter();
   @Output() idJornada: EventEmitter<number> = new EventEmitter();
   @Output() idInfraestructura: EventEmitter<number> = new EventEmitter();
@@ -58,6 +59,9 @@ export class ListCalendarioComponent {
   }
   ambientes() {
     this.create3.emit();
+  }
+  jornadas(){
+    this.crearJornada.emit();
   }
 
   enviarIdGrupo(event:any){
