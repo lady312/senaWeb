@@ -54,16 +54,12 @@ export class GrupoComponent {
   tipoFormacion: TipoFormacionModel = null;
   estado: EstadoGrupoModel = null;
   tipoOferta: TipoOfertaModel = null;
-  jornada: JornadaModel =  null;
+  jornada: JornadaModel = null;
 
   constructor(
     private _uiNotificationService: UINotificationService,
     private _gruposService: GruposService,
     private _tipoGruposService: TipoGrupoService,
-    private _programaService: ProgramaService,
-    private _usuarioService: UsuarioService,
-    private _infraestructuraService: InfraestructuraService,
-
   ) { }
 
   ngOnInit(): void {
@@ -74,6 +70,8 @@ export class GrupoComponent {
     this._gruposService.traerGrupos()
       .subscribe(grupos => {
         this.grupos = grupos;
+        this.grupos.forEach((grupo) => {
+        });
       }, error => {
         this._uiNotificationService.error("Error de conexión");
       });
@@ -103,24 +101,26 @@ export class GrupoComponent {
         this.reset();
       });
     } else {
-      this._gruposService.crearGrupo(grupo).subscribe(gr => {
-        this.getGrupo();
-        this.reset();
-      })
+      this._gruposService.crearGrupo(grupo).subscribe(
+        gr => {
+          this.getGrupo();
+          this.reset();
+          this._uiNotificationService.success("El registro fué creado");
+        },
+        (error) => {
+          this._uiNotificationService.error("Error al guardar la información");
+        }
+      );
     }
   }
 
-  guardarTipoGrupo(tipoGrupo: TipoGrupoModel)
-  {
+  guardarTipoGrupo(tipoGrupo: TipoGrupoModel) {
     this._tipoGruposService.crearTipoGrupo(tipoGrupo).subscribe(gr => {
       this.tipoGrupos.push(gr);
       this.guardarTipoGrupo(this.grupo);
     })
     this.reset();
   }
-
-
-  
 
   reset() {
     this.grupo = null;

@@ -42,4 +42,3 @@ export interface GrupoModel {
   grupos_jornada?:AsignacionJornadaGrupoModel[];
 
 }
-

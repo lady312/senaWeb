@@ -181,9 +181,10 @@
       </div>
       <div class="form-floating mb-3">
         <select class="form-select" id="jornada" aria-label="Floating label select example"
-          formControlName="idJornada">
+          formControlName="grupos_jornada" #jornadaSelect>
           <option selected>Selecionar jornada</option>
-          <option *ngFor='let jornada of jornadas' [ngValue]="jornada.id">{{jornada.nombreJornada}}
+          <option *ngFor='let jornada of jornadas' [value]="jornada.id">{{jornada.nombreJornada}}
+            
           </option>
         </select>
         <label for="jornada">Jornada</label>
