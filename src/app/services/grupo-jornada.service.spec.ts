@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { GrupoJornadaService } from './grupo-jornada.service';
+import { GrupoJornadaService } from './asignacion-jornada-grupo.service';
 
 describe('GrupoJornadaService', () => {
   let service: GrupoJornadaService;

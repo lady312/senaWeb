@@ -1,5 +1,3 @@
-import { CalendarioService } from "@services/calendario.service";
-
 import { Component, OnInit } from "@angular/core";
 import { CalendarioModel } from "@models/calendario.model";
 import { SedeModel } from "@models/sede.model";
@@ -20,8 +18,7 @@ import { AreaModel } from "@models/area.model";
 import { JornadaService } from "@services/jornada.service";
 import { JornadaModel } from "@models/jornada.model";
 import { Time } from "@angular/common";
-import { GrupoJornadaService } from "@services/grupo-jornada.service";
-import { GrupoJornadaModel } from "@models/grupo_jornada.model";
+import { AsignacionJornadaGrupoService } from "@services/asignacion-jornada-grupo.service";
 import { UsuarioService } from "@services/usuario.service";
 import { UsuarioModel } from "@models/usuario.model";
 import { AsignacionJornadaGrupoModel } from "@models/asignacion-jornada-grupo.model";
@@ -71,11 +68,10 @@ export class CalendarioComponent implements OnInit {
   areas: AreaModel[] = [];
   infreaestructuras: InfraestructuraModel[] = [];
   usuarios: UsuarioModel[] = [];
-  gruposJornada: GrupoJornadaModel[] = [];
+  gruposJornada: AsignacionJornadaGrupoModel[] = [];
 
   constructor(
     private _uiNotificationService: UINotificationService,
-    private _CalendarioService: CalendarioService,
     private _sedeService: SedeService,
     private _ciudadService: CiudadService,
     private _departamentoService: DepartamentoService,
@@ -84,7 +80,7 @@ export class CalendarioComponent implements OnInit {
     private _infraestructuraService: InfraestructuraService,
     private _areaService: AreaService,
     private _jornadaService: JornadaService,
-    private _grupoJornadaService: GrupoJornadaService,
+    private _grupoJornadaService: AsignacionJornadaGrupoService,
     private _usuarioService: UsuarioService
   ) {}
 
@@ -213,7 +209,7 @@ export class CalendarioComponent implements OnInit {
         (grupo) => grupo.idInfraestructura == infra.id
       );
       if (grupos) {
-        let gruposJornada: GrupoJornadaModel[] = [];
+        let gruposJornada: AsignacionJornadaGrupoModel[] = [];
         grupos.forEach((grupo) => {
           gruposJornada = gruposJornada.concat(
             this.gruposJornada.filter(
@@ -292,6 +288,7 @@ export class CalendarioComponent implements OnInit {
   guardarJornada(event:JornadaModel){
     this._jornadaService.crearJornada(event).subscribe(jornada=>{
       this.getJornadas();
+      this.reset();
     });
   }
 

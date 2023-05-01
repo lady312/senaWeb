@@ -6,6 +6,7 @@ import { NivelFormacionModel } from './nivel-formacion.model';
 import { ProgramaModel } from './programa.model';
 import { UsuarioModel } from './usuario.model';
 import { EstadoGrupoModel } from './estado-grupo.model';
+import { AsignacionJornadaGrupoModel } from './asignacion-jornada-grupo.model';
 export interface GrupoModel {
   id: number;
   nombre: string;
@@ -36,6 +37,8 @@ export interface GrupoModel {
 
   idTipoOferta?:number;
   tipo_oferta?:TipoOfertaModel;
+
+  grupos_jornada?:AsignacionJornadaGrupoModel[];
 
 }
 
