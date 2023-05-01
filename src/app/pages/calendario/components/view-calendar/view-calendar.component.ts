@@ -25,6 +25,7 @@ import { addDays } from "@fullcalendar/core/internal";
 import { GrupoJornadaModel } from "@models/grupo_jornada.model";
 import { UsuarioModel } from "@models/usuario.model";
 import { SedeModel } from "@models/sede.model";
+import { AsignacionJornadaGrupoModel } from "@models/asignacion-jornada-grupo.model";
 
 @Component({
   selector: "view-calendar",
@@ -37,7 +38,7 @@ export class ViewCalendarComponent implements OnInit{
   @Input() jornadas: JornadaModel[];
   @Input() grupos: GrupoModel[];
 //grupo y jornada
-  @Input() gruposJornadas: GrupoJornadaModel[];
+  @Input() gruposJornadas: AsignacionJornadaGrupoModel[];
   @Input() listUsers: UsuarioModel[];
 
   @Input() sedes: SedeModel;

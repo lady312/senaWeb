@@ -10,9 +10,10 @@ export class AsignacionJornadaGrupoService {
   constructor(
     private _coreService: CoreService
   ) { }
-
-  public getGrupoJornadaByGrupo(id: number) {
-    return this._coreService.get<AsignacionJornadaGrupoModel[]>('grupojornada/grupo/' + id);
+  traerGruposJornada(){
+    return this._coreService.get<AsignacionJornadaGrupoModel[]>('gruposjornada');
   }
-
+  crearGrupoJornada(grupoJornada:AsignacionJornadaGrupoModel){
+    return this._coreService.post<AsignacionJornadaGrupoModel>('gruposjornada',grupoJornada);
+  }
 }
