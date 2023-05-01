@@ -39,11 +39,7 @@ export interface GrupoModel {
   idTipoOferta?:number;
   tipo_oferta?:TipoOfertaModel;
 
-  // idJornadaGrupo?:number;
-  jornadaGrupo?:AsignacionJornadaGrupoModel[];
+  grupos_jornada?:AsignacionJornadaGrupoModel[];
 
-  // idJornada?:number;
-  // jornada?:JornadaModel[];
-  
 }
 

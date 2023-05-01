@@ -1,5 +1,3 @@
-import { CalendarioService } from "@services/calendario.service";
-
 import { Component, OnInit } from "@angular/core";
 import { CalendarioModel } from "@models/calendario.model";
 import { SedeModel } from "@models/sede.model";
@@ -74,7 +72,6 @@ export class CalendarioComponent implements OnInit {
 
   constructor(
     private _uiNotificationService: UINotificationService,
-    private _CalendarioService: CalendarioService,
     private _sedeService: SedeService,
     private _ciudadService: CiudadService,
     private _departamentoService: DepartamentoService,
@@ -291,6 +288,7 @@ export class CalendarioComponent implements OnInit {
   guardarJornada(event:JornadaModel){
     this._jornadaService.crearJornada(event).subscribe(jornada=>{
       this.getJornadas();
+      this.reset();
     });
   }
 
