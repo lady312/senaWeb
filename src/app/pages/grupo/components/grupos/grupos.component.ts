@@ -13,7 +13,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DatePipe } from '@angular/common';
 import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { ProgramaModel } from '@models/programa.model';
-import { JornadaModel } from '@models/jornada.model';
+import { AsignacionJornadaGrupoModel } from '@models/asignacion-jornada-grupo.model';
 import { TipoFormacionModel } from '@models/tipo-formacion.model';
 import { InfraestructuraModel } from '@models/infraestructura.model';
 import { UsuarioModel } from '@models/usuario.model';
@@ -24,6 +24,7 @@ import { NivelFormacionService } from '@services/nivel-formacion.service';
 import { TipoFormacionService } from '@services/tipo-formacion.service';
 import { EstadoGrupoService } from '@services/estado-grupo.service';
 import { TipoOfertaService } from '@services/tipo-oferta.service';
+import { JornadaModel } from '@models/jornada.model';
 
 @Component({
   selector: 'app-grupos',
@@ -41,6 +42,12 @@ export class GruposComponent implements OnInit {
   @Output() cancel: EventEmitter<void> = new EventEmitter();
   @Output() create: EventEmitter<void> = new EventEmitter();
 
+
+  // Jornadas relacion aqui N:N
+  jornadaGrupos: AsignacionJornadaGrupoModel[] = [];
+  jornada: JornadaModel[] = [];
+  // diasInput: JornadaModel[] = [];
+
   public showModalTipoGrupo = false;
   tipoGrupo:                  TipoGrupoModel = null;
   @Input() tipoGrupos:        TipoGrupoModel[] = [];
@@ -51,6 +58,7 @@ export class GruposComponent implements OnInit {
   @Input() tipoFormaciones:   TipoFormacionModel[] = [];
   @Input() estados:           EstadoGrupoModel[] = [];
   @Input() tipoOfertas:       TipoOfertaModel[] = [];
+  @Input() jornadas:          JornadaModel[] = [];
   @Input() grupo:             GrupoModel;
   tipoGrupoForm:              FormGroup;
   formGrupo:                  UntypedFormGroup;
@@ -68,6 +76,7 @@ export class GruposComponent implements OnInit {
     private _tipoFormacionService: TipoFormacionService,
     private _estadoService: EstadoGrupoService,
     private _tipoOfertaService: TipoOfertaService,
+    private _jornadasService:JornadaService,
     private _uiNotificationService: UINotificationService, //nofitificacion
     private _modalService: NgbModal, //Modal
     //Renderizar vista
@@ -101,6 +110,9 @@ export class GruposComponent implements OnInit {
 
       idTipoOferta:null,
       tipo_oferta:null,
+
+      // idJornadaGrupo:null,
+      // jornadaGrupo:null,
       
     };
     this.buildForm();
@@ -116,6 +128,7 @@ export class GruposComponent implements OnInit {
     this.setGrupo();
     this.traerEstados();
     this.traerTipoOfertas();
+    this.traerJornadas();
   }
 
   guardarTipoGrupo(tipoGrupo: TipoGrupoModel) {
@@ -210,6 +223,16 @@ export class GruposComponent implements OnInit {
       });
   }
 
+
+  traerJornadas() {
+    this._jornadasService.traerJornada()
+      .subscribe((jorn: JornadaModel[]) => {
+        this.jornadas = jorn;
+      }, error => {
+        this._uiNotificationService.error('Error de conexión');
+      });
+  }
+
   get nombreField() {
     return this.formGrupo.get('nombre');
   }
@@ -253,6 +276,10 @@ export class GruposComponent implements OnInit {
   get tipoOfertaField(){
     return this.formGrupo.get('idTipoOferta');
   }
+
+  get jornadaField(){
+    return this.formGrupo.get('idJornada');
+  }
   
 
   setGrupo() {
@@ -286,6 +313,12 @@ export class GruposComponent implements OnInit {
 
         idTipoOferta:      this.grupo.idTipoOferta,
         tipoOferta:        this.grupo.tipo_oferta,
+
+        // idJornadaGrupo:    this.grupo.idJornadaGrupo,
+        // jornadaGrupo:      this.grupo.jornadaGrupo,
+
+        // idJornada:         this.grupo.idJornada,
+        // jornada:           this.grupo.jornada,
  
       })
     }
@@ -314,6 +347,8 @@ export class GruposComponent implements OnInit {
       idEstado:          ['', [Validators.required]],
 
       idTipoOferta:      ['', [Validators.required]],
+
+      idJornada:         ['', [Validators.required]],
 
     });
 
@@ -363,6 +398,10 @@ export class GruposComponent implements OnInit {
 
       idTipoOferta:      this.getControl('idTipoOferta').value,
  
+      // jornadaGrupo:      this.jornadaGrupos,
+
+      // idJornada:         this.getControl('idJornada').value,
+
     }
 
   }

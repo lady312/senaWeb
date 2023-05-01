@@ -23,7 +23,7 @@
       <div class="form-floating mb-3">
         <input type="Text" onkeyup="javascript:this.value=this.value.toUpperCase();" class="form-control"
           id="floatingInput" placeholder="name@example.com" formControlName='nombre'>
-        <label for="floatingInput">Nombre</label>
+        <label for="floatingInput">Número de ficha / nombre</label>
         <div class="valid-feedback" *ngIf="!nombreField.hasError('required')">
           Valor válido
         </div>
@@ -134,7 +134,7 @@
           <div class="form-floating mb-3">
             <input type="date" onkeyup="javascript:this.value=this.value.toUpperCase();" class="form-control"
               id="fechaInicial" placeholder="name@example.com" formControlName='fechaInicial' #fechaInicialInput>
-            <label for="fechaInicial">Fecha inicial</label>
+            <label for="fechaInicial">Fecha inicial lectiva</label>
             <div class="valid-feedback" *ngIf="!fechaInicialField.hasError('required')">
               Valor válido
             </div>
@@ -147,7 +147,7 @@
           <div class="form-floating mb-3">
             <input type="date" onkeyup="javascript:this.value=this.value.toUpperCase();" class="form-control"
               id="floatingInput" placeholder="name@example.com" formControlName='fechaFinal' #fechaFinalInput>
-            <label for="floatingInput">Fecha final</label>
+            <label for="floatingInput">Fecha fin lectiva</label>
             <div class="valid-feedback" *ngIf="!fechaFinalField.hasError('required')">
               Valor válido
             </div>
@@ -157,17 +157,6 @@
           </div>
         </div>
       </div>
-      <div class="form-floating">
-        <textarea class="form-control" onkeyup="javascript:this.value=this.value.toUpperCase();" style="height: 100px"
-          placeholder="Leave a comment here" id="floatingTextarea" formControlName='observacion' required></textarea>
-        <label for="floatingTextarea">Observación</label>
-        <div class="valid-feedback" *ngIf="!observacion.hasError('required')">
-          Valor valido
-        </div>
-        <div class="invalid-feedback">
-          Por favor ingrese un valor valido para la descripción
-        </div>
-      </div>
       <div class="row mb-2">
         <div class="col-sm-10">
           <div class="form-floating">
@@ -175,7 +164,7 @@
               formControlName="idTipoGrupo">
               <option selected>Selecionar tipo de grupo</option>
               <option *ngFor='let tipoGrupo of tipoGrupos' [ngValue]="tipoGrupo.id">{{tipoGrupo.nombreTipoGrupo}}
-              </option><!--Renderizar este select con lo que hay en la base de datos-->
+              </option>
             </select>
             <label for="tipoGrupo">Tipo de grupo</label>
             <div class="valid-feedback" *ngIf="!idTipoGrupo.hasError('required')">
@@ -188,6 +177,32 @@
         </div>
         <div class="col-sm-2 mt-2">
           <button type="button" class="btn btn-success rounded-circle" (click)="agregar()">+</button>
+        </div>
+      </div>
+      <div class="form-floating mb-3">
+        <select class="form-select" id="jornada" aria-label="Floating label select example"
+          formControlName="idJornada">
+          <option selected>Selecionar jornada</option>
+          <option *ngFor='let jornada of jornadas' [ngValue]="jornada.id">{{jornada.nombreJornada}}
+          </option>
+        </select>
+        <label for="jornada">Jornada</label>
+        <div class="valid-feedback" *ngIf="!jornadaField.hasError('required')">
+          Valor válido
+        </div>
+        <div class="invalid-feedback">
+          Por favor ingresé un valor válido para la jornada
+        </div>
+      </div>
+      <div class="form-floating">
+        <textarea class="form-control" onkeyup="javascript:this.value=this.value.toUpperCase();" style="height: 100px"
+          placeholder="Leave a comment here" id="floatingTextarea" formControlName='observacion' required></textarea>
+        <label for="floatingTextarea">Observación</label>
+        <div class="valid-feedback" *ngIf="!observacion.hasError('required')">
+          Valor valido
+        </div>
+        <div class="invalid-feedback">
+          Por favor ingrese un valor valido para la descripción
         </div>
       </div>
     </form>

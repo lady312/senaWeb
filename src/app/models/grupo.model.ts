@@ -6,6 +6,8 @@ import { NivelFormacionModel } from '@models/nivel-formacion.model';
 import { TipoFormacionModel } from '@models/tipo-formacion.model';
 import { TipoOfertaModel } from '@models/tipo-oferta.model';
 import { EstadoGrupoModel } from '@models/estado-grupo.model';
+import { AsignacionJornadaGrupoModel } from '@models/asignacion-jornada-grupo.model';
+import { JornadaModel } from './jornada.model';
 
 export interface GrupoModel {
   id: number;
@@ -37,5 +39,11 @@ export interface GrupoModel {
 
   idTipoOferta?:number;
   tipo_oferta?:TipoOfertaModel;
+
+  // idJornadaGrupo?:number;
+  jornadaGrupo?:AsignacionJornadaGrupoModel[];
+
+  // idJornada?:number;
+  // jornada?:JornadaModel[];
   
 }

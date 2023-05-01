@@ -12,7 +12,7 @@
     <div class="card-body">
 
         <div class="input-group mb-3">
-          <input class="form-control" type="search" [(ngModel)]="query" (keyup)="filter()" placeholder="Buscar grupos" aria-label="Buscar grupo">
+          <input class="form-control" type="search" [(ngModel)]="query" (keyup)="filter()" placeholder="Buscar grupos">
           <button class="btn btn-primary" type="button"><i class="cil-search"></i></button>
         </div>
 
@@ -32,6 +32,7 @@
               <th>Fecha de finalización</th>
               <th>Observacion</th>
               <th>Tipo grupo</th>
+              <!-- <th>Jornada</th> -->
               <th>Infraestructura</th>
               <th>Acciones</th>
           </thead>
@@ -50,6 +51,7 @@
               <td>{{ grupo.fechaFinal | date:'d-MMMM-y' }}</td>
               <td>{{ grupo.observacion || 'No se encuentra alguna observación'}}</td>
               <td>{{ grupo.tipo_grupo.nombreTipoGrupo || 'Tipo de grupo no disponible' }}</td>
+              <!-- <td>{{ grupo.tipo_jornada.nombreJornada }}</td> -->
               <td>{{ grupo?.infraestructura?.nombreInfraestructura }}</td>
               <td>
                 <span class="badge badge-primary" style="cursor: pointer;" (click)="actualizar(grupo)">Actualizar</span>

@@ -14,6 +14,8 @@ import { ProgramaService } from '@services/programa.service';
 import { TipoGrupoService } from '@services/tipo-grupo.service';
 import { UINotificationService } from '@services/uinotification.service';
 import { UsuarioService } from '@services/usuario.service';
+import { AsignacionJornadaGrupoModel } from '@models/asignacion-jornada-grupo.model';
+import { JornadaModel } from '@models/jornada.model';
 
 @Component({
   selector: 'app-grupo',
@@ -33,6 +35,10 @@ export class GrupoComponent {
   @Input() tipoFormaciones: TipoFormacionModel[] = [];
   @Input() estados: EstadoGrupoModel[] = [];
   @Input() tipoOfertas: TipoOfertaModel[] = [];
+  @Input() jornadas: JornadaModel[] = [];
+
+  jornadasGrupo: AsignacionJornadaGrupoModel[] = [];
+
 
 
   @Output() create: EventEmitter<void> = new EventEmitter();
@@ -48,6 +54,7 @@ export class GrupoComponent {
   tipoFormacion: TipoFormacionModel = null;
   estado: EstadoGrupoModel = null;
   tipoOferta: TipoOfertaModel = null;
+  jornada: JornadaModel =  null;
 
   constructor(
     private _uiNotificationService: UINotificationService,
@@ -117,6 +124,7 @@ export class GrupoComponent {
 
   reset() {
     this.grupo = null;
+    this.jornadasGrupo = [];
     this.showModalGrupo = false;
   }
 
