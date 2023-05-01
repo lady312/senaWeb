@@ -113,6 +113,31 @@
       </div>
       <div class="form-group row">
         <label
+          class="col-md-4 col-form-label" 
+          for="centroF">
+          Centro de formación:
+        </label>
+        <div class="col-md-7">
+          <input
+            class="form-control"
+            id="centroF"
+            list="centros-list"
+            (change)="selectIdCentro($event)" 
+            type="text"
+            formControlName="idCentroFormacion"
+            placeholder="Seleccione un centro de formación"
+            required>
+            <datalist id="centros-list">
+              <option
+                *ngFor="let centro of centrosFormacion" 
+                [value]="centro.nombreCentro">
+                {{centro.nombreCentro}} 
+              </option>
+            </datalist>
+        </div>
+      </div>
+      <div class="form-group row">
+        <label
           class="col-md-4 col-form-label"
           for="descF">
           Descripción

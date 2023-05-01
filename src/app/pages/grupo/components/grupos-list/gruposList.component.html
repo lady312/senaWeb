@@ -2,7 +2,7 @@
   <div class="card rounded mt-3 style">
     <div class="card-header style">
       <i class="fa fa-align-justify"></i> Grupos Registrados
-      <select #nreg class="form-control col-lg-1" (change)="enviarNumeroRegistros($event.target.value) ">
+      <select #nreg class="form-control col-lg-1" (change)="enviarNumeroRegistros($event) ">
         <option>10</option>
         <option>15</option>
         <option>20</option>
@@ -43,7 +43,7 @@
               <td>{{ grupo?.programa?.nombrePrograma || 'Programa no disponible' }}</td>
               <td>{{ grupo.nivel_formacion?.nivel }}</td>
               <td>{{ grupo.nombre || 'Nombre no disponible'}}</td>
-              <td>{{ grupo?.lider.persona.nombre1 || 'Lider no disponible ' }}</td>
+              <td>{{ grupo?.lider || 'Lider no disponible ' }}</td>
               <td>{{ grupo?.tipo_formacion?.nombreTipoFormacion || 'Tipo de formación no disponible'}}</td>
               <td>{{ grupo?.estado_grupo.nombreEstado || 'Estado no disponible'}}</td>
               <td>{{ grupo?.tipo_oferta?.nombreOferta || 'Tipo de oferta no disponible'}}</td>

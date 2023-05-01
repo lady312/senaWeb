@@ -73,6 +73,7 @@ export class GruposListComponent {
     }
   }
 
+  
   obtenerNivelFormativo(): string {
     if (this.grupo && this.grupo.idNivel) {
       const nivel = this.nivel.find(t => t.id === this.grupo.idNivel);
@@ -82,7 +83,8 @@ export class GruposListComponent {
     }
   }
 
-  enviarNumeroRegistros(num: number) {
+  enviarNumeroRegistros(event:any) {
+    const num:number = event.target.value
     this.numReg = num;
   }
 

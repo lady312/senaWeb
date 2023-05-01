@@ -11,6 +11,9 @@ import { ComunModule } from '@components/comun.module';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 @NgModule({
+  exports:[
+    AddJornadaComponent
+  ],
   declarations: [
     JornadaComponent,
     AddJornadaComponent,

@@ -12,6 +12,7 @@ import { CalendarioComponent } from './page/calendario/calendario.component';
 import { ListCalendarioComponent } from './components/list-calendario/list-calendario.component';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { ViewCalendarComponent } from './components/view-calendar/view-calendar.component';
+import { JornadaModule } from '../jornada/jornada.module';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { ViewCalendarComponent } from './components/view-calendar/view-calendar.
     GrupoModule,
     InfraestructuraModule,
     ProgramaModule,
-    FullCalendarModule
+    FullCalendarModule,
+    JornadaModule
   ]
 })
 export class CalendarioModule { }
