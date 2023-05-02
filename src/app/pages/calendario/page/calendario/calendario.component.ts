@@ -18,10 +18,10 @@ import { AreaModel } from "@models/area.model";
 import { JornadaService } from "@services/jornada.service";
 import { JornadaModel } from "@models/jornada.model";
 import { Time } from "@angular/common";
-import { AsignacionJornadaGrupoService } from "@services/asignacion-jornada-grupo.service";
 import { UsuarioService } from "@services/usuario.service";
 import { UsuarioModel } from "@models/usuario.model";
 import { AsignacionJornadaGrupoModel } from "@models/asignacion-jornada-grupo.model";
+import { AsignacionJornadaGrupoService } from "@services/asignacion-jornada-grupo.service";
 
 interface formacion {
   fecha?: Date;

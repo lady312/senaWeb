@@ -8,5 +8,5 @@ export interface UsuarioModel {
   idPersona?:number;
   company_id?: number;
   roles?: RolModel[];
-  persona?: PersonaModel;
+  persona?:PersonaModel;
 }

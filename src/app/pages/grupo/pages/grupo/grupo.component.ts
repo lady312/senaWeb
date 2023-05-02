@@ -14,6 +14,8 @@ import { ProgramaService } from '@services/programa.service';
 import { TipoGrupoService } from '@services/tipo-grupo.service';
 import { UINotificationService } from '@services/uinotification.service';
 import { UsuarioService } from '@services/usuario.service';
+import { AsignacionJornadaGrupoModel } from '@models/asignacion-jornada-grupo.model';
+import { JornadaModel } from '@models/jornada.model';
 
 @Component({
   selector: 'app-grupo',
@@ -33,6 +35,10 @@ export class GrupoComponent {
   @Input() tipoFormaciones: TipoFormacionModel[] = [];
   @Input() estados: EstadoGrupoModel[] = [];
   @Input() tipoOfertas: TipoOfertaModel[] = [];
+  @Input() jornadas: JornadaModel[] = [];
+
+  jornadasGrupo: AsignacionJornadaGrupoModel[] = [];
+
 
 
   @Output() create: EventEmitter<void> = new EventEmitter();
@@ -48,15 +54,12 @@ export class GrupoComponent {
   tipoFormacion: TipoFormacionModel = null;
   estado: EstadoGrupoModel = null;
   tipoOferta: TipoOfertaModel = null;
+  jornada: JornadaModel = null;
 
   constructor(
     private _uiNotificationService: UINotificationService,
     private _gruposService: GruposService,
     private _tipoGruposService: TipoGrupoService,
-    private _programaService: ProgramaService,
-    private _usuarioService: UsuarioService,
-    private _infraestructuraService: InfraestructuraService,
-
   ) { }
 
   ngOnInit(): void {
@@ -67,6 +70,8 @@ export class GrupoComponent {
     this._gruposService.traerGrupos()
       .subscribe(grupos => {
         this.grupos = grupos;
+        this.grupos.forEach((grupo) => {
+        });
       }, error => {
         this._uiNotificationService.error("Error de conexión");
       });
@@ -96,15 +101,20 @@ export class GrupoComponent {
         this.reset();
       });
     } else {
-      this._gruposService.crearGrupo(grupo).subscribe(gr => {
-        this.getGrupo();
-        this.reset();
-      })
+      this._gruposService.crearGrupo(grupo).subscribe(
+        gr => {
+          this.getGrupo();
+          this.reset();
+          this._uiNotificationService.success("El registro fué creado");
+        },
+        (error) => {
+          this._uiNotificationService.error("Error al guardar la información");
+        }
+      );
     }
   }
 
-  guardarTipoGrupo(tipoGrupo: TipoGrupoModel)
-  {
+  guardarTipoGrupo(tipoGrupo: TipoGrupoModel) {
     this._tipoGruposService.crearTipoGrupo(tipoGrupo).subscribe(gr => {
       this.tipoGrupos.push(gr);
       this.guardarTipoGrupo(this.grupo);
@@ -112,11 +122,9 @@ export class GrupoComponent {
     this.reset();
   }
 
-
-  
-
   reset() {
     this.grupo = null;
+    this.jornadasGrupo = [];
     this.showModalGrupo = false;
   }
 

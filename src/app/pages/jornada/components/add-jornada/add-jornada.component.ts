@@ -166,6 +166,8 @@ export class AddJornadaComponent implements OnInit {
           idDia: d.id,
         };
       });
+      console.log(diaJornadas);
+
     return {
       id: this.jorna?.id,
       nombreJornada: this.getControl('nombreJornada').value,

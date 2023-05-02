@@ -13,7 +13,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DatePipe } from '@angular/common';
 import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { ProgramaModel } from '@models/programa.model';
-import { JornadaModel } from '@models/jornada.model';
+import { AsignacionJornadaGrupoModel } from '@models/asignacion-jornada-grupo.model';
 import { TipoFormacionModel } from '@models/tipo-formacion.model';
 import { InfraestructuraModel } from '@models/infraestructura.model';
 import { UsuarioModel } from '@models/usuario.model';
@@ -24,6 +24,7 @@ import { NivelFormacionService } from '@services/nivel-formacion.service';
 import { TipoFormacionService } from '@services/tipo-formacion.service';
 import { EstadoGrupoService } from '@services/estado-grupo.service';
 import { TipoOfertaService } from '@services/tipo-oferta.service';
+import { JornadaModel } from '@models/jornada.model';
 
 @Component({
   selector: 'app-grupos',
@@ -37,9 +38,16 @@ export class GruposComponent implements OnInit {
   @ViewChild('fechaInicialInput', { static: false }) fechaInicialInput: ElementRef;
   @ViewChild('fechaFinalInput', { static: false }) fechaFinalInput: ElementRef;
 
+  @ViewChild('jornadaSelect', { static: false })
+  select: ElementRef<HTMLSelectElement>;
+
+
   @Output() store: EventEmitter<GrupoModel> = new EventEmitter();
   @Output() cancel: EventEmitter<void> = new EventEmitter();
   @Output() create: EventEmitter<void> = new EventEmitter();
+
+  jornadaGrupos: AsignacionJornadaGrupoModel[] = [];
+  jornada: JornadaModel[] = [];
 
   public showModalTipoGrupo = false;
   tipoGrupo:                  TipoGrupoModel = null;
@@ -51,10 +59,10 @@ export class GruposComponent implements OnInit {
   @Input() tipoFormaciones:   TipoFormacionModel[] = [];
   @Input() estados:           EstadoGrupoModel[] = [];
   @Input() tipoOfertas:       TipoOfertaModel[] = [];
+  @Input() jornadas:          JornadaModel[] = [];
   @Input() grupo:             GrupoModel;
   tipoGrupoForm:              FormGroup;
   formGrupo:                  UntypedFormGroup;
-  // grupos:                     TipoGrupoModel[] = [];
 
   constructor(
     private formBuilder: UntypedFormBuilder, // construccion de form controles
@@ -68,6 +76,7 @@ export class GruposComponent implements OnInit {
     private _tipoFormacionService: TipoFormacionService,
     private _estadoService: EstadoGrupoService,
     private _tipoOfertaService: TipoOfertaService,
+    private _jornadasService:JornadaService,
     private _uiNotificationService: UINotificationService, //nofitificacion
     private _modalService: NgbModal, //Modal
     //Renderizar vista
@@ -101,7 +110,8 @@ export class GruposComponent implements OnInit {
 
       idTipoOferta:null,
       tipo_oferta:null,
-      
+
+      grupos_jornada: [] = [],
     };
     this.buildForm();
   }
@@ -113,9 +123,10 @@ export class GruposComponent implements OnInit {
     this.traerInfraestructuras();
     this.traerTipoFormaciones();
     this.traerLideres();
-    this.setGrupo();
     this.traerEstados();
     this.traerTipoOfertas();
+    this.traerJornadas();
+    this.setGrupo();
   }
 
   guardarTipoGrupo(tipoGrupo: TipoGrupoModel) {
@@ -152,8 +163,7 @@ export class GruposComponent implements OnInit {
         }, error => {
           this._uiNotificationService.error('Error de conexión');
         });
-    }
-
+  }
 
   traerProgramas() {
     this._programaService.traerProgramas()
@@ -163,7 +173,6 @@ export class GruposComponent implements OnInit {
         this._uiNotificationService.error('Error de conexión');
       });
   }
-
 
   traerInfraestructuras() {
     this._infraestructuraService.traerInfraestructuras()
@@ -205,6 +214,15 @@ export class GruposComponent implements OnInit {
     this._tipoOfertaService.traerTipoOfertas()
       .subscribe((tipoOferta: TipoOfertaModel[]) => {
         this.tipoOfertas = tipoOferta;
+      }, error => {
+        this._uiNotificationService.error('Error de conexión');
+      });
+  }
+
+  traerJornadas() {
+    this._jornadasService.traerJornada()
+      .subscribe((jorn: JornadaModel[]) => {
+        this.jornadas = jorn;
       }, error => {
         this._uiNotificationService.error('Error de conexión');
       });
@@ -253,8 +271,11 @@ export class GruposComponent implements OnInit {
   get tipoOfertaField(){
     return this.formGrupo.get('idTipoOferta');
   }
-  
 
+  get jornadaField(){
+    return this.formGrupo.get('grupos_jornada');
+  }
+  
   setGrupo() {
     if (this.grupo) {
       this.formGrupo.patchValue({
@@ -286,7 +307,6 @@ export class GruposComponent implements OnInit {
 
         idTipoOferta:      this.grupo.idTipoOferta,
         tipoOferta:        this.grupo.tipo_oferta,
- 
       })
     }
   }
@@ -315,6 +335,10 @@ export class GruposComponent implements OnInit {
 
       idTipoOferta:      ['', [Validators.required]],
 
+      dataJornada:       this.formBuilder.array([]),
+
+      grupos_jornada:    ['', [Validators.required]],
+
     });
 
     this.formGrupo.valueChanges
@@ -339,32 +363,30 @@ export class GruposComponent implements OnInit {
     return this.formGrupo.controls[name];
   }
 
-  getGrupo(): GrupoModel {
+getGrupo(): GrupoModel {
+    const grupoJornadas: number[] = Array.from(this.select.nativeElement.selectedOptions)
+    .map((option: HTMLOptionElement) => {
+      return parseInt(option.value);
+    });
+
     return {
       id: this.grupo?.id,
-      nombre:            this.getControl('nombre').value,
-      fechaInicial:      this.getControl('fechaInicial').value,
-      fechaFinal:        this.getControl('fechaFinal').value,
-      observacion:       this.getControl('observacion').value,
-
-      idTipoGrupo:       this.getControl('idTipoGrupo').value,
-
-      idLider:           this.getControl('idLider').value,
-
-      idPrograma:        this.getControl('idPrograma').value,
-      
+      nombre: this.getControl('nombre').value,
+      fechaInicial: this.getControl('fechaInicial').value,
+      fechaFinal: this.getControl('fechaFinal').value,
+      observacion: this.getControl('observacion').value,
+      idTipoGrupo: this.getControl('idTipoGrupo').value,
+      idLider: this.getControl('idLider').value,
+      idPrograma: this.getControl('idPrograma').value,
       idInfraestructura: this.getControl('idInfraestructura').value,
+      idNivel: this.getControl('idNivel').value,
+      idTipoFormacion: this.getControl('idTipoFormacion').value,
+      idEstado: this.getControl('idEstado').value,
+      idTipoOferta: this.getControl('idTipoOferta').value,
+      
+      grupos_jornada: grupoJornadas.map((idJornada) => ({ idJornada })),
 
-      idNivel:           this.getControl('idNivel').value,
-
-      idTipoFormacion:   this.getControl('idTipoFormacion').value,
-
-      idEstado:          this.getControl('idEstado').value,
-
-      idTipoOferta:      this.getControl('idTipoOferta').value,
- 
-    }
-
+    };
   }
 
   obtenerFechaInicialValue(): Date {

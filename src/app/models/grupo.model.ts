@@ -1,12 +1,13 @@
 import { TipoGrupoModel } from '@models/tipogrupo.model';
+import { NivelFormacionModel } from '@models/nivel-formacion.model';
+import { TipoFormacionModel } from '@models/tipo-formacion.model';
+import { TipoOfertaModel } from '@models/tipo-oferta.model';
+import { EstadoGrupoModel } from '@models/estado-grupo.model';
+import { AsignacionJornadaGrupoModel } from '@models/asignacion-jornada-grupo.model';
+import { JornadaModel } from './jornada.model';
 import { InfraestructuraModel } from './infraestructura.model';
-import { TipoOfertaModel } from './tipo-oferta.model';
-import { TipoFormacionModel } from './tipo-formacion.model';
-import { NivelFormacionModel } from './nivel-formacion.model';
 import { ProgramaModel } from './programa.model';
 import { UsuarioModel } from './usuario.model';
-import { EstadoGrupoModel } from './estado-grupo.model';
-import { AsignacionJornadaGrupoModel } from './asignacion-jornada-grupo.model';
 export interface GrupoModel {
   id: number;
   nombre: string;
@@ -41,4 +42,3 @@ export interface GrupoModel {
   grupos_jornada?:AsignacionJornadaGrupoModel[];
 
 }
-
