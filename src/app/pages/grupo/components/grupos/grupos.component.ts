@@ -363,7 +363,7 @@ export class GruposComponent implements OnInit {
     return this.formGrupo.controls[name];
   }
 
-getGrupo(): GrupoModel {
+  getGrupo(): GrupoModel {
     const grupoJornadas: number[] = Array.from(this.select.nativeElement.selectedOptions)
     .map((option: HTMLOptionElement) => {
       return parseInt(option.value);
