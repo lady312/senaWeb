@@ -179,12 +179,12 @@
           <button type="button" class="btn btn-success rounded-circle" (click)="agregar()">+</button>
         </div>
       </div>
+<!--
       <div class="form-floating mb-3">
         <select class="form-select" id="jornada" aria-label="Floating label select example"
           formControlName="grupos_jornada" #jornadaSelect>
           <option selected>Selecionar jornada</option>
           <option *ngFor='let jornada of jornadas' [value]="jornada.id">{{jornada.nombreJornada}}
-            
           </option>
         </select>
         <label for="jornada">Jornada</label>
@@ -195,6 +195,7 @@
           Por favor ingresé un valor válido para la jornada
         </div>
       </div>
+-->
       <div class="form-floating">
         <textarea class="form-control" onkeyup="javascript:this.value=this.value.toUpperCase();" style="height: 100px"
           placeholder="Leave a comment here" id="floatingTextarea" formControlName='observacion' required></textarea>
@@ -206,6 +207,43 @@
           Por favor ingrese un valor valido para la descripción
         </div>
       </div>
+
+
+<div class="card">
+  <div class="card-header">
+    <strong> Seleccione la jornada </strong>
+  </div>
+  <div class="card-body">
+
+    <div class="row row-cols-3">
+      <div class="col">
+        <label class="pointer">
+          <app-custom-switch
+            [size]="7"
+            [checked]="allJornadas"
+            (checkedChange)="changeAllJornadas($event)"
+          >
+          </app-custom-switch>
+          Todas
+        </label>
+      </div>
+      <div class="col-md-3" *ngFor="let jor of jornadas; let i = index;">
+        <label class="pointer"
+        >
+          <app-custom-switch
+            [size]="7"
+            [checked]="jor.checked"
+            (checkedChange)="changeJornada($event, i)"
+            id="check{{ jor.id }}"
+          >
+          </app-custom-switch>
+          {{jor.nombreJornada}}
+        </label>
+      </div>
+    </div>
+  </div>
+</div>
+
     </form>
 
     <app-custom-modal title="Gestión Grupo" [(show)]="showModalTipoGrupo">
@@ -224,3 +262,6 @@
     </div>
   </div>
 </div>
+
+
+

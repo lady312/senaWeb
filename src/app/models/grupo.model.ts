@@ -9,7 +9,7 @@ import { InfraestructuraModel } from './infraestructura.model';
 import { ProgramaModel } from './programa.model';
 import { UsuarioModel } from './usuario.model';
 export interface GrupoModel {
-  id: number;
+  id?: number;
   nombre: string;
   fechaInicial: Date;
   fechaFinal: Date;

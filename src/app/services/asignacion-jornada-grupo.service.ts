@@ -16,4 +16,7 @@ export class AsignacionJornadaGrupoService {
   crearGrupoJornada(grupoJornada:AsignacionJornadaGrupoModel){
     return this._coreService.post<AsignacionJornadaGrupoModel>('gruposjornada',grupoJornada);
   }
+  public getGrupoJornadaByGrupo(id: number) {
+  return this._coreService.get<AsignacionJornadaGrupoModel[]>('grupoJornada/grupo/' + id);
+  }
 }
