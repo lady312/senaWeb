@@ -45,9 +45,6 @@ export class GruposService {
     grupo.programa          = grupo.programa;
     
 
-    grupo.idInfraestructura = grupo.idInfraestructura;
-    grupo.infraestructura   = grupo.infraestructura;
-
     grupo.idNivel           = grupo.idNivel;
     grupo.nivel_formacion   = grupo.nivel_formacion;
  
@@ -84,10 +81,6 @@ export class GruposService {
 
     grupo.idPrograma        = grupo.idPrograma;
     grupo.programa          = grupo.programa;
-    
-
-    grupo.idInfraestructura = grupo.idInfraestructura;
-    grupo.infraestructura   = grupo.infraestructura;
 
     grupo.idNivel           = grupo.idNivel;
     grupo.nivel_formacion   = grupo.nivel_formacion;

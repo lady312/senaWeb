@@ -125,6 +125,7 @@ export class GrupoComponent {
   reset() {
     this.grupo = null;
     this.jornadasGrupo = [];
+    this.infraestructuras = [];
     this.showModalGrupo = false;
   }
 

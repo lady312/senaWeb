@@ -7,7 +7,8 @@
 
 
       <div class="form-floating mb-3">
-        <select class="form-select" id="programa" aria-label="Floating label select example" formControlName="idPrograma">
+        <select class="form-select" id="programa" aria-label="Floating label select example"
+          formControlName="idPrograma">
           <option selected>Selecionar programa</option>
           <option *ngFor='let programa of programas' [ngValue]="programa.id">{{programa.nombrePrograma}}</option>
         </select>
@@ -47,20 +48,11 @@
         </div>
       </div>
 
-
-      <!-- <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
-        <option selected>Seleccionar lider</option>
-        <option value="Gustavo">Gustavo</option>
-        <option value="David Lozada">David Lozada</option>
-        <option value="Angelica Guerrero">Angelica Guerrero</option>
-      </select> -->
-
-
       <div class="form-floating mb-3">
         <select class="form-select" id="infraestrutura" aria-label="Floating label select example"
-          formControlName="idInfraestructura">
+          formControlName="infraestructura" #infraestructuraSelect>
           <option selected>Selecionar infraestructura</option>
-          <option *ngFor='let infraestructura of infraestructuras' [ngValue]="infraestructura.id">
+          <option *ngFor='let infraestructura of infraestructuras' [value]="infraestructura.id">
             {{infraestructura.nombreInfraestructura}}</option>
         </select>
         <label for="infraestrutura">Infraestructura</label>
@@ -88,9 +80,11 @@
       </div>
 
       <div class="form-floating mb-3">
-        <select class="form-select" id="tipoFormacion" aria-label="Floating label select example" formControlName="idTipoFormacion">
+        <select class="form-select" id="tipoFormacion" aria-label="Floating label select example"
+          formControlName="idTipoFormacion">
           <option selected>Selecionar tipo de formación</option>
-          <option *ngFor='let tipoFormacion of tipoFormaciones' [ngValue]="tipoFormacion.id">{{tipoFormacion.nombreTipoFormacion}}</option>
+          <option *ngFor='let tipoFormacion of tipoFormaciones' [ngValue]="tipoFormacion.id">
+            {{tipoFormacion.nombreTipoFormacion}}</option>
         </select>
         <label for="tipoFormacion">Tipo de formación</label>
         <div class="valid-feedback" *ngIf="!tipoFormacionField.hasError('required')">
@@ -116,7 +110,8 @@
       </div>
 
       <div class="form-floating mb-3">
-        <select class="form-select" id="tipoOferta" aria-label="Floating label select example" formControlName="idTipoOferta">
+        <select class="form-select" id="tipoOferta" aria-label="Floating label select example"
+          formControlName="idTipoOferta">
           <option selected>Selecionar tipo de oferta</option>
           <option *ngFor='let tipoOferta of tipoOfertas' [ngValue]="tipoOferta.id">{{tipoOferta.nombreOferta}}</option>
         </select>
@@ -184,7 +179,6 @@
           formControlName="grupos_jornada" #jornadaSelect>
           <option selected>Selecionar jornada</option>
           <option *ngFor='let jornada of jornadas' [value]="jornada.id">{{jornada.nombreJornada}}
-            
           </option>
         </select>
         <label for="jornada">Jornada</label>

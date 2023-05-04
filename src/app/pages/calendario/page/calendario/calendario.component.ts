@@ -206,7 +206,7 @@ export class CalendarioComponent implements OnInit {
     const infra = this.infraestructuras.find((infra) => infra.id == event);
     if (infra) {
       const grupos = this.grupos.filter(
-        (grupo) => grupo.idInfraestructura == infra.id
+        (grupo) => grupo.id == infra.id //Lo modifique
       );
       if (grupos) {
         let gruposJornada: AsignacionJornadaGrupoModel[] = [];
