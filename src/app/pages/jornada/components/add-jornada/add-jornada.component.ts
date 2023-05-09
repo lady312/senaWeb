@@ -100,7 +100,6 @@ export class AddJornadaComponent implements OnInit {
     }
   }
 
-
   guardarJornada() {
     this.store.emit(this.getJornada());
   }
@@ -203,7 +202,6 @@ export class AddJornadaComponent implements OnInit {
     this.diasChecked = [];
     this._diajornadaService.getDiaJornadaByJornada(this.jorna.id).subscribe(
       (savedData: any) => {
-        console.log(savedData);
         if (savedData && savedData.length > 0) {
           this.diasChecked = savedData;
           this.diasSeman = this.diasSeman.map((diaSe) => {

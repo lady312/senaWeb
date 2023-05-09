@@ -24,11 +24,11 @@
     </div>
     <full-calendar *ngIf="calendarVisible" [options]="calendarOptions">
       <ng-template #eventContent let-arg>
-        <p>{{ arg.timeText }}</p>
-        <p>{{ arg.event.title }}</p><br>
-        <p>{{arg.event.extendedProps.infra}}</p><br>
-        <p>{{arg.event.extendedProps.jornada}}</p><br>
-        <p>{{arg.event.extendedProps.tipoGrupo}}</p>
+        {{ arg.timeText }} <br>
+        {{ arg.event.title}}<br>
+        {{arg.event.extendedProps.infra}}<br>
+        {{arg.event.extendedProps.jornada}}<br>
+        {{arg.event.extendedProps.tipoGrupo}} <br>
       </ng-template>
     </full-calendar>
   </div>

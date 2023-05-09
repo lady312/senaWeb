@@ -1,3 +1,4 @@
+import { DiaJornadaModel } from '@models/dia_jornada.model';
 import { TipoGrupoModel } from '@models/tipogrupo.model';
 import { NivelFormacionModel } from '@models/nivel-formacion.model';
 import { TipoFormacionModel } from '@models/tipo-formacion.model';
@@ -40,5 +41,7 @@ export interface GrupoModel {
   tipo_oferta?:TipoOfertaModel;
 
   grupos_jornada?:AsignacionJornadaGrupoModel[];
+
+  diaJor?: DiaJornadaModel[];
 
 }
