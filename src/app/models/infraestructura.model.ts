@@ -5,6 +5,7 @@ export interface InfraestructuraModel{
     id?:number;
     nombreInfraestructura:string;
     capacidad:number;
+    codigoQr?:string;
     descripcion?:string;
 
     idSede?:number;
@@ -12,4 +13,6 @@ export interface InfraestructuraModel{
 
     sede?:SedeModel;
     area?:AreaModel;
+
+    newQr?:string;
 }
