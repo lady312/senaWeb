@@ -1,3 +1,4 @@
+import { DiaJornadaModel } from './dia_jornada.model';
 import { GrupoModel } from './grupo.model';
 import { JornadaModel } from './jornada.model';
 
@@ -9,4 +10,5 @@ export interface AsignacionJornadaGrupoModel {
 
   jornada?: JornadaModel;
   grupo?: GrupoModel;
+  diaj?: DiaJornadaModel;
 }

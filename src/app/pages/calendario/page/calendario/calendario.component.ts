@@ -42,7 +42,7 @@ export class CalendarioComponent implements OnInit {
   protected showModalGrupo = false;
   protected showModalPrograma: boolean = false;
   protected showFormInfr: boolean = false;
-  protected showCalendar: boolean =false;
+  protected showCalendar: boolean = false;
   protected showModalJornada: boolean = false;
 
   calendario2: CalendarioModel = null;
@@ -179,7 +179,6 @@ export class CalendarioComponent implements OnInit {
     });
   }
 
-
   getGruposJornadaByIdGrupo(event: number) {
     const grupo = this.grupos.find((grupo) => grupo.id == event);
     if (grupo) {
@@ -191,13 +190,12 @@ export class CalendarioComponent implements OnInit {
     }
   }
   getByIdSede(event: number) {
-
     const sede = this.sedes.find((sede) => sede.id == event);
 
     if (sede) {
-      this._infraestructuraService.infrBySede(sede.id).subscribe(infrs=>{
-        this.infraestructuras=infrs;
-      })
+      this._infraestructuraService.infrBySede(sede.id).subscribe((infrs) => {
+        this.infraestructuras = infrs;
+      });
     } else {
       this.getInfraestructuras();
     }
@@ -224,7 +222,7 @@ export class CalendarioComponent implements OnInit {
     } else {
       this.getGruposJornada();
     }
-    this.showCalendar=true;
+    this.showCalendar = true;
   }
 
   createCalendario() {
@@ -244,7 +242,7 @@ export class CalendarioComponent implements OnInit {
     this.infraestructura = null;
     this.showFormInfr = true;
   }
-  createJornada(){
+  createJornada() {
     this.jornada = null;
     this.showModalJornada = true;
   }
@@ -285,8 +283,8 @@ export class CalendarioComponent implements OnInit {
     }
   }
 
-  guardarJornada(event:JornadaModel){
-    this._jornadaService.crearJornada(event).subscribe(jornada=>{
+  guardarJornada(event: JornadaModel) {
+    this._jornadaService.crearJornada(event).subscribe((jornada) => {
       this.getJornadas();
       this.reset();
     });
