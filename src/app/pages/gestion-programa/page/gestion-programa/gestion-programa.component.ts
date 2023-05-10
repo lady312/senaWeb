@@ -22,6 +22,9 @@ import { FaseService } from '@services/fase.service';
 })
 export class GestionProgramaComponent  implements OnInit{
 
+  selectedActividadP: any ;
+  selectedCompetencia: any;
+
 
   selectedProgram: ProgramaModel;
   selectedProyecto: ProyectoFormativoModel;
@@ -33,10 +36,10 @@ export class GestionProgramaComponent  implements OnInit{
   @Input() competencia: CompetenciaModel;
   @Input() Competencias: CompetenciaModel[] = [];
 
+  
+
   @Input() actividadProyecto: ActividadProyectoModel;
   @Input() ActividadProyectos: ActividadProyectoModel[] = [];
-
-
 
   @Input() programas: ProgramaModel[] = [];
   @Input() proyectos: ProyectoFormativoModel[] = [];
@@ -54,6 +57,9 @@ export class GestionProgramaComponent  implements OnInit{
   formPrograma: UntypedFormGroup;
   formActividadProyecto: UntypedFormGroup;
 
+  private competenciasOriginales: any[];
+
+ 
 
   fases: FaseModel[] = [];
   
@@ -78,6 +84,7 @@ export class GestionProgramaComponent  implements OnInit{
     private _uiNotificationService: UINotificationService,
     private _actividadProyectoService: ActividadProyectoService,
     private faseService: FaseService,
+
 
     private competenciaService: CompetenciaService, ActividadProyectoService:ActividadProyectoService,
   ){
@@ -347,7 +354,14 @@ export class GestionProgramaComponent  implements OnInit{
     }
   }
   
+  // Método para seleccionar la actividad proyecto
+  seleccionarActividadP(ActividadProyecto: any) {
+    this.selectedActividadP = ActividadProyecto;
+  }
 
+  seleccionarCompetencia(Competencia: any) {
+    this.selectedCompetencia = Competencia; 
+  }
 
 
 ////////////////////////////////////////////////////////////////////////////selet filtros/////////////
@@ -402,12 +416,29 @@ eliminarEtiquet(actividadProyecto: ActividadProyectoModel): void {
 }
 
 
+// Variable para almacenar la copia del array original
+
+filtrarCompetencias(actividadP: ActividadProyectoModel) {
+  this.actividadProyecto = actividadP;
+ 
+  if (!this.competenciasOriginales) {
+   
+    this.competenciasOriginales = [...this.Competencias];
+  } else {
+
+    this.Competencias = [...this.competenciasOriginales];
+  }
+
+  this.Competencias = this.Competencias.filter(c => c.idActividadProyecto === actividadP.id);
+ 
+}
 
 }
 
- 
 
-//////////////////////////////////////////////////////////
+
+
+
  
 
 
