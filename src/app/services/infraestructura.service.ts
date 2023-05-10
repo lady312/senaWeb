@@ -42,7 +42,10 @@ export class InfraestructuraService {
   //crea una infraestructura
   guardarInfraestructura(infraestructura:InfraestructuraModel){
     infraestructura.nombreInfraestructura=infraestructura.nombreInfraestructura.toUpperCase();
-    infraestructura.descripcion=infraestructura.descripcion.toLowerCase();
+    if(infraestructura.descripcion){
+      infraestructura.descripcion=infraestructura.descripcion.toLowerCase();
+    }
+    console.log(infraestructura.newQr);
     return this._coreService.post<InfraestructuraModel>('infraestructuras',infraestructura);
   }
   //crea varias infraestructuras
