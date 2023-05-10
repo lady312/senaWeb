@@ -22,7 +22,11 @@ export class ProyectoFormativoService {
     proyecto.nombre = proyecto.nombre.toUpperCase();
     proyecto.codigo= proyecto.codigo.toUpperCase();
     proyecto.idPrograma = proyecto.idPrograma;
+    proyecto.tiempoEstimado = proyecto.tiempoEstimado;
+    proyecto.numeroTotalRaps = proyecto.numeroTotalRaps;
+    proyecto.idCentroFormacion = proyecto.idCentroFormacion;
 
+    console.log('llega asi', proyecto);    
     return this._coreService.post<ProyectoFormativoModel>('proyecto_formativo', proyecto);
   }
 

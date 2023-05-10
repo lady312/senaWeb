@@ -10,7 +10,8 @@ import { UINotificationService } from "@services/uinotification.service";
   styleUrls: ["./jornada.component.scss"],
 })
 export class JornadaComponent {
-  private showModalJornada = false;
+
+  public showModalJornada = false;
 
   jornada: JornadaModel = null;
   jornadas: JornadaModel[] = [];
@@ -60,7 +61,7 @@ export class JornadaComponent {
         (jorn) => {
           this.getJornada();
           this.reset();
-          this._uiNotificationService.success("Actualizado");
+          this._uiNotificationService.success("Actualizado con exito");
         },
         (error) => {
           this._uiNotificationService.error(
@@ -73,7 +74,7 @@ export class JornadaComponent {
         (jorn) => {
           this.getJornada();
           this.reset();
-          this._uiNotificationService.success("El registro fué creado");
+          this._uiNotificationService.success("Registro creado");
         },
         (error) => {
           this._uiNotificationService.error("Error al guardar la información");

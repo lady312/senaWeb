@@ -11,6 +11,9 @@ import { FormsModule} from '@angular/forms';
 import { CompetenciaComponent } from '../competencias/page/competencia/competencia.component';
 import { CompetenciasModule } from '../competencias/competencias.module';
 import { ActividadProyectoModule } from '../actividad-proyecto/actividad-proyecto.module';
+import { ProgramaModule } from '../programa/programa.module';
+import { ProgramaComponent } from '../programa/page/programa/programa.component';
+import { ActividadProyectoComponent } from '../actividad-proyecto/page/actividad-proyecto/actividad-proyecto.component';
 
 
 @NgModule({
@@ -26,9 +29,15 @@ import { ActividadProyectoModule } from '../actividad-proyecto/actividad-proyect
     SweetAlert2Module.forChild(),
     FormsModule,
     CompetenciasModule,
-    ActividadProyectoModule
+    ActividadProyectoModule,
+    ProgramaModule
   ],
 
-  entryComponents:[CompetenciaComponent],
+  entryComponents:[
+    CompetenciaComponent,
+    ProgramaComponent,
+    ActividadProyectoComponent
+  ],
+  
 })
 export class GestionProgramaModule { }

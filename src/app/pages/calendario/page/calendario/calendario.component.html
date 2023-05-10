@@ -1,0 +1,80 @@
+<app-list-calendario
+  [calendarios]="calendarios"
+  [gruposList]="grupos"
+  [infraestructuras]="infraestructuras"
+  [sedes]="sedes"
+  (create)="createCalendario()"
+  (create1)="createCalendario2()"
+  (create2)="createCalendario3()"
+  (create3)="createCalendario4()"
+  (crearJornada)="createJornada();"
+  (idGrupo)="getGruposJornadaByIdGrupo($event)"
+  (idInfraestructura)="getGruposJornadaByIdInfra($event)"
+  (idSede)="getByIdSede($event)"
+>
+</app-list-calendario>
+
+<app-custom-modal title="Gestión Jornada" [(show)]="showModalJornada">
+  <app-add-jornada
+    *ngIf="showModalJornada"
+    [jorna]="jornada"
+    (store)="guardarJornada($event)"
+    (cancelar)="reset()"
+  >
+  </app-add-jornada>
+</app-custom-modal>
+
+<app-custom-modal title="Sede" [(show)]="showFormSede">
+  <app-sede-form
+    *ngIf="showFormSede"
+    [sede]="sede"
+    [ciudades]="ciudades"
+    [title]="'Crear Sede'"
+    (store)="guardarSede($event)"
+    (cancel)="reset()"
+  >
+  </app-sede-form>
+</app-custom-modal>
+
+<app-custom-modal title="Grupos" [(show)]="showModalGrupo">
+  <app-grupos
+    *ngIf="showModalGrupo"
+    [grupo]="grupo"
+    (store)="guardarGrupo($event)"
+    (cancel)="reset()"
+  >
+  </app-grupos>
+</app-custom-modal>
+
+<app-custom-modal title="Programas" [(show)]="showModalPrograma">
+  <app-add-programa
+    *ngIf="showModalPrograma"
+    [programa]="programa"
+    (store)="guardarProgramas($event)"
+    (cancel)="reset()"
+  >
+  </app-add-programa>
+</app-custom-modal>
+
+<app-custom-modal title="Infraestructura" [(show)]="showFormInfr">
+  <app-infraestructura-form
+    *ngIf="showFormInfr"
+    [infraestructura]="infraestructura"
+    [areas]="areas"
+    [sedes]="sedes"
+    [title]="formTitle"
+    (store)="guardarInfraestructura($event)"
+    (cancel)="reset()"
+  >
+  </app-infraestructura-form>
+</app-custom-modal>
+
+
+  <view-calendar
+  *ngIf="showCalendar"
+[grupos]="grupos" [jornadas]="jornadas"
+[gruposJornadas]="gruposJornada"
+[listUsers]="usuarios">
+</view-calendar>
+
+

@@ -1,31 +1,32 @@
 
 import { Routes } from '@angular/router';
 import { NavegacionModel } from '../models/navegacion.model';
-import { GESTION_MEDIO_PAGO,
-         GESTION_PROCESOS,
-         GESTION_ROLES,
-         GESTION_ROL_PERMISOS,
-         GESTION_TIPO_DOCUMENTOS,
-         GESTION_TIPO_PAGO,
-         GESTION_TIPO_TRANSACCION,
-         GESTION_GRUPO,
-         GESTION_TIPO_GRUPO, GESTION_JORNADA,
-         GESTION_TIPO_PROGRAMAS,
-        GESTION_PROGRAMAS,
-        GESTION_FASES,
-        GESTION_ACTIVIDAD_PROYECTO,
-        GESTION_PROYECTO_FORMATIVO,
-        GESTION_PRO,
+import {  GESTION_MEDIO_PAGO,
+          GESTION_PROCESOS,
+          GESTION_ROLES,
+          GESTION_ROL_PERMISOS,
+          GESTION_TIPO_DOCUMENTOS,
+          GESTION_TIPO_PAGO,
+          GESTION_TIPO_TRANSACCION,
+          GESTION_GRUPO,
+          GESTION_TIPO_GRUPO, GESTION_JORNADA,
+          GESTION_TIPO_PROGRAMAS,
+          GESTION_PROGRAMAS,
+          GESTION_FASES,
+          GESTION_ACTIVIDAD_PROYECTO,
+          GESTION_PROYECTO_FORMATIVO,
+          GESTION_PRO,
           GESTION_SEDE,
           GESTION_AREA,
           GESTION_INFRAESTRUCTURA,
-
-          GESTION_COMPETENCIA, //importaciones 
-          GESTION_ACTIVIDAD_APRENDIZAJE,//importaciones 
-          GESTION_RESULTADO_APRENDIZAJE,//importaciones
-       
- } from './permissions';
-
+          CALENDARIO,
+          GESTION_COMPETENCIA, //importaciones
+          GESTION_ACTIVIDAD_APRENDIZAJE,//importaciones
+          GESTION_RESULTADO_APRENDIZAJE,
+          REGIONAL,
+          CENTRO_FORMACION,//i
+} from './permissions';
+          
 export const navItems: NavegacionModel[] = [
   {
     name: 'Roles',
@@ -75,7 +76,7 @@ export const navItems: NavegacionModel[] = [
     icon: 'icon-drop',
     permiso: GESTION_TIPO_TRANSACCION,
   },
- 
+
   {
     name: "Sedes",
     url: 'gestionar_sede', //URL que mostrará la vista
@@ -97,13 +98,13 @@ export const navItems: NavegacionModel[] = [
   {
     name: 'Grupo',
     url: 'grupos',
-    icon: 'icon-drop',
+    icon: 'cil-group',
     permiso: GESTION_GRUPO
   },
   {
     name: 'Tipo grupos',
     url: 'tipogrupos',
-    icon: 'icon-drop',
+    icon: 'cil-user',
     permiso: GESTION_TIPO_GRUPO
   },
   {
@@ -124,7 +125,7 @@ export const navItems: NavegacionModel[] = [
     icon: 'icon-drop',
     permiso: GESTION_PROGRAMAS
   },
-   {
+  {
     name: "Fases",
     url: 'add_fases',
     icon: 'icon-drop',
@@ -145,8 +146,14 @@ export const navItems: NavegacionModel[] = [
   {
     name: "Gestión Programas",
     url: 'add_gestion_programa',
-    icon: 'icon-drop',
+    icon: 'cil-folder-open',
     permiso: GESTION_PRO
+  },
+  {
+    name: "Calendario",
+    url: "add_calendario",
+    icon: "icon-drop",
+    permiso: CALENDARIO,
   },
   {
     name: "Competencia",
@@ -161,17 +168,24 @@ export const navItems: NavegacionModel[] = [
     icon: 'cil-color-border',
     permiso: GESTION_ACTIVIDAD_APRENDIZAJE
   },
-
   {
     name: "Resultado aprendizaje",
     url: 'add_resultado_aprendizaje',//muestra la vista para resultado aprendizaje''''''''''''''''''''
     icon: 'cil-columns',
     permiso: GESTION_RESULTADO_APRENDIZAJE
   },
-
-
-
-
+  {
+    name: "Regional",
+    url: 'add_regional',//muestra la vista para regional''''''''''''''''''''
+    icon: 'cil-columns',
+    permiso: REGIONAL
+  },
+  {
+    name: "Centro Formacion",
+    url: 'add_centro_formacion',//muestra la vista para resultado aprendizaje''''''''''''''''''''
+    icon: 'cil-columns',
+    permiso: CENTRO_FORMACION
+  },
 ];
 
 export const routesNav: Routes = [
@@ -242,7 +256,6 @@ export const routesNav: Routes = [
     loadChildren: () =>
       import('../pages/usuario/usuario.module').then((m) => m.UsuarioModule),
   },
-
   {
     path: 'add_jornada',
     loadChildren: () =>
@@ -250,7 +263,7 @@ export const routesNav: Routes = [
         (m) => m.JornadaModule
       ),
   },
-{
+  {
     path: 'add_usuarios',
     loadChildren: () => import('../pages/usuario/usuario.module').then(m => m.UsuarioModule)
   },
@@ -302,8 +315,10 @@ export const routesNav: Routes = [
     path: 'add_gestion_programa',
     loadChildren: () => import('../pages/gestion-programa/gestion-programa.module').then(m => m.GestionProgramaModule)
   },
-
-
+  {
+    path: 'add_calendario',
+    loadChildren: () => import('../pages/calendario/calendario.module').then((m) => m.CalendarioModule)
+  },
   {
     path: 'gestionar_competencia',
     loadChildren: () => import('../pages/competencias/competencias.module').then(m => m.CompetenciasModule)//ruta como tal que se muestra en el nav (barra de navegacion)
@@ -316,5 +331,12 @@ export const routesNav: Routes = [
     path: 'add_actividad_aprendizaje',
     loadChildren: () => import('../pages/actividad-aprendizaje/actividad-aprendizaje.module').then(m => m.ActividadAprendizajeModule)
   },
-
+  {
+    path: 'add_regional',
+    loadChildren: () => import('../pages/regional/regional.module').then(m => m.RegionalModule)
+  },
+  {
+    path: 'add_centro_formacion',
+    loadChildren: () => import('../pages/centro-formacion/centro-formacion.module').then(m => m.CentroFormacionModule)
+  },
 ];

@@ -15,8 +15,8 @@ import { CustomTableComponent } from './custom-table/custom-table.component';
 import { FormCustomMessagesComponent } from './form-custom-messages/form-custom-messages.component';
 import { CampoBusquedaComponent } from './campo-busqueda/campo-busqueda.component';
 import { ListInputDirective } from './directives/list-input.directive';
-
-
+import { FullCalendarModule } from '@fullcalendar/angular';
+import { SelectsModule } from './selects/selects.module';
 @NgModule({
   imports: [
     FormsModule,
@@ -25,6 +25,8 @@ import { ListInputDirective } from './directives/list-input.directive';
     ModalModule,
     CommonModule,
     NgxPaginationModule,
+    FullCalendarModule
+
   ],
   exports: [
     CustomSearchComponent,
@@ -36,7 +38,9 @@ import { ListInputDirective } from './directives/list-input.directive';
     CustomSwitchComponent,
     CustomTableComponent,
     CampoBusquedaComponent,
-    ListInputDirective
+    ListInputDirective,
+    ListInputDirective,
+    SelectsModule
   ],
   declarations: [
     CustomSearchComponent,

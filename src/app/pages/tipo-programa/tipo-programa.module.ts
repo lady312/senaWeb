@@ -34,4 +34,4 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
   ],
 
 })
-export class TipoProgramaModule { }
+export class TipoProgramaModule {}

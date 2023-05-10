@@ -28,7 +28,7 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
     ReactiveFormsModule,
     NgxPaginationModule,
     SweetAlert2Module.forChild(),
-    ComunModule
+    ComunModule,
   ]
 })
 export class ActividadProyectoModule { }
