@@ -10,6 +10,7 @@
   [(show)]="showModalPrograma">
   <app-add-programa
     *ngIf="showModalPrograma"
+    (formDocs)="filesPrograma=$event"
     [programa]="programa"
     (store)="guardarProgramas($event)"
     (cancel)="reset()">

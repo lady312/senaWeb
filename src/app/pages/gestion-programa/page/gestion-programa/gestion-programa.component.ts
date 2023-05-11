@@ -6,6 +6,7 @@ import { ProgramaService } from '@services/programa.service';
 import { ProyectoFormativoService } from '@services/proyecto-formativo.service';
 import { UINotificationService } from '@services/uinotification.service';
 import { debounceTime } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-gestion-programa',
@@ -13,6 +14,7 @@ import { debounceTime } from 'rxjs/operators';
   styleUrls: ['./gestion-programa.component.scss']
 })
 export class GestionProgramaComponent  implements OnInit{
+
   selectedProgram: ProgramaModel;
   selectedProyecto: ProyectoFormativoModel;
   selectedProgramId: number;
@@ -36,7 +38,8 @@ export class GestionProgramaComponent  implements OnInit{
     private formBuilder: UntypedFormBuilder,
     private programaService: ProgramaService,
     private proyectoFormativoService: ProyectoFormativoService,
-    private _uiNotificationService: UINotificationService
+    private _uiNotificationService: UINotificationService,
+    private http: HttpClient
   ){
     this.programa = {
       id: null,
@@ -49,9 +52,17 @@ export class GestionProgramaComponent  implements OnInit{
       etapaLectiva:null,
       etapaProductiva:null,
       creditosLectiva:null,
-      creditosProductiva:null
+      creditosProductiva:null,
+      rutaArchivo:''
     };
     this.buildForm();
+  }
+
+
+  mostrarArchivo(rutaArchivo: string) {
+    const url = `http://localhost:8000${rutaArchivo}`;
+    console.log(url);
+    window.open(url);
   }
 
   get nombreProgramaField() {
@@ -77,7 +88,7 @@ export class GestionProgramaComponent  implements OnInit{
     return this.formPrograma.get('etapaLectiva');
   }
   
-  get etapaProductiva() {
+  get etapaProductiva() { 
     return this.formPrograma.get('etapaProductiva');
   }
 
@@ -87,6 +98,10 @@ export class GestionProgramaComponent  implements OnInit{
 
   get creditosProductiva() {
     return this.formPrograma.get('creditosProductiva');
+  }
+
+  get rutaArchivo(){
+    return this.formPrograma.get('rutaArchivo');
   }
 
   
@@ -157,6 +172,7 @@ export class GestionProgramaComponent  implements OnInit{
       etapaProductiva:this.getControl('etapaProductiva').value,
       creditosLectiva:this.getControl('creditosLectiva').value,
       creditosProductiva:this.getControl('creditosProductiva').value,
+      rutaArchivo: this.getControl('rutaArchivo').value
     }
   }
 
@@ -215,7 +231,4 @@ export class GestionProgramaComponent  implements OnInit{
     this.numReg = id;
   }
 
-  // agregar() {
-  //   this.create.emit();
-  // }
 }

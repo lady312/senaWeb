@@ -19,16 +19,24 @@ export class AddProgramaComponent implements OnInit {
   @Output() store: EventEmitter<ProgramaModel> = new EventEmitter();
   @Output() cancel: EventEmitter<void> = new EventEmitter();
   @Output() create: EventEmitter<void> = new EventEmitter();
+  @Output() formDocs: EventEmitter<FileList> = new EventEmitter<FileList>();
+
+  // @Output() formDocs:EventEmitter <{[key:number]:{files:FileList; fechaVig: string};}> = new EventEmitter();
+  filesRuta: FileList;
   formPrograma: UntypedFormGroup;
   formTipoProgramas: UntypedFormGroup;
   showModalTipoProgramas = false;
-  TipoPrograma: TipoProgramaModel = null; 
+  TipoPrograma: TipoProgramaModel = null;
+  idDocumento: number[];
+ filesRutaDoc: {[key:number]: {files:FileList; fechaVig:string}} ={};
+  selectedFile: File;
 
 
   constructor(
     private formBuilder: UntypedFormBuilder,
     private TipoProgramaService: TipoProgramaService,
-    private _uiNotificationService: UINotificationService
+    private _uiNotificationService: UINotificationService,
+    private _programaService: TipoProgramaService,
   ) {
     this.programa = {
       id: null,
@@ -41,7 +49,8 @@ export class AddProgramaComponent implements OnInit {
       etapaLectiva:null,
       etapaProductiva:null,
       creditosLectiva:null,
-      creditosProductiva:null
+      creditosProductiva:null,
+      rutaArchivo:null,
     };
     this.buildForm();
 
@@ -50,8 +59,30 @@ export class AddProgramaComponent implements OnInit {
       nombreTipoPrograma:'',
       descripcion:''
     };
+    this.idDocumento=[];
     this.buildForms();
   }
+
+  // onFileSelected(event:any) {
+  //   const file: File = event.target.files[0];
+  //   const objectUrl: string = URL.createObjectURL(file);
+  //   console.log('este es al archivo', objectUrl);
+  // }
+  onFileChangeDoc(files: FileList) {
+    const file = files[0]; // Obtener solo el primer archivo seleccionado
+    this.formDocs.emit(files); // Emitir el archivo
+    console.log(file, 'dfd'); // Mostrar el archivo en la consola
+  }
+  
+  // onFileChangeDoc(tipo: any, files: FileList){
+  //   var nameDoc = [];
+
+  //   var fechaVig = this.formPrograma.value.fechaVig;
+  //   this.filesRutaDoc[tipo.id]= {files, fechaVig};
+   
+  //   this.formDocs.emit(this.filesRutaDoc);
+  //   console.log(this.filesRutaDoc,'dfd')
+  // }
 
   get nombreTipoProgramaField() {
     return this.formTipoProgramas.get('nombreTipoPrograma');
@@ -169,6 +200,10 @@ export class AddProgramaComponent implements OnInit {
     return this.formPrograma.get('creditosProductiva');
   }
 
+  get rutaArchivo() {
+    return this.formPrograma.get('rutaArchivo');
+  }
+
   
   setPrograma() {
     if (this.programa) {
@@ -181,9 +216,12 @@ export class AddProgramaComponent implements OnInit {
         etapaLectiva:this.programa.etapaLectiva,
         etapaProductiva:this.programa.etapaProductiva,
         creditosLectiva:this.programa.creditosLectiva,
-        creditosProductiva:this.programa.creditosProductiva
+        creditosProductiva:this.programa.creditosProductiva,
+        // rutaArchivo: this.programa.rutaArchivo,
+        
       })
     }
+    console.log(this.programa,'asi llega al set');
   }
 
   private buildForm() {
@@ -197,7 +235,8 @@ export class AddProgramaComponent implements OnInit {
       etapaLectiva:['', [Validators.required]],
       etapaProductiva:['', [Validators.required]],
       creditosLectiva:['', [Validators.required]],
-      creditosProductiva:['', [Validators.required]]
+      creditosProductiva:['', [Validators.required]],
+      rutaArchivo:['', [Validators.required]]
     });
 
     this.formPrograma.valueChanges
@@ -205,6 +244,7 @@ export class AddProgramaComponent implements OnInit {
         debounceTime(350),
       )
       .subscribe((data) => {
+        console.log(data);
       });
   }
 
@@ -233,6 +273,7 @@ export class AddProgramaComponent implements OnInit {
       etapaProductiva:this.getControl('etapaProductiva').value,
       creditosLectiva:this.getControl('creditosLectiva').value,
       creditosProductiva:this.getControl('creditosProductiva').value,
+      rutaArchivo:this.getControl('rutaArchivo').value
     }
   }
 }

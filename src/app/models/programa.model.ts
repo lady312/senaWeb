@@ -11,4 +11,5 @@ export interface ProgramaModel {
     etapaProductiva:number;
     creditosLectiva:number;
     creditosProductiva:number;
+    rutaArchivo:any;
   }
