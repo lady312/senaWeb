@@ -32,6 +32,9 @@
         <p>{{resultadoBusqueda.capacidad}}</p>
       </div>
     </div>
+    <div *ngIf="resultadoBusqueda.codigoQr" class="row">
+      <img [src]="resultadoBusqueda.codigoQr" alt="La imagen no carga">
+    </div>
     <div 
       *ngIf="resultadoBusqueda.descripcion"
       class="row">

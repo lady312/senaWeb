@@ -25,6 +25,8 @@ import { DefaultLayoutComponent } from './templates';
 import { RouterModule } from '@angular/router';
 
 import { FormsModule } from '@angular/forms';
+import { FullCalendarModule } from '@fullcalendar/angular';
+import { CalendarioComponent } from './components/calendario/calendario.component';
 import { SedeModule } from './pages/sede/sede.module';
 
 
@@ -58,13 +60,15 @@ const APP_CONTAINERS = [
     SweetAlert2Module.forRoot(),
     RouterModule,
     FormsModule,
+    FullCalendarModule,
     SedeModule
   ],
   declarations: [
     AppComponent,
     ...APP_CONTAINERS,
     P404Component,
-    P500Component
+    P500Component,
+    CalendarioComponent
   ],
 
   providers: [

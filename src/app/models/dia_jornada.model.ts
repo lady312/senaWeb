@@ -9,4 +9,5 @@ export interface DiaJornadaModel {
 
 // objetos de dia y jornada
   dia?: DiaModel[];
+  JornadaModel?: JornadaModel[];
 }

@@ -18,6 +18,7 @@ import { DiaJornadaService } from '@services/dia-jornada.service';
   styleUrls: ['./add-jornada.component.scss'],
 })
 export class AddJornadaComponent implements OnInit {
+
   @Input() jorandas: JornadaModel[] = [];
   @Input() jorna: JornadaModel;
 
@@ -99,7 +100,6 @@ export class AddJornadaComponent implements OnInit {
     }
   }
 
-
   guardarJornada() {
     this.store.emit(this.getJornada());
   }
@@ -166,6 +166,7 @@ export class AddJornadaComponent implements OnInit {
           idDia: d.id,
         };
       });
+
     return {
       id: this.jorna?.id,
       nombreJornada: this.getControl('nombreJornada').value,
