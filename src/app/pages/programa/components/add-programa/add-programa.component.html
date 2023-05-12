@@ -3,7 +3,10 @@
     <strong>Registrar programa</strong>
   </div>
   <div class="card-body">
-    <form class="programaFormulario" [formGroup]="formPrograma" class="was-validated" novalidate>
+    <form class="programaFormulario" 
+    [formGroup]="formPrograma" 
+    class="was-validated" novalidate
+    method="POST" enctype="multipart/form-data">
       
 
       <!-- campos de nombre-->
@@ -165,6 +168,25 @@
             Valor válido
           </div>
         </div>
+        <div class="invalid-feedback">
+          por favor ingresé un valor válido para los creditos productiva
+        </div>
+      </div>
+
+      <!-- ruta archivo ----------- -->
+      <div class="form-group row">
+        <label class="col-md-4 col-form-label" for="rutaArchivo">Archivo</label>
+          <div class="col-md-7">
+            <input
+              type="file"
+              (change)="onFileChangeDoc($event.target['files'])"
+              onkeyup="javascript:this.value=this.value"
+              class="form-control is-valid"
+              formControlName='rutaArchivo'>
+            <div class="valid-feedback" *ngIf="!rutaArchivo.hasError('required')">
+              Valor válido
+            </div>
+          </div>
         <div class="invalid-feedback">
           por favor ingresé un valor válido para los creditos productiva
         </div>

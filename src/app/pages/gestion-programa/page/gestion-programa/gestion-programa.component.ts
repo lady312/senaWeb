@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { UntypedFormGroup, Validators } from '@angular/forms';
+import { FormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { CompetenciaModel } from '@models/competencia.model';
 import { ProyectoFormativoModel } from '@models/proyecto-formativo.model ';
 import { CompetenciaService } from '@services/competencia.service';
@@ -7,8 +7,9 @@ import { ProgramaService } from '@services/programa.service';
 import { ProyectoFormativoService } from '@services/proyecto-formativo.service';
 import { UINotificationService } from '@services/uinotification.service';
 import { debounceTime } from 'rxjs/operators';
-import { FormBuilder } from '@angular/forms';
-import { filter } from 'rxjs/operators'; import { ActividadProyectoModel } from '@models/actividad-proyecto.model';
+import { HttpClient } from '@angular/common/http';
+import { filter } from 'rxjs/operators'; 
+import { ActividadProyectoModel } from '@models/actividad-proyecto.model';
 import { ActividadProyectoService } from '@services/actividad-proyecto.service'
 import { FaseModel } from '@models/fase.model';
 import { FaseService } from '@services/fase.service';
@@ -85,44 +86,35 @@ export class GestionProgramaComponent implements OnInit {
     private programaService: ProgramaService,
     private proyectoFormativoService: ProyectoFormativoService,
     private _uiNotificationService: UINotificationService,
+    private http: HttpClient,
     private _actividadProyectoService: ActividadProyectoService,
-    private faseService: FaseService,
-    private competenciaService: CompetenciaService, 
-  ) {
-    this.Competencia = {
+    private competenciaService: CompetenciaService,
+    private faseService : FaseService,
+  ){
+    this.programa = {
       id: null,
-      nombreCompetencia: '',
-      codigoCompetencia: '',
-      idActividadProyecto: null,
-
-    }
-    this.buildForms();
-    {
-      this.actividadProyecto = {
-        id: null,
-        nombreActividadProyecto: '',
-        idFase: null,
-        codigoAP: ''
-      };
-      this.buildFormss();
-    }
-    {
-      this.programa = {
-        id: null,
-        nombrePrograma: '',
-        codigoPrograma: '',
-        descripcionPrograma: '',
-        idTipoPrograma: null,
-        idEstado: 1,
-        totalHoras: null,
-        etapaLectiva: null,
-        etapaProductiva: null,
-        creditosLectiva: null,
-        creditosProductiva: null
-      };
-      this.buildForm();
-    }
+      nombrePrograma: '',
+      codigoPrograma: '',
+      descripcionPrograma:'',
+      idTipoPrograma:null,
+      idEstado:1,
+      totalHoras:null,
+      etapaLectiva:null,
+      etapaProductiva:null,
+      creditosLectiva:null,
+      creditosProductiva:null,
+      rutaArchivo:''
+    };
+    this.buildForm();
   }
+
+
+  mostrarArchivo(rutaArchivo: string) {
+    const url = `http://localhost:8000${rutaArchivo}`;
+    console.log(url);
+    window.open(url);
+  }
+
 
   get nombreProgramaField() {
       return this.formPrograma.get('nombrePrograma');
@@ -215,11 +207,12 @@ export class GestionProgramaComponent implements OnInit {
       codigoPrograma: this.getControlP('codigoPrograma').value,
       descripcionPrograma: this.getControlP('descripcionPrograma').value,
       idEstado: 1,
-      totalHoras: this.getControlP('totalHoras').value,
-      etapaLectiva: this.getControlP('etapaLectiva').value,
-      etapaProductiva: this.getControlP('etapaProductiva').value,
-      creditosLectiva: this.getControlP('creditosLectiva').value,
-      creditosProductiva: this.getControlP('creditosProductiva').value,
+      totalHoras:this.getControl('totalHoras').value,
+      etapaLectiva:this.getControl('etapaLectiva').value,
+      etapaProductiva:this.getControl('etapaProductiva').value,
+      creditosLectiva:this.getControl('creditosLectiva').value,
+      creditosProductiva:this.getControl('creditosProductiva').value,
+      rutaArchivo: this.getControl('rutaArchivo').value
     }
   }
 

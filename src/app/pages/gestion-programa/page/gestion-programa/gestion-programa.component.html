@@ -1,15 +1,6 @@
 <div class="div-principal col-lg-12 grid-margin stretch-card"></div>  
   <div class="card">
     <div class="card-header">
-      <i class="fa fa-align-justify"></i>gestion Programas Registrados
-      <select #nreg class="form-control col-lg-1" (change)="enviarNumeroRegistros($event.target.value) ">
-        <option>10</option>
-        <option>15</option>
-        <option>20</option>
-        <option>25</option>
-      </select>
-    </div>
-      
     <div class="card-body">
       <div class="card-header">
         <strong>Gestión Programa</strong>
@@ -58,7 +49,7 @@
               </tr>
               <tr>
                 <th scope="row">Descripción:</th><td>{{selectedProgram.descripcionPrograma}}</td>
-                <th></th><td></td>
+                <th scope="row">Archivo:</th><td><a (click)="mostrarArchivo(selectedProgram.rutaArchivo)" class="cil-info"></a></td>
                 <th></th><td></td>
               </tr>
             </tbody>
@@ -103,7 +94,7 @@
 
         <!--Para realizar los botones(etiquetas) de eliminar-->
         <label class="col-md-4 col-form-label">Actividad proyecto</label>
-        <button class="btn btn-success rounded-circle m-4" style="position: relative; left: -290px;"
+        <button class="btn btn-success rounded-circle m-4" style="position: relative; left: -10rem;"
           (click)="agregarAp()">+</button>
         <div class="etiquet" style="display: flex; flex-wrap: wrap; padding: 30px; width: 100%; border: 2px solid rgba(0, 0, 0, 0.185);background:rgb(255, 255, 255) ; ">
           <button *ngFor="let  ActividadProyecto of ActividadProyectos "(click)="filtrarCompetencias(ActividadProyecto)" class="btn btn-outline-primary btn-sm" 
@@ -174,7 +165,7 @@
 
         <!--Para realizar los botones(etiquetas) de eliminar-->
         <label class="col-md-4 col-form-label">Competencias</label>
-        <button class="btn btn-success rounded-circle m-4" style="position: relative; left: -300px; "
+        <button class="btn btn-success rounded-circle m-4" style="position: relative; left: -12rem; "
           (click)="agregarC()">+</button>
         <div class="etiqueta" style="display: flex; flex-wrap: wrap; padding: 30px; width: 100%; border: 2px solid rgba(0, 0, 0, 0.185);background:rgb(255, 255, 255) ; " >
           <button *ngFor="let Competencia of Competencias" class="btn btn-outline-primary btn-sm " style="margin: 10px; width: 12%;"
