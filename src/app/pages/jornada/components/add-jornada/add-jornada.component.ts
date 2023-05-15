@@ -18,6 +18,7 @@ import { DiaJornadaService } from '@services/dia-jornada.service';
   styleUrls: ['./add-jornada.component.scss'],
 })
 export class AddJornadaComponent implements OnInit {
+
   @Input() jorandas: JornadaModel[] = [];
   @Input() jorna: JornadaModel;
 
@@ -166,7 +167,8 @@ export class AddJornadaComponent implements OnInit {
           idDia: d.id,
         };
       });
-      console.log(diaJornadas);
+
+    console.log(diaJornadas);
 
     return {
       id: this.jorna?.id,
@@ -203,6 +205,7 @@ export class AddJornadaComponent implements OnInit {
     this.diasChecked = [];
     this._diajornadaService.getDiaJornadaByJornada(this.jorna.id).subscribe(
       (savedData: any) => {
+        console.log(savedData);
         if (savedData && savedData.length > 0) {
           this.diasChecked = savedData;
           this.diasSeman = this.diasSeman.map((diaSe) => {

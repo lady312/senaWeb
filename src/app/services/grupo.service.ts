@@ -30,8 +30,8 @@ export class GruposService {
 
   crearGrupo(grupo: GrupoModel) {
     grupo.nombre            = grupo.nombre.toUpperCase();
-    grupo.fechaInicial      = grupo.fechaInicial;
-    grupo.fechaFinal        = grupo.fechaFinal;
+    grupo.fechaInicialGrupo = grupo.fechaInicialGrupo;
+    grupo.fechaFinalGrupo   = grupo.fechaFinalGrupo;
     grupo.observacion       = grupo.observacion.toUpperCase();
 
     grupo.idTipoGrupo       = grupo.idTipoGrupo;
@@ -68,8 +68,8 @@ export class GruposService {
 
   actualizarGrupo(grupo: GrupoModel) {
     grupo.nombre            = grupo.nombre.toUpperCase();
-    grupo.fechaInicial      = grupo.fechaInicial;
-    grupo.fechaFinal        = grupo.fechaFinal;
+    grupo.fechaInicialGrupo = grupo.fechaInicialGrupo;
+    grupo.fechaFinalGrupo   = grupo.fechaFinalGrupo;
     grupo.observacion       = grupo.observacion.toUpperCase();
 
     grupo.idTipoGrupo       = grupo.idTipoGrupo;

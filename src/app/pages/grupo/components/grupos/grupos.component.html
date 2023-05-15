@@ -36,33 +36,64 @@
       <!--El lider debe ser nullable-->
       <div class="form-floating mb-3">
         <select class="form-select" id="lider" aria-label="Floating label select example" formControlName="idLider">
-          <option selected>Selecionar lider</option>
-          <option *ngFor='let lider of lideres' [ngValue]="lider.id">{{ lider.email }}</option>
+          <option selected>Selecionar instructor</option>
+          <option *ngFor='let lider of instructores' [ngValue]="lider.id - 1">{{ lider.usuario.nombre1 }} {{
+            lider.usuario.apellido1 }}</option>
         </select>
-        <label for="lider">Lider</label>
+        <label for="lider">Instructor</label>
         <div class="valid-feedback" *ngIf="!liderField.hasError('required')">
           Valor válido
         </div>
         <div class="invalid-feedback">
-          Por favor ingresé un valor válido para el lider
+          Por favor ingresé un valor válido para el instructor
         </div>
       </div>
 
-      <div class="form-floating mb-3">
-        <select class="form-select" id="infraestrutura" aria-label="Floating label select example"
-          formControlName="infraestructura" #infraestructuraSelect>
-          <option selected>Selecionar infraestructura</option>
-          <option *ngFor='let infraestructura of infraestructuras' [value]="infraestructura.id">
-            {{infraestructura.nombreInfraestructura}}</option>
-        </select>
-        <label for="infraestrutura">Infraestructura</label>
-        <div class="valid-feedback" *ngIf="!infraestructuraField.hasError('required')">
-          Valor válido
+      <div class="row mb-2">
+        <div class="col-sm-10">
+
+          <div class="form-floating mb-3">
+            <select class="form-select" id="infraestrutura" aria-label="Floating label select example"
+              formControlName="infraestructura" #infraestructuraSelect>
+              <option selected>Selecionar infraestructura</option>
+              <option *ngFor='let infraestructura of infraestructuras' [ngValue]="infraestructura.id">
+                {{infraestructura.nombreInfraestructura}}</option>
+            </select>
+            <label for="infraestrutura">Infraestructura</label>
+            <div class="valid-feedback" *ngIf="!infraestructuraField.hasError('required')">
+              Valor válido
+            </div>
+            <div class="invalid-feedback">
+              Por favor ingresé un valor válido para la infraestructura
+            </div>
+          </div>
+
+          <div class="bg-white rounded">
+            <p class="h4">Infraestructura</p>
+            <ng-container *ngFor="let dato of datosDelSegundoModal">
+              <p>Nombre de infraestructura: {{ getNombreInfraestructura(dato.idInfraestructura) }}</p>
+              <div class="row">
+                <div class="col-sm-6">
+                  <p>Fecha inicial: {{ dato.fechaInicial }}</p>
+                </div>
+                <div class="col-sm-6">
+                  <p>Fecha final: {{ dato.fechaFinal }}</p>
+                </div>
+              </div>
+            </ng-container>
+          </div>
+
+
+
+
         </div>
-        <div class="invalid-feedback">
-          Por favor ingresé un valor válido para la infraestructura
+        <div class="col-sm-2 mt-2">
+          <button type="button" class="btn btn-success rounded-circle"
+            (click)="agregarHorarioInfraestructura()">+</button>
         </div>
       </div>
+
+
 
 
       <div class="form-floating mb-3">
@@ -128,7 +159,7 @@
         <div class="col-sm-6">
           <div class="form-floating mb-3">
             <input type="date" onkeyup="javascript:this.value=this.value.toUpperCase();" class="form-control"
-              id="fechaInicial" placeholder="name@example.com" formControlName='fechaInicial' #fechaInicialInput>
+              id="fechaInicial" placeholder="name@example.com" formControlName='fechaInicialGrupo' #fechaInicialInput>
             <label for="fechaInicial">Fecha inicial lectiva</label>
             <div class="valid-feedback" *ngIf="!fechaInicialField.hasError('required')">
               Valor válido
@@ -141,7 +172,7 @@
         <div class="col-sm-6">
           <div class="form-floating mb-3">
             <input type="date" onkeyup="javascript:this.value=this.value.toUpperCase();" class="form-control"
-              id="floatingInput" placeholder="name@example.com" formControlName='fechaFinal' #fechaFinalInput>
+              id="floatingInput" placeholder="name@example.com" formControlName='fechaFinalGrupo' #fechaFinalInput>
             <label for="floatingInput">Fecha fin lectiva</label>
             <div class="valid-feedback" *ngIf="!fechaFinalField.hasError('required')">
               Valor válido
@@ -174,21 +205,7 @@
           <button type="button" class="btn btn-success rounded-circle" (click)="agregar()">+</button>
         </div>
       </div>
-      <div class="form-floating mb-3">
-        <select class="form-select" id="jornada" aria-label="Floating label select example"
-          formControlName="grupos_jornada" #jornadaSelect>
-          <option selected>Selecionar jornada</option>
-          <option *ngFor='let jornada of jornadas' [value]="jornada.id">{{jornada.nombreJornada}}
-          </option>
-        </select>
-        <label for="jornada">Jornada</label>
-        <div class="valid-feedback" *ngIf="!jornadaField.hasError('required')">
-          Valor válido
-        </div>
-        <div class="invalid-feedback">
-          Por favor ingresé un valor válido para la jornada
-        </div>
-      </div>
+
       <div class="form-floating">
         <textarea class="form-control" onkeyup="javascript:this.value=this.value.toUpperCase();" style="height: 100px"
           placeholder="Leave a comment here" id="floatingTextarea" formControlName='observacion' required></textarea>
@@ -200,12 +217,49 @@
           Por favor ingrese un valor valido para la descripción
         </div>
       </div>
+
+
+      <div class="card">
+        <div class="card-header">
+          <strong> Seleccione la jornada </strong>
+        </div>
+        <div class="card-body">
+
+          <div class="row row-cols-3">
+            <div class="col">
+              <label class="pointer">
+                <app-custom-switch [size]="7" [checked]="allJornadas" (checkedChange)="changeAllJornadas($event)">
+                </app-custom-switch>
+                Todas
+              </label>
+            </div>
+            <div class="col-md-3" *ngFor="let jor of jornadas; let i = index;">
+              <label class="pointer">
+                <app-custom-switch [size]="7" [checked]="jor.checked" (checkedChange)="changeJornada($event, i)"
+                  id="check{{ jor.id }}">
+                </app-custom-switch>
+                {{jor.nombreJornada}}
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </form>
+
+
+
+    <app-custom-modal title="Horario infraestructura" [(show)]="showModalHorarioInfraestructura">
+      <app-modal-horario-infraestructura (cancel)="resetHorarioInfraestructura()">
+      </app-modal-horario-infraestructura>
+    </app-custom-modal>
 
     <app-custom-modal title="Gestión Grupo" [(show)]="showModalTipoGrupo">
       <app-tipogrupos [tipoGrupos]="tipoGrupos" (store)="guardarTipoGrupo($event)" (cancel)="reset()">
       </app-tipogrupos>
     </app-custom-modal>
+
+
 
     <div class="card-footer text-center">
       <button type="submit" class="btn btn-success" (click)="guardarGrupo()"><!--[disabled]="formGrupo.invalid"-->

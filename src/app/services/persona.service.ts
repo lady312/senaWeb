@@ -54,7 +54,7 @@ export class PersonaService {
     if (persona.direccion) {
       data.append('direccion', persona.direccion);
     }
-    if (persona.celular) {
+    if (persona.telefonoFijo) {
       data.append('telefonoFijo', persona.telefonoFijo);
     }
     if (persona.celular) {
@@ -75,8 +75,13 @@ export class PersonaService {
       data.append('rutaFotoFile', fotoAvatar[0]);
     }
 
-    return this._coreService.put('profile/update', data);
+    const idUsuario = persona.id;
+
+    return this._coreService.put('usuarios/' + idUsuario, data);
+    
   }
+
+  
 
 
   eliminarPersona(personaId: number) {

@@ -10,10 +10,17 @@ export class HorarioInfraestructuraGrupoService {
   constructor(
     private _coreService: CoreService
   ) { }
-  traerHorarioInfraestructuraGrupo(){
+
+  traerHorarioInfraestructuraGrupo() {
     return this._coreService.get<HorarioInfraestructuraGrupo[]>('horario_infraestructura_grupo');
   }
-  crearHorarioInfraestructuraGrupo(horarioInfraestructuraGrupo:HorarioInfraestructuraGrupo){
-    return this._coreService.post<HorarioInfraestructuraGrupo>('horario_infraestructura_grupo',horarioInfraestructuraGrupo);
+
+  public getHorarioInfraestructuraByGrupo(id: number) {
+    return this._coreService.get<HorarioInfraestructuraGrupo[]>('horario_infraestructura_grupo/grupo/' + id);
   }
+
+  crearHorarioInfraestructuraGrupo(id: HorarioInfraestructuraGrupo) {
+    return this._coreService.post<HorarioInfraestructuraGrupo>('horario_infraestructura_grupo', id);
+  }
+
 }

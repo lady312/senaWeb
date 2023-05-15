@@ -10,11 +10,13 @@ import { AsignacionParticipanteModel } from '@models/asignacion-participante.mod
 import { AsignacionJornadaGrupoModel } from '@models/asignacion-jornada-grupo.model';
 
 export interface GrupoModel {
-  id: number;
+  id?: number;
   nombre: string;
-  fechaInicial: Date;
-  fechaFinal: Date;
+  fechaInicialGrupo: Date;
+  fechaFinalGrupo: Date;
   observacion: string;
+
+  nombreJornada?:string;
 
   idTipoGrupo?: number;
   tipo_grupo?: TipoGrupoModel;
@@ -24,7 +26,6 @@ export interface GrupoModel {
 
   idPrograma?: number;
   programa?: ProgramaModel;
-
 
   idNivel?:number;
   nivel_formacion?:NivelFormacionModel;
@@ -43,6 +44,5 @@ export interface GrupoModel {
   infraestructura?: HorarioInfraestructuraGrupo[];
 
   participantes?:AsignacionParticipanteModel[];
-
 
 }

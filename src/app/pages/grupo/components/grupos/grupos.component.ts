@@ -1,39 +1,63 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
-import { TipoGrupoModel } from '@models/tipogrupo.model';
-import { GrupoModel } from '@models/grupo.model';
-import { TipoGrupoService } from '@services/tipo-grupo.service';
-import { ProgramaService } from '@services/programa.service';
-import { JornadaService } from '@services/jornada.service';
-import { InfraestructuraService } from '@services/infraestructura.service';
-import { UsuarioService } from '@services/usuario.service';
-import { UINotificationService } from '@services/uinotification.service';
-import { debounceTime } from 'rxjs/operators';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { DatePipe } from '@angular/common';
-import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
-import { ProgramaModel } from '@models/programa.model';
-import { AsignacionJornadaGrupoModel } from '@models/asignacion-jornada-grupo.model';
-import { TipoFormacionModel } from '@models/tipo-formacion.model';
-import { InfraestructuraModel } from '@models/infraestructura.model';
-import { UsuarioModel } from '@models/usuario.model';
-import { NivelFormacionModel } from '@models/nivel-formacion.model';
-import { TipoOfertaModel } from '@models/tipo-oferta.model';
-import { EstadoGrupoModel } from '@models/estado-grupo.model';
-import { NivelFormacionService } from '@services/nivel-formacion.service';
-import { TipoFormacionService } from '@services/tipo-formacion.service';
-import { EstadoGrupoService } from '@services/estado-grupo.service';
-import { TipoOfertaService } from '@services/tipo-oferta.service';
-import { JornadaModel } from '@models/jornada.model';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+  ElementRef,
+  ChangeDetectorRef,
+} from "@angular/core";
+import {
+  UntypedFormBuilder,
+  UntypedFormGroup,
+  Validators,
+} from "@angular/forms";
+import { TipoGrupoModel } from "@models/tipogrupo.model";
+import { GrupoModel } from "@models/grupo.model";
+import { TipoGrupoService } from "@services/tipo-grupo.service";
+import { ProgramaService } from "@services/programa.service";
+import { JornadaService } from "@services/jornada.service";
+import { InfraestructuraService } from "@services/infraestructura.service";
+import { UsuarioService } from "@services/usuario.service";
+import { UINotificationService } from "@services/uinotification.service";
+import { debounceTime } from "rxjs/operators";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { DatePipe } from "@angular/common";
+import { FormGroup, FormControl, FormBuilder } from "@angular/forms";
+import { ProgramaModel } from "@models/programa.model";
+import { AsignacionJornadaGrupoModel } from "@models/asignacion-jornada-grupo.model";
+import { TipoFormacionModel } from "@models/tipo-formacion.model";
+import { InfraestructuraModel } from "@models/infraestructura.model";
+import { UsuarioModel } from "@models/usuario.model";
+import { NivelFormacionModel } from "@models/nivel-formacion.model";
+import { TipoOfertaModel } from "@models/tipo-oferta.model";
+import { EstadoGrupoModel } from "@models/estado-grupo.model";
+import { NivelFormacionService } from "@services/nivel-formacion.service";
+import { TipoFormacionService } from "@services/tipo-formacion.service";
+import { EstadoGrupoService } from "@services/estado-grupo.service";
+import { TipoOfertaService } from "@services/tipo-oferta.service";
+import { JornadaModel } from "@models/jornada.model";
+import { AsignacionJornadaGrupoService } from "@services/asignacion-jornada-grupo.service";
+import { HorarioInfraestructuraGrupo } from "@models/horario-infraestructura-grupo.model";
+import { HorarioInfraestructuraGrupoService } from "@services/horario-infraestructura-grupo.service";
+import { ModalHorarioInfraestructuraComponent } from "../modal-horario-infraestructura/modal-horario-infraestructura.component";
+import { HorarioInfraestructuraTemporal } from "@models/horario-infraestructura-temporal.model";
 
 @Component({
-  selector: 'app-grupos',
-  templateUrl: './grupos.component.html',
-  styleUrls: ['./grupos.component.scss'],
-  providers: [DatePipe]
+  selector: "app-grupos",
+  templateUrl: "./grupos.component.html",
+  styleUrls: ["./grupos.component.scss"],
+  providers: [DatePipe],
 })
-
 export class GruposComponent implements OnInit {
+
+  //Agregado
+  // datosDelSegundoModal: any;
+  datosDelSegundoModal: HorarioInfraestructuraGrupo[];
+
+
+  public horarios: HorarioInfraestructuraGrupo[];
 
   @ViewChild('fechaInicialInput', { static: false }) fechaInicialInput: ElementRef;
   @ViewChild('fechaFinalInput', { static: false }) fechaFinalInput: ElementRef;
@@ -41,23 +65,27 @@ export class GruposComponent implements OnInit {
   @ViewChild('infraestructuraSelect', { static: false, read: ElementRef })
   infraestructuraSelect: ElementRef;
 
-  @ViewChild('jornadaSelect', { static: false, read: ElementRef })
-  jornadaSelect: ElementRef;
-
-
-
-
   @Output() store: EventEmitter<GrupoModel> = new EventEmitter();
   @Output() cancel: EventEmitter<void> = new EventEmitter();
   @Output() create: EventEmitter<void> = new EventEmitter();
 
   jornadaGrupos: AsignacionJornadaGrupoModel[] = [];
+  horarioInfraestructuraGrupo: HorarioInfraestructuraGrupo[] = [];
   jornada: JornadaModel[] = [];
 
+  public jornadasChecked: any[];
+  allJornadas = false;
+
+  public infraestructura: any[];
+
   public showModalTipoGrupo = false;
+  public showModalHorarioInfraestructura = false;
+
   tipoGrupo: TipoGrupoModel = null;
+  horarioGrupoInfraestructura: HorarioInfraestructuraGrupo = null;
   @Input() tipoGrupos: TipoGrupoModel[] = [];
-  @Input() lideres: UsuarioModel[] = [];
+  @Input() horarioGrupoInfraestructuras: HorarioInfraestructuraGrupo[] = [];
+  @Input() instructores: UsuarioModel[] = [];
   @Input() programas: ProgramaModel[] = [];
   @Input() infraestructuras: InfraestructuraModel[] = [];
   @Input() niveles: NivelFormacionModel[] = [];
@@ -85,15 +113,19 @@ export class GruposComponent implements OnInit {
     private _uiNotificationService: UINotificationService, //nofitificacion
     private _modalService: NgbModal, //Modal
     //Renderizar vista
+    private _grupoJornadaService: AsignacionJornadaGrupoService,
+    private _horarioInfraestructuraGrupoService: HorarioInfraestructuraGrupoService
   ) {
     this.grupo = {
       id: null,
-      nombre: '',
-      fechaInicial: null,
-      fechaFinal: null,
-      observacion: '',
+      nombre: "",
+      fechaInicialGrupo: null,
+      fechaFinalGrupo: null,
+      observacion: "",
       idTipoGrupo: null,
       tipo_grupo: null,
+
+      nombreJornada: null,
 
       idPrograma: null,
       programa: null,
@@ -113,11 +145,11 @@ export class GruposComponent implements OnInit {
       idTipoOferta: null,
       tipo_oferta: null,
 
-      grupos_jornada: [] = [],
+      grupos_jornada: ([] = []),
 
-      infraestructura: [] = [],
+      infraestructura: ([] = []),
 
-      participantes: [] = [],
+      participantes: ([] = []),
 
     };
     this.buildForm();
@@ -134,18 +166,57 @@ export class GruposComponent implements OnInit {
     this.traerEstados();
     this.traerTipoOfertas();
     this.setGrupo();
+    this.traercheckedJornadas();
+    this.traerInfraestructura();
   }
 
+  // recibirDatosDelSegundoModal(datos: any) {
+  //   this.datosDelSegundoModal = datos;
+  // }
+
+  recibirDatosDelSegundoModal(datos: any) {
+    this.datosDelSegundoModal = JSON.parse(JSON.stringify(datos)) as HorarioInfraestructuraGrupo[];
+  }
+
+  getNombreInfraestructura(idInfraestructura: number): string | undefined {
+    const infraestructura = this.infraestructuras.find(i => i.id === idInfraestructura);
+    return infraestructura?.nombreInfraestructura;
+  }
+  
   guardarTipoGrupo(tipoGrupo: TipoGrupoModel) {
-    this._tipoGrupoService.crearTipoGrupo(tipoGrupo).subscribe(tipo => {
+    this._tipoGrupoService.crearTipoGrupo(tipoGrupo).subscribe((tipo) => {
       this.tipoGrupos.push(tipo);
-      this._uiNotificationService.success('Tipo de grupo agregado', 'Tipo grupo');
+      this._uiNotificationService.success(
+        "Tipo de grupo agregado",
+        "Tipo grupo"
+      );
       this.reset();
-    })
+    });
   }
 
   agregar() {
     this.showModalTipoGrupo = true;
+    this.create.emit();
+  }
+
+  agregarHorarioInfraestructura() {
+    this.showModalHorarioInfraestructura = true;
+    this.create.emit();
+  }
+
+  guardarHorarioInfraestructura(horarioInfra: HorarioInfraestructuraGrupo) {
+    this._horarioInfraestructuraGrupoService.crearHorarioInfraestructuraGrupo(horarioInfra).subscribe((horarioInfr) => {
+      this.horarioGrupoInfraestructuras.push(horarioInfr);
+      this._uiNotificationService.success(
+        "Horario de infraestructura agregado",
+        "Horario infraestructura"
+      );
+      this.resetHorarioInfraestructura();
+    });
+  }
+
+  agregarHorarioInfraestructuraModel() {
+    this.showModalHorarioInfraestructura = true;
     this.create.emit();
   }
 
@@ -155,104 +226,129 @@ export class GruposComponent implements OnInit {
   }
 
   traerTipoGrupos() {
-    this._tipoGrupoService.traerTipoGrupos()
-      .subscribe((tipoGrupo: TipoGrupoModel[]) => {
+    this._tipoGrupoService.traerTipoGrupos().subscribe(
+      (tipoGrupo: TipoGrupoModel[]) => {
         this.tipoGrupos = tipoGrupo;
-      }, error => {
-        this._uiNotificationService.error('Error de conexión');
-      });
+      },
+      (error) => {
+        this._uiNotificationService.error("Error de conexión");
+      }
+    );
   }
 
   traerLideres() {
-    this._liderService.traerUsuarios()
-      .subscribe((lider: UsuarioModel[]) => {
-        this.lideres = lider;
+    this._liderService.traerUsuariosActives()
+      .subscribe((instructor: UsuarioModel[]) => {
+        this.instructores = instructor;
       }, error => {
         this._uiNotificationService.error('Error de conexión');
       });
   }
 
   traerProgramas() {
-    this._programaService.traerProgramas()
-      .subscribe((programa: ProgramaModel[]) => {
+    this._programaService.traerProgramas().subscribe(
+      (programa: ProgramaModel[]) => {
         this.programas = programa;
-      }, error => {
-        this._uiNotificationService.error('Error de conexión');
-      });
+      },
+      (error) => {
+        this._uiNotificationService.error("Error de conexión");
+      }
+    );
   }
 
   traerInfraestructuras() {
-    this._infraestructuraService.traerInfraestructuras()
-      .subscribe((infraestructura: InfraestructuraModel[]) => {
+    this._infraestructuraService.traerInfraestructuras().subscribe(
+      (infraestructura: InfraestructuraModel[]) => {
         this.infraestructuras = infraestructura;
-      }, error => {
-        this._uiNotificationService.error('Error de conexión');
+      },
+      (error) => {
+        this._uiNotificationService.error("Error de conexión");
+      }
+    );
+  }
+
+  traerInfraestructura() {
+    console.log('aqui dentro')
+    this._horarioInfraestructuraGrupoService.getHorarioInfraestructuraByGrupo(1)
+      .subscribe((horarios) => {
+        this.horarios = horarios;
       });
+
   }
 
   traerNivelesFormacion() {
-    this._nivelFormacionService.traerNivelesFormacion()
-      .subscribe((niveles: NivelFormacionModel[]) => {
+    this._nivelFormacionService.traerNivelesFormacion().subscribe(
+      (niveles: NivelFormacionModel[]) => {
         this.niveles = niveles;
-      }, error => {
-        this._uiNotificationService.error('Error de conexión');
-      });
+      },
+      (error) => {
+        this._uiNotificationService.error("Error de conexión");
+      }
+    );
   }
 
   traerTipoFormaciones() {
-    this._tipoFormacionService.traerTipoFormaciones()
-      .subscribe((tiposF: TipoFormacionModel[]) => {
+    this._tipoFormacionService.traerTipoFormaciones().subscribe(
+      (tiposF: TipoFormacionModel[]) => {
         this.tipoFormaciones = tiposF;
-      }, error => {
-        this._uiNotificationService.error('Error de conexión');
-      });
+      },
+      (error) => {
+        this._uiNotificationService.error("Error de conexión");
+      }
+    );
   }
 
   traerEstados() {
-    this._estadoService.traerEstadoGrupos()
-      .subscribe((estado: EstadoGrupoModel[]) => {
+    this._estadoService.traerEstadoGrupos().subscribe(
+      (estado: EstadoGrupoModel[]) => {
         this.estados = estado;
-      }, error => {
-        this._uiNotificationService.error('Error de conexión');
-      });
+      },
+      (error) => {
+        this._uiNotificationService.error("Error de conexión");
+      }
+    );
   }
 
   traerTipoOfertas() {
-    this._tipoOfertaService.traerTipoOfertas()
-      .subscribe((tipoOferta: TipoOfertaModel[]) => {
+    this._tipoOfertaService.traerTipoOfertas().subscribe(
+      (tipoOferta: TipoOfertaModel[]) => {
         this.tipoOfertas = tipoOferta;
-      }, error => {
-        this._uiNotificationService.error('Error de conexión');
-      });
+      },
+      (error) => {
+        this._uiNotificationService.error("Error de conexión");
+      }
+    );
   }
 
   traerJornadas() {
-    this._jornadasService.traerJornada()
-      .subscribe((jorn: JornadaModel[]) => {
+    this._jornadasService.traerJornada().subscribe(
+      (jorn: JornadaModel[]) => {
         this.jornadas = jorn;
-      }, error => {
-        this._uiNotificationService.error('Error de conexión');
-      });
+      },
+      (error) => {
+        this._uiNotificationService.error("Error de conexión");
+      }
+    );
   }
 
   get nombreField() {
-    return this.formGrupo.get('nombre');
+    return this.formGrupo.get("nombre");
   }
 
   get fechaInicialField() {
-    return this.formGrupo.get('fechaInicial');
+    return this.formGrupo.get("fechaInicialGrupo");
   }
 
   get fechaFinalField() {
-    return this.formGrupo.get('fechaFinal');
+    return this.formGrupo.get("fechaFinalGrupo");
   }
 
   get observacion() {
-    return this.formGrupo.get('observacion');
+    return this.formGrupo.get("observacion");
   }
 
   get idTipoGrupo() {
-    return this.formGrupo.get('idTipoGrupo');
+    return this.formGrupo.get("idTipoGrupo");
   }
 
   get liderField() {
@@ -279,16 +375,12 @@ export class GruposComponent implements OnInit {
     return this.formGrupo.get('idTipoOferta');
   }
 
-  get jornadaField() {
-    return this.formGrupo.get('grupos_jornada');
-  }
-
   setGrupo() {
     if (this.grupo) {
       this.formGrupo.patchValue({
         nombre: this.grupo.nombre,
-        fechaInicial: this.grupo.fechaInicial,
-        fechaFinal: this.grupo.fechaFinal,
+        fechaInicialGrupo: this.grupo.fechaInicialGrupo,
+        fechaFinalGrupo: this.grupo.fechaFinalGrupo,
         observacion: this.grupo.observacion,
 
         idTipoGrupo: this.grupo.idTipoGrupo,
@@ -318,41 +410,35 @@ export class GruposComponent implements OnInit {
   private buildForm() {
     this.formGrupo = this.formBuilder.group({
       id: [0],
-      nombre: ['', [Validators.required]],
-      fechaInicial: ['', [Validators.required]],
-      fechaFinal: ['', [Validators.required]],
-      observacion: ['', [Validators.required]],
+      nombre: ["", [Validators.required]],
+      fechaInicialGrupo: ["", [Validators.required]],
+      fechaFinalGrupo: ["", [Validators.required]],
+      observacion: ["", [Validators.required]],
 
-      idTipoGrupo: ['', [Validators.required]],
+      idTipoGrupo: ["", [Validators.required]],
 
-      idLider: ['', [Validators.required]],
+      idLider: ["", [Validators.required]],
 
-      idPrograma: ['', [Validators.required]],
+      idPrograma: ["", [Validators.required]],
 
-      idNivel: ['', [Validators.required]],
+      idNivel: ["", [Validators.required]],
 
-      idTipoFormacion: ['', [Validators.required]],
+      idTipoFormacion: ["", [Validators.required]],
 
-      idEstado: ['', [Validators.required]],
+      idEstado: ["", [Validators.required]],
 
-      idTipoOferta: ['', [Validators.required]],
+      idTipoOferta: ["", [Validators.required]],
 
-      grupos_jornada: ['', [Validators.required]],
+      infraestructura: ["", [Validators.required]],
 
-      infraestructura: ['', [Validators.required]],
-
-      participantes: ['', [Validators.required]],
+      grupos_jornada: ["", [Validators.required]],
 
       dataJornada: this.formBuilder.array([]),
 
     });
 
-    this.formGrupo.valueChanges
-      .pipe(
-        debounceTime(350),
-      )
-      .subscribe(data => {
-      });
+    this.formGrupo.valueChanges.pipe(debounceTime(350)).subscribe((data) => { });
+
   }
 
   guardarGrupo() {
@@ -370,21 +456,29 @@ export class GruposComponent implements OnInit {
   }
 
   getGrupo(): GrupoModel {
-    const grupoJornadas: number[] = Array.from(this.jornadaSelect.nativeElement.selectedOptions)
-      .map((option: HTMLOptionElement) => {
-        return parseInt(option.value);
+
+    let description = '';
+    const grupoJornadas: AsignacionJornadaGrupoModel[] = this.jornadas
+      .filter((j) => j["checked"])
+      .map((j) => {
+        description += j.nombreJornada + ' | ';
+        return {
+          idJornada: j.id,
+        };
       });
 
-    const HorarioInfraestructurasGrupo: number[] = Array.from(this.infraestructuraSelect.nativeElement.selectedOptions)
-      .map((option: HTMLOptionElement) => {
-        return parseInt(option.value);
-      });
+    // const HorarioInfraestructurasGrupo: number[] = Array.from(this.infraestructuraSelect.nativeElement.selectedOptions)
+    //   .map((option: HTMLOptionElement) => {
+    //     return parseInt(option.value);
+    //   });
+
+    console.log(grupoJornadas);
 
     return {
       id: this.grupo?.id,
       nombre: this.getControl('nombre').value,
-      fechaInicial: this.getControl('fechaInicial').value,
-      fechaFinal: this.getControl('fechaFinal').value,
+      fechaInicialGrupo: this.getControl('fechaInicialGrupo').value,
+      fechaFinalGrupo: this.getControl('fechaFinalGrupo').value,
       observacion: this.getControl('observacion').value,
       idTipoGrupo: this.getControl('idTipoGrupo').value,
       idLider: this.getControl('idLider').value,
@@ -394,9 +488,10 @@ export class GruposComponent implements OnInit {
       idEstado: this.getControl('idEstado').value,
       idTipoOferta: this.getControl('idTipoOferta').value,
 
-      grupos_jornada: grupoJornadas.map((idJornada) => ({ idJornada })),
+      // infraestructura: HorarioInfraestructurasGrupo.map((idInfraestructura) => ({ idInfraestructura })),
+      infraestructura: this.datosDelSegundoModal,
 
-      infraestructura: HorarioInfraestructurasGrupo.map((idInfraestructura) => ({ idInfraestructura })),
+      grupos_jornada: grupoJornadas,
 
     };
   }
@@ -420,14 +515,77 @@ export class GruposComponent implements OnInit {
     if (fechaFinal > fechaInicial) {
       return true;
     } else {
-      this._uiNotificationService.error('La fecha final no puede ser menor a fecha inicial 😊', 'Fechas')
+      this._uiNotificationService.error(
+        "La fecha final no puede ser menor a fecha inicial 😊",
+        "Fechas"
+      );
       return false;
     }
+  }
+
+  onChange(dia: AsignacionJornadaGrupoModel, isChecked: boolean, pos: number) {
+    if (isChecked) {
+      this.jornadaGrupos.push(dia);
+    } else {
+      this.jornadaGrupos.splice(pos, 1);
+    }
+  }
+
+  changeJornada(checked: boolean, index: number) {
+    this.jornadas[index]["checked"] = checked;
+    this.allJornadas = this.totalJornadasSeleccionadas === 3;
+  }
+
+  get totalJornadasSeleccionadas() {
+    return this.jornadas.filter((j) => j["checked"]).length;
+  }
+
+  changeAllJornadas(allJor: boolean) {
+    this.allJornadas = allJor;
+    if (allJor) {
+      this.jornadas.map((jor) => {
+        jor["checked"] = true;
+        return jor;
+      });
+    } else {
+      this.jornadas.map((jor) => {
+        jor["checked"] = false;
+        return jor;
+      });
+    }
+  }
+
+  traercheckedJornadas() {
+    this.jornadasChecked = [];
+    this._grupoJornadaService.getGrupoJornadaByGrupo(this.grupo.id).subscribe(
+      (savedData: any) => {
+        console.log(savedData);
+        if (savedData && savedData.length > 0) {
+          this.jornadasChecked = savedData;
+          this.jornadas = this.jornadas.map((jorSe) => {
+            jorSe.checked =
+              this.jornadasChecked.findIndex((j) => j.idJornada === jorSe.id) !== -1;
+            return jorSe;
+          });
+        } else {
+          this.jornadas.forEach((jorSe) => {
+            jorSe.checked = false;
+          });
+        }
+      },
+      (error) => {
+        console.log("There was an error while retrieving data !!!", error);
+      });
   }
 
   reset() {
     this.tipoGrupo = null;
     this.showModalTipoGrupo = false;
+  }
+
+  resetHorarioInfraestructura() {
+    this.horarioGrupoInfraestructura = null;
+    this.showModalHorarioInfraestructura = false;
   }
 
 }

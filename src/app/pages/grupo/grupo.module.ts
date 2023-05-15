@@ -11,6 +11,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { GruposService } from '@services/grupo.service';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { TipogrupoModule } from '../tipo-grupo/tipoGrupo.module';
+import { ModalHorarioInfraestructuraComponent } from './components/modal-horario-infraestructura/modal-horario-infraestructura.component';
+import { InfraestructuraModule } from '../infraestructura/infraestructura.module';
 
 @NgModule({
   exports: [
@@ -20,6 +22,7 @@ import { TipogrupoModule } from '../tipo-grupo/tipoGrupo.module';
     GruposComponent,
     GruposListComponent,
     GrupoComponent,
+    ModalHorarioInfraestructuraComponent,
     // TipogrupoModalComponent,
   ],
   schemas: [
@@ -37,6 +40,7 @@ import { TipogrupoModule } from '../tipo-grupo/tipoGrupo.module';
     ReactiveFormsModule,
     FormsModule,
     TipogrupoModule,
+    InfraestructuraModule
   ],
   providers: [GruposService],
   bootstrap: [GruposComponent]
