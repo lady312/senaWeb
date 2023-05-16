@@ -290,6 +290,15 @@ export class InfraestructuraComponent implements OnInit{
   }
   eliminarInfraestructura(event:number){
     this._infraestructuraService.borrarInfraestructura(event).subscribe(()=>{
+      this.cache = new Map<number, {
+        areas:AreaModel[],
+        sedes:SedeModel[],
+        infrsSedeArea:Map<number,
+          Map<number,{
+            infrs:InfraestructuraModel[]
+          }>> 
+      }>();
+      this.iniciarCache();
       this.getInfraestructuras();
     })
   }
@@ -299,14 +308,23 @@ export class InfraestructuraComponent implements OnInit{
     this.showFormInfr = true;
   }
   guardarInfraestructura(event:InfraestructuraModel){
-    console.log(event);
+    this.cache = new Map<number, {
+      areas:AreaModel[],
+      sedes:SedeModel[],
+      infrsSedeArea:Map<number,
+        Map<number,{
+          infrs:InfraestructuraModel[]
+        }>> 
+    }>();
     if(event.id){
       this._infraestructuraService.actualizarInfraestructura(event).subscribe(()=>{
+        this.iniciarCache();        
         this.getInfraestructuras();
         this.reset();
       });
     }else{
       this._infraestructuraService.guardarInfraestructura(event).subscribe(()=>{
+        this.iniciarCache();
         this.getInfraestructuras();
         this.reset();
       });

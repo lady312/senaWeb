@@ -13,7 +13,7 @@ import * as QRCode from 'qrcode';
 })
 export class InfraestructuraFormComponent implements OnInit{
   
-  @Input() infraestructura:InfraestructuraModel;
+  @Input() infraestructura:InfraestructuraModel=null;
   @Input() areas:AreaModel[]=[];
   @Input() sedes: SedeModel[]=[];
   @Input() title: string;
@@ -28,20 +28,15 @@ export class InfraestructuraFormComponent implements OnInit{
   constructor(
     private formBuilder:UntypedFormBuilder
   ){
-    this.infraestructura={
-      id:null,
-      nombreInfraestructura:'',
-      capacidad:0,
-      descripcion:'',
-      idSede:null,
-      idArea:null
-    }
     this.buildForm();
   }
 
   ngOnInit(): void {
-    this.setInfraestructura();
-    this.setIndexes(this.infraestructura);
+    if(this.infraestructura){
+      console.log(this.infraestructura);
+      this.setInfraestructura();
+      this.setIndexes(this.infraestructura);
+    }
   }
 
   get nombreInfraField(){
