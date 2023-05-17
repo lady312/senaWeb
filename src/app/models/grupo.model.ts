@@ -9,7 +9,9 @@ import { JornadaModel } from './jornada.model';
 import { InfraestructuraModel } from './infraestructura.model';
 import { ProgramaModel } from './programa.model';
 import { UsuarioModel } from './usuario.model';
+import { HorarioInfrModel } from './horario-infraestructura.model';
 export interface GrupoModel {
+
   id?: number;
   nombre: string;
   fechaInicial: Date;
@@ -25,9 +27,6 @@ export interface GrupoModel {
   idPrograma?: number;
   programa?: ProgramaModel;
 
-  idInfraestructura?: number;
-  infraestructura?: InfraestructuraModel;
-
   idNivel?:number;
   nivel_formacion?:NivelFormacionModel;
 
@@ -40,8 +39,8 @@ export interface GrupoModel {
   idTipoOferta?:number;
   tipo_oferta?:TipoOfertaModel;
 
-  grupos_jornada?:AsignacionJornadaGrupoModel[];
-
-  diaJor?: DiaJornadaModel[];
+  horario_infraestructura?:HorarioInfrModel;
+  infraestructuras?:InfraestructuraModel[];
+  jornadas?:JornadaModel[];
 
 }

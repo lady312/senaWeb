@@ -111,8 +111,7 @@ export class GruposComponent implements OnInit {
       idLider: null,
       lider: null,
 
-      idInfraestructura: null,
-      infraestructura: null,
+      infraestructuras: [],
 
       idNivel: null,
       nivel_formacion: null,
@@ -126,7 +125,7 @@ export class GruposComponent implements OnInit {
       idTipoOferta: null,
       tipo_oferta: null,
 
-      grupos_jornada: ([] = []),
+      jornadas:[],
     };
     this.buildForm();
   }
@@ -330,9 +329,6 @@ export class GruposComponent implements OnInit {
         idPrograma: this.grupo.idPrograma,
         programa: this.grupo.programa,
 
-        idInfraestructura: this.grupo.idInfraestructura,
-        infraestructura: this.grupo.infraestructura,
-
         idNivel: this.grupo.idNivel,
         nivel: this.grupo.nivel_formacion,
 
@@ -416,13 +412,10 @@ export class GruposComponent implements OnInit {
       idTipoGrupo: this.getControl("idTipoGrupo").value,
       idLider: this.getControl("idLider").value,
       idPrograma: this.getControl("idPrograma").value,
-      idInfraestructura: this.getControl("idInfraestructura").value,
       idNivel: this.getControl("idNivel").value,
       idTipoFormacion: this.getControl("idTipoFormacion").value,
       idEstado: this.getControl("idEstado").value,
-      idTipoOferta: this.getControl("idTipoOferta").value,
-
-      grupos_jornada: grupoJornadas,
+      idTipoOferta: this.getControl("idTipoOferta").value
       //grupos_jornada: grupoJornadas.map((idJornada) => ({ idJornada })),
     };
   }

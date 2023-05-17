@@ -53,7 +53,7 @@ export class GruposListComponent {
     const grupoId = +this.route.snapshot.paramMap.get('id');
 
     // Llamar a la función getGrupo() con el id obtenido
-    this.grupoService.getGrupo(grupoId).subscribe(
+    this.grupoService.traerGrupo(grupoId).subscribe(
       (data) => {
         this.obtenergrupo = data;
       },

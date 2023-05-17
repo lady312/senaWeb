@@ -63,15 +63,13 @@ export class GrupoComponent {
   ) { }
 
   ngOnInit(): void {
-    this.getGrupo();
+    this.getGrupos();
   }
 
-  getGrupo() {
+  getGrupos() {
     this._gruposService.traerGrupos()
       .subscribe(grupos => {
         this.grupos = grupos;
-        this.grupos.forEach((grupo) => {
-        });
       }, error => {
         this._uiNotificationService.error("Error de conexión");
       });
@@ -79,7 +77,7 @@ export class GrupoComponent {
 
   eliminarGrupo(grupoId: number) {
     this._gruposService.eliminarGrupo(grupoId).subscribe(() => {
-      this.getGrupo();
+      this.getGrupos();
     })
   }
 
@@ -97,13 +95,13 @@ export class GrupoComponent {
     console.log(grupo)
     if (grupo.id) {
       this._gruposService.actualizarGrupo(grupo).subscribe(gr => {
-        this.getGrupo();
+        this.getGrupos();
         this.reset();
       });
     } else {
       this._gruposService.crearGrupo(grupo).subscribe(
         gr => {
-          this.getGrupo();
+          this.getGrupos();
           this.reset();
           this._uiNotificationService.success("El registro fué creado");
         },

@@ -110,7 +110,7 @@ export class ViewCalendarComponent implements OnInit {
           jornada: gruposJornadas.jornada.nombreJornada,
           start: new Date(`${fecha.toISOString().slice(0, 10)}T${hInit}`),
           end: new Date(`${fecha.toISOString().slice(0, 10)}T${hEnd}`),
-          infra: grupo.infraestructura.nombreInfraestructura,
+          infra: grupo.horario_infraestructura.infraestructura.nombreInfraestructura,
           //lider: lider.persona.nombre1+' '+lider.persona.nombre2
         });
       }
