@@ -1,22 +1,24 @@
-import { DiaJornadaModel } from '@models/dia_jornada.model';
 import { TipoGrupoModel } from '@models/tipogrupo.model';
 import { NivelFormacionModel } from '@models/nivel-formacion.model';
 import { TipoFormacionModel } from '@models/tipo-formacion.model';
 import { TipoOfertaModel } from '@models/tipo-oferta.model';
 import { EstadoGrupoModel } from '@models/estado-grupo.model';
-import { AsignacionJornadaGrupoModel } from '@models/asignacion-jornada-grupo.model';
+import { ProgramaModel } from '@models/programa.model';
+import { UsuarioModel } from '@models/usuario.model';
+import { HorarioInfraestructuraGrupo } from '@models/horario-infraestructura-grupo.model';
+import { AsignacionParticipanteModel } from '@models/asignacion-participante.model';
 import { JornadaModel } from './jornada.model';
 import { InfraestructuraModel } from './infraestructura.model';
-import { ProgramaModel } from './programa.model';
-import { UsuarioModel } from './usuario.model';
 import { HorarioInfrModel } from './horario-infraestructura.model';
 export interface GrupoModel {
 
   id?: number;
   nombre: string;
-  fechaInicial: Date;
-  fechaFinal: Date;
+  fechaInicialGrupo: Date;
+  fechaFinalGrupo: Date;
   observacion: string;
+
+  nombreJornada?:string;
 
   idTipoGrupo?: number;
   tipo_grupo?: TipoGrupoModel;
@@ -42,5 +44,9 @@ export interface GrupoModel {
   horario_infraestructura?:HorarioInfrModel;
   infraestructuras?:InfraestructuraModel[];
   jornadas?:JornadaModel[];
+
+  infraestructura?: HorarioInfraestructuraGrupo[];
+
+  participantes?:AsignacionParticipanteModel[];
 
 }

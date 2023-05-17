@@ -16,6 +16,7 @@ import { UINotificationService } from '@services/uinotification.service';
 import { UsuarioService } from '@services/usuario.service';
 import { AsignacionJornadaGrupoModel } from '@models/asignacion-jornada-grupo.model';
 import { JornadaModel } from '@models/jornada.model';
+import { HorarioInfraestructuraGrupo } from '@models/horario-infraestructura-grupo.model';
 
 @Component({
   selector: 'app-grupo',
@@ -38,8 +39,7 @@ export class GrupoComponent {
   @Input() jornadas: JornadaModel[] = [];
 
   jornadasGrupo: AsignacionJornadaGrupoModel[] = [];
-
-
+  infraestructuraGrupo: HorarioInfraestructuraGrupo[] = [];
 
   @Output() create: EventEmitter<void> = new EventEmitter();
 
@@ -97,6 +97,7 @@ export class GrupoComponent {
       this._gruposService.actualizarGrupo(grupo).subscribe(gr => {
         this.getGrupos();
         this.reset();
+        this._uiNotificationService.success("El registro fué actualizado");
       });
     } else {
       this._gruposService.crearGrupo(grupo).subscribe(
@@ -123,7 +124,13 @@ export class GrupoComponent {
   reset() {
     this.grupo = null;
     this.jornadasGrupo = [];
+    this.infraestructuraGrupo = [];
     this.showModalGrupo = false;
   }
+
+  recibirDatosDelSegundoModal(datos: any) {
+    // Aquí puedes manejar los datos recibidos y realizar las operaciones necesarias
+    
+  }  
 
 }

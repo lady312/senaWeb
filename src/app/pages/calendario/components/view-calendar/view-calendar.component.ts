@@ -93,12 +93,10 @@ export class ViewCalendarComponent implements OnInit {
 
 
     this.gruposJornadas.forEach((gruposJornadas) => {
-      const fInit: Date = new Date(gruposJornadas.grupo.fechaInicial);
-      const fEnd: Date = new Date(gruposJornadas.grupo.fechaFinal);
-
-      const hInit: string = gruposJornadas.jornada.horaInicial;
-      const hEnd: string = gruposJornadas.jornada.horaFinal;
-
+      const fInit:Date = new Date(gruposJornadas.grupo.fechaInicialGrupo);
+      const fEnd:Date = new Date(gruposJornadas.grupo.fechaFinalGrupo);
+      const hInit:string = gruposJornadas.jornada.horaInicial
+      const hEnd:string =gruposJornadas.jornada.horaFinal;
       for (let fecha = fInit; fecha <= fEnd; fecha = addDays(fecha, 1)) {
         const grupo = this.grupos.find(
         (grupo) => grupo.id == gruposJornadas.idGrupo

@@ -11,10 +11,10 @@
     </div>
     <div class="card-body">
 
-        <div class="input-group mb-3">
-          <input class="form-control" type="search" [(ngModel)]="query" (keyup)="filter()" placeholder="Buscar grupos">
-          <button class="btn btn-primary" type="button"><i class="cil-search"></i></button>
-        </div>
+      <div class="input-group mb-3">
+        <input class="form-control" type="search" [(ngModel)]="query" (keyup)="filter()" placeholder="Buscar grupos">
+        <button class="btn btn-primary" type="button"><i class="cil-search"></i></button>
+      </div>
 
       <div class="div table-container">
         <table class="table table-striped table-hover table-responsive style">
@@ -24,7 +24,7 @@
               <th>Programa</th>
               <th>Nivel formativo</th>
               <th>Nombre del grupo</th>
-              <th>Lider</th>
+              <th>Instructor</th>
               <th>Tipo de formación</th>
               <th>Estado</th>
               <th>Tipo de oferta</th>
@@ -32,7 +32,7 @@
               <th>Fecha de finalización</th>
               <th>Observacion</th>
               <th>Tipo grupo</th>
-              <!-- <th>Jornada</th> -->
+              <th>Jornada</th>
               <th>Infraestructura</th>
               <th>Acciones</th>
           </thead>
@@ -43,16 +43,31 @@
               <td>{{ grupo?.programa?.nombrePrograma || 'Programa no disponible' }}</td>
               <td>{{ grupo.nivel_formacion?.nivel }}</td>
               <td>{{ grupo.nombre || 'Nombre no disponible'}}</td>
-              <td>{{ grupo?.lider || 'Lider no disponible ' }}</td>
+              <td>{{ grupo?.instructor.persona.nombre1 || 'Lider no disponible ' }} {{
+                grupo?.instructor.persona.apellido1 }}</td>
               <td>{{ grupo?.tipo_formacion?.nombreTipoFormacion || 'Tipo de formación no disponible'}}</td>
               <td>{{ grupo?.estado_grupo.nombreEstado || 'Estado no disponible'}}</td>
               <td>{{ grupo?.tipo_oferta?.nombreOferta || 'Tipo de oferta no disponible'}}</td>
-              <td>{{ grupo.fechaInicial | date:'d-MMMM-y' || 'Fecha inicial no disponible'}}</td>
-              <td>{{ grupo.fechaFinal | date:'d-MMMM-y' }}</td>
+              <td>{{ grupo.fechaInicialGrupo | date:'d-MMMM-y' || 'Fecha inicial no disponible'}}</td>
+              <td>{{ grupo.fechaFinalGrupo | date:'d-MMMM-y' }}</td>
               <td>{{ grupo.observacion || 'No se encuentra alguna observación'}}</td>
               <td>{{ grupo.tipo_grupo.nombreTipoGrupo || 'Tipo de grupo no disponible' }}</td>
-              <!-- <td>{{ grupo.tipo_jornada.nombreJornada }}</td> -->
-              <td>{{ grupo?.infraestructura?.nombreInfraestructura }}</td>
+              <td><ng-container *ngIf="grupo.grupos_jornada && grupo.grupos_jornada.length > 0">
+                  <span *ngFor="let grupo_jornada of grupo.grupos_jornada">- {{ grupo_jornada.nombreJornada }} </span>
+                </ng-container>
+                <span *ngIf="!grupo.grupos_jornada || grupo.grupos_jornada.length === 0">Jornadas no disponibles</span>
+              </td>
+              <td>
+                <ng-container *ngIf="grupo.infraestructura && grupo.infraestructura.length > 0">
+                  <span *ngFor="let infraestructura of grupo.infraestructura">
+                    {{ infraestructura.nombreInfraestructura }} (
+                    {{ infraestructura.pivot?.idInfraestructura.fechaInicial | date:'d-MMMM-y' }} - 
+                    {{ infraestructura.pivot?.fechaFinal | date:'d-MMMM-y' }})
+                  </span>
+                </ng-container>
+                <span *ngIf="!grupo.infraestructura || grupo.infraestructura.length === 0">Infraestructura no disponible</span>
+              </td>
+              
               <td>
                 <span class="badge badge-primary" style="cursor: pointer;" (click)="actualizar(grupo)">Actualizar</span>
                 <span class="badge badge-danger" style="cursor: pointer;"
