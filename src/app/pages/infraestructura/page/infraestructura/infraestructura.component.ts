@@ -299,6 +299,7 @@ export class InfraestructuraComponent implements OnInit{
     this.showFormInfr = true;
   }
   guardarInfraestructura(event:InfraestructuraModel){
+    console.log(event);
     if(event.id){
       this._infraestructuraService.actualizarInfraestructura(event).subscribe(()=>{
         this.getInfraestructuras();
