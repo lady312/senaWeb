@@ -329,9 +329,9 @@ export class GestionProgramaComponent implements OnInit {
       const file = this.filesPrograma;
       const data = new FormData();
       data.append('archivo', file[0]);
-      data.append('nombrePrograma', programa.nombrePrograma);
+      data.append('nombrePrograma', programa.nombrePrograma.toUpperCase());
       data.append('codigoPrograma', programa.codigoPrograma);
-      data.append('descripcionPrograma', programa.descripcionPrograma);
+      data.append('descripcionPrograma', programa.descripcionPrograma.toUpperCase());
       data.append('idTipoPrograma', programa.idTipoPrograma.toString());
       data.append('idEstado', programa.idEstado.toString());
       data.append('totalHoras', programa.totalHoras.toString());

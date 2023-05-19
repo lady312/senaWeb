@@ -21,8 +21,7 @@ export class AddProgramaComponent implements OnInit {
   @Output() create: EventEmitter<void> = new EventEmitter();
   @Output() formDocs: EventEmitter<FileList> = new EventEmitter<FileList>();
 
-  // @Output() formDocs:EventEmitter <{[key:number]:{files:FileList; fechaVig: string};}> = new EventEmitter();
-  filesRuta: FileList;
+    filesRuta: FileList;
   formPrograma: UntypedFormGroup;
   formTipoProgramas: UntypedFormGroup;
   showModalTipoProgramas = false;

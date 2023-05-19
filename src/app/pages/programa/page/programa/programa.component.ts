@@ -68,19 +68,19 @@ export class ProgramaComponent {
         this._programaService.actualizarProgramas(data).subscribe((programa) => {
           this.getPrograma();
           this.reset();
+          this.showModalPrograma=false;
         });
       } else {
         this._programaService.crearProgramas(data).subscribe((programa) => {
           this.getPrograma();
           this.reset();
+          this.showModalPrograma=false;
         });
       }
-      this.showModalPrograma=false;
+      
   
   }
-  
-  
-      
+ 
   reset() {
     this.programa = null;
     this.showModalPrograma = false;

@@ -22,7 +22,6 @@ export class ProgramaService {
 
 
   crearProgramas(programa: any) {
-    
     return this._coreService.post<ProgramaModel>('programas', programa);
   }
 
