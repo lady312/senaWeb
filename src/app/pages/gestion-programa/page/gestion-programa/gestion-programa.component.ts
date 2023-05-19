@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { CompetenciaModel } from '@models/competencia.model';
 import { ProyectoFormativoModel } from '@models/proyecto-formativo.model ';
@@ -7,8 +7,6 @@ import { ProgramaService } from '@services/programa.service';
 import { ProyectoFormativoService } from '@services/proyecto-formativo.service';
 import { UINotificationService } from '@services/uinotification.service';
 import { debounceTime } from 'rxjs/operators';
-import { HttpClient } from '@angular/common/http';
-import { filter } from 'rxjs/operators'; 
 import { ActividadProyectoModel } from '@models/actividad-proyecto.model';
 import { ActividadProyectoService } from '@services/actividad-proyecto.service'
 import { FaseModel } from '@models/fase.model';
@@ -26,59 +24,45 @@ export class GestionProgramaComponent implements OnInit {
 
   selectedActividadP: any;
   selectedCompetencia: any;
-
-
   selectedProgram: ProgramaModel;
   selectedProyecto: ProyectoFormativoModel;
   selectedProgramId: number;
   selectedProyectoId: number;// lista de proyectos formativos disponibles
-
   filteredProjects: ProyectoFormativoModel[] = []; // lista de proyectos formativos filtrados según el programa seleccionado
 
   @Input() competencia: CompetenciaModel;
   @Input() Competencias: CompetenciaModel[] = [];
-
-
-
   @Input() actividadProyecto: ActividadProyectoModel;
   @Input() ActividadProyectos: ActividadProyectoModel[] = [];
-
   @Input() programas: ProgramaModel[] = [];
   @Input() proyectos: ProyectoFormativoModel[] = [];
   @Input() programa: ProgramaModel;
-
   @Output() update: EventEmitter<ProgramaModel> = new EventEmitter();
   @Output() delete: EventEmitter<number> = new EventEmitter();
   @Output() create: EventEmitter<void> = new EventEmitter();
   @Output() cancel: EventEmitter<void> = new EventEmitter();
-  formPrograma: UntypedFormGroup;
-  showModalProgramas = false;
-  Programa: ProgramaModel = null;
-
   @Output() store: EventEmitter<CompetenciaModel> = new EventEmitter();
 
-
+  formPrograma: UntypedFormGroup;
   formCompetencia: UntypedFormGroup;
   formActividadProyecto: UntypedFormGroup;
 
-  private competenciasOriginales: any[];
-
-
-
-  fases: FaseModel[] = [];
-
-
+  showModalProgramas = false;
   showModalCompetencia = false;
-  Competencia: CompetenciaModel = null;
-
   showModalActividad = false;
+  Programa: ProgramaModel = null;
+  filesPrograma :FileList;
+
+
+
+  private competenciasOriginales: any[];
+  fases: FaseModel[] = [];
+  Competencia: CompetenciaModel = null;
   ActividadProyecto: ActividadProyectoModel = null;
 
 
 
   numReg = 5;
-
-
 
   constructor(
 
@@ -86,7 +70,6 @@ export class GestionProgramaComponent implements OnInit {
     private programaService: ProgramaService,
     private proyectoFormativoService: ProyectoFormativoService,
     private _uiNotificationService: UINotificationService,
-    private http: HttpClient,
     private _actividadProyectoService: ActividadProyectoService,
     private competenciaService: CompetenciaService,
     private faseService : FaseService,
@@ -103,7 +86,7 @@ export class GestionProgramaComponent implements OnInit {
       etapaProductiva:null,
       creditosLectiva:null,
       creditosProductiva:null,
-      rutaArchivo:''
+      rutaArchivo:null,
     };
     this.buildForm();
   }
@@ -111,7 +94,6 @@ export class GestionProgramaComponent implements OnInit {
 
   mostrarArchivo(rutaArchivo: string) {
     const url = `http://localhost:8000${rutaArchivo}`;
-    console.log(url);
     window.open(url);
   }
 
@@ -150,6 +132,11 @@ export class GestionProgramaComponent implements OnInit {
   get creditosProductiva() {
       return this.formPrograma.get('creditosProductiva');
     }
+    
+  get rutaArchivo() {
+      return this.formPrograma.get('rutaArchivo');
+    }
+  
 
 
     setPrograma() {
@@ -179,7 +166,8 @@ export class GestionProgramaComponent implements OnInit {
       etapaLectiva: ['', [Validators.required]],
       etapaProductiva: ['', [Validators.required]],
       creditosLectiva: ['', [Validators.required]],
-      creditosProductiva: ['', [Validators.required]]
+      creditosProductiva: ['', [Validators.required]],
+      rutaArchivo:['', [Validators.required]]
     });
 
     this.formPrograma.valueChanges
@@ -225,6 +213,8 @@ export class GestionProgramaComponent implements OnInit {
     this.showModalProgramas = true;
     this.create.emit;
   }
+
+  
 
 
   //Competencia
@@ -335,12 +325,33 @@ export class GestionProgramaComponent implements OnInit {
     });
   }
 
-  guardarProgramas(programa: ProgramaModel) {
-    this.programaService.crearProgramas(programa).subscribe(programas => {
-      this.programas.push(programa);
-      this.reset();
-      this.showModalProgramas = false;
-    });
+  guardarProgramas(programa: any) {
+      const file = this.filesPrograma;
+      const data = new FormData();
+      data.append('archivo', file[0]);
+      data.append('nombrePrograma', programa.nombrePrograma);
+      data.append('codigoPrograma', programa.codigoPrograma);
+      data.append('descripcionPrograma', programa.descripcionPrograma);
+      data.append('idTipoPrograma', programa.idTipoPrograma.toString());
+      data.append('idEstado', programa.idEstado.toString());
+      data.append('totalHoras', programa.totalHoras.toString());
+      data.append('etapaLectiva', programa.etapaLectiva.toString());
+      data.append('etapaProductiva', programa.etapaProductiva.toString());
+      data.append('creditosLectiva', programa.creditosLectiva.toString());
+      data.append('creditosProductiva', programa.creditosProductiva.toString());
+  
+      if (programa.id) {
+        this.programaService.actualizarProgramas(data).subscribe((programa) => {
+          this.getPrograma();
+          this.reset();
+        });
+      } else {
+        this.programaService.crearProgramas(data).subscribe((programa) => {
+          this.getPrograma();
+          this.reset();
+        });
+      }
+      this.showModalProgramas=false;
   }
 
 
@@ -436,8 +447,6 @@ export class GestionProgramaComponent implements OnInit {
         this._uiNotificationService.error('Error de conexión');
       });
   }
-
-
 
 
   setCompetencias() {
