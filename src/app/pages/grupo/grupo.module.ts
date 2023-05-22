@@ -13,16 +13,23 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { TipogrupoModule } from '../tipo-grupo/tipoGrupo.module';
 import { ModalHorarioInfraestructuraComponent } from './components/modal-horario-infraestructura/modal-horario-infraestructura.component';
 import { InfraestructuraModule } from '../infraestructura/infraestructura.module';
+import { GrupoFormComponent } from './components/grupo-form/grupo-form.component';
+import { GrupoInfraComponent } from './components/grupo-infra/grupo-infra.component';
+import { GrupoInfraFormComponent } from './components/grupo-infra-form/grupo-infra-form.component';
 
 @NgModule({
   exports: [
-    GruposComponent
+    GruposComponent,
+    GrupoFormComponent
   ],
   declarations: [
     GruposComponent,
     GruposListComponent,
     GrupoComponent,
     ModalHorarioInfraestructuraComponent,
+    GrupoFormComponent,
+    GrupoInfraComponent,
+    GrupoInfraFormComponent,
     // TipogrupoModalComponent,
   ],
   schemas: [

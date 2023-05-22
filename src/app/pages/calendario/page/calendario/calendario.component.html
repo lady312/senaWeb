@@ -37,13 +37,8 @@
 </app-custom-modal>
 
 <app-custom-modal title="Grupos" [(show)]="showModalGrupo">
-  <app-grupos
-    *ngIf="showModalGrupo"
-    [grupo]="grupo"
-    (store)="guardarGrupo($event)"
-    (cancel)="reset()"
-  >
-  </app-grupos>
+  <app-grupo-form>
+  </app-grupo-form>
 </app-custom-modal>
 
 <app-custom-modal title="Programas" [(show)]="showModalPrograma">

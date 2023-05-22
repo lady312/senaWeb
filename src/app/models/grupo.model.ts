@@ -18,7 +18,7 @@ export interface GrupoModel {
   fechaFinalGrupo: Date;
   observacion: string;
 
-  nombreJornada?:string;
+  nombreJornada?: string;
 
   idTipoGrupo?: number;
   tipo_grupo?: TipoGrupoModel;
@@ -29,24 +29,24 @@ export interface GrupoModel {
   idPrograma?: number;
   programa?: ProgramaModel;
 
-  idNivel?:number;
-  nivel_formacion?:NivelFormacionModel;
+  idNivel?: number;
+  nivel_formacion?: NivelFormacionModel;
 
-  idTipoFormacion?:number;
-  tipo_formacion?:TipoFormacionModel;
+  idTipoFormacion?: number;
+  tipo_formacion?: TipoFormacionModel;
 
-  idEstado?:number;
-  estado_grupo?:EstadoGrupoModel;
+  idEstado?: number;
+  estado_grupo?: EstadoGrupoModel;
 
-  idTipoOferta?:number;
-  tipo_oferta?:TipoOfertaModel;
+  idTipoOferta?: number;
+  tipo_oferta?: TipoOfertaModel;
 
-  horario_infraestructura?:HorarioInfrModel;
-  infraestructuras?:InfraestructuraModel[];
+  horario_infraestructura?: HorarioInfrModel;
+  infraestructuras?: InfraestructuraModel[];
 
-  grupos_jornada?:AsignacionJornadaGrupoModel;
-  jornadas?:JornadaModel[];
+  grupos_jornada?: AsignacionJornadaGrupoModel;
+  jornadas?: JornadaModel[];
 
-  participantes?:AsignacionParticipanteModel[];
+  participantes?: AsignacionParticipanteModel[];
 
 }
