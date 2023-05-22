@@ -52,20 +52,25 @@
               <td>{{ grupo.fechaFinalGrupo | date:'d-MMMM-y' }}</td>
               <td>{{ grupo.observacion || 'No se encuentra alguna observación'}}</td>
               <td>{{ grupo.tipo_grupo.nombreTipoGrupo || 'Tipo de grupo no disponible' }}</td>
-              <td><ng-container *ngIf="grupo.grupos_jornada && grupo.grupos_jornada.length > 0">
-                  <span *ngFor="let grupo_jornada of grupo.grupos_jornada">- {{ grupo_jornada.nombreJornada }} </span>
+              <td>
+                <ng-container *ngIf="grupo.jornadas && grupo.jornadas.length > 0 else noJornadas">
+                  <span *ngFor="let jornada of grupo.jornadas">- {{ jornada.nombreJornada }} </span>
                 </ng-container>
-                <span *ngIf="!grupo.grupos_jornada || grupo.grupos_jornada.length === 0">Jornadas no disponibles</span>
+                <ng-template #noJornadas>
+                  <span>Jornadas no disponibles</span>
+                </ng-template>
               </td>
               <td>
-                <ng-container *ngIf="grupo.infraestructura && grupo.infraestructura.length > 0">
-                  <span *ngFor="let infraestructura of grupo.infraestructura">
+                <ng-container *ngIf="grupo.infraestructuras && grupo.infraestructuras.length > 0 else noInfra">
+                  <span *ngFor="let infraestructura of grupo.infraestructuras">
                     {{ infraestructura.nombreInfraestructura }} (
-                    {{ infraestructura.pivot?.idInfraestructura.fechaInicial | date:'d-MMMM-y' }} - 
-                    {{ infraestructura.pivot?.fechaFinal | date:'d-MMMM-y' }})
+                    {{ infraestructura.horario_infraestructura?.fechaInicial | date:'d-MMMM-y' }} - 
+                    {{ infraestructura.horario_infraestructura?.fechaFinal | date:'d-MMMM-y' }})
                   </span>
                 </ng-container>
-                <span *ngIf="!grupo.infraestructura || grupo.infraestructura.length === 0">Infraestructura no disponible</span>
+                <ng-template #noInfra>
+                  <span>Infraestructura no disponible</span>
+                </ng-template>
               </td>
               
               <td>

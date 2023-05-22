@@ -13,10 +13,12 @@ import * as QRCode from 'qrcode';
 })
 export class InfraestructuraFormComponent implements OnInit{
   
-  @Input() infraestructura:InfraestructuraModel=null;
+  
   @Input() areas:AreaModel[]=[];
   @Input() sedes: SedeModel[]=[];
+
   @Input() title: string;
+  @Input() infraestructura:InfraestructuraModel=null;
 
   @Output() store = new EventEmitter<InfraestructuraModel>();
   @Output() cancel = new EventEmitter<void>();
@@ -32,12 +34,21 @@ export class InfraestructuraFormComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    if(this.infraestructura){
-      console.log(this.infraestructura);
+    if(this.title!=='Añadir infraestructura'){
       this.setInfraestructura();
       this.setIndexes(this.infraestructura);
+    }else{
+      this.infraestructura={
+        id:null,
+        nombreInfraestructura:'',
+        capacidad:null,
+        idSede:null,
+        idArea:null,
+        descripcion:''
+      }
     }
   }
+
 
   get nombreInfraField(){
     return this.formInfra.get('nombreInfraestructura');

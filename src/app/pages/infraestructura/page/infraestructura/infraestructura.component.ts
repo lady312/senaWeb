@@ -300,6 +300,7 @@ export class InfraestructuraComponent implements OnInit{
       }>();
       this.iniciarCache();
       this.getInfraestructuras();
+      this.reset();
     })
   }
   actualizarInfraestructura(event:InfraestructuraModel){
@@ -352,6 +353,6 @@ export class InfraestructuraComponent implements OnInit{
     this.showResultadoBusqueda = false;
     this.resultadoBusqueda = null;
     this.formTitle = '';
-    this.infraestructura = null;
+    this.infraestructura = undefined;
   }
 }

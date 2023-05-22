@@ -15,16 +15,9 @@ import {
 } from "@angular/forms";
 import { TipoGrupoModel } from "@models/tipogrupo.model";
 import { GrupoModel } from "@models/grupo.model";
-import { TipoGrupoService } from "@services/tipo-grupo.service";
-import { ProgramaService } from "@services/programa.service";
-import { JornadaService } from "@services/jornada.service";
-import { InfraestructuraService } from "@services/infraestructura.service";
-import { UsuarioService } from "@services/usuario.service";
-import { UINotificationService } from "@services/uinotification.service";
 import { debounceTime } from "rxjs/operators";
-import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+
 import { DatePipe } from "@angular/common";
-import { FormGroup, FormControl, FormBuilder } from "@angular/forms";
 import { ProgramaModel } from "@models/programa.model";
 import { AsignacionJornadaGrupoModel } from "@models/asignacion-jornada-grupo.model";
 import { TipoFormacionModel } from "@models/tipo-formacion.model";
@@ -33,16 +26,8 @@ import { UsuarioModel } from "@models/usuario.model";
 import { NivelFormacionModel } from "@models/nivel-formacion.model";
 import { TipoOfertaModel } from "@models/tipo-oferta.model";
 import { EstadoGrupoModel } from "@models/estado-grupo.model";
-import { NivelFormacionService } from "@services/nivel-formacion.service";
-import { TipoFormacionService } from "@services/tipo-formacion.service";
-import { EstadoGrupoService } from "@services/estado-grupo.service";
-import { TipoOfertaService } from "@services/tipo-oferta.service";
 import { JornadaModel } from "@models/jornada.model";
-import { AsignacionJornadaGrupoService } from "@services/asignacion-jornada-grupo.service";
-import { HorarioInfraestructuraGrupo } from "@models/horario-infraestructura-grupo.model";
-import { HorarioInfraestructuraGrupoService } from "@services/horario-infraestructura-grupo.service";
-import { ModalHorarioInfraestructuraComponent } from "../modal-horario-infraestructura/modal-horario-infraestructura.component";
-import { HorarioInfraestructuraTemporal } from "@models/horario-infraestructura-temporal.model";
+import { UINotificationService } from "@services/uinotification.service";
 
 @Component({
   selector: "app-grupos",
@@ -51,27 +36,6 @@ import { HorarioInfraestructuraTemporal } from "@models/horario-infraestructura-
   providers: [DatePipe],
 })
 export class GruposComponent implements OnInit {
-
-  //Agregado
-  // datosDelSegundoModal: any;
-  datosDelSegundoModal: HorarioInfraestructuraGrupo[];
-
-
-  public horarios: HorarioInfraestructuraGrupo[];
-
-  @ViewChild('fechaInicialInput', { static: false }) fechaInicialInput: ElementRef;
-  @ViewChild('fechaFinalInput', { static: false }) fechaFinalInput: ElementRef;
-
-  @ViewChild('infraestructuraSelect', { static: false, read: ElementRef })
-  infraestructuraSelect: ElementRef;
-
-  @Output() store: EventEmitter<GrupoModel> = new EventEmitter();
-  @Output() cancel: EventEmitter<void> = new EventEmitter();
-  @Output() create: EventEmitter<void> = new EventEmitter();
-
-  jornadaGrupos: AsignacionJornadaGrupoModel[] = [];
-  horarioInfraestructuraGrupo: HorarioInfraestructuraGrupo[] = [];
-  jornada: JornadaModel[] = [];
 
   public jornadasChecked: any[];
   allJornadas = false;
@@ -82,9 +46,8 @@ export class GruposComponent implements OnInit {
   public showModalHorarioInfraestructura = false;
 
   tipoGrupo: TipoGrupoModel = null;
-  horarioGrupoInfraestructura: HorarioInfraestructuraGrupo = null;
+
   @Input() tipoGrupos: TipoGrupoModel[] = [];
-  @Input() horarioGrupoInfraestructuras: HorarioInfraestructuraGrupo[] = [];
   @Input() instructores: UsuarioModel[] = [];
   @Input() programas: ProgramaModel[] = [];
   @Input() infraestructuras: InfraestructuraModel[] = [];
@@ -93,103 +56,52 @@ export class GruposComponent implements OnInit {
   @Input() estados: EstadoGrupoModel[] = [];
   @Input() tipoOfertas: TipoOfertaModel[] = [];
   @Input() jornadas: JornadaModel[] = [];
-  @Input() grupo: GrupoModel;
-  tipoGrupoForm: FormGroup;
+
+  @Input() title: string;
+  @Input() grupo: GrupoModel = null;
+
+
+  @Output() store = new EventEmitter<GrupoModel>();
+  @Output() cancel = new EventEmitter<void>();
+  @Output() create = new EventEmitter<void>();
+
+  infrConHorarios: InfraestructuraModel[] = [];
+  grupoConJornadas: JornadaModel[] = [];
+
   formGrupo: UntypedFormGroup;
 
+  idTipoGrupo: number = 0;
+  idLider: number = 0;
+  idPrograma: number = 0;
+  idNivel: number = 0;
+  idTipoFormacion: number = 0;
+  idEstado: number = 0;
+  idTipoOferta: number = 0;
+
   constructor(
-    private formBuilder: UntypedFormBuilder, // construccion de form controles
-    private datePipe: DatePipe, //Fecha
-    private cdr: ChangeDetectorRef,
-    private _tipoGrupoService: TipoGrupoService, //Servicio TipoGrupo
-    private _liderService: UsuarioService,
-    private _programaService: ProgramaService,
-    private _infraestructuraService: InfraestructuraService,
-    private _nivelFormacionService: NivelFormacionService,
-    private _tipoFormacionService: TipoFormacionService,
-    private _estadoService: EstadoGrupoService,
-    private _tipoOfertaService: TipoOfertaService,
-    private _jornadasService: JornadaService,
-    private _uiNotificationService: UINotificationService, //nofitificacion
-    private _modalService: NgbModal, //Modal
-    //Renderizar vista
-    private _grupoJornadaService: AsignacionJornadaGrupoService,
-    private _horarioInfraestructuraGrupoService: HorarioInfraestructuraGrupoService
+    private formBuilder: UntypedFormBuilder,
+    private _uiNotificationService: UINotificationService
   ) {
-    this.grupo = {
-      id: null,
-      nombre: "",
-      fechaInicialGrupo: null,
-      fechaFinalGrupo: null,
-      observacion: "",
-      idTipoGrupo: null,
-      tipo_grupo: null,
-
-      nombreJornada: null,
-
-      idPrograma: null,
-      programa: null,
-
-      idLider: null,
-      lider: null,
-
-      infraestructuras: [],
-
-      idNivel: null,
-      nivel_formacion: null,
-
-      idTipoFormacion: null,
-      tipo_formacion: null,
-
-      idEstado: null,
-      estado_grupo: null,
-
-      idTipoOferta: null,
-      tipo_oferta: null,
-
-      jornadas:[],
-    };
     this.buildForm();
   }
 
   ngOnInit(): void {
-    this.traerJornadas();
-    this.traerTipoGrupos();
-    this.traerProgramas();
-    this.traerNivelesFormacion();
-    this.traerInfraestructuras();
-    this.traerTipoFormaciones();
-    this.traerLideres();
-    this.traerEstados();
-    this.traerTipoOfertas();
     this.setGrupo();
-    this.traercheckedJornadas();
-    this.traerInfraestructura();
+
   }
 
-  // recibirDatosDelSegundoModal(datos: any) {
-  //   this.datosDelSegundoModal = datos;
-  // }
-
-  recibirDatosDelSegundoModal(datos: any) {
-    this.datosDelSegundoModal = JSON.parse(JSON.stringify(datos)) as HorarioInfraestructuraGrupo[];
+  get nombreField() {
+    return this.formGrupo.get('nombreGrupo');
   }
 
-  getNombreInfraestructura(idInfraestructura: number): string | undefined {
-    const infraestructura = this.infraestructuras.find(i => i.id === idInfraestructura);
-    return infraestructura?.nombreInfraestructura;
+  get fechaInicialGrupo() {
+    return this.formGrupo.get('fechaInicialGrupo');
   }
-  
-  guardarTipoGrupo(tipoGrupo: TipoGrupoModel) {
-    this._tipoGrupoService.crearTipoGrupo(tipoGrupo).subscribe((tipo) => {
-      this.tipoGrupos.push(tipo);
-      this._uiNotificationService.success(
-        "Tipo de grupo agregado",
-        "Tipo grupo"
-      );
-      this.reset();
-    });
+
+  get fechaFinalGrupo() {
+    return this.formGrupo.get('fechaFinalGrupo')
   }
+
 
   agregar() {
     this.showModalTipoGrupo = true;
@@ -201,175 +113,13 @@ export class GruposComponent implements OnInit {
     this.create.emit();
   }
 
-  guardarHorarioInfraestructura(horarioInfra: HorarioInfraestructuraGrupo) {
-    this._horarioInfraestructuraGrupoService.crearHorarioInfraestructuraGrupo(horarioInfra).subscribe((horarioInfr) => {
-      this.horarioGrupoInfraestructuras.push(horarioInfr);
-      this._uiNotificationService.success(
-        "Horario de infraestructura agregado",
-        "Horario infraestructura"
-      );
-      this.resetHorarioInfraestructura();
-    });
-  }
-
   agregarHorarioInfraestructuraModel() {
     this.showModalHorarioInfraestructura = true;
     this.create.emit();
   }
 
   actualizarVista() {
-    // Llamando a markForCheck() o detectChanges() para forzar una actualización del renderizado
-    this.cdr.markForCheck(); // O this.cdr.detectChanges();
-  }
 
-  traerTipoGrupos() {
-    this._tipoGrupoService.traerTipoGrupos().subscribe(
-      (tipoGrupo: TipoGrupoModel[]) => {
-        this.tipoGrupos = tipoGrupo;
-      },
-      (error) => {
-        this._uiNotificationService.error("Error de conexión");
-      }
-    );
-  }
-
-  traerLideres() {
-    this._liderService.traerUsuariosActives()
-      .subscribe((instructor: UsuarioModel[]) => {
-        this.instructores = instructor;
-      }, error => {
-        this._uiNotificationService.error('Error de conexión');
-      });
-  }
-
-  traerProgramas() {
-    this._programaService.traerProgramas().subscribe(
-      (programa: ProgramaModel[]) => {
-        this.programas = programa;
-      },
-      (error) => {
-        this._uiNotificationService.error("Error de conexión");
-      }
-    );
-  }
-
-  traerInfraestructuras() {
-    this._infraestructuraService.traerInfraestructuras().subscribe(
-      (infraestructura: InfraestructuraModel[]) => {
-        this.infraestructuras = infraestructura;
-      },
-      (error) => {
-        this._uiNotificationService.error("Error de conexión");
-      }
-    );
-  }
-
-  traerInfraestructura() {
-    console.log('aqui dentro')
-    this._horarioInfraestructuraGrupoService.getHorarioInfraestructuraByGrupo(1)
-      .subscribe((horarios) => {
-        this.horarios = horarios;
-      });
-
-  }
-
-  traerNivelesFormacion() {
-    this._nivelFormacionService.traerNivelesFormacion().subscribe(
-      (niveles: NivelFormacionModel[]) => {
-        this.niveles = niveles;
-      },
-      (error) => {
-        this._uiNotificationService.error("Error de conexión");
-      }
-    );
-  }
-
-  traerTipoFormaciones() {
-    this._tipoFormacionService.traerTipoFormaciones().subscribe(
-      (tiposF: TipoFormacionModel[]) => {
-        this.tipoFormaciones = tiposF;
-      },
-      (error) => {
-        this._uiNotificationService.error("Error de conexión");
-      }
-    );
-  }
-
-  traerEstados() {
-    this._estadoService.traerEstadoGrupos().subscribe(
-      (estado: EstadoGrupoModel[]) => {
-        this.estados = estado;
-      },
-      (error) => {
-        this._uiNotificationService.error("Error de conexión");
-      }
-    );
-  }
-
-  traerTipoOfertas() {
-    this._tipoOfertaService.traerTipoOfertas().subscribe(
-      (tipoOferta: TipoOfertaModel[]) => {
-        this.tipoOfertas = tipoOferta;
-      },
-      (error) => {
-        this._uiNotificationService.error("Error de conexión");
-      }
-    );
-  }
-
-  traerJornadas() {
-    this._jornadasService.traerJornada().subscribe(
-      (jorn: JornadaModel[]) => {
-        this.jornadas = jorn;
-      },
-      (error) => {
-        this._uiNotificationService.error("Error de conexión");
-      }
-    );
-  }
-
-  get nombreField() {
-    return this.formGrupo.get("nombre");
-  }
-
-  get fechaInicialField() {
-    return this.formGrupo.get("fechaInicialGrupo");
-  }
-
-  get fechaFinalField() {
-    return this.formGrupo.get("fechaFinalGrupo");
-  }
-
-  get observacion() {
-    return this.formGrupo.get("observacion");
-  }
-
-  get idTipoGrupo() {
-    return this.formGrupo.get("idTipoGrupo");
-  }
-
-  get liderField() {
-    return this.formGrupo.get('idLider');
-  }
-
-  get programaField() {
-    return this.formGrupo.get('idPrograma');
-  }
-
-  get infraestructuraField() {
-    return this.formGrupo.get('infraestructura');
-  }
-
-  get nivelFormacionField() {
-    return this.formGrupo.get('idNivel');
-  }
-
-  get tipoFormacionField() {
-    return this.formGrupo.get('idTipoFormacion');
-  }
-
-  get tipoOfertaField() {
-    return this.formGrupo.get('idTipoOferta');
   }
 
   setGrupo() {
@@ -430,7 +180,7 @@ export class GruposComponent implements OnInit {
 
       grupos_jornada: ["", [Validators.required]],
 
-      dataJornada: this.formBuilder.array([]),
+      //dataJornada: this.formBuilder.array([]),
 
     });
 
@@ -552,28 +302,6 @@ export class GruposComponent implements OnInit {
     }
   }
 
-  traercheckedJornadas() {
-    this.jornadasChecked = [];
-    this._grupoJornadaService.getGrupoJornadaByGrupo(this.grupo.id).subscribe(
-      (savedData: any) => {
-        console.log(savedData);
-        if (savedData && savedData.length > 0) {
-          this.jornadasChecked = savedData;
-          this.jornadas = this.jornadas.map((jorSe) => {
-            jorSe.checked =
-              this.jornadasChecked.findIndex((j) => j.idJornada === jorSe.id) !== -1;
-            return jorSe;
-          });
-        } else {
-          this.jornadas.forEach((jorSe) => {
-            jorSe.checked = false;
-          });
-        }
-      },
-      (error) => {
-        console.log("There was an error while retrieving data !!!", error);
-      });
-  }
 
   reset() {
     this.tipoGrupo = null;

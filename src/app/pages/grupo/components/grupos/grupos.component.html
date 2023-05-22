@@ -7,13 +7,22 @@
 
 
       <div class="form-floating mb-3">
-        <select class="form-select" id="programa" aria-label="Floating label select example"
+        <select 
+          class="form-select" 
+          id="programa" 
+          aria-label="Floating label select example"
           formControlName="idPrograma">
           <option selected>Selecionar programa</option>
-          <option *ngFor='let programa of programas' [ngValue]="programa.id">{{programa.nombrePrograma}}</option>
+          <option 
+            *ngFor='let programa of programas' 
+            [ngValue]="programa.id">
+            {{programa.nombrePrograma}}
+          </option>
         </select>
         <label for="programa">Tipo de programa</label>
-        <div class="valid-feedback" *ngIf="!programaField.hasError('required')">
+        <div 
+          class="valid-feedback" 
+          *ngIf="!programaField.hasError('required')">
           Valor válido
         </div>
         <div class="invalid-feedback">
@@ -21,8 +30,12 @@
         </div>
       </div>
       <div class="form-floating mb-3">
-        <input type="Text" onkeyup="javascript:this.value=this.value.toUpperCase();" class="form-control"
-          id="floatingInput" placeholder="name@example.com" formControlName='nombre'>
+        <input type="Text" 
+          onkeyup="javascript:this.value=this.value.toUpperCase();" 
+          class="form-control"
+          id="floatingInput" 
+          placeholder="name@example.com" 
+          formControlName='nombre'>
         <label for="floatingInput">Número de ficha / nombre</label>
         <div class="valid-feedback" *ngIf="!nombreField.hasError('required')">
           Valor válido

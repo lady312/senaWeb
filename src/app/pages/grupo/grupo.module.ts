@@ -35,7 +35,6 @@ import { InfraestructuraModule } from '../infraestructura/infraestructura.module
     NgxPaginationModule,
     ComunModule,
     SweetAlert2Module.forChild(),
-    FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,

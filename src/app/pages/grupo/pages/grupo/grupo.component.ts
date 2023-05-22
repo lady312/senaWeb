@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component } from '@angular/core';
 import { EstadoGrupoModel } from '@models/estado-grupo.model';
 import { GrupoModel } from '@models/grupo.model';
 import { InfraestructuraModel } from '@models/infraestructura.model';
@@ -10,13 +10,11 @@ import { TipoGrupoModel } from '@models/tipogrupo.model';
 import { UsuarioModel } from '@models/usuario.model';
 import { GruposService } from '@services/grupo.service';
 import { InfraestructuraService } from '@services/infraestructura.service';
-import { ProgramaService } from '@services/programa.service';
 import { TipoGrupoService } from '@services/tipo-grupo.service';
 import { UINotificationService } from '@services/uinotification.service';
 import { UsuarioService } from '@services/usuario.service';
-import { AsignacionJornadaGrupoModel } from '@models/asignacion-jornada-grupo.model';
 import { JornadaModel } from '@models/jornada.model';
-import { HorarioInfraestructuraGrupo } from '@models/horario-infraestructura-grupo.model';
+import { JornadaService } from '@services/jornada.service';
 
 @Component({
   selector: 'app-grupo',
@@ -27,29 +25,19 @@ export class GrupoComponent {
 
   public showModalGrupo = false;
 
-  @Input() tipoGrupos: TipoGrupoModel[] = [];
-  @Input() programas: ProgramaModel[] = [];
-  @Input() usuarios: UsuarioModel[] = [];
-  @Input() lideres: UsuarioModel[] = [];
-  @Input() infraestructuras: InfraestructuraModel[] = [];
-  @Input() nivelesFormacion: NivelFormacionModel[] = [];
-  @Input() tipoFormaciones: TipoFormacionModel[] = [];
-  @Input() estados: EstadoGrupoModel[] = [];
-  @Input() tipoOfertas: TipoOfertaModel[] = [];
-  @Input() jornadas: JornadaModel[] = [];
-
-  jornadasGrupo: AsignacionJornadaGrupoModel[] = [];
-  infraestructuraGrupo: HorarioInfraestructuraGrupo[] = [];
-
-  @Output() create: EventEmitter<void> = new EventEmitter();
-
+  infraestructuras:InfraestructuraModel[]=[];
+  grupos: GrupoModel[] = [];
+  jornadas:JornadaModel[]= [];
+  tipoGrupos:TipoGrupoModel[]=[];
+  instructores:UsuarioModel[]=[];
+  estudiantes:UsuarioModel[]=[];
+  
   usuario: UsuarioModel = null;
   grupo: GrupoModel = null;
-  grupos: GrupoModel[] = [];
+  
   tipoGrupo: TipoGrupoModel = null;
   lider: UsuarioModel = null;
   programa: ProgramaModel = null;
-  infraestructura: InfraestructuraModel = null;
   nivel: NivelFormacionModel = null;
   tipoFormacion: TipoFormacionModel = null;
   estado: EstadoGrupoModel = null;
@@ -60,10 +48,15 @@ export class GrupoComponent {
     private _uiNotificationService: UINotificationService,
     private _gruposService: GruposService,
     private _tipoGruposService: TipoGrupoService,
+    private _infraestructuraService:InfraestructuraService,
+    private _jornadaService:JornadaService,
+    private _usuarioService:UsuarioService
   ) { }
 
   ngOnInit(): void {
     this.getGrupos();
+    this.getInfraestructuras();
+    this.getJornadas();
   }
 
   getGrupos() {
@@ -73,6 +66,22 @@ export class GrupoComponent {
       }, error => {
         this._uiNotificationService.error("Error de conexión");
       });
+  }
+
+  getInfraestructuras(){
+    this._infraestructuraService.traerInfraestructuras().subscribe((infrs)=>{
+      this.infraestructuras=infrs;
+    },(error)=>{
+      this._uiNotificationService.error('Error de coneccion','infraestructuras');
+    })
+  }
+
+  getJornadas(){
+    this._jornadaService.traerJornada().subscribe((jornada)=>{
+      this.jornadas=jornada;
+    },(error)=>{
+      this._uiNotificationService.error('Error de conexión','Jornadas');
+    })
   }
 
   eliminarGrupo(grupoId: number) {
@@ -123,14 +132,9 @@ export class GrupoComponent {
 
   reset() {
     this.grupo = null;
-    this.jornadasGrupo = [];
-    this.infraestructuraGrupo = [];
+    this.jornadas = [];
+    this.infraestructuras = [];
     this.showModalGrupo = false;
   }
-
-  recibirDatosDelSegundoModal(datos: any) {
-    // Aquí puedes manejar los datos recibidos y realizar las operaciones necesarias
-    
-  }  
 
 }

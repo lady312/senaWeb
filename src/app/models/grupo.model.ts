@@ -5,11 +5,11 @@ import { TipoOfertaModel } from '@models/tipo-oferta.model';
 import { EstadoGrupoModel } from '@models/estado-grupo.model';
 import { ProgramaModel } from '@models/programa.model';
 import { UsuarioModel } from '@models/usuario.model';
-import { HorarioInfraestructuraGrupo } from '@models/horario-infraestructura-grupo.model';
 import { AsignacionParticipanteModel } from '@models/asignacion-participante.model';
 import { JornadaModel } from './jornada.model';
 import { InfraestructuraModel } from './infraestructura.model';
 import { HorarioInfrModel } from './horario-infraestructura.model';
+import { AsignacionJornadaGrupoModel } from './asignacion-jornada-grupo.model';
 export interface GrupoModel {
 
   id?: number;
@@ -43,9 +43,9 @@ export interface GrupoModel {
 
   horario_infraestructura?:HorarioInfrModel;
   infraestructuras?:InfraestructuraModel[];
-  jornadas?:JornadaModel[];
 
-  infraestructura?: HorarioInfraestructuraGrupo[];
+  grupos_jornada?:AsignacionJornadaGrupoModel;
+  jornadas?:JornadaModel[];
 
   participantes?:AsignacionParticipanteModel[];
 
