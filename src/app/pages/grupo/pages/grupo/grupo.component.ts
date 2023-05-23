@@ -31,9 +31,15 @@ export class GrupoComponent implements OnInit {
   protected showFormGrupo: boolean = false;
   protected formTitle: string;
 
+  //datos de grupos
   grupos: GrupoModel[] = [];
   grupo: GrupoModel = null;
 
+  /**datos pasados a los modales hijos
+   * estos almacenan todos los datos para que 
+   * al cargar el formulario o otro componente hijo
+   * no haga mas solicitudes al backend
+   */
   tipoGrupos: TipoGrupoModel[] = [];
   programas: ProgramaModel[] = [];
   nivelFormaciones: NivelFormacionModel[] = [];
@@ -125,18 +131,32 @@ export class GrupoComponent implements OnInit {
     });
   }
 
-  crearGrupo(){
+  guardarGrupo(event: GrupoModel) {
+    if (event.id) {
+      this._grupoService.actualizarGrupo(event).subscribe(() => {
+        this.getGrupos();
+        this.reset();
+      });
+    } else {
+      this._grupoService.crearGrupo(event).subscribe(() => {
+        this.getGrupos();
+        this.reset();
+      });
+    }
+  }
+
+  crearGrupo() {
     this.showFormGrupo = true;
     this.formTitle = 'Añadir Grupo';
   }
 
-  actualizarGrupo(event: GrupoModel){
+  actualizarGrupo(event: GrupoModel) {
     this.showFormGrupo = true;
     this.grupo = event;
-    this.formTitle='Actualizar Grupo';
+    this.formTitle = 'Actualizar Grupo';
   }
 
-  reset(){
+  reset() {
     this.showFormGrupo = false;
     this.formTitle = '';
     this.grupo = null;

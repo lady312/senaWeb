@@ -1,0 +1,32 @@
+<div class="div-principal d-grid col-lg-12 grid-margin stretch-card">
+    <div class="card">
+        <div class="card-header">
+            <div class="col
+            justify-content-around
+            align-items-center">
+                <i class="fa fa-align-justify"></i>
+                Sedes Registradas
+                <select
+                #nreg
+                class="form-control col col-lg-2"
+                (change)="enviarNumeroRegistros($event)">
+                    <option>10</option>
+                    <option>15</option>
+                    <option>20</option>
+                    <option>25</option>
+                </select>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="div table-container">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Nombre</th>
+                        
+                    </tr>
+                </thead>
+            </div>
+        </div>
+    </div>
+</div>
