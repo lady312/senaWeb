@@ -38,7 +38,6 @@ export class GrupoInfraFormComponent {
   }
   seleccionarFechaFinal(event:any){
     const fecha = event.target.value
-    console.log(fecha);
     this.fechaFinal=fecha;
   }
   addInfraestructura() {

@@ -26,7 +26,7 @@
             <!--Campo para introducir el nombre del grupo-->
             <div class="form-floating mb-3">
                 <input type="Text" onkeyup="javascript:this.value=this.value.toUpperCase();" class="form-control"
-                    id="floatingInput" placeholder="name@example.com" formControlName='nombre'>
+                    id="floatingInput" placeholder="name@example.com" formControlName='nombreGrupo'>
                 <label for="floatingInput">Número de ficha / nombre</label>
                 <div class="valid-feedback" *ngIf="!nombreGrupoField.hasError('required')">
                     Valor válido
@@ -157,7 +157,7 @@
                     <div class="form-floating mb-3">
                         <input type="date" onkeyup="javascript:this.value=this.value.toUpperCase();"
                             class="form-control" id="fechaInicial" placeholder="name@example.com"
-                            formControlName='fechaInicialGrupo' #fechaInicialInput>
+                            formControlName='fechaInicial' #fechaInicialInput>
                         <label for="fechaInicial">Fecha inicial lectiva</label>
                         <div class="valid-feedback" *ngIf="!fechaInicialField.hasError('required')">
                             Valor válido
@@ -171,7 +171,7 @@
                     <div class="form-floating mb-3">
                         <input type="date" onkeyup="javascript:this.value=this.value.toUpperCase();"
                             class="form-control" id="floatingInput" placeholder="name@example.com"
-                            formControlName='fechaFinalGrupo' #fechaFinalInput>
+                            formControlName='fechaFinal' #fechaFinalInput>
                         <label for="floatingInput">Fecha fin lectiva</label>
                         <div class="valid-feedback" *ngIf="!fechaFinalField.hasError('required')">
                             Valor válido
@@ -229,17 +229,17 @@
                     <div class="row row-cols-3">
                         <div class="col">
                             <label class="pointer">
-                                <!--app-custom-switch [size]="7" [checked]="allJornadas"
+                                <app-custom-switch [size]="5" [checked]="allJornadas"
                                     (checkedChange)="changeAllJornadas($event)">
-                                </app-custom-switch-->
+                                </app-custom-switch>
                                 Todas
                             </label>
                         </div>
                         <div class="col-md-3" *ngFor="let jor of jornadas; let i = index;">
                             <label class="pointer">
-                                <!--app-custom-switch [size]="7" [checked]="jor.checked"
+                                <app-custom-switch [size]="5" [checked]="jor.checked"
                                     (checkedChange)="changeJornada($event, i)" id="check{{ jor.id }}">
-                                </app-custom-switch-->
+                                </app-custom-switch>
                                 {{jor.nombreJornada}}
                             </label>
                         </div>
@@ -252,10 +252,10 @@
 
 
 
-        <!--app-custom-modal title="Gestión Grupo" [(show)]="showModalTipoGrupo">
+       
             <app-tipogrupos [tipoGrupos]="tipoGrupos" (store)="guardarTipoGrupo($event)" (cancel)="reset()">
             </app-tipogrupos>
-        </app-custom-modal-->
+   
 
 
 

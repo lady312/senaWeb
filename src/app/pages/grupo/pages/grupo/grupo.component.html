@@ -5,13 +5,13 @@
 </app-grupos-list>
 
 <app-custom-modal
-    size="lg"
     title="Gestionar Grupos"
     [(show)]="showFormGrupo"
 >
     <app-grupo-form
         *ngIf="showFormGrupo"
-        [infraestructuras]="infraestructuras">
-
+        [infraestructuras]="infraestructuras"
+        [jornadas]="jornadas"
+        [programas]="programas">
     </app-grupo-form>
 <app-custom-modal>

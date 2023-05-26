@@ -35,7 +35,8 @@ export class GrupoComponent implements OnInit {
   grupos: GrupoModel[] = [];
   grupo: GrupoModel = null;
 
-  /**datos pasados a los modales hijos
+  /**
+   * datos pasados a los modales hijos
    * estos almacenan todos los datos para que 
    * al cargar el formulario o otro componente hijo
    * no haga mas solicitudes al backend

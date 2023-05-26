@@ -29,7 +29,7 @@ export class GrupoFormComponent implements OnInit {
   @Input() jornadas: JornadaModel[] = [];
   @Input() infraestructuras: InfraestructuraModel[] = [];
 
-  @Input() grupo: GrupoModel;
+  @Input() grupo: GrupoModel=null;
   @Input() title: string;
 
   @Output() store = new EventEmitter<GrupoModel>();
@@ -39,6 +39,7 @@ export class GrupoFormComponent implements OnInit {
   horariosInfra:InfraestructuraModel[] = [];
 
   showFormHorario:boolean = false;
+  allJornadas:boolean = false;
 
   formGrupo: UntypedFormGroup;
   idTipoGrupo: number = 0;
@@ -52,6 +53,23 @@ export class GrupoFormComponent implements OnInit {
   constructor(
     private formBuilder: UntypedFormBuilder
   ) {
+    this.grupo = {
+      id: null,
+      nombre: '',
+      fechaInicialGrupo: new Date(),
+      fechaFinalGrupo: new Date(),
+      observacion: '',
+      nombreJornada: '',
+      idTipoGrupo: null,
+      idLider: null,
+      idPrograma: null,
+      idNivel: null,
+      idTipoFormacion: null,
+      idEstado: null,
+      idTipoOferta: null,
+      infraestructuras: [],
+      jornadas: []
+    }
     this.buildForm();
   }
 
@@ -116,6 +134,10 @@ export class GrupoFormComponent implements OnInit {
   }
   get idTipoOfertaField(){
     return this.formGrupo.get('idTipoOferta');
+  }
+
+  get totalJornadasSeleccionadas() {
+    return this.jornadas.filter((j) => j["checked"]).length;
   }
 
   setGrupo(){
@@ -206,9 +228,8 @@ export class GrupoFormComponent implements OnInit {
     this.horariosInfra.push(infr);
   }
   removeInfraestructura(idInfr:number){
-    this.horariosInfra = this.horariosInfra.filter((infr)=>{
-      infr.id!==idInfr
-    });
+    const index = this.horariosInfra.findIndex((infr) => infr.id === idInfr);
+    this.horariosInfra.splice(index,1);
   }
 
   private buildForm(){
@@ -269,5 +290,30 @@ export class GrupoFormComponent implements OnInit {
   }
   cancelarHorarioInfraestructura(){
     this.showFormHorario=false;
+  }
+
+  changeAllJornadas(allJor:boolean){
+    this.allJornadas=allJor;
+    if(this.allJornadas){
+      this.jornadasGrupo=this.jornadas.map((jor) => {
+        jor["checked"] = true;
+        return jor;
+      });
+    }else{
+      this.jornadas.map((jor) => {
+        jor["checked"] = false;
+        return jor;
+      });
+    }
+  }
+  changeJornada(checked: boolean, index: number) {
+    this.jornadas[index]["checked"] = checked;
+    this.allJornadas = this.totalJornadasSeleccionadas === 3;
+    if(this.jornadas[index]['checked']){
+      this.jornadasGrupo.push(this.jornadas[index]);
+    }else{
+      const deleteIndex = this.jornadasGrupo.findIndex((jornada)=>jornada===this.jornadas[index]);
+      this.jornadasGrupo.splice(deleteIndex,1);
+    }
   }
 }
