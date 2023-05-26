@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
 import { GrupoRoutingModule } from './grupo-routing.module';
-import { GruposComponent } from './components/grupos/grupos.component';
 import { GruposListComponent } from './components/grupos-list/gruposList.component';
 import { GrupoComponent } from './pages/grupo/grupo.component';
 import { ComunModule } from '@components/comun.module';
@@ -11,7 +10,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { GruposService } from '@services/grupo.service';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { TipogrupoModule } from '../tipo-grupo/tipoGrupo.module';
-import { ModalHorarioInfraestructuraComponent } from './components/modal-horario-infraestructura/modal-horario-infraestructura.component';
 import { InfraestructuraModule } from '../infraestructura/infraestructura.module';
 import { GrupoFormComponent } from './components/grupo-form/grupo-form.component';
 import { GrupoInfraComponent } from './components/grupo-infra/grupo-infra.component';
@@ -19,18 +17,14 @@ import { GrupoInfraFormComponent } from './components/grupo-infra-form/grupo-inf
 
 @NgModule({
   exports: [
-    GruposComponent,
     GrupoFormComponent
   ],
   declarations: [
-    GruposComponent,
     GruposListComponent,
     GrupoComponent,
-    ModalHorarioInfraestructuraComponent,
     GrupoFormComponent,
     GrupoInfraComponent,
     GrupoInfraFormComponent,
-    // TipogrupoModalComponent,
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
@@ -49,6 +43,5 @@ import { GrupoInfraFormComponent } from './components/grupo-infra-form/grupo-inf
     InfraestructuraModule
   ],
   providers: [GruposService],
-  bootstrap: [GruposComponent]
 })
 export class GrupoModule { }

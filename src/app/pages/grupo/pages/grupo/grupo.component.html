@@ -1,0 +1,17 @@
+<app-grupos-list
+    [grupos]="grupos"
+    (create)="crearGrupo()"
+>
+</app-grupos-list>
+
+<app-custom-modal
+    size="lg"
+    title="Gestionar Grupos"
+    [(show)]="showFormGrupo"
+>
+    <app-grupo-form
+        *ngIf="showFormGrupo"
+        [infraestructuras]="infraestructuras">
+
+    </app-grupo-form>
+<app-custom-modal>

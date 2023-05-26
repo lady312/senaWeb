@@ -1,1 +1,272 @@
-<p>grupo-form works!</p>
+<div class="modal-body" style="background: rgb(246, 244, 244);">
+    <div class="card-header" style="background: rgb(246, 244, 244);">
+        <strong>Registrar Grupo</strong>
+    </div>
+    <div class="card-body" style="background: rgb(246, 244, 244);">
+        <form class="tipoDocFormulario" [formGroup]="formGrupo" class="was-validated" novalidate>
+
+
+            <div class="form-floating mb-3">
+                <!--Campo para seleccionar un programa-->
+                <label for="programa">Programa</label>
+                <input class="form-control" list="programa-list" (change)="selectIdPrograma($event)" type="text"
+                    name="programa" id="programa" aria-label="Floating label select" formControlName="idPrograma"
+                    required>
+                <datalist id="programa-list">
+                    <option *ngFor="let programa of programas" [value]="programa.nombrePrograma"></option>
+                </datalist>
+                <div class="valid-feedback" *ngIf="!idProgramaField.hasError('required')">
+                    Valor válido
+                </div>
+                <div class="invalid-feedback">
+                    Por favor ingresé un valor válido para el programa
+                </div>
+            </div>
+
+            <!--Campo para introducir el nombre del grupo-->
+            <div class="form-floating mb-3">
+                <input type="Text" onkeyup="javascript:this.value=this.value.toUpperCase();" class="form-control"
+                    id="floatingInput" placeholder="name@example.com" formControlName='nombre'>
+                <label for="floatingInput">Número de ficha / nombre</label>
+                <div class="valid-feedback" *ngIf="!nombreGrupoField.hasError('required')">
+                    Valor válido
+                </div>
+                <div class="invalid-feedback">
+                    Por favor ingresé un valor válido para el nombre del grupo
+                </div>
+            </div>
+
+            <!--El lider debe ser nullable-->
+            <div class="form-floating mb-3">
+                <label for="lider">Instructor</label>
+                <input class="form-control" list="lider-list" (change)="selectIdLider($event)" type="text" name="lider"
+                    id="lider" aria-label="Floating label select" formControlName="idPrograma" required>
+                <datalist id="lider-list">
+                    <option *ngFor="let lider of instructores" [value]="lider.persona.apellido1"></option>
+                </datalist>
+                <div class="valid-feedback" *ngIf="!idLiderField.hasError('required')">
+                    Valor válido
+                </div>
+                <div class="invalid-feedback">
+                    Por favor ingresé un valor válido para el instructor
+                </div>
+            </div>
+
+            <!--Horario Infraestructura-->
+            <div class="row mb-2">
+                <div class="col-sm-10">
+
+                    <div class="form-floating mb-3" *ngIf="!showFormHorario else formHorario">
+                        <label for="infraestrutura">Infraestructura</label>
+                        <div class="col-sm-2 mt-2">
+                            <button type="button" class="btn btn-success rounded-circle"
+                                (click)="agregarHorarioInfraestructura()">+</button>
+                        </div>
+                    </div>
+                    <ng-template #formHorario>
+                        <app-grupo-infra-form
+                            (storeInfr)="addInfraestructura($event)"
+                            (cancelInfr)="cancelarHorarioInfraestructura()"
+                            [infraestructuras]="infraestructuras">
+                        </app-grupo-infra-form>
+                    </ng-template>
+
+
+                    <div class="bg-white rounded">
+                        <p class="h4">Infraestructuras</p>
+                        <ng-container *ngFor="let horario of horariosInfra">
+                            <app-grupo-infra
+                                (remove)="removeInfraestructura($event)"
+                                [infraestructura]="horario"
+                            >
+                            </app-grupo-infra>
+                        </ng-container>
+                    </div>
+
+                </div>
+                
+            </div>
+
+
+
+
+            <div class="form-floating mb-3">
+                <select class="form-select" id="nivel" aria-label="Floating label select example"
+                    formControlName="idNivel">
+                    <option selected>Selecionar nivel de formación</option>
+                    <option *ngFor='let nivel of niveles' [ngValue]="nivel.id">{{nivel.nivel}}</option>
+                </select>
+                <label for="nivel">Nivel de formación</label>
+                <div class="valid-feedback" *ngIf="!idNivelField.hasError('required')">
+                    Valor válido
+                </div>
+                <div class="invalid-feedback">
+                    Por favor ingresé un valor válido para la nivel
+                </div>
+            </div>
+
+            <div class="form-floating mb-3">
+                <select class="form-select" id="tipoFormacion" aria-label="Floating label select example"
+                    formControlName="idTipoFormacion">
+                    <option selected>Selecionar tipo de formación</option>
+                    <option *ngFor='let tipoFormacion of tipoFormaciones' [ngValue]="tipoFormacion.id">
+                        {{tipoFormacion.nombreTipoFormacion}}</option>
+                </select>
+                <label for="tipoFormacion">Tipo de formación</label>
+                <div class="valid-feedback" *ngIf="!idTipoFormacionField.hasError('required')">
+                    Valor válido
+                </div>
+                <div class="invalid-feedback">
+                    Por favor ingresé un valor válido para el tipo de formación
+                </div>
+            </div>
+
+            <div class="form-floating mb-3">
+                <select class="form-select" id="estado" aria-label="Floating label select example"
+                    formControlName="idEstado">
+                    <option selected>Selecionar estado</option>
+                    <option *ngFor='let estado of estadoGrupos' [ngValue]="estado.id">{{estado.nombreEstado}}</option>
+                </select>
+                <label for="estado">Tipo de estado</label>
+                <!-- <div class="valid-feedback" *ngIf="!estadoField.hasError('required')">
+            Valor válido
+          </div>
+          <div class="invalid-feedback">
+            Por favor ingresé un valor válido para el estado
+          </div>-->
+            </div>
+
+            <div class="form-floating mb-3">
+                <select class="form-select" id="tipoOferta" aria-label="Floating label select example"
+                    formControlName="idTipoOferta">
+                    <option selected>Selecionar tipo de oferta</option>
+                    <option *ngFor='let tipoOferta of tipoOfertas' [ngValue]="tipoOferta.id">{{tipoOferta.nombreOferta}}
+                    </option>
+                </select>
+                <label for="tipoOferta">Tipo de oferta</label>
+                <div class="valid-feedback" *ngIf="!idTipoOfertaField.hasError('required')">
+                    Valor válido
+                </div>
+                <div class="invalid-feedback">
+                    Por favor ingresé un valor válido para el tipo de oferta
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-floating mb-3">
+                        <input type="date" onkeyup="javascript:this.value=this.value.toUpperCase();"
+                            class="form-control" id="fechaInicial" placeholder="name@example.com"
+                            formControlName='fechaInicialGrupo' #fechaInicialInput>
+                        <label for="fechaInicial">Fecha inicial lectiva</label>
+                        <div class="valid-feedback" *ngIf="!fechaInicialField.hasError('required')">
+                            Valor válido
+                        </div>
+                        <div class="invalid-feedback">
+                            Por favor ingresé un valor válido para la fecha inicial
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-floating mb-3">
+                        <input type="date" onkeyup="javascript:this.value=this.value.toUpperCase();"
+                            class="form-control" id="floatingInput" placeholder="name@example.com"
+                            formControlName='fechaFinalGrupo' #fechaFinalInput>
+                        <label for="floatingInput">Fecha fin lectiva</label>
+                        <div class="valid-feedback" *ngIf="!fechaFinalField.hasError('required')">
+                            Valor válido
+                        </div>
+                        <div class="invalid-feedback">
+                            Por favor ingresé un valor válido para la fecha final
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-sm-10">
+                    <div class="form-floating">
+                        <select class="form-select" id="tipoGrupo" aria-label="Floating label select example"
+                            formControlName="idTipoGrupo">
+                            <option selected>Selecionar tipo de grupo</option>
+                            <option *ngFor='let tipoGrupo of tipoGrupos' [ngValue]="tipoGrupo.id">
+                                {{tipoGrupo.nombreTipoGrupo}}
+                            </option>
+                        </select>
+                        <label for="tipoGrupo">Tipo de grupo</label>
+                        <div class="valid-feedback" *ngIf="!idTipoGrupoField.hasError('required')">
+                            Valor válido
+                        </div>
+                        <div class="invalid-feedback">
+                            Por favor ingresé un valor válido para el tipo de grupo
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-2 mt-2">
+                    <button type="button" class="btn btn-success rounded-circle" >+</button>
+                </div>
+            </div>
+
+            <div class="form-floating">
+                <textarea class="form-control" onkeyup="javascript:this.value=this.value.toUpperCase();"
+                    style="height: 100px" placeholder="Leave a comment here" id="floatingTextarea"
+                    formControlName='observacion' required></textarea>
+                <label for="floatingTextarea">Observación</label>
+                <div class="valid-feedback" *ngIf="!observacionField.hasError('required')">
+                    Valor valido
+                </div>
+                <div class="invalid-feedback">
+                    Por favor ingrese un valor valido para la descripción
+                </div>
+            </div>
+
+
+            <div class="card">
+                <div class="card-header">
+                    <strong> Seleccione la jornada </strong>
+                </div>
+                <div class="card-body">
+
+                    <div class="row row-cols-3">
+                        <div class="col">
+                            <label class="pointer">
+                                <!--app-custom-switch [size]="7" [checked]="allJornadas"
+                                    (checkedChange)="changeAllJornadas($event)">
+                                </app-custom-switch-->
+                                Todas
+                            </label>
+                        </div>
+                        <div class="col-md-3" *ngFor="let jor of jornadas; let i = index;">
+                            <label class="pointer">
+                                <!--app-custom-switch [size]="7" [checked]="jor.checked"
+                                    (checkedChange)="changeJornada($event, i)" id="check{{ jor.id }}">
+                                </app-custom-switch-->
+                                {{jor.nombreJornada}}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+
+
+
+
+        <!--app-custom-modal title="Gestión Grupo" [(show)]="showModalTipoGrupo">
+            <app-tipogrupos [tipoGrupos]="tipoGrupos" (store)="guardarTipoGrupo($event)" (cancel)="reset()">
+            </app-tipogrupos>
+        </app-custom-modal-->
+
+
+
+        <div class="card-footer text-center">
+            <button type="submit" class="btn btn-success" (click)="guardarGrupo()"><!--[disabled]="formGrupo.invalid"-->
+                <i class="fa fa-dot-circle-o"></i> Aceptar
+            </button>
+            <button type="reset" class="btn btn-danger" (click)="closeModal()">
+                <i class="fa fa-ban"></i>
+                Cancelar
+            </button>
+        </div>
+    </div>
+</div>

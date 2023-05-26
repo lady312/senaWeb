@@ -25,6 +25,10 @@ export class GruposListComponent {
     const num: number = event.target.value;
     this.numReg = num;
   }
+  
+  agregar(){
+    this.create.emit();
+  }
 
   actualizar(grupo:GrupoModel){
     this.update.emit(grupo);

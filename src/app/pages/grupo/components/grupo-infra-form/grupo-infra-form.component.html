@@ -1,1 +1,21 @@
-<p>grupo-infra-form works!</p>
+<div class="card">
+    <div class="card-header">
+        <h3>Nueva Infraestructura</h3>
+    </div>
+    <div class="card-body">
+        <form>
+            <select (change)="seleccionarInfraestructura($event)">
+                <option selected>Seleccionar Infraestructura</option>
+                <option *ngFor="let infr of infraestructuras" [value]="infr.id">
+                    {{infr.nombreInfraestructura}} {{infr.sede.nombreSede}}
+                </option>
+            </select>
+            <label for="fechaInicialF">Fecha Inicial</label>
+            <input (input)="seleccionarFechaInicial($event)" type="date" name="fechaInicialF" id="fechaF">
+            <label for="fechaFinalF">Fecha Final</label>
+            <input (input)="seleccionarFechaFinal($event)" type="date" name="fechaFinalF" id="fechaFinalF">
+            <button (click)="addInfraestructura()" class="btn btn-succes">Agregar</button>
+            <button (click)="cancelar()">Cancelar</button>
+        </form>
+    </div>
+</div>
