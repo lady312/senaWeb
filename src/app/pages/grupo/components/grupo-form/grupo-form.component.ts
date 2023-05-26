@@ -202,6 +202,7 @@ export class GrupoFormComponent implements OnInit {
   }
 
   addInfraestructura(infr:InfraestructuraModel){
+    this.showFormHorario=false;
     this.horariosInfra.push(infr);
   }
   removeInfraestructura(idInfr:number){

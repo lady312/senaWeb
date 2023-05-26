@@ -4,8 +4,8 @@ import { InfraestructuraModel } from "./infraestructura.model";
 export interface HorarioInfrModel {
     id?:number;
 
-    idGrupo:number;
-    idInfraestructura:number;
+    idGrupo?:number;
+    idInfraestructura?:number;
 
     fechaInicial:Date;
     fechaFinal:Date;

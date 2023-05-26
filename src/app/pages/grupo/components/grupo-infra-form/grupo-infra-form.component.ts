@@ -1,4 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { GrupoModel } from '@models/grupo.model';
 import { InfraestructuraModel } from '@models/infraestructura.model';
 
 @Component({
@@ -24,7 +25,11 @@ export class GrupoInfraFormComponent {
         this.infraestructura=infr;
       }
     })
-    console.log(this.infraestructura);
+    this.infraestructura.horario_infraestructura={
+      idInfraestructura:this.infraestructura.id,
+      fechaInicial:new Date(),
+      fechaFinal:new Date()
+    };
     
   }
   seleccionarFechaInicial(event:any){
