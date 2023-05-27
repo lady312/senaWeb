@@ -1,6 +1,6 @@
 <div class="modal-body" style="background: rgb(246, 244, 244);">
     <div class="card-header" style="background: rgb(246, 244, 244);">
-        <strong>Registrar Grupo</strong>
+        <strong>{{title}}</strong>
     </div>
     <div class="card-body" style="background: rgb(246, 244, 244);">
         <form class="tipoDocFormulario" [formGroup]="formGrupo" class="was-validated" novalidate>
@@ -10,11 +10,16 @@
                 <!--Campo para seleccionar un programa-->
                 <label for="programa">Programa</label>
                 <input class="form-control" list="programa-list" (change)="selectIdPrograma($event)" type="text"
-                    name="programa" id="programa" aria-label="Floating label select" formControlName="idPrograma"
+                    name="programa" id="programa" formControlName="idPrograma"
                     required>
                 <datalist id="programa-list">
                     <option *ngFor="let programa of programas" [value]="programa.nombrePrograma"></option>
                 </datalist>
+                <select 
+                    name="programa" 
+                    id="programa">
+
+                </select>
                 <div class="valid-feedback" *ngIf="!idProgramaField.hasError('required')">
                     Valor válido
                 </div>
@@ -57,7 +62,7 @@
                 <div class="col-sm-10">
 
                     <div class="form-floating mb-3" *ngIf="!showFormHorario else formHorario">
-                        <label for="infraestrutura">Infraestructura</label>
+                        <label class="col col-md-3" for="infraestrutura">Infraestructura</label>
                         <div class="col-sm-2 mt-2">
                             <button type="button" class="btn btn-success rounded-circle"
                                 (click)="agregarHorarioInfraestructura()">+</button>
@@ -202,7 +207,7 @@
                     </div>
                 </div>
                 <div class="col-sm-2 mt-2">
-                    <button type="button" class="btn btn-success rounded-circle" >+</button>
+                    <button (click)="agregarTipoGrupo()" type="button" class="btn btn-success rounded-circle" >+</button>
                 </div>
             </div>
 
@@ -253,7 +258,7 @@
 
 
        
-            <app-tipogrupos [tipoGrupos]="tipoGrupos" (store)="guardarTipoGrupo($event)" (cancel)="reset()">
+            <app-tipogrupos *ngIf="showFormTipoG" [tipoGrupos]="tipoGrupos" (store)="guardarTipoGrupo($event)" (cancel)="cancelarTipoGrupo()">
             </app-tipogrupos>
    
 

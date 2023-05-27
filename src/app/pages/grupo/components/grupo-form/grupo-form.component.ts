@@ -10,6 +10,8 @@ import { TipoFormacionModel } from '@models/tipo-formacion.model';
 import { TipoOfertaModel } from '@models/tipo-oferta.model';
 import { TipoGrupoModel } from '@models/tipogrupo.model';
 import { UsuarioModel } from '@models/usuario.model';
+import { TipoGrupoService } from '@services/tipo-grupo.service';
+import { UINotificationService } from '@services/uinotification.service';
 import { debounceTime } from 'rxjs/operators';
 
 @Component({
@@ -39,6 +41,7 @@ export class GrupoFormComponent implements OnInit {
   horariosInfra:InfraestructuraModel[] = [];
 
   showFormHorario:boolean = false;
+  showFormTipoG:boolean = false;
   allJornadas:boolean = false;
 
   formGrupo: UntypedFormGroup;
@@ -51,7 +54,9 @@ export class GrupoFormComponent implements OnInit {
   idTipoOferta: number = 0;
 
   constructor(
-    private formBuilder: UntypedFormBuilder
+    private formBuilder: UntypedFormBuilder,
+    private _tipoGrupoService:TipoGrupoService,
+    private _uiNotificationService:UINotificationService
   ) {
     this.grupo = {
       id: null,
@@ -146,7 +151,8 @@ export class GrupoFormComponent implements OnInit {
       fechaInicial:this.grupo.fechaInicialGrupo,
       fechaFinal:this.grupo.fechaFinalGrupo,
       observacion:this.grupo.observacion,
-      nombreJornada:this.grupo.nombreJornada
+      nombreJornada:this.grupo.nombreJornada,
+      idPrograma:this.grupo.programa.nombrePrograma
     });
   }
 
@@ -210,7 +216,11 @@ export class GrupoFormComponent implements OnInit {
   }
 
   setLists(grupo:GrupoModel){
-    this.jornadasGrupo=grupo.jornadas;
+    this.jornadasGrupo=grupo.jornadas.map((jornadaGrupo)=>{
+      const index = this.jornadas.findIndex((jornada) => jornada==jornadaGrupo);
+      this.changeJornada(true,index+1);
+      return jornadaGrupo;
+    });
     this.horariosInfra=grupo.infraestructuras;
   }
 
@@ -291,6 +301,12 @@ export class GrupoFormComponent implements OnInit {
   cancelarHorarioInfraestructura(){
     this.showFormHorario=false;
   }
+  agregarTipoGrupo(){
+    this.showFormTipoG=true;
+  }
+  cancelarTipoGrupo(){
+    this.showFormTipoG = false;
+  }
 
   changeAllJornadas(allJor:boolean){
     this.allJornadas=allJor;
@@ -307,13 +323,28 @@ export class GrupoFormComponent implements OnInit {
     }
   }
   changeJornada(checked: boolean, index: number) {
+    if(index<0){
+      return;
+    }
+    console.log(index);
     this.jornadas[index]["checked"] = checked;
     this.allJornadas = this.totalJornadasSeleccionadas === 3;
     if(this.jornadas[index]['checked']){
       this.jornadasGrupo.push(this.jornadas[index]);
+      console.log(this.jornadasGrupo);
     }else{
       const deleteIndex = this.jornadasGrupo.findIndex((jornada)=>jornada===this.jornadas[index]);
       this.jornadasGrupo.splice(deleteIndex,1);
     }
+  }
+  guardarTipoGrupo(tipoGrupo: TipoGrupoModel) {
+    this._tipoGrupoService.crearTipoGrupo(tipoGrupo).subscribe((tipo) => {
+      this.tipoGrupos.push(tipo);
+      this._uiNotificationService.success(
+        "Tipo de grupo agregado",
+        "Tipo grupo"
+      );
+      this.showFormTipoG=false;
+    });
   }
 }

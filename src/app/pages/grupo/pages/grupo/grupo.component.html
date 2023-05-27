@@ -1,6 +1,7 @@
 <app-grupos-list
     [grupos]="grupos"
     (create)="crearGrupo()"
+    (update)="actualizarGrupo($event)"
 >
 </app-grupos-list>
 
@@ -10,8 +11,12 @@
 >
     <app-grupo-form
         *ngIf="showFormGrupo"
+        [title]="formTitle"
+        [grupo]="grupo"
         [infraestructuras]="infraestructuras"
         [jornadas]="jornadas"
-        [programas]="programas">
+        [programas]="programas"
+        (store)="reset()"
+        (cancel)="reset()">
     </app-grupo-form>
 <app-custom-modal>

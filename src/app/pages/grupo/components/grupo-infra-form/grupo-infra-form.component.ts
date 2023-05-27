@@ -42,7 +42,7 @@ export class GrupoInfraFormComponent {
   }
   addInfraestructura() {
     this.infraestructura.horario_infraestructura.fechaInicial=new Date(this.fechaInicial);
-    this.infraestructura.horario_infraestructura.fechaFinal=this.fechaFinal;
+    this.infraestructura.horario_infraestructura.fechaFinal=new Date(this.fechaFinal);
     this.storeInfr.emit(this.infraestructura);
   }
   cancelar() {
