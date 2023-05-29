@@ -89,13 +89,8 @@
   </div>
 
   <div class="card-body">
-
-
-    
-
     <div class="card-header">
-
-        <!--Para realizar los botones(etiquetas) de eliminar-->
+     <!--Para realizar los botones(etiquetas) de eliminar-->
         <label class="col-md-4 col-form-label">Actividad proyecto</label>
         <button class="btn btn-success rounded-circle m-4" style="position: relative; left: -11rem;"
           (click)="agregarAp()">+</button>
@@ -103,13 +98,10 @@
           <button *ngFor="let  ActividadProyecto of ActividadProyectos "(click)="filtrarCompetencias(ActividadProyecto)" class="btn btn-outline-primary btn-sm" 
             style=" margin: 10px; width: 12%;" 
             title="{{ ActividadProyecto.nombreActividadProyecto }}" >
-            {{ ActividadProyecto.codigoAP}}
-            
+            {{ ActividadProyecto.codigoAP}} 
            <div class="spanss">
             <span title="Eliminar" class="fa fa-close fa-lg " style="margin-left: 15px; color: rgb(210, 91, 91); position: sticky;"  (click)="eliminarEtiquet(ActividadProyecto)"></span>
-            
             <span title="Ver información" class="fa fa-info-circle fa-lg " data-bs-toggle="modal" data-bs-target="#modalId1" style="margin-left: 15px; color: rgb(132, 132, 132); position: sticky;"  (click)="seleccionarActividadP(ActividadProyecto) "></span>
-
            </div>
           </button>
         </div>
@@ -123,8 +115,6 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-
-
               <table class="table table-striped table-hover table-responsive" *ngIf="selectedActividadP">
                 <tbody>
                   <tr>
@@ -154,39 +144,28 @@
         </div>
       </div>
     </div>
-    
-      
-      <!-- Optional: Place to the bottom of scripts -->
 
-      <!-- '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''' -->
       <div class="form-group row"></div>
-
-
-
-      <!-- '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''' -->
       <div class="card-header">
-
         <!--Para realizar los botones(etiquetas) de eliminar-->
         <label class="col-md-4 col-form-label">Competencias</label>
         <button class="btn btn-success rounded-circle m-4" style="position: relative; left: -14rem; "
           (click)="agregarC()">+</button>
         <div class="etiqueta" style="display: flex; flex-wrap: wrap; padding: 30px; width: 100%; border: 2px solid rgba(0, 0, 0, 0.185);background:rgb(255, 255, 255) ; " >
           <button *ngFor="let Competencia of Competencias" class="btn btn-outline-primary btn-sm " style="margin: 10px; width: 12%;"
-          
-
+            (change)="capturarIdCompetencia()"
+            [(ngModel)]="selectedCompetenciaId"
+            (click)="traerCompetenciasRaps(Competencia.id)"
             title="{{ Competencia.nombreCompetencia }}">
             {{ Competencia.codigoCompetencia}}
             <div class="spans">
               <span title="Eliminar" class="fa fa-close fa-lg " style="margin-left: 15px; color: rgb(210, 91, 91); position: sticky;"  (click)="eliminarEtiquet(ActividadProyecto)"></span>
-              <span title="Ver información" class="fa fa-info-circle fa-lg " data-bs-toggle="modal" data-bs-target="#modalId" style="margin-left: 15px; color: rgb(132, 132, 132); position: sticky;"  (click)="seleccionarCompetencia(Competencia)"></span>
-  
+              <span title="Ver información" class="fa fa-info-circle fa-lg " data-bs-toggle="modal" data-bs-target="#modalId" style="margin-left: 15px; color: rgb(132, 132, 132); position: sticky;"  
+              (click)="seleccionarCompetencia(Competencia)"></span>
              </div>
           </button>
         </div>
       </div>
-
-      
-          
           <!-- Modal Body-->
           <div class="modal fade" id="modalId" tabindex="-1" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -225,32 +204,65 @@
               </div>
             </div>
           </div>
-  <!-- '''''''''''''''''''''''''''''''''''''' -->
-
   <!-- resultados de aprendisaje etiquetas -->
 
   <div class="card-header">
-
     <!--Para realizar los botones(etiquetas) de eliminar-->
     <label class="col-md-4 col-form-label">Resultados de aprendizaje</label>
-    <button class="btn btn-success rounded-circle m-4" style="position: relative; left: -10rem; "
-      (click)="agregarC()">+</button>
     <div class="etiqueta" style="display: flex; flex-wrap: wrap; padding: 30px; width: 100%; border: 2px solid rgba(0, 0, 0, 0.185);background:rgb(255, 255, 255) ; " >
-      <button *ngFor="let Competencia of Competencias" class="btn btn-outline-primary btn-sm " style="margin: 10px; width: 12%;"
-      
-
-        title="{{ Competencia.nombreCompetencia }}">
-        {{ Competencia.codigoCompetencia}}
+      <button *ngFor="let competenciaRap of CompetenciasRaps" class="btn btn-outline-primary btn-sm " style="margin: 10px; width: 12%;"
+        (change)="capturarIdResultado()"
+        [(ngModel)]="selectedResultadoId"
+        title="{{competenciaRap.resultadoAprendizaje.rap}}">
+        {{competenciaRap.resultadoAprendizaje.codigoRap}}
         <div class="spans">
-          <span title="Eliminar" class="fa fa-close fa-lg " style="margin-left: 15px; color: rgb(210, 91, 91); position: sticky;"  (click)="eliminarEtiquet(ActividadProyecto)"></span>
-          <span title="Ver información" class="fa fa-info-circle fa-lg " data-bs-toggle="modal" data-bs-target="#modalId" style="margin-left: 15px; color: rgb(132, 132, 132); position: sticky;"  (click)="seleccionarCompetencia(Competencia)"></span>
-
+          <span title="Eliminar" class="fa fa-close fa-lg " style="margin-left: 15px; color: rgb(210, 91, 91); position: sticky;"  (click)="eliminarResultado(resultado)"></span>
+          <span title="Ver información" class="fa fa-info-circle fa-lg " data-bs-toggle="modal" data-bs-target="#modalId2" style="margin-left: 15px; color: rgb(132, 132, 132); position: sticky;"  
+          (click)="seleccionarResultado(competenciaRap)"></span>
          </div>
       </button>
     </div>
   </div>
 
+  <!-- modal info Raps -->
+  <div class="modal fade" id="modalId2" tabindex="-1" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="modalTitleId">Raps</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+        <div class="modal-body">
 
+          <table class="table table-striped table-hover table-responsive" *ngIf="selectedResultado">
+            <tbody>
+              <tr>
+                <th scope="row">Nombre:</th>
+                <td>{{selectedResultado.resultadoAprendizaje.rap}}</td>
+                <th ></th>
+                <td></td>
+              </tr>
+          
+              <tr>
+                <th scope="row">codigo : </th>
+                <td>{{selectedCompetencia.codigoCompetencia}}</td>
+                <th ></th>
+                <td></td>
+              </tr>
+          
+              <tr>
+                <th scope="row">Actividad proyecto:</th>
+                <td>{{selectedCompetencia.idActividadProyecto}}</td>
+                <th></th>
+                <th></th>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  
   <app-custom-modal 
     title="Gestión de competencias" 
     [(show)]="showModalCompetencia">
