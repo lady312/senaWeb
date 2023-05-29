@@ -21,7 +21,7 @@
         [tipoFormaciones]="tipoFormaciones"
         [estadoGrupos]="estadoGrupos"
         [tipoOfertas]="tipoOfertas"
-        (store)="reset()"
+        (store)="guardarGrupo($event)"
         (cancel)="reset()">
     </app-grupo-form>
 <app-custom-modal>

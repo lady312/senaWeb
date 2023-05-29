@@ -3,7 +3,7 @@
         <h3>Nueva Infraestructura</h3>
     </div>
     <div class="card-body">
-        <form>
+        <form [formGroup]="formGrupoInfr">
             <select (change)="seleccionarInfraestructura($event)">
                 <option selected>Seleccionar Infraestructura</option>
                 <option *ngFor="let infr of infraestructuras" [value]="infr.id">
@@ -11,9 +11,9 @@
                 </option>
             </select>
             <label for="fechaInicialF">Fecha Inicial</label>
-            <input (input)="seleccionarFechaInicial($event)" type="date" name="fechaInicialF" id="fechaF">
+            <input  formControlName="fechaInicial" type="date" name="fechaInicialF" id="fechaF">
             <label for="fechaFinalF">Fecha Final</label>
-            <input (input)="seleccionarFechaFinal($event)" type="date" name="fechaFinalF" id="fechaFinalF">
+            <input formControlName="fechaFinal" type="date" name="fechaFinalF" id="fechaFinalF">
             <button (click)="addInfraestructura()" class="btn btn-succes">Agregar</button>
             <button (click)="cancelar()">Cancelar</button>
         </form>

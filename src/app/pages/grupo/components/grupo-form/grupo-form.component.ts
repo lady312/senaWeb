@@ -32,17 +32,18 @@ export class GrupoFormComponent implements OnInit {
   @Input() infraestructuras: InfraestructuraModel[] = [];
 
   @Input() grupo: GrupoModel;
+
   @Input() title: string;
 
   @Output() store = new EventEmitter<GrupoModel>();
   @Output() cancel = new EventEmitter<void>();
 
-  jornadasGrupo:JornadaModel[] = [];
-  horariosInfra:InfraestructuraModel[] = [];
+  jornadasGrupo: JornadaModel[] = [];
+  horariosInfra: InfraestructuraModel[] = [];
 
-  showFormHorario:boolean = false;
-  showFormTipoG:boolean = false;
-  allJornadas:boolean = false;
+  showFormHorario: boolean = false;
+  showFormTipoG: boolean = false;
+  allJornadas: boolean = false;
 
   formGrupo: UntypedFormGroup;
   idTipoGrupo: number = 0;
@@ -55,8 +56,8 @@ export class GrupoFormComponent implements OnInit {
 
   constructor(
     private formBuilder: UntypedFormBuilder,
-    private _tipoGrupoService:TipoGrupoService,
-    private _uiNotificationService:UINotificationService
+    private _tipoGrupoService: TipoGrupoService,
+    private _uiNotificationService: UINotificationService
   ) {
     this.grupo = {
       id: null,
@@ -66,7 +67,7 @@ export class GrupoFormComponent implements OnInit {
       observacion: '',
       nombreJornada: '',
       idTipoGrupo: null,
-      //idLider: null,
+      idLider: null,
       idPrograma: null,
       idNivel: null,
       idTipoFormacion: null,
@@ -79,7 +80,8 @@ export class GrupoFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (this.title !== 'Añadir grupo') {
+    console.log(this.title)
+    if (this.title != 'Añadir Grupo') {
       this.setGrupo();
       this.setIndexes(this.grupo);
       this.setLists(this.grupo);
@@ -102,6 +104,7 @@ export class GrupoFormComponent implements OnInit {
         jornadas: []
       }
     }
+   
   }
 
   get nombreGrupoField() {
@@ -119,25 +122,25 @@ export class GrupoFormComponent implements OnInit {
   get nombreJornadaField() {
     return this.formGrupo.get('nombreJornada');
   }
-  get idTipoGrupoField(){
+  get idTipoGrupoField() {
     return this.formGrupo.get('idTipoGrupo');
   }
-  get idLiderField(){
+  get idLiderField() {
     return this.formGrupo.get('idLider');
   }
-  get idProgramaField(){
+  get idProgramaField() {
     return this.formGrupo.get('idPrograma');
   }
-  get idNivelField(){
+  get idNivelField() {
     return this.formGrupo.get('idNivel');
   }
-  get idTipoFormacionField(){
+  get idTipoFormacionField() {
     return this.formGrupo.get('idTipoFormacion');
   }
-  get idEstadoField(){
+  get idEstadoField() {
     return this.formGrupo.get('idEstado');
   }
-  get idTipoOfertaField(){
+  get idTipoOfertaField() {
     return this.formGrupo.get('idTipoOferta');
   }
 
@@ -145,159 +148,161 @@ export class GrupoFormComponent implements OnInit {
     return this.jornadas.filter((j) => j["checked"]).length;
   }
 
-  setGrupo(){
+  setGrupo() {
     this.formGrupo.patchValue({
-      nombreGrupo:this.grupo.nombre,
-      fechaInicial:this.grupo.fechaInicialGrupo,
-      fechaFinal:this.grupo.fechaFinalGrupo,
-      observacion:this.grupo.observacion,
-      nombreJornada:this.grupo.nombreJornada,
-      idPrograma:this.grupo.programa.nombrePrograma
+      nombreGrupo: this.grupo.nombre,
+      fechaInicial: this.grupo.fechaInicialGrupo,
+      fechaFinal: this.grupo.fechaFinalGrupo,
+      observacion: this.grupo.observacion,
+      nombreJornada: this.grupo.nombreJornada,
+      idPrograma: this.grupo.programa.nombrePrograma
     });
   }
 
-  setIndexes(grupo:GrupoModel){
-    this.idTipoGrupo=grupo.idTipoGrupo;
+  setIndexes(grupo: GrupoModel) {
+    this.idTipoGrupo = grupo.idTipoGrupo;
     //this.idLider=grupo.idLider;
-    this.idPrograma=grupo.idPrograma;
-    this.idNivel=grupo.idNivel;
-    this.idTipoFormacion=grupo.idTipoFormacion;
-    this.idEstado=grupo.idEstado;
-    this.idTipoOferta=grupo.idTipoOferta;
+    this.idPrograma = grupo.idPrograma;
+    this.idNivel = grupo.idNivel;
+    this.idTipoFormacion = grupo.idTipoFormacion;
+    this.idEstado = grupo.idEstado;
+    this.idTipoOferta = grupo.idTipoOferta;
   }
-  selectIdTipoGrupo(event:any){
+  selectIdTipoGrupo(event: any) {
     const value = event.target.value;
-    const tipoGrupo = this.tipoGrupos.find((tipoGrupo)=>{
-      tipoGrupo.nombreTipoGrupo.toUpperCase()===value.toUpperCase();
-    });
-    this.idTipoGrupo=tipoGrupo.id;
+    this.idTipoGrupo = value;
   }
   /*selectIdLider(event:any){
     const value = event.target.value;
     this.idLider=value;
   }*/
-  selectIdPrograma(event:any){
-    const value = event.target.value;
-    this.idPrograma=value;
+  selectIdPrograma(event: any) {
+    const value:number = event.target.value;
+    console.log(value);
+    this.idPrograma = value;
   }
-  selectIdNivel(event:any){
+  selectIdNivel(event: any) {
     const value = event.target.value;
-    this.idNivel=value;
+    this.idNivel = value;
   }
-  selectIdTipoFormacion(event:any){
+  selectIdTipoFormacion(event: any) {
     const value = event.target.value;
-    this.idTipoFormacion=value;
+    console.log(value);
+    this.idTipoFormacion = value;
   }
-  selectIdEstado(event:any){
+  selectIdEstado(event: any) {
     const value = event.target.value;
-    this.idEstado=value;
+    this.idEstado = value;
   }
-  selectIdTipoOferta(event:any){
+  selectIdTipoOferta(event: any) {
     const value = event.target.value;
-    this.idTipoOferta=value;
+    this.idTipoOferta = value;
   }
 
-  setLists(grupo:GrupoModel){
-    this.jornadasGrupo=grupo.jornadas.map((jornadaGrupo)=>{
-      const index = this.jornadas.findIndex((jornada) => jornada==jornadaGrupo);
-      this.changeJornada(true,index+1);
+  setLists(grupo: GrupoModel) {
+    this.jornadasGrupo = grupo.jornadas.map((jornadaGrupo) => {
+      const index = this.jornadas.findIndex((jornada) => jornada == jornadaGrupo);
+      this.changeJornada(true, index + 1);
+      jornadaGrupo.jornada_grupo={idJornada:jornadaGrupo.id};
       return jornadaGrupo;
     });
-    this.horariosInfra=grupo.infraestructuras;
+    this.horariosInfra = grupo.infraestructuras;
   }
 
-  addJornada(jornada:JornadaModel){
+  addJornada(jornada: JornadaModel) {
     this.jornadasGrupo.push(jornada);
   }
-  removeJornada(idJornada:number){
-    this.jornadasGrupo= this.jornadasGrupo.filter((jornada)=>{
-      jornada.id!==idJornada;
+  removeJornada(idJornada: number) {
+    this.jornadasGrupo = this.jornadasGrupo.filter((jornada) => {
+      jornada.id !== idJornada;
     });
   }
 
-  addInfraestructura(infr:InfraestructuraModel){
-    this.showFormHorario=false;
+  addInfraestructura(infr: InfraestructuraModel) {
+    this.showFormHorario = false;
     this.horariosInfra.push(infr);
   }
-  removeInfraestructura(idInfr:number){
+  removeInfraestructura(idInfr: number) {
     const index = this.horariosInfra.findIndex((infr) => infr.id === idInfr);
-    this.horariosInfra.splice(index,1);
+    this.horariosInfra.splice(index, 1);
   }
 
-  private buildForm(){
-    this.formGrupo=this.formBuilder.group({
-      id:[null],
-      nombreGrupo:['',Validators.required],
-      fechaInicial:['',Validators.required],
-      fechaFinal:['',Validators.required],
-      observacion:[''],
-      nombreJornada:['',Validators.required],
-      idTipoGrupo:['',Validators.required],
-      idLider:[''],
-      idPrograma:['',Validators.required],
-      idNivel:['',Validators.required],
-      idTipoFormacion:['',Validators.required],
-      idEstado:['',Validators.required],
-      idTipoOferta:['',Validators.required]
+  private buildForm() {
+    this.formGrupo = this.formBuilder.group({
+      id: [null],
+      nombreGrupo: ['', Validators.required],
+      fechaInicial: ['', Validators.required],
+      fechaFinal: ['', Validators.required],
+      observacion: [''],
+      nombreJornada: ['', Validators.required],
+      idTipoGrupo: ['', Validators.required],
+      idLider: [''],
+      idPrograma: ['', Validators.required],
+      idNivel: ['', Validators.required],
+      idTipoFormacion: ['', Validators.required],
+      idEstado: ['', Validators.required],
+      idTipoOferta: ['', Validators.required]
     });
     this.formGrupo.valueChanges
-    .pipe(
-      debounceTime(350)
-    ).subscribe((data)=>{});
+      .pipe(
+        debounceTime(350)
+      ).subscribe((data) => { });
   }
 
-  closeModal(){
+  closeModal() {
     this.cancel.emit();
   }
-  guardarGrupo(){
+  guardarGrupo() {
     const grupo = this.getGrupo();
     this.store.emit(grupo);
   }
-  private getControl(control:string){
+  private getControl(control: string) {
+
     const controlField = this.formGrupo.controls[control];
-    console.log(controlField.value);
     return controlField;
+
   }
-  getGrupo(){
+  getGrupo() {
     return {
-      id:this.grupo?.id,
-      nombre:this.getControl('nombreGrupo').value,
-      fechaInicialGrupo:this.getControl('fechaInicialGrupo').value,
-      fechaFinalGrupo:this.getControl('fechaFinalGrupo').value,
-      observacion:this.getControl('observacion').value,
-      idTipoGrupo:this.idTipoGrupo,
+      id: this.grupo?.id,
+      nombre: this.getControl('nombreGrupo').value,
+      fechaInicialGrupo: this.getControl('fechaInicial').value,
+      fechaFinalGrupo: this.getControl('fechaFinal').value,
+      observacion: this.getControl('observacion').value,
+      idTipoGrupo: this.idTipoGrupo,
       //idLider:this.idLider,
-      idPrograma:this.idPrograma,
-      idNivel:this.idNivel,
-      idTipoFormacion:this.idTipoFormacion,
-      idEstado:this.idEstado,
-      idTipoOferta:this.idTipoOferta,
-      jornadas:this.jornadasGrupo,
-      infraestructuras:this.horariosInfra
+      idPrograma: this.idPrograma,
+      idNivel: this.idNivel,
+      idTipoFormacion: this.idTipoFormacion,
+      idEstado: this.idEstado,
+      idTipoOferta: this.idTipoOferta,
+      jornadas: this.jornadasGrupo,
+      infraestructuras: this.horariosInfra
     }
   }
 
-  agregarHorarioInfraestructura(){
-    this.showFormHorario=true;
+  agregarHorarioInfraestructura() {
+    this.showFormHorario = true;
   }
-  cancelarHorarioInfraestructura(){
-    this.showFormHorario=false;
+  cancelarHorarioInfraestructura() {
+    this.showFormHorario = false;
   }
-  agregarTipoGrupo(){
-    this.showFormTipoG=true;
+  agregarTipoGrupo() {
+    this.showFormTipoG = true;
   }
-  cancelarTipoGrupo(){
+  cancelarTipoGrupo() {
     this.showFormTipoG = false;
   }
 
-  changeAllJornadas(allJor:boolean){
-    this.allJornadas=allJor;
-    if(this.allJornadas){
-      this.jornadasGrupo=this.jornadas.map((jor) => {
+  changeAllJornadas(allJor: boolean) {
+    this.allJornadas = allJor;
+    if (this.allJornadas) {
+      this.jornadasGrupo = this.jornadas.map((jor) => {
+        jor.jornada_grupo={idJornada:jor.id};
         jor["checked"] = true;
         return jor;
       });
-    }else{
+    } else {
       this.jornadas.map((jor) => {
         jor["checked"] = false;
         return jor;
@@ -305,18 +310,18 @@ export class GrupoFormComponent implements OnInit {
     }
   }
   changeJornada(checked: boolean, index: number) {
-    if(index<0){
+    if (index < 0) {
       return;
     }
-    console.log(index);
     this.jornadas[index]["checked"] = checked;
     this.allJornadas = this.totalJornadasSeleccionadas === 3;
-    if(this.jornadas[index]['checked']){
-      this.jornadasGrupo.push(this.jornadas[index]);
-      console.log(this.jornadasGrupo);
-    }else{
-      const deleteIndex = this.jornadasGrupo.findIndex((jornada)=>jornada===this.jornadas[index]);
-      this.jornadasGrupo.splice(deleteIndex,1);
+    if (this.jornadas[index]['checked']) {
+      let newJornada= this.jornadas[index];
+      newJornada.jornada_grupo={idJornada:newJornada.id}
+      this.jornadasGrupo.push(newJornada);
+    } else {
+      const deleteIndex = this.jornadasGrupo.findIndex((jornada) => jornada === this.jornadas[index]);
+      this.jornadasGrupo.splice(deleteIndex, 1);
     }
   }
   guardarTipoGrupo(tipoGrupo: TipoGrupoModel) {
@@ -326,7 +331,7 @@ export class GrupoFormComponent implements OnInit {
         "Tipo de grupo agregado",
         "Tipo grupo"
       );
-      this.showFormTipoG=false;
+      this.showFormTipoG = false;
     });
   }
 }

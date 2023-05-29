@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { GrupoRoutingModule } from './grupo-routing.module';
 import { GruposListComponent } from './components/grupos-list/gruposList.component';
 import { GrupoComponent } from './pages/grupo/grupo.component';
@@ -42,6 +42,6 @@ import { GrupoInfraFormComponent } from './components/grupo-infra-form/grupo-inf
     TipogrupoModule,
     InfraestructuraModule
   ],
-  providers: [GruposService],
+  providers: [GruposService,DatePipe],
 })
 export class GrupoModule { }
