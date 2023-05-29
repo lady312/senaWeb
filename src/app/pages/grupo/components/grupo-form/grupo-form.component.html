@@ -5,21 +5,16 @@
     <div class="card-body" style="background: rgb(246, 244, 244);">
         <form class="tipoDocFormulario" [formGroup]="formGrupo" class="was-validated" novalidate>
 
-
+            <!--Campo para seleccionar un programa-->
             <div class="form-floating mb-3">
-                <!--Campo para seleccionar un programa-->
-                <label for="programa">Programa</label>
-                <input class="form-control" list="programa-list" (change)="selectIdPrograma($event)" type="text"
-                    name="programa" id="programa" formControlName="idPrograma"
-                    required>
-                <datalist id="programa-list">
-                    <option *ngFor="let programa of programas" [value]="programa.nombrePrograma"></option>
-                </datalist>
-                <select 
-                    name="programa" 
-                    id="programa">
-
+                <select (change)="selectIdPrograma($event)" class="form-select" id="programa"
+                    aria-label="Floating label select example" formControlName="idPrograma">
+                    <option selected>Selecionar programa</option>
+                    <option *ngFor='let programa of programas' [ngValue]="programa.id">
+                        {{programa.nombrePrograma}}
+                    </option>
                 </select>
+                <label for="programa">Programa</label>
                 <div class="valid-feedback" *ngIf="!idProgramaField.hasError('required')">
                     Valor válido
                 </div>
@@ -31,8 +26,8 @@
             <!--Campo para introducir el nombre del grupo-->
             <div class="form-floating mb-3">
                 <input type="Text" onkeyup="javascript:this.value=this.value.toUpperCase();" class="form-control"
-                    id="floatingInput" placeholder="name@example.com" formControlName='nombreGrupo'>
-                <label for="floatingInput">Número de ficha / nombre</label>
+                    id="nombreGrupo" placeholder="name@example.com" formControlName='nombreGrupo'>
+                <label for="nombreGrupo">Número de ficha / nombre</label>
                 <div class="valid-feedback" *ngIf="!nombreGrupoField.hasError('required')">
                     Valor válido
                 </div>
@@ -45,7 +40,7 @@
             <div class="form-floating mb-3">
                 <label for="lider">Instructor</label>
                 <input class="form-control" list="lider-list" (change)="selectIdLider($event)" type="text" name="lider"
-                    id="lider" aria-label="Floating label select" formControlName="idPrograma" required>
+                    id="lider" aria-label="Floating label select" formControlName="idPrograma">
                 <datalist id="lider-list">
                     <option *ngFor="let lider of instructores" [value]="lider.persona.apellido1"></option>
                 </datalist>
@@ -60,7 +55,6 @@
             <!--Horario Infraestructura-->
             <div class="row mb-2">
                 <div class="col-sm-10">
-
                     <div class="form-floating mb-3" *ngIf="!showFormHorario else formHorario">
                         <label class="col col-md-3" for="infraestrutura">Infraestructura</label>
                         <div class="col-sm-2 mt-2">
@@ -69,10 +63,8 @@
                         </div>
                     </div>
                     <ng-template #formHorario>
-                        <app-grupo-infra-form
-                            (storeInfr)="addInfraestructura($event)"
-                            (cancelInfr)="cancelarHorarioInfraestructura()"
-                            [infraestructuras]="infraestructuras">
+                        <app-grupo-infra-form (storeInfr)="addInfraestructura($event)"
+                            (cancelInfr)="cancelarHorarioInfraestructura()" [infraestructuras]="infraestructuras">
                         </app-grupo-infra-form>
                     </ng-template>
 
@@ -80,24 +72,19 @@
                     <div class="bg-white rounded">
                         <p class="h4">Infraestructuras</p>
                         <ng-container *ngFor="let horario of horariosInfra">
-                            <app-grupo-infra
-                                (remove)="removeInfraestructura($event)"
-                                [infraestructura]="horario"
-                            >
+                            <app-grupo-infra (remove)="removeInfraestructura($event)" [infraestructura]="horario">
                             </app-grupo-infra>
                         </ng-container>
                     </div>
 
                 </div>
-                
+
             </div>
 
 
-
-
             <div class="form-floating mb-3">
-                <select class="form-select" id="nivel" aria-label="Floating label select example"
-                    formControlName="idNivel">
+                <select (change)="selectIdNivel($event)" class="form-select" id="nivel"
+                    aria-label="Floating label select example" formControlName="idNivel">
                     <option selected>Selecionar nivel de formación</option>
                     <option *ngFor='let nivel of niveles' [ngValue]="nivel.id">{{nivel.nivel}}</option>
                 </select>
@@ -207,8 +194,11 @@
                     </div>
                 </div>
                 <div class="col-sm-2 mt-2">
-                    <button (click)="agregarTipoGrupo()" type="button" class="btn btn-success rounded-circle" >+</button>
+                    <button (click)="agregarTipoGrupo()" type="button" class="btn btn-success rounded-circle">+</button>
                 </div>
+                <app-tipogrupos *ngIf="showFormTipoG" [tipoGrupos]="tipoGrupos" (store)="guardarTipoGrupo($event)"
+                    (cancel)="cancelarTipoGrupo()">
+                </app-tipogrupos>
             </div>
 
             <div class="form-floating">
@@ -253,16 +243,6 @@
             </div>
 
         </form>
-
-
-
-
-       
-            <app-tipogrupos *ngIf="showFormTipoG" [tipoGrupos]="tipoGrupos" (store)="guardarTipoGrupo($event)" (cancel)="cancelarTipoGrupo()">
-            </app-tipogrupos>
-   
-
-
 
         <div class="card-footer text-center">
             <button type="submit" class="btn btn-success" (click)="guardarGrupo()"><!--[disabled]="formGrupo.invalid"-->

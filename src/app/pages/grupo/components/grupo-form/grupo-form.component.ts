@@ -31,7 +31,7 @@ export class GrupoFormComponent implements OnInit {
   @Input() jornadas: JornadaModel[] = [];
   @Input() infraestructuras: InfraestructuraModel[] = [];
 
-  @Input() grupo: GrupoModel=null;
+  @Input() grupo: GrupoModel;
   @Input() title: string;
 
   @Output() store = new EventEmitter<GrupoModel>();
@@ -46,7 +46,7 @@ export class GrupoFormComponent implements OnInit {
 
   formGrupo: UntypedFormGroup;
   idTipoGrupo: number = 0;
-  idLider: number = 0;
+  //idLider: number = 0;
   idPrograma: number = 0;
   idNivel: number = 0;
   idTipoFormacion: number = 0;
@@ -66,7 +66,7 @@ export class GrupoFormComponent implements OnInit {
       observacion: '',
       nombreJornada: '',
       idTipoGrupo: null,
-      idLider: null,
+      //idLider: null,
       idPrograma: null,
       idNivel: null,
       idTipoFormacion: null,
@@ -158,7 +158,7 @@ export class GrupoFormComponent implements OnInit {
 
   setIndexes(grupo:GrupoModel){
     this.idTipoGrupo=grupo.idTipoGrupo;
-    this.idLider=grupo.idLider;
+    //this.idLider=grupo.idLider;
     this.idPrograma=grupo.idPrograma;
     this.idNivel=grupo.idNivel;
     this.idTipoFormacion=grupo.idTipoFormacion;
@@ -172,47 +172,29 @@ export class GrupoFormComponent implements OnInit {
     });
     this.idTipoGrupo=tipoGrupo.id;
   }
-  selectIdLider(event:any){
+  /*selectIdLider(event:any){
     const value = event.target.value;
-    const lider = this.instructores.find((instructor)=>{
-      instructor.persona.apellido1.toUpperCase()===value.toUpperCase();
-    });
-    this.idLider=lider.id;
-  }
+    this.idLider=value;
+  }*/
   selectIdPrograma(event:any){
     const value = event.target.value;
-    const programa = this.programas.find((programa)=>{
-      programa.nombrePrograma.toUpperCase()===value.toUpperCase();
-    });
-    this.idPrograma=programa.id;
+    this.idPrograma=value;
   }
   selectIdNivel(event:any){
     const value = event.target.value;
-    const nivel = this.niveles.find((nivel)=>{
-      nivel.nivel.toUpperCase()===value.toUpperCase();
-    });
-    this.idNivel=nivel.id;
+    this.idNivel=value;
   }
   selectIdTipoFormacion(event:any){
     const value = event.target.value;
-    const tipoFormacion = this.tipoFormaciones.find((tFormaciones)=>{
-      tFormaciones.nombreTipoFormacion.toUpperCase()===value.toUpperCase();
-    });
-    this.idTipoFormacion=tipoFormacion.id;
+    this.idTipoFormacion=value;
   }
   selectIdEstado(event:any){
     const value = event.target.value;
-    const estado = this.estadoGrupos.find((estado)=>{
-      estado.nombreEstado.toUpperCase()===value.toUpperCase();
-    });
-    this.idEstado=estado.id;
+    this.idEstado=value;
   }
   selectIdTipoOferta(event:any){
     const value = event.target.value;
-    const tipoOferta = this.tipoOfertas.find((tOferta)=>{
-      tOferta.nombreOferta.toUpperCase()===value.toUpperCase();
-    });
-    this.idTipoOferta=tipoOferta.id;
+    this.idTipoOferta=value;
   }
 
   setLists(grupo:GrupoModel){
@@ -251,7 +233,7 @@ export class GrupoFormComponent implements OnInit {
       observacion:[''],
       nombreJornada:['',Validators.required],
       idTipoGrupo:['',Validators.required],
-      idLider:['',Validators.required],
+      idLider:[''],
       idPrograma:['',Validators.required],
       idNivel:['',Validators.required],
       idTipoFormacion:['',Validators.required],
@@ -272,18 +254,19 @@ export class GrupoFormComponent implements OnInit {
     this.store.emit(grupo);
   }
   private getControl(control:string){
-    return this.formGrupo.controls[control];
+    const controlField = this.formGrupo.controls[control];
+    console.log(controlField.value);
+    return controlField;
   }
   getGrupo(){
-    let grupo:GrupoModel = {
+    return {
       id:this.grupo?.id,
       nombre:this.getControl('nombreGrupo').value,
       fechaInicialGrupo:this.getControl('fechaInicialGrupo').value,
       fechaFinalGrupo:this.getControl('fechaFinalGrupo').value,
       observacion:this.getControl('observacion').value,
-      nombreJornada:this.getControl('nombreJornada').value,
       idTipoGrupo:this.idTipoGrupo,
-      idLider:this.idLider,
+      //idLider:this.idLider,
       idPrograma:this.idPrograma,
       idNivel:this.idNivel,
       idTipoFormacion:this.idTipoFormacion,
@@ -292,7 +275,6 @@ export class GrupoFormComponent implements OnInit {
       jornadas:this.jornadasGrupo,
       infraestructuras:this.horariosInfra
     }
-    return grupo;
   }
 
   agregarHorarioInfraestructura(){
