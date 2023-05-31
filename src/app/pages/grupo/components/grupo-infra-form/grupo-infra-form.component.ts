@@ -1,4 +1,3 @@
-import { DatePipe } from '@angular/common';
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { FormControl, FormGroup, UntypedFormGroup } from '@angular/forms';
 import { GrupoModel } from '@models/grupo.model';
@@ -17,16 +16,15 @@ export class GrupoInfraFormComponent {
   @Output() cancelInfr = new EventEmitter<void>();
 
   formGrupoInfr: UntypedFormGroup = new FormGroup({
+    idInfraestructura:new FormControl(),
     fechaInicial: new FormControl(),
     fechaFinal: new FormControl()
   });
   infraestructura: InfraestructuraModel = null;
-
-  constructor(
-    private datePipe: DatePipe
-  ) { }
-
-
+ 
+  get idInfraestructuraField() {
+    return this.formGrupoInfr.get('idInfraestructura');
+  }
   get fechaInicialField() {
     return this.formGrupoInfr.get('fechaInicial');
   }
@@ -35,18 +33,18 @@ export class GrupoInfraFormComponent {
   }
 
   seleccionarInfraestructura(event: any) {
-    const idInfra = event.target.value;
-    this.infraestructuras.map((infr) => {
-      if (infr.id == idInfra) {
-        this.infraestructura = infr;
-      }
-    })
+    const value:string = event.target.value;
+    const data:string[]=value.split('/');
+    this.infraestructura=this.infraestructuras.find((infr)=>
+      (infr.nombreInfraestructura.toLowerCase()==data[0].toLowerCase())
+      &&
+      (infr.sede.nombreSede.toLowerCase()==data[1].toLowerCase())
+    );
     this.infraestructura.horario_infraestructura = {
       idInfraestructura: this.infraestructura.id,
       fechaInicial: new Date(),
       fechaFinal: new Date()
     };
-
   }
   addInfraestructura() {
     this.infraestructura.horario_infraestructura.fechaInicial = this.getControl('fechaInicial').value;

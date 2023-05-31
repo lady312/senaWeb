@@ -22,7 +22,6 @@ import { debounceTime } from 'rxjs/operators';
 export class GrupoFormComponent implements OnInit {
 
   @Input() tipoGrupos: TipoGrupoModel[] = [];
-  @Input() instructores: UsuarioModel[] = [];
   @Input() programas: ProgramaModel[] = [];
   @Input() niveles: NivelFormacionModel[] = [];
   @Input() tipoFormaciones: TipoFormacionModel[] = [];
@@ -47,7 +46,6 @@ export class GrupoFormComponent implements OnInit {
 
   formGrupo: UntypedFormGroup;
   idTipoGrupo: number = 0;
-  //idLider: number = 0;
   idPrograma: number = 0;
   idNivel: number = 0;
   idTipoFormacion: number = 0;
@@ -67,7 +65,6 @@ export class GrupoFormComponent implements OnInit {
       observacion: '',
       nombreJornada: '',
       idTipoGrupo: null,
-      idLider: null,
       idPrograma: null,
       idNivel: null,
       idTipoFormacion: null,
@@ -80,7 +77,6 @@ export class GrupoFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.title)
     if (this.title != 'Añadir Grupo') {
       this.setGrupo();
       this.setIndexes(this.grupo);
@@ -94,7 +90,6 @@ export class GrupoFormComponent implements OnInit {
         observacion: '',
         nombreJornada: '',
         idTipoGrupo: null,
-        idLider: null,
         idPrograma: null,
         idNivel: null,
         idTipoFormacion: null,
@@ -104,7 +99,7 @@ export class GrupoFormComponent implements OnInit {
         jornadas: []
       }
     }
-   
+
   }
 
   get nombreGrupoField() {
@@ -124,9 +119,6 @@ export class GrupoFormComponent implements OnInit {
   }
   get idTipoGrupoField() {
     return this.formGrupo.get('idTipoGrupo');
-  }
-  get idLiderField() {
-    return this.formGrupo.get('idLider');
   }
   get idProgramaField() {
     return this.formGrupo.get('idPrograma');
@@ -155,13 +147,17 @@ export class GrupoFormComponent implements OnInit {
       fechaFinal: this.grupo.fechaFinalGrupo,
       observacion: this.grupo.observacion,
       nombreJornada: this.grupo.nombreJornada,
-      idPrograma: this.grupo.programa.nombrePrograma
+      idPrograma: this.grupo.programa.nombrePrograma,
+      idNivel:this.grupo.nivel_formacion.nivel,
+      idTipoFormacion: this.grupo.tipo_formacion.nombreTipoFormacion,
+      idEstado:this.grupo.estado_grupo.nombreEstado,
+      idTipoOferta:this.grupo.tipo_oferta.nombreOferta,
+      idTipoGrupo:this.grupo.tipo_grupo.nombreTipoGrupo
     });
   }
 
   setIndexes(grupo: GrupoModel) {
     this.idTipoGrupo = grupo.idTipoGrupo;
-    //this.idLider=grupo.idLider;
     this.idPrograma = grupo.idPrograma;
     this.idNivel = grupo.idNivel;
     this.idTipoFormacion = grupo.idTipoFormacion;
@@ -172,23 +168,23 @@ export class GrupoFormComponent implements OnInit {
     const value = event.target.value;
     this.idTipoGrupo = value;
   }
-  /*selectIdLider(event:any){
-    const value = event.target.value;
-    this.idLider=value;
-  }*/
   selectIdPrograma(event: any) {
-    const value:number = event.target.value;
-    console.log(value);
-    this.idPrograma = value;
+    const value: string = event.target.value;
+    const programa: ProgramaModel = this.programas.find((programa) =>
+      programa.nombrePrograma.toLocaleLowerCase() === value.toLocaleLowerCase());
+    this.idPrograma = programa.id;
   }
   selectIdNivel(event: any) {
-    const value = event.target.value;
-    this.idNivel = value;
+    const value: string = event.target.value;
+    const nivel = this.niveles.find((nivel) =>
+      nivel.nivel.toLocaleLowerCase() === value.toLocaleLowerCase());
+    this.idNivel = nivel.id;
   }
   selectIdTipoFormacion(event: any) {
-    const value = event.target.value;
-    console.log(value);
-    this.idTipoFormacion = value;
+    const value: string = event.target.value;
+    const tipoFormacion = this.tipoFormaciones.find((tFormacion) =>
+      tFormacion.nombreTipoFormacion.toLocaleLowerCase() === value.toLocaleLowerCase());
+    this.idTipoFormacion = tipoFormacion.id;
   }
   selectIdEstado(event: any) {
     const value = event.target.value;
@@ -203,7 +199,7 @@ export class GrupoFormComponent implements OnInit {
     this.jornadasGrupo = grupo.jornadas.map((jornadaGrupo) => {
       const index = this.jornadas.findIndex((jornada) => jornada == jornadaGrupo);
       this.changeJornada(true, index + 1);
-      jornadaGrupo.jornada_grupo={idJornada:jornadaGrupo.id};
+      jornadaGrupo.jornada_grupo = { idJornada: jornadaGrupo.id };
       return jornadaGrupo;
     });
     this.horariosInfra = grupo.infraestructuras;
@@ -236,7 +232,6 @@ export class GrupoFormComponent implements OnInit {
       observacion: [''],
       nombreJornada: ['', Validators.required],
       idTipoGrupo: ['', Validators.required],
-      idLider: [''],
       idPrograma: ['', Validators.required],
       idNivel: ['', Validators.required],
       idTipoFormacion: ['', Validators.required],
@@ -270,7 +265,6 @@ export class GrupoFormComponent implements OnInit {
       fechaFinalGrupo: this.getControl('fechaFinal').value,
       observacion: this.getControl('observacion').value,
       idTipoGrupo: this.idTipoGrupo,
-      //idLider:this.idLider,
       idPrograma: this.idPrograma,
       idNivel: this.idNivel,
       idTipoFormacion: this.idTipoFormacion,
@@ -298,7 +292,7 @@ export class GrupoFormComponent implements OnInit {
     this.allJornadas = allJor;
     if (this.allJornadas) {
       this.jornadasGrupo = this.jornadas.map((jor) => {
-        jor.jornada_grupo={idJornada:jor.id};
+        jor.jornada_grupo = { idJornada: jor.id };
         jor["checked"] = true;
         return jor;
       });
@@ -316,8 +310,8 @@ export class GrupoFormComponent implements OnInit {
     this.jornadas[index]["checked"] = checked;
     this.allJornadas = this.totalJornadasSeleccionadas === 3;
     if (this.jornadas[index]['checked']) {
-      let newJornada= this.jornadas[index];
-      newJornada.jornada_grupo={idJornada:newJornada.id}
+      let newJornada = this.jornadas[index];
+      newJornada.jornada_grupo = { idJornada: newJornada.id }
       this.jornadasGrupo.push(newJornada);
     } else {
       const deleteIndex = this.jornadasGrupo.findIndex((jornada) => jornada === this.jornadas[index]);

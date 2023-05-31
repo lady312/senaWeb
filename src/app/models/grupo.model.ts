@@ -23,9 +23,6 @@ export interface GrupoModel {
   idTipoGrupo?: number;
   tipo_grupo?: TipoGrupoModel;
 
-  idLider?: number;
-  lider?: UsuarioModel;
-
   idPrograma?: number;
   programa?: ProgramaModel;
 

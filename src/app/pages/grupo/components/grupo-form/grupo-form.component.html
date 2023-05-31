@@ -1,20 +1,18 @@
-<div class="modal-body" style="background: rgb(246, 244, 244);">
-    <div class="card-header" style="background: rgb(246, 244, 244);">
+<div class="modal-body">
+    <div class="card-header">
         <strong>{{title}}</strong>
     </div>
-    <div class="card-body" style="background: rgb(246, 244, 244);">
-        <form class="tipoDocFormulario" [formGroup]="formGrupo" class="was-validated" novalidate>
+    <div class="card-body align-items-center">
+        <form class="grupoForm" [formGroup]="formGrupo" class="was-validated" novalidate>
 
             <!--Campo para seleccionar un programa-->
             <div class="form-floating mb-3">
-                <select (change)="selectIdPrograma($event)" class="form-select" id="programa"
-                    aria-label="Floating label select example" formControlName="idPrograma">
-                    <option selected>Selecionar programa</option>
-                    <option *ngFor='let programa of programas' [value]="programa.id">
-                        {{programa.nombrePrograma}}
-                    </option>
-                </select>
-                <label for="programa">Programa</label>
+                <input (change)="selectIdPrograma($event)" class="form-control" list="programa-list" type="text"
+                    formControlName="idPrograma" id="idPrograma" required>
+                <label for="idPrograma">Programa</label>
+                <datalist id="programa-list">
+                    <option *ngFor='let programa of programas' [value]="programa.nombrePrograma"></option>
+                </datalist>
                 <div class="valid-feedback" *ngIf="!idProgramaField.hasError('required')">
                     Valor válido
                 </div>
@@ -26,7 +24,7 @@
             <!--Campo para introducir el nombre del grupo-->
             <div class="form-floating mb-3">
                 <input type="Text" onkeyup="javascript:this.value=this.value.toUpperCase();" class="form-control"
-                    id="nombreGrupo" placeholder="name@example.com" formControlName='nombreGrupo'>
+                    id="nombreGrupo" formControlName='nombreGrupo'>
                 <label for="nombreGrupo">Número de ficha / nombre</label>
                 <div class="valid-feedback" *ngIf="!nombreGrupoField.hasError('required')">
                     Valor válido
@@ -36,59 +34,37 @@
                 </div>
             </div>
 
-            <!--El lider debe ser nullable-->
-            <div class="form-floating mb-3">
-                <label for="lider">Instructor</label>
-                <input class="form-control" list="lider-list"  type="text" name="lider"
-                    id="lider" aria-label="Floating label select" formControlName="idPrograma">
-                <datalist id="lider-list">
-                    <option *ngFor="let lider of instructores" [value]="lider.persona.apellido1"></option>
-                </datalist>
-                <div class="valid-feedback" *ngIf="!idLiderField.hasError('required')">
-                    Valor válido
-                </div>
-                <div class="invalid-feedback">
-                    Por favor ingresé un valor válido para el instructor
-                </div>
-            </div>
-
             <!--Horario Infraestructura-->
-            <div class="row mb-2">
-                <div class="col-sm-10">
-                    <div class="form-floating mb-3" *ngIf="!showFormHorario else formHorario">
-                        <label class="col col-md-3" for="infraestrutura">Infraestructura</label>
-                        <div class="col-sm-2 mt-2">
-                            <button type="button" class="btn btn-success rounded-circle"
-                                (click)="agregarHorarioInfraestructura()">+</button>
-                        </div>
-                    </div>
-                    <ng-template #formHorario>
-                        <app-grupo-infra-form (storeInfr)="addInfraestructura($event)"
-                            (cancelInfr)="cancelarHorarioInfraestructura()" [infraestructuras]="infraestructuras">
-                        </app-grupo-infra-form>
-                    </ng-template>
-
-
-                    <div class="bg-white rounded">
-                        <p class="h4">Infraestructuras</p>
-                        <ng-container *ngFor="let horario of horariosInfra">
-                            <app-grupo-infra (remove)="removeInfraestructura($event)" [infraestructura]="horario">
-                            </app-grupo-infra>
-                        </ng-container>
-                    </div>
-
+            <div class="row justify-content-center">
+                <div class="card-header row-md-10 row justify-content-between"
+                    *ngIf="!showFormHorario else formHorario">
+                    <p class="col col-md-10 h4 mb-0">Añadir Infraestructura</p>
+                    <button
+                        class="col col-sm-1 btn btn-success rounded-circle justify-content-center aling-items-center"
+                        type="button" id="addInfraestructura" (click)="agregarHorarioInfraestructura()">+</button>
                 </div>
-
+                <ng-template class="row" #formHorario>
+                    <app-grupo-infra-form (storeInfr)="addInfraestructura($event)"
+                        (cancelInfr)="cancelarHorarioInfraestructura()" [infraestructuras]="infraestructuras">
+                    </app-grupo-infra-form>
+                </ng-template>
+                <div class="card-body">
+                    <p class="h4">Infraestructuras</p>
+                    <ng-container *ngFor="let horario of horariosInfra">
+                        <app-grupo-infra (remove)="removeInfraestructura($event)" [infraestructura]="horario">
+                        </app-grupo-infra>
+                    </ng-container>
+                </div>
             </div>
 
-
+            <!--Campo para selecionar el nivel de formacion-->
             <div class="form-floating mb-3">
-                <select (change)="selectIdNivel($event)" class="form-select" id="nivel"
-                    aria-label="Floating label select example" formControlName="idNivel">
-                    <option selected>Selecionar nivel de formación</option>
-                    <option *ngFor='let nivel of niveles' [value]="nivel.id">{{nivel.nivel}}</option>
-                </select>
-                <label for="nivel">Nivel de formación</label>
+                <input (change)="selectIdNivel($event)" class="form-control" list="nivel-list" type="text"
+                    formControlName="idNivel" id="idNivel" required>
+                <label for="idNivel">Nivel de formación</label>
+                <datalist id="tNivel-list">
+                    <option *ngFor='let nivel of niveles' [value]="nivel.nivel"></option>
+                </datalist>
                 <div class="valid-feedback" *ngIf="!idNivelField.hasError('required')">
                     Valor válido
                 </div>
@@ -97,14 +73,15 @@
                 </div>
             </div>
 
+            <!--Campo para seleccionar el tipo de formacion-->
             <div class="form-floating mb-3">
-                <select class="form-select" id="tipoFormacion" aria-label="Floating label select example"
-                    (change)="selectIdTipoFormacion($event)" formControlName="idTipoFormacion">
-                    <option selected>Selecionar tipo de formación</option>
-                    <option *ngFor='let tipoFormacion of tipoFormaciones' [value]="tipoFormacion.id">
-                        {{tipoFormacion.nombreTipoFormacion}}</option>
-                </select>
-                <label for="tipoFormacion">Tipo de formación</label>
+                <input (change)="selectIdTipoFormacion($event)" class="form-control" list="tFormacion-list" type="text"
+                    formControlName="idTipoFormacion" id="idTipoFormacion" required>
+                <label for="idTipoFormacion">Tipo de formación</label>
+                <datalist id="tFormacion-list">
+                    <option *ngFor='let tipoFormacion of tipoFormaciones' [value]="tipoFormacion.nombreTipoFormacion">
+                    </option>
+                </datalist>
                 <div class="valid-feedback" *ngIf="!idTipoFormacionField.hasError('required')">
                     Valor válido
                 </div>
@@ -114,28 +91,27 @@
             </div>
 
             <div class="form-floating mb-3">
-                <select class="form-select" id="estado" aria-label="Floating label select example"
-                    (change)="selectIdEstado($event)" formControlName="idEstado">
-                    <option selected>Selecionar estado</option>
-                    <option *ngFor='let estado of estadoGrupos' [value]="estado.id">{{estado.nombreEstado}}</option>
-                </select>
-                <label for="estado">Tipo de estado</label>
-                <!-- <div class="valid-feedback" *ngIf="!estadoField.hasError('required')">
-            Valor válido
-          </div>
-          <div class="invalid-feedback">
-            Por favor ingresé un valor válido para el estado
-          </div>-->
+                <input (change)="selectIdEstado($event)" class="form-control" list="estado-list" type="text"
+                    formControlName="idEstado" id="idEstado" required>
+                <label for="idEstado">Estado de formación</label>
+                <datalist id="estado-list">
+                    <option *ngFor='let estado of estadoGrupos' [value]="estado.nombreEstado"></option>
+                </datalist>
+                <div class="valid-feedback" *ngIf="!idEstadoField.hasError('required')">
+                    Valor válido
+                </div>
+                <div class="invalid-feedback">
+                    Por favor ingresé un valor válido para el estado
+                </div>
             </div>
 
             <div class="form-floating mb-3">
-                <select class="form-select" id="tipoOferta" aria-label="Floating label select example"
-                    (change)="selectIdTipoOferta($event)" formControlName="idTipoOferta">
-                    <option selected>Selecionar tipo de oferta</option>
-                    <option *ngFor='let tipoOferta of tipoOfertas' [value]="tipoOferta.id">{{tipoOferta.nombreOferta}}
-                    </option>
-                </select>
-                <label for="tipoOferta">Tipo de oferta</label>
+                <input (change)="selectIdTipoOferta($event)" class="form-control" list="tOferta-list" type="text"
+                    formControlName="idTipoOferta" id="idTipoOferta" required>
+                <label for="idTipoOferta">Tipo de oferta formativa</label>
+                <datalist id="tOferta-list">
+                    <option *ngFor='let tipoOferta of tipoOfertas' [value]="tipoOferta.nombreOferta"></option>
+                </datalist>
                 <div class="valid-feedback" *ngIf="!idTipoOfertaField.hasError('required')">
                     Valor válido
                 </div>
@@ -147,9 +123,8 @@
             <div class="row">
                 <div class="col-sm-6">
                     <div class="form-floating mb-3">
-                        <input type="date" onkeyup="javascript:this.value=this.value.toUpperCase();"
-                            class="form-control" id="fechaInicial" placeholder="name@example.com"
-                            formControlName='fechaInicial' #fechaInicialInput>
+                        <input type="date" class="form-control" id="fechaInicial" formControlName='fechaInicial'
+                            #fechaInicialInput>
                         <label for="fechaInicial">Fecha inicial lectiva</label>
                         <div class="valid-feedback" *ngIf="!fechaInicialField.hasError('required')">
                             Valor válido
@@ -161,9 +136,8 @@
                 </div>
                 <div class="col-sm-6">
                     <div class="form-floating mb-3">
-                        <input type="date" onkeyup="javascript:this.value=this.value.toUpperCase();"
-                            class="form-control" id="floatingInput" placeholder="name@example.com"
-                            formControlName='fechaFinal' #fechaFinalInput>
+                        <input type="date" class="form-control" id="floatingInput" formControlName='fechaFinal'
+                            required>
                         <label for="floatingInput">Fecha fin lectiva</label>
                         <div class="valid-feedback" *ngIf="!fechaFinalField.hasError('required')">
                             Valor válido
@@ -176,15 +150,13 @@
             </div>
             <div class="row mb-2">
                 <div class="col-sm-10">
-                    <div class="form-floating">
-                        <select class="form-select" id="tipoGrupo" aria-label="Floating label select example"
-                            (change)="selectIdTipoGrupo($event)" formControlName="idTipoGrupo">
-                            <option selected>Selecionar tipo de grupo</option>
-                            <option *ngFor='let tipoGrupo of tipoGrupos' [value]="tipoGrupo.id">
-                                {{tipoGrupo.nombreTipoGrupo}}
-                            </option>
-                        </select>
-                        <label for="tipoGrupo">Tipo de grupo</label>
+                    <div class="form-floating mb-3">
+                        <input (change)="selectIdTipoGrupo($event)" class="form-control" list="tGrupo-list" type="text"
+                            formControlName="idTipoGrupo" id="idTipoOferta" required>
+                        <label for="idTipoGrupo">Tipo de Grupo</label>
+                        <datalist id="tGrupo-list">
+                            <option *ngFor='let tipoGrupo of tipoGrupos' [value]="tipoGrupo.nombreTipoGrupo"></option>
+                        </datalist>
                         <div class="valid-feedback" *ngIf="!idTipoGrupoField.hasError('required')">
                             Valor válido
                         </div>
@@ -245,7 +217,7 @@
         </form>
 
         <div class="card-footer text-center">
-            <button type="submit" class="btn btn-success" (click)="guardarGrupo()"><!--[disabled]="formGrupo.invalid"-->
+            <button type="submit" class="btn btn-success" (click)="guardarGrupo()">
                 <i class="fa fa-dot-circle-o"></i> Aceptar
             </button>
             <button type="reset" class="btn btn-danger" (click)="closeModal()">

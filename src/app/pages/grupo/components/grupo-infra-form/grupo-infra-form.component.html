@@ -1,21 +1,55 @@
 <div class="card">
     <div class="card-header">
-        <h3>Nueva Infraestructura</h3>
+        <p class="h4">Añadir Infraestructura</p>
     </div>
     <div class="card-body">
-        <form [formGroup]="formGrupoInfr">
-            <select (change)="seleccionarInfraestructura($event)">
-                <option selected>Seleccionar Infraestructura</option>
-                <option *ngFor="let infr of infraestructuras" [value]="infr.id">
-                    {{infr.nombreInfraestructura}} {{infr.sede.nombreSede}}
-                </option>
-            </select>
-            <label for="fechaInicialF">Fecha Inicial</label>
-            <input  formControlName="fechaInicial" type="date" name="fechaInicialF" id="fechaF">
-            <label for="fechaFinalF">Fecha Final</label>
-            <input formControlName="fechaFinal" type="date" name="fechaFinalF" id="fechaFinalF">
-            <button (click)="addInfraestructura()" class="btn btn-succes">Agregar</button>
-            <button (click)="cancelar()">Cancelar</button>
+        <form [formGroup]="formGrupoInfr" class="was-validated" novalidate>
+            <div class="form-floating mb-3">
+                <input (change)="seleccionarInfraestructura($event)" class="form-control" list="infr-list" type="text"
+                    formControlName="idInfraestructura" id="idInfr" required>
+                <label for="idInfr">Infraestructura/Sede</label>
+                <datalist id="infr-list">
+                    <option *ngFor='let infr of infraestructuras'
+                        [value]="infr.nombreInfraestructura+'/'+infr.sede.nombreSede"></option>
+                </datalist>
+                <div class="valid-feedback" *ngIf="!idInfraestructuraField.hasError('required')">
+                    Valor válido
+                </div>
+                <div class="invalid-feedback">
+                    Por favor elija una infraestructura
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-floating mb-3">
+                        <input type="date" class="form-control" id="fechaInicial" formControlName='fechaInicial'
+                            id="fechaInicial" required>
+                        <label for="fechaInicial">Disponible desde</label>
+                        <div class="valid-feedback" *ngIf="!fechaInicialField.hasError('required')">
+                            Valor válido
+                        </div>
+                        <div class="invalid-feedback">
+                            Elija desde cuando ese grupo va a usar la infraestructura
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-floating mb-3">
+                        <input type="date" class="form-control" id="fechaFinal" formControlName='fechaFinal' required>
+                        <label for="fechaFinal">Disponible hasta</label>
+                        <div class="valid-feedback" *ngIf="!fechaFinalField.hasError('required')">
+                            Valor válido
+                        </div>
+                        <div class="invalid-feedback">
+                            Elija hasta cuando ese grupo va a usar la infraestructur
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <button (click)="addInfraestructura()" class="col col-md-6 btn btn-success" [disabled]="formGrupoInfr.invalid">Agregar</button>
+                <button (click)="cancelar()" class="col col-md-6 btn btn-danger">Cancelar</button>
+            </div>
         </form>
     </div>
 </div>
