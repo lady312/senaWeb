@@ -40,7 +40,56 @@
         </div>
       </div>
 
+      <div class="form-group row">
+        <label class="col-md-4 col-form-label" for="name">Nro horas</label>
+        <div class="col-md-7">
+          <input
+            type="number"
+            onkeyup="javascript:this.value"
+            placeholder="Ingrese el numero de horas"
+            class="form-control is-valid"
+            formControlName='numeroHoras'>
+          <div class="valid-feedback" *ngIf="!numeroHoras.hasError('required')">
+            Valor válido
+          </div>
+        </div>
+        <div class="invalid-feedback">
+          por favor ingresé un valor válido
+        </div>
+      </div>
 
+      <div class="form-group row">
+        <label class="col-md-4 col-form-label" for="TipoRaps">Tipo resultado</label>
+        <div class="col-md-7">
+          <select class="form-control is-valid" formControlName='idTipoRaps'>
+            <option [ngValue]="null">Seleccionar resultado </option>
+            <option *ngFor='let tipoResultado of tipoResultados' [ngValue]="tipoResultado.id">{{tipoResultado.nombre}}</option>
+          </select>
+          <div class="valid-feedback" *ngIf="!tipoResultado.hasError('required')">
+            Valor válido
+          </div>
+        </div>
+        <div class="invalid-feedback">
+          por favor ingresé un valor para Fase
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label class="col-md-4 col-form-label" for="competencias">Competencias</label>
+        <div class="col-md-7">
+          <select class="form-control is-valid" 
+            formControlName='idCompetencia'>
+            <option [ngValue]="null">Seleccionar competencia </option>
+            <option *ngFor='let competencia of competencias' [ngValue]="competencia.id">{{competencia.nombreCompetencia}}</option>
+          </select>
+          <div class="valid-feedback" *ngIf="!competenciaField.hasError('required')">
+            Valor válido
+          </div>
+        </div>
+        <div class="invalid-feedback">
+          por favor ingresé un valor para Fase
+        </div>
+      </div>
     </form>
     <div class="card-footer">
       <button
