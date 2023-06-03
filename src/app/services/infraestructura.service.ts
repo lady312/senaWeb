@@ -10,7 +10,6 @@ export class InfraestructuraService {
   constructor(
     private _coreService: CoreService
   ) { }
-
   //retorna todas las infraestructuras
   traerInfraestructuras(){
     return this._coreService.get<InfraestructuraModel[]>('infraestructuras');
@@ -43,8 +42,19 @@ export class InfraestructuraService {
   //crea una infraestructura
   guardarInfraestructura(infraestructura:InfraestructuraModel){
     infraestructura.nombreInfraestructura=infraestructura.nombreInfraestructura.toUpperCase();
-    infraestructura.descripcion=infraestructura.descripcion.toUpperCase();
+    if(infraestructura.descripcion){
+      infraestructura.descripcion=infraestructura.descripcion.toLowerCase();
+    }
+    console.log(infraestructura.newQr);
     return this._coreService.post<InfraestructuraModel>('infraestructuras',infraestructura);
+  }
+  //crea varias infraestructuras
+  guardarInfraestructuras(infrs:InfraestructuraModel[]){
+    infrs.forEach(infr=>{
+      infr.nombreInfraestructura=infr.nombreInfraestructura.toUpperCase();
+      infr.descripcion=infr.descripcion.toLocaleLowerCase();
+    });
+    return this._coreService.post<InfraestructuraModel[]>('infraestructuras',infrs);
   }
   //actualiza una infraestructura existente
   actualizarInfraestructura(infraestructura: InfraestructuraModel){

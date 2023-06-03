@@ -73,6 +73,7 @@ export class GruposListComponent {
     }
   }
 
+  
   obtenerNivelFormativo(): string {
     if (this.grupo && this.grupo.idNivel) {
       const nivel = this.nivel.find(t => t.id === this.grupo.idNivel);

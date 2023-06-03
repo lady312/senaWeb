@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { InfraestructuraModel } from '@models/infraestructura.model';
-
+import { environment } from '../../../../../environments/environment';
 @Component({
   selector: 'app-infraestructura-result',
   templateUrl: './infraestructura-result.component.html',
@@ -9,6 +9,7 @@ import { InfraestructuraModel } from '@models/infraestructura.model';
 export class InfraestructuraResultComponent {
 
   @Input() resultadoBusqueda: InfraestructuraModel;
+  @Input() imgBusqueda:string;
 
   @Output() cancel= new EventEmitter<void>();
   @Output() update= new EventEmitter<InfraestructuraModel>();

@@ -114,6 +114,7 @@ export class CompetenciasComponent {
       codigoCompetencia: this.getControl('codigoCompetencia').value,
       nombreCompetencia: this.getControl('nombreCompetencia').value,
       idActividadProyecto:this.getControl('idActividadProyecto').value,
+      
     }
   }
 

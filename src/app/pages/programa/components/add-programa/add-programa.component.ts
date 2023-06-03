@@ -19,16 +19,23 @@ export class AddProgramaComponent implements OnInit {
   @Output() store: EventEmitter<ProgramaModel> = new EventEmitter();
   @Output() cancel: EventEmitter<void> = new EventEmitter();
   @Output() create: EventEmitter<void> = new EventEmitter();
+  @Output() formDocs: EventEmitter<FileList> = new EventEmitter<FileList>();
+
+    filesRuta: FileList;
   formPrograma: UntypedFormGroup;
   formTipoProgramas: UntypedFormGroup;
   showModalTipoProgramas = false;
-  TipoPrograma: TipoProgramaModel = null; 
+  TipoPrograma: TipoProgramaModel = null;
+  idDocumento: number[];
+ filesRutaDoc: {[key:number]: {files:FileList; fechaVig:string}} ={};
+  selectedFile: File;
 
 
   constructor(
     private formBuilder: UntypedFormBuilder,
     private TipoProgramaService: TipoProgramaService,
-    private _uiNotificationService: UINotificationService
+    private _uiNotificationService: UINotificationService,
+    private _programaService: TipoProgramaService,
   ) {
     this.programa = {
       id: null,
@@ -41,7 +48,8 @@ export class AddProgramaComponent implements OnInit {
       etapaLectiva:null,
       etapaProductiva:null,
       creditosLectiva:null,
-      creditosProductiva:null
+      creditosProductiva:null,
+      rutaArchivo:null,
     };
     this.buildForm();
 
@@ -50,9 +58,15 @@ export class AddProgramaComponent implements OnInit {
       nombreTipoPrograma:'',
       descripcion:''
     };
+    this.idDocumento=[];
     this.buildForms();
   }
-
+  
+  onFileChangeDoc(files: FileList) {
+    const file = files[0]; 
+    this.formDocs.emit(files); 
+  }
+  
   get nombreTipoProgramaField() {
     return this.formTipoProgramas.get('nombreTipoPrograma');
   }
@@ -169,6 +183,10 @@ export class AddProgramaComponent implements OnInit {
     return this.formPrograma.get('creditosProductiva');
   }
 
+  get rutaArchivo() {
+    return this.formPrograma.get('rutaArchivo');
+  }
+
   
   setPrograma() {
     if (this.programa) {
@@ -181,7 +199,7 @@ export class AddProgramaComponent implements OnInit {
         etapaLectiva:this.programa.etapaLectiva,
         etapaProductiva:this.programa.etapaProductiva,
         creditosLectiva:this.programa.creditosLectiva,
-        creditosProductiva:this.programa.creditosProductiva
+        creditosProductiva:this.programa.creditosProductiva,
       })
     }
   }
@@ -197,7 +215,8 @@ export class AddProgramaComponent implements OnInit {
       etapaLectiva:['', [Validators.required]],
       etapaProductiva:['', [Validators.required]],
       creditosLectiva:['', [Validators.required]],
-      creditosProductiva:['', [Validators.required]]
+      creditosProductiva:['', [Validators.required]],
+      rutaArchivo:['', [Validators.required]]
     });
 
     this.formPrograma.valueChanges
@@ -233,6 +252,7 @@ export class AddProgramaComponent implements OnInit {
       etapaProductiva:this.getControl('etapaProductiva').value,
       creditosLectiva:this.getControl('creditosLectiva').value,
       creditosProductiva:this.getControl('creditosProductiva').value,
+      rutaArchivo:this.getControl('rutaArchivo').value
     }
   }
 }

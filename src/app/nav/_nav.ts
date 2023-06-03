@@ -25,8 +25,10 @@ import {  GESTION_MEDIO_PAGO,
           GESTION_RESULTADO_APRENDIZAJE,
           REGIONAL,
           CENTRO_FORMACION,//i
+          GESTION_MATRICULA
 } from './permissions';
-          
+import { MatriculasModule } from '../pages/matriculas/matriculas.module';
+
 export const navItems: NavegacionModel[] = [
   {
     name: 'Roles',
@@ -186,6 +188,12 @@ export const navItems: NavegacionModel[] = [
     icon: 'cil-columns',
     permiso: CENTRO_FORMACION
   },
+  {
+    name: "Matricula",
+    url: 'matricula',
+    icon: 'cil-folder-open',
+    permiso: GESTION_MATRICULA
+  },
 ];
 
 export const routesNav: Routes = [
@@ -338,5 +346,9 @@ export const routesNav: Routes = [
   {
     path: 'add_centro_formacion',
     loadChildren: () => import('../pages/centro-formacion/centro-formacion.module').then(m => m.CentroFormacionModule)
+  },
+  {
+    path: 'matricula',
+    loadChildren: () => import('../pages/matriculas/matriculas.module').then(m => MatriculasModule)
   },
 ];

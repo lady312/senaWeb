@@ -29,7 +29,8 @@ import { InfraestructuraFormComponent } from './components/infraestructura-form/
     ReactiveFormsModule,
     NgxPaginationModule,
     ComunModule,
-    SweetAlert2Module.forChild()
+    SweetAlert2Module.forChild(),
+    
   ],
 })
 export class InfraestructuraModule { }

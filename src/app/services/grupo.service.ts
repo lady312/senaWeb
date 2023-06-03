@@ -30,8 +30,8 @@ export class GruposService {
 
   crearGrupo(grupo: GrupoModel) {
     grupo.nombre            = grupo.nombre.toUpperCase();
-    grupo.fechaInicialGrupo = grupo.fechaInicialGrupo;
-    grupo.fechaFinalGrupo   = grupo.fechaFinalGrupo;
+    grupo.fechaInicial      = grupo.fechaInicial;
+    grupo.fechaFinal        = grupo.fechaFinal;
     grupo.observacion       = grupo.observacion.toUpperCase();
 
     grupo.idTipoGrupo       = grupo.idTipoGrupo;
@@ -44,6 +44,9 @@ export class GruposService {
     grupo.idPrograma        = grupo.idPrograma;
     grupo.programa          = grupo.programa;
     
+
+    grupo.idInfraestructura = grupo.idInfraestructura;
+    grupo.infraestructura   = grupo.infraestructura;
 
     grupo.idNivel           = grupo.idNivel;
     grupo.nivel_formacion   = grupo.nivel_formacion;
@@ -68,8 +71,8 @@ export class GruposService {
 
   actualizarGrupo(grupo: GrupoModel) {
     grupo.nombre            = grupo.nombre.toUpperCase();
-    grupo.fechaInicialGrupo = grupo.fechaInicialGrupo;
-    grupo.fechaFinalGrupo   = grupo.fechaFinalGrupo;
+    grupo.fechaInicial      = grupo.fechaInicial;
+    grupo.fechaFinal        = grupo.fechaFinal;
     grupo.observacion       = grupo.observacion.toUpperCase();
 
     grupo.idTipoGrupo       = grupo.idTipoGrupo;
@@ -81,6 +84,10 @@ export class GruposService {
 
     grupo.idPrograma        = grupo.idPrograma;
     grupo.programa          = grupo.programa;
+    
+
+    grupo.idInfraestructura = grupo.idInfraestructura;
+    grupo.infraestructura   = grupo.infraestructura;
 
     grupo.idNivel           = grupo.idNivel;
     grupo.nivel_formacion   = grupo.nivel_formacion;

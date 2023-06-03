@@ -21,6 +21,12 @@ import { InfraestructuraService } from '@services/infraestructura.service';
 
 export class SelectsComponent implements OnInit {
 
+  @Output() enviarIdInfra: EventEmitter<any> = new EventEmitter<any>();
+
+  onSelectChange(event: any) {
+    this.enviarIdInfra.emit(event);
+  }
+
   procesos: ProcesoModel[] = []; // Arreglo de objetos de tipo ProcesoModel
   sedes: SedeModel[] = []; // Arreglo de objetos de tipo SedeModel
   tiposProgramas: TipoProgramaModel[] = []; // Arreglo de objetos de tipo TipoProgramaModel
@@ -63,8 +69,6 @@ export class SelectsComponent implements OnInit {
   ngOnInit() {
     this.getInfraestructuras();
     this.getSedes();
-    this.getTipoPrograma();
-    this.getPrograma();
 
   this.opcion11 = document.getElementById('opcion1') as HTMLSelectElement;
   this.opcion22 = document.getElementById('opcion2') as HTMLSelectElement;

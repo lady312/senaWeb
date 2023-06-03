@@ -8,32 +8,20 @@ import { CoreService } from './core.service';
 export class ProgramaService {
 
   Programa: ProgramaModel;
-
-
+  public url : string;
+  selectedFile:File = null;
 
 
   constructor(
     private _coreService: CoreService,
-
-  ) { }
+  ) {}
 
   public traerProgramas(params = {},) {
     return this._coreService.get<ProgramaModel[]>('programas');
   }
 
 
-  crearProgramas(programa: ProgramaModel) {
-    programa.nombrePrograma = programa.nombrePrograma.toUpperCase();
-    programa.codigoPrograma= programa.codigoPrograma.toUpperCase();
-    programa.descripcionPrograma = programa.descripcionPrograma.toUpperCase();
-    programa.idTipoPrograma = programa.idTipoPrograma;
-    programa.idEstado = programa.idEstado;
-    programa.totalHoras = programa.totalHoras;
-    programa.etapaLectiva = programa.etapaLectiva;
-    programa.etapaProductiva = programa.etapaProductiva;
-    programa.creditosLectiva = programa.creditosLectiva;
-    programa.creditosProductiva = programa.creditosProductiva
-
+  crearProgramas(programa: any) {
     return this._coreService.post<ProgramaModel>('programas', programa);
   }
 
@@ -41,8 +29,8 @@ export class ProgramaService {
     return this._coreService.delete('programas/' + programaId);
   }
 
-  
-  actualizarProgramas(programa: ProgramaModel) {
+
+  actualizarProgramas(programa: any) {
 
     return this._coreService.put('programas/' + programa.id, programa);
   }

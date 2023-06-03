@@ -19,10 +19,6 @@ export class UsuarioService {
     return this._coreService.get<UsuarioModel[]>('lista_usuarios');
   }
 
-  public traerUsuariosActives() {
-    return this._coreService.get<UsuarioModel[]>('usuarios_instructores');
-  }
-
   public actualizarUsuario(usuario: UsuarioModel) {
     return this._coreService.put('usuarios/' + usuario.id, usuario);
 

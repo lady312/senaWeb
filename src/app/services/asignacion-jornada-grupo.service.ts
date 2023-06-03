@@ -10,13 +10,13 @@ export class AsignacionJornadaGrupoService {
   constructor(
     private _coreService: CoreService
   ) { }
-  traerGruposJornada() {
+  traerGruposJornada(){
     return this._coreService.get<AsignacionJornadaGrupoModel[]>('gruposjornada');
   }
-  crearGrupoJornada(grupoJornada: AsignacionJornadaGrupoModel) {
-    return this._coreService.post<AsignacionJornadaGrupoModel>('gruposjornada', grupoJornada);
+  crearGrupoJornada(grupoJornada:AsignacionJornadaGrupoModel){
+    return this._coreService.post<AsignacionJornadaGrupoModel>('gruposjornada',grupoJornada);
   }
   public getGrupoJornadaByGrupo(id: number) {
-    return this._coreService.get<AsignacionJornadaGrupoModel[]>('jornadagrupo/grupo/' + id);
+  return this._coreService.get<AsignacionJornadaGrupoModel[]>('grupoJornada/grupo/' + id);
   }
 }

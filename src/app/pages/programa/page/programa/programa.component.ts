@@ -11,7 +11,7 @@ import { UINotificationService } from '@services/uinotification.service';
 export class ProgramaComponent {
 
   protected showModalPrograma = false;
-
+  filesPrograma :FileList;
   programa: ProgramaModel = null;
   programas: ProgramaModel[] = [];
 
@@ -49,21 +49,38 @@ export class ProgramaComponent {
     this.showModalPrograma = true;
   }
 
-  guardarProgramas(programa: ProgramaModel) {
-    if (programa.id) {
-      this._programaService.actualizarProgramas(programa).subscribe(programa => {
-        this.getPrograma();
-        this.reset();
-      });
-    } else {
-      this._programaService.crearProgramas(programa).subscribe(programa => {
-        this.getPrograma();
-        this.reset();
-      })
-    }
-  }
+  guardarProgramas(programa: any) {
+      const file = this.filesPrograma;
+      const data = new FormData();
+      data.append('archivo', file[0]);
+      data.append('nombrePrograma', programa.nombrePrograma);
+      data.append('codigoPrograma', programa.codigoPrograma);
+      data.append('descripcionPrograma', programa.descripcionPrograma);
+      data.append('idTipoPrograma', programa.idTipoPrograma.toString());
+      data.append('idEstado', programa.idEstado.toString());
+      data.append('totalHoras', programa.totalHoras.toString());
+      data.append('etapaLectiva', programa.etapaLectiva.toString());
+      data.append('etapaProductiva', programa.etapaProductiva.toString());
+      data.append('creditosLectiva', programa.creditosLectiva.toString());
+      data.append('creditosProductiva', programa.creditosProductiva.toString());
   
+      if (programa.id) {
+        this._programaService.actualizarProgramas(data).subscribe((programa) => {
+          this.getPrograma();
+          this.reset();
+          this.showModalPrograma=false;
+        });
+      } else {
+        this._programaService.crearProgramas(data).subscribe((programa) => {
+          this.getPrograma();
+          this.reset();
+          this.showModalPrograma=false;
+        });
+      }
       
+  
+  }
+ 
   reset() {
     this.programa = null;
     this.showModalPrograma = false;

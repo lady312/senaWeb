@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CompetenciaModel } from '@models/competencia.model';
 import { CoreService } from './core.service';
+import { CompetenciaComponent } from '../pages/competencias/page/competencia/competencia.component';
 
 
 @Injectable({
@@ -8,11 +9,16 @@ import { CoreService } from './core.service';
 })
 
 export class CompetenciaService {
+  open(CompetenciaComponent: CompetenciaComponent) {
+    throw new Error('Method not implemented.');
+  }
   competencia: CompetenciaModel;
   permisos: number;
   constructor(
     private _coreService: CoreService
   ) { }
+
+  
   public traerCompetencias() {
     return this._coreService.get<CompetenciaModel[]>('competencias');
   }
@@ -22,10 +28,8 @@ export class CompetenciaService {
   public competencias() {
     return this._coreService.get<CompetenciaModel[]>('competencias');
   }
-  public traerCompetencia() {
-    return this._coreService.get<CompetenciaModel[]>('competencias');
-  }
-  crearCompetencia(competencia: CompetenciaModel) {
+
+  crearCompetencia (competencia: CompetenciaModel) {
     competencia.nombreCompetencia=competencia.nombreCompetencia.toUpperCase();
     competencia.codigoCompetencia=competencia.codigoCompetencia.toUpperCase();
 

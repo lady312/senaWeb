@@ -39,6 +39,8 @@ export class ListUsuarioComponent {
   }
 
   asignar(usuario: UsuarioModel) {
+    console.log(usuario, 'desde list')
     this.asignation.emit(usuario);
+
   }
 }
