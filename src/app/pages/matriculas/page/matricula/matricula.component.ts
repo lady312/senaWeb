@@ -88,19 +88,20 @@ export class MatriculaComponent implements OnInit {
   }
 
   setFormValues(person: PersonaModel) {
-    this.personForm.patchValue({
-      nombre1: person.nombre1,
-      nombre2: person.nombre2,
-      apellido1: person.apellido1,
-      apellido2: person.apellido2,
-      fechaNacimiento: person.fechaNac,
-      direccion: person.direccion,
-      correo: person.email,
-      telefonoFijo: person.telefonoFijo,
-
-    });
-
+    if (person) {
+      this.personForm.patchValue({
+        nombre1: person.nombre1 || '',
+        nombre2: person.nombre2 || '',
+        apellido1: person.apellido1 || '',
+        apellido2: person.apellido2 || '',
+        fechaNacimiento: person.fechaNac || '',
+        direccion: person.direccion || '',
+        correo: person.email || '',
+        telefonoFijo: person.telefonoFijo || ''
+      });
+    }
   }
+  
 
   setFormValues2(matricula: MatriculaModel) {
     this.personForm.patchValue({
@@ -123,9 +124,10 @@ export class MatriculaComponent implements OnInit {
   personaByIdentificacion(identificacion: number) {
     this._matriculaService.personByIdentificacion(identificacion).subscribe(
       (personas: PersonaModel[]) => {
-        if (personas.length > 0) {
-          const person = personas[0];
-          this.setFormValues(person);
+        if (identificacion) {
+          console.log(personas)
+          // const person = personas[1];
+          this.setFormValues(personas[0]);
           this.validacionExistencia = true;
         } else {
           this.validacionExistencia = false;

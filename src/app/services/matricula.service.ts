@@ -16,7 +16,7 @@ export class MatriculaService {
   ) { }
 
   personByIdentificacion(identificacion: number): Observable<PersonaModel[]> {
-    const url: string = `personByIdentificacion/${identificacion}`;
+    const url: string = `person_by_identificacion/${identificacion}`;
     return this._coreService.get<PersonaModel[]>(url);
   }
 
