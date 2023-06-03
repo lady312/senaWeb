@@ -1,13 +1,10 @@
-<button mat-raised-button (click)="isLinear = !isLinear" id="toggle-linear">
-  {{!isLinear ? 'Enable linear mode' : 'Disable linear mode'}}
-</button>
-
 <mat-stepper [linear]="isLinear" #stepper>
-  <mat-step label="a" [stepControl]="firstFormGroup">
+  <mat-step label="a" [stepControl]="personForm">
 
     <ng-template matStepLabel>Aprendiz</ng-template>
 
     <form [formGroup]="personForm">
+
       <div class="form-floating mb-3">
         <input type="number" class="form-control" id="floatingInput" placeholder="name@example.com"
         (input)="onIdentificacionInput($event.target.value)" formControlName="identificacion" >
@@ -40,6 +37,12 @@
         </div>
 
         <div class="form-floating mb-3">
+          <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com"
+            formControlName="correo" [(ngModel)]="personForm.value.correo">
+          <label for="floatingInput">Correo</label>
+        </div>
+
+        <div class="form-floating mb-3">
           <input type="date" class="form-control" id="floatingInput" placeholder="name@example.com"
             formControlName="fechaNacimiento" [(ngModel)]="personForm.value.fechaNacimiento">
           <label for="floatingInput">Fecha de nacimiento</label>
@@ -51,11 +54,6 @@
           <label for="floatingInput">Dirección</label>
         </div>
 
-        <div class="form-floating mb-3">
-          <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com"
-            formControlName="correo" [(ngModel)]="personForm.value.correo">
-          <label for="floatingInput">Correo</label>
-        </div>
 
         <div class="form-floating mb-3">
           <input type="number" class="form-control" id="floatingInput" placeholder="name@example.com"
@@ -72,46 +70,33 @@
 
 
   </mat-step>
-  <mat-step [stepControl]="secondFormGroup" label="Activos">
+  <mat-step [stepControl]="activoForm" label="Activos">
 
-
-    <!-- <form [formGroup]="secondFormGroup">
-      <mat-form-field appearance="fill">
-        <mat-label>Address</mat-label>
-        <input matInput formControlName="secondCtrl" placeholder="Ex. 1 Main St, New York, NY"
-               required>
-      </mat-form-field>
-      <div>
-        <button mat-button matStepperPrevious>Back</button>
-        <button mat-button matStepperNext>Next</button>
-      </div>
-    </form> -->
-
-    <form class="my-form" formGroup="activoForm">
+    <form class="my-form" [formGroup]="activoForm">
 
       <div class="form-floating mb-3">
         <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com">
         <label for="floatingInput">Filtrar</label>
       </div>
 
-      <!-- <div class="form-floating mb-3">
-        <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com">
-        <label for="floatingInput">Programa</label>
-      </div> -->
-      <select class="form-select" [(ngModel)]="selectedPrograma" name="programa">
-        <option *ngFor="let programaItem of programa" [value]="programaItem">{{ programaItem }}</option>
-      </select>
-
-
-
+      <div class="form-floating mb-3">
+        <select class="form-select" id="programa" aria-label="Floating label select example"
+          formControlName="idPrograma">
+          <option selected>Selecionar programa</option>
+          <option *ngFor='let programa of programas' [ngValue]="programa.id">{{programa.nombrePrograma}}
+          </option>
+        </select>
+        <label for="programa">Programa</label>
+        <!-- <div class="valid-feedback" *ngIf="!idTipoGrupo.hasError('required')">
+          Valor válido
+        </div>
+        <div class="invalid-feedback">
+          Por favor ingresé un valor válido para el tipo de grupo
+        </div> -->
+      </div>
 
 
       <div class="form-floating mb-3">
-        <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com">
-        <label for="floatingInput">Proyecto de Formación</label>
-      </div>
-
-      <div class="form-floating">
         <select class="form-select" id="tipoGrupo" aria-label="Floating label select example"
           formControlName="idTipoGrupo">
           <option selected>Selecionar tipo de grupo</option>

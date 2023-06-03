@@ -39,18 +39,25 @@ export class MatriculaComponent implements OnInit {
 
 
   @Input() tipoGrupos: TipoGrupoModel[] = [];
+  @Input() programas: ProgramaModel[] = [];
+
 
   programa: ProgramaModel;
-  programas: ProgramaModel[] = [];
   personForm: FormGroup;
   activoForm: FormGroup;
   validacionExistencia: boolean = false;
   identificacionForm: FormGroup;
   private identificacionSubject: Subject<number> = new Subject<number>();
 
-  isLinear: true;
+  isLinear = true;
+
 
   formMatricula: UntypedFormGroup;
+
+  
+  secondFormGroup = this._formBuilder.group({
+    secondCtrl: ['', Validators.required],
+  });
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -62,18 +69,19 @@ export class MatriculaComponent implements OnInit {
   ) {
     this.personForm = this._formBuilder.group({
       identificacion: ['', Validators.required],
-      nombre1: [''],
-      nombre2: [''],
-      apellido1: [''],
-      apellido2: [''],
-      fechaNacimiento: [''],
-      direccion: [''],
-      correo: [''],
-      telefono: ['']
+      nombre1: ['', Validators.required],
+      nombre2: ['', Validators.required],
+      apellido1: ['', Validators.required],
+      apellido2: ['', Validators.required],
+      fechaNacimiento: ['', Validators.required],
+      direccion: ['', Validators.required],
+      correo: ['', Validators.required],
+      telefono: ['', Validators.required]
     });
 
     this.activoForm = this._formBuilder.group({
-      idTipoGrupo: [''],
+      idTipoGrupo: ['', Validators.required],
+      idPrograma: ['', Validators.required]
     })
 
     this.identificacionSubject.pipe(debounceTime(1000)).subscribe((identificacion) => {
@@ -87,30 +95,30 @@ export class MatriculaComponent implements OnInit {
     this.traerProgramas();
   }
 
-  setFormValues(person: PersonaModel) {
-    if (person) {
-      this.personForm.patchValue({
-        nombre1: person.nombre1 || '',
-        nombre2: person.nombre2 || '',
-        apellido1: person.apellido1 || '',
-        apellido2: person.apellido2 || '',
-        fechaNacimiento: person.fechaNac || '',
-        direccion: person.direccion || '',
-        correo: person.email || '',
-        telefonoFijo: person.telefonoFijo || ''
-      });
-    }
-  }
+  // setFormValues(person: PersonaModel) {
+  //   if (person) {
+  //     this.personForm.patchValue({
+  //       nombre1: person.nombre1 || '',
+  //       nombre2: person.nombre2 || '',
+  //       apellido1: person.apellido1 || '',
+  //       apellido2: person.apellido2 || '',
+  //       fechaNacimiento: person.fechaNac || '',
+  //       direccion: person.direccion || '',
+  //       correo: person.email || '',
+  //       telefonoFijo: person.telefonoFijo || ''
+  //     });
+  //   }
+  // }
   
 
-  setFormValues2(matricula: MatriculaModel) {
-    this.personForm.patchValue({
-      idTipoGrupo: matricula.idTipoGrupo,
+  // setFormValues2(matricula: MatriculaModel) {
+  //   this.personForm.patchValue({
+  //     idTipoGrupo: matricula.idTipoGrupo,
 
 
-    });
+  //   });
 
-  }
+  // }
 
   onIdentificacionInput(identificacion: number) {
     if (identificacion) {
@@ -127,7 +135,7 @@ export class MatriculaComponent implements OnInit {
         if (identificacion) {
           console.log(personas)
           // const person = personas[1];
-          this.setFormValues(personas[0]);
+          // this.setFormValues(personas[0]);
           this.validacionExistencia = true;
         } else {
           this.validacionExistencia = false;
