@@ -73,8 +73,8 @@ export class MatriculaComponent implements OnInit {
     });
 
     this.activoForm = this._formBuilder.group({
-
-  idTipoGrupo   })
+      idTipoGrupo: [''],
+    })
 
     this.identificacionSubject.pipe(debounceTime(1000)).subscribe((identificacion) => {
       this.personaByIdentificacion(identificacion);
