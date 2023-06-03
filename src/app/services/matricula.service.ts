@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { CoreService } from './core.service';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { MatriculaModel } from '@models/matricula.model';
 import { PersonaModel } from '@models/persona.model';
+import { delay, switchMap, debounceTime, catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +20,7 @@ export class MatriculaService {
     const url: string = `person_by_identificacion/${identificacion}`;
     return this._coreService.get<PersonaModel[]>(url);
   }
+
 
   crearMatricula(matricula: MatriculaModel)
   {

@@ -19,6 +19,7 @@ import { ProgramaService } from '@services/programa.service';
 import { TipoGrupoModel } from "@models/tipogrupo.model";
 import { MatriculaModel } from "@models/matricula.model";
 import { TipoGrupoService } from "@services/tipo-grupo.service";
+import { delay, filter, catchError } from 'rxjs/operators';
 
 
 @Component({
@@ -42,22 +43,19 @@ export class MatriculaComponent implements OnInit {
   @Input() programas: ProgramaModel[] = [];
 
 
-  programa: ProgramaModel;
   personForm: FormGroup;
   activoForm: FormGroup;
+  documentoForm: FormGroup;
+
+
   validacionExistencia: boolean = false;
   identificacionForm: FormGroup;
   private identificacionSubject: Subject<number> = new Subject<number>();
 
   isLinear = true;
 
-
   formMatricula: UntypedFormGroup;
 
-  
-  secondFormGroup = this._formBuilder.group({
-    secondCtrl: ['', Validators.required],
-  });
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -84,7 +82,7 @@ export class MatriculaComponent implements OnInit {
       idPrograma: ['', Validators.required]
     })
 
-    this.identificacionSubject.pipe(debounceTime(1000)).subscribe((identificacion) => {
+    this.identificacionSubject.pipe(debounceTime(700)).subscribe((identificacion) => {
       this.personaByIdentificacion(identificacion);
     });
 
@@ -93,36 +91,22 @@ export class MatriculaComponent implements OnInit {
   ngOnInit(): void {
     this.traerTipoGrupos();
     this.traerProgramas();
+
+
+    this.identificacionSubject.pipe(
+      filter(identificacion => identificacion >= 10000000000),
+      debounceTime(700)
+    ).subscribe((identificacion: number) => {
+      this.personaByIdentificacion(identificacion);
+    });
+
+
   }
 
-  // setFormValues(person: PersonaModel) {
-  //   if (person) {
-  //     this.personForm.patchValue({
-  //       nombre1: person.nombre1 || '',
-  //       nombre2: person.nombre2 || '',
-  //       apellido1: person.apellido1 || '',
-  //       apellido2: person.apellido2 || '',
-  //       fechaNacimiento: person.fechaNac || '',
-  //       direccion: person.direccion || '',
-  //       correo: person.email || '',
-  //       telefonoFijo: person.telefonoFijo || ''
-  //     });
-  //   }
-  // }
-  
-
-  // setFormValues2(matricula: MatriculaModel) {
-  //   this.personForm.patchValue({
-  //     idTipoGrupo: matricula.idTipoGrupo,
-
-
-  //   });
-
-  // }
 
   onIdentificacionInput(identificacion: number) {
     if (identificacion) {
-      this.personaByIdentificacion(identificacion);
+      this.identificacionSubject.next(identificacion);
     } else {
       this.validacionExistencia = false;
       this.personForm.reset();
@@ -130,24 +114,32 @@ export class MatriculaComponent implements OnInit {
   }
 
   personaByIdentificacion(identificacion: number) {
-    this._matriculaService.personByIdentificacion(identificacion).subscribe(
-      (personas: PersonaModel[]) => {
-        if (identificacion) {
-          console.log(personas)
-          // const person = personas[1];
-          // this.setFormValues(personas[0]);
-          this.validacionExistencia = true;
-        } else {
-          this.validacionExistencia = false;
-          this._uiNotificationService.error("No se encontró la persona en el sistema");
+    if (identificacion) {
+      this._matriculaService.personByIdentificacion(identificacion).pipe(
+        debounceTime(500), // Retraso de 500 milisegundos (ajusta según tus necesidades)
+        catchError(() => {
+          // Manejo silencioso de errores
+          return [];
+        })
+      ).subscribe(
+        (personas: PersonaModel[]) => {
+          try {
+            if (identificacion) {
+              // console.log(personas);
+              this._uiNotificationService.success("Tus datos han sido registrados anteriormente", "Persona encontrada");
+              this.validacionExistencia = true;
+            }
+          } catch (error) {
+          }
         }
-      },
-      (error) => {
-        this._uiNotificationService.error("Ocurrió un error al obtener la persona");
-        console.log(error);
-      }
-    );
+      );
+    } else {
+      this.validacionExistencia = false;
+      this.personForm.reset();
+    }
   }
+
+
 
   traerProgramas() {
     this._programaService.traerProgramas().subscribe(
