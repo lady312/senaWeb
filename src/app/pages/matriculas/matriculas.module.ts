@@ -8,9 +8,8 @@ import { MatIconModule } from '@angular/material/icon';
 // import { StepsModule } from 'primeng/steps';
 import { ComunModule } from '@components/comun.module';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/compiler';
 import { MatInputModule } from '@angular/material/input';
-
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -19,11 +18,14 @@ import { MatInputModule } from '@angular/material/input';
   // schemas: [CUSTOM_ELEMENTS_SCHEMA],
   exports: [
     MatriculaComponent,
+    MatIconModule
+
   ],
   declarations: [
     MatriculaComponent
   ],
   imports: [
+    // TipogrupoModule,
     CommonModule,
     ComunModule,
     MatriculasRoutingModule,
@@ -31,8 +33,9 @@ import { MatInputModule } from '@angular/material/input';
     MatIconModule,
     MatStepperModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
     // StepsModule,
+    FormsModule,
   ]
 
 })
