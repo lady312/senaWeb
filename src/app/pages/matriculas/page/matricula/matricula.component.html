@@ -12,53 +12,53 @@
         <label for="floatingInput">Identificación</label>
       </div>
 
-      <div *ngIf="validacionExistencia">
+      <div>
         <div class="form-floating mb-3">
           <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com"
-            formControlName="nombre1" [(ngModel)]="personForm.value.nombre1">
+            formControlName="nombre1">
           <label for="floatingInput">Primer Nombre</label>
         </div>
 
         <div class="form-floating mb-3">
           <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com"
-            formControlName="nombre2" [(ngModel)]="personForm.value.nombre2">
+            formControlName="nombre2">
           <label for="floatingInput">Segundo Nombre</label>
         </div>
 
         <div class="form-floating mb-3">
           <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com"
-            formControlName="apellido1" [(ngModel)]="personForm.value.apellido1">
+            formControlName="apellido1">
           <label for="floatingInput">Primer Apellido</label>
         </div>
 
         <div class="form-floating mb-3">
           <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com"
-            formControlName="apellido2" [(ngModel)]="personForm.value.apellido2">
+            formControlName="apellido2">
           <label for="floatingInput">Segundo Apellido</label>
         </div>
 
         <div class="form-floating mb-3">
           <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com"
-            formControlName="correo" [(ngModel)]="personForm.value.correo">
+            formControlName="email">
           <label for="floatingInput">Correo</label>
         </div>
 
         <div class="form-floating mb-3">
           <input type="date" class="form-control" id="floatingInput" placeholder="name@example.com"
-            formControlName="fechaNacimiento" [(ngModel)]="personForm.value.fechaNacimiento">
+            formControlName="fechaNac">
           <label for="floatingInput">Fecha de nacimiento</label>
         </div>
 
         <div class="form-floating mb-3">
           <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com"
-            formControlName="direccion" [(ngModel)]="personForm.value.direccion">
+            formControlName="direccion">
           <label for="floatingInput">Dirección</label>
         </div>
 
 
         <div class="form-floating mb-3">
           <input type="number" class="form-control" id="floatingInput" placeholder="name@example.com"
-            formControlName="telefono" [(ngModel)]="personForm.value.telefono">
+            formControlName="telefonoFijo">
           <label for="floatingInput">Teléfono</label>
         </div>
       </div>
@@ -76,11 +76,6 @@
   <mat-step [stepControl]="activoForm" label="Activos">
 
     <form class="my-form" [formGroup]="activoForm">
-
-      <div class="form-floating mb-3">
-        <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com">
-        <label for="floatingInput">Filtrar</label>
-      </div>
 
       <div class="form-floating mb-3">
         <select class="form-select" id="programa" aria-label="Floating label select example"

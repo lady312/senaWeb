@@ -65,16 +65,17 @@ export class MatriculaComponent implements OnInit {
     private _tipoGrupoService: TipoGrupoService
 
   ) {
+
     this.personForm = this._formBuilder.group({
       identificacion: ['', Validators.required],
       nombre1: ['', Validators.required],
       nombre2: ['', Validators.required],
       apellido1: ['', Validators.required],
       apellido2: ['', Validators.required],
-      fechaNacimiento: ['', Validators.required],
+      fechaNac: ['', Validators.required],
       direccion: ['', Validators.required],
-      correo: ['', Validators.required],
-      telefono: ['', Validators.required]
+      email: ['', Validators.required],
+      telefonoFijo: ['', Validators.required]
     });
 
     this.activoForm = this._formBuilder.group({
@@ -100,11 +101,10 @@ export class MatriculaComponent implements OnInit {
       this.personaByIdentificacion(identificacion);
     });
 
-
   }
 
-
-  onIdentificacionInput(identificacion: number) {
+  onIdentificacionInput(identificacion: number)
+   {
     if (identificacion) {
       this.identificacionSubject.next(identificacion);
     } else {
@@ -125,9 +125,23 @@ export class MatriculaComponent implements OnInit {
         (personas: PersonaModel[]) => {
           try {
             if (identificacion) {
-              // console.log(personas);
+              const persona = personas.find((person) => person); // Asignación segura del primer elemento del array
+              console.log(persona);
               this._uiNotificationService.success("Tus datos han sido registrados anteriormente", "Persona encontrada");
               this.validacionExistencia = true;
+              // const persona = personas[0];
+              // console.log("A" + persona);
+              this.personForm.patchValue(persona);
+              console.log(this.personForm.patchValue(persona));
+              this.personForm.get('nombre1').setValue(persona.nombre1);
+              this.personForm.get('nombre2').setValue(persona.nombre2);
+              this.personForm.get('apellido1').setValue(persona.apellido1);
+              this.personForm.get('apellido2').setValue(persona.apellido2);
+              this.personForm.get('fechaNac').setValue(persona.fechaNac);
+              this.personForm.get('direccion').setValue(persona.direccion);
+              this.personForm.get('email').setValue(persona.email);
+              this.personForm.get('telefonoFijo').setValue(persona.telefonoFijo);
+
             }
           } catch (error) {
           }
