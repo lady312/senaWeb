@@ -13,15 +13,20 @@ import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 
 
+
+
 @NgModule({
   // schemas: [CUSTOM_ELEMENTS_SCHEMA],
   exports: [
     MatriculaComponent,
+    MatIconModule
+
   ],
   declarations: [
     MatriculaComponent
   ],
   imports: [
+    // TipogrupoModule,
     CommonModule,
     ComunModule,
     MatriculasRoutingModule,

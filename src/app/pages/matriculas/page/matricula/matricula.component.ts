@@ -22,6 +22,10 @@ import { TipoGrupoService } from "@services/tipo-grupo.service";
 import { delay, filter, catchError } from 'rxjs/operators';
 
 
+import { TipoProgramaModel } from '@models/tipo-programa.model';
+import { TipoProgramaService } from '@services/tipo-programa.service';
+import { ProyectoFormativoService } from '@services/proyecto-formativo.service';
+import { ProyectoFormativoModel } from '@models/proyecto-formativo.model ';
 @Component({
 
   selector: 'app-matricula',
@@ -41,12 +45,25 @@ export class MatriculaComponent implements OnInit {
 
   @Input() tipoGrupos: TipoGrupoModel[] = [];
   @Input() programas: ProgramaModel[] = [];
+  @Input() proyectoFormativos: ProyectoFormativoModel[] = [];
 
 
   personForm: FormGroup;
   activoForm: FormGroup;
   documentoForm: FormGroup;
 
+
+  title = 'angular-stepper-ejercicio';
+
+  stepperForm!: FormGroup;
+
+
+  firstFormGroup = this._formBuilder.group({
+    firstCtrl: ['', Validators.required],
+  });
+  secondFormGroup = this._formBuilder.group({
+    secondCtrl: ['', Validators.required],
+  });
 
   validacionExistencia: boolean = false;
   identificacionForm: FormGroup;
