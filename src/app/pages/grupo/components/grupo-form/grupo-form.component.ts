@@ -8,6 +8,7 @@ import { NivelFormacionModel } from '@models/nivel-formacion.model';
 import { ProgramaModel } from '@models/programa.model';
 import { TipoFormacionModel } from '@models/tipo-formacion.model';
 import { TipoOfertaModel } from '@models/tipo-oferta.model';
+import { TipoProgramaModel } from '@models/tipo-programa.model';
 import { TipoGrupoModel } from '@models/tipogrupo.model';
 import { UsuarioModel } from '@models/usuario.model';
 import { TipoGrupoService } from '@services/tipo-grupo.service';
@@ -164,10 +165,14 @@ export class GrupoFormComponent implements OnInit {
     this.idEstado = grupo.idEstado;
     this.idTipoOferta = grupo.idTipoOferta;
   }
+
   selectIdTipoGrupo(event: any) {
-    const value = event.target.value;
-    this.idTipoGrupo = value;
+    const value: string = event.target.value;
+    const tipoPrograma: TipoGrupoModel = this.tipoGrupos.find((tipoP) =>
+    tipoP.nombreTipoGrupo.toLocaleLowerCase() === value.toLocaleLowerCase());
+    this.idTipoGrupo = tipoPrograma.id;
   }
+
   selectIdPrograma(event: any) {
     const value: string = event.target.value;
     const programa: ProgramaModel = this.programas.find((programa) =>
@@ -186,13 +191,20 @@ export class GrupoFormComponent implements OnInit {
       tFormacion.nombreTipoFormacion.toLocaleLowerCase() === value.toLocaleLowerCase());
     this.idTipoFormacion = tipoFormacion.id;
   }
+
   selectIdEstado(event: any) {
-    const value = event.target.value;
-    this.idEstado = value;
+    const value: string = event.target.value;
+    const estado = this.estadoGrupos.find((estado) =>
+      estado.nombreEstado.toLocaleLowerCase() === value.toLocaleLowerCase());
+    this.idEstado = estado.id;
   }
+
   selectIdTipoOferta(event: any) {
-    const value = event.target.value;
-    this.idTipoOferta = value;
+    const value: string = event.target.value;
+    const tipoOferta = this.tipoOfertas.find((tOfertas) =>
+    tOfertas.nombreOferta.toLocaleLowerCase() === value.toLocaleLowerCase());
+    this.idTipoOferta = tipoOferta.id;
+    console.log(this.idTipoOferta)
   }
 
   setLists(grupo: GrupoModel) {
@@ -208,6 +220,7 @@ export class GrupoFormComponent implements OnInit {
   addJornada(jornada: JornadaModel) {
     this.jornadasGrupo.push(jornada);
   }
+  
   removeJornada(idJornada: number) {
     this.jornadasGrupo = this.jornadasGrupo.filter((jornada) => {
       jornada.id !== idJornada;
@@ -218,6 +231,7 @@ export class GrupoFormComponent implements OnInit {
     this.showFormHorario = false;
     this.horariosInfra.push(infr);
   }
+
   removeInfraestructura(idInfr: number) {
     const index = this.horariosInfra.findIndex((infr) => infr.id === idInfr);
     this.horariosInfra.splice(index, 1);
@@ -257,6 +271,7 @@ export class GrupoFormComponent implements OnInit {
     return controlField;
 
   }
+
   getGrupo() {
     return {
       id: this.grupo?.id,

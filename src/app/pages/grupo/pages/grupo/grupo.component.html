@@ -1,14 +1,15 @@
 <app-grupos-list
+
     [grupos]="grupos"
     (create)="crearGrupo()"
-    (update)="actualizarGrupo($event)"
->
+    (update)="actualizarGrupo($event)">
+
 </app-grupos-list>
 
 <app-custom-modal
     title="Gestionar Grupos"
-    [(show)]="showFormGrupo"
->
+    [(show)]="showFormGrupo">
+
     <app-grupo-form
         *ngIf="showFormGrupo"
         [title]="formTitle"
@@ -24,4 +25,5 @@
         (store)="guardarGrupo($event)"
         (cancel)="reset()">
     </app-grupo-form>
+
 <app-custom-modal>

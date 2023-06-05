@@ -62,7 +62,7 @@
                 <input (change)="selectIdNivel($event)" class="form-control" list="nivel-list" type="text"
                     formControlName="idNivel" id="idNivel" required>
                 <label for="idNivel">Nivel de formación</label>
-                <datalist id="tNivel-list">
+                <datalist id="nivel-list">
                     <option *ngFor='let nivel of niveles' [value]="nivel.nivel"></option>
                 </datalist>
                 <div class="valid-feedback" *ngIf="!idNivelField.hasError('required')">
@@ -152,7 +152,7 @@
                 <div class="col-sm-10">
                     <div class="form-floating mb-3">
                         <input (change)="selectIdTipoGrupo($event)" class="form-control" list="tGrupo-list" type="text"
-                            formControlName="idTipoGrupo" id="idTipoOferta" required>
+                            formControlName="idTipoGrupo" id="idTipoGrupo" required>
                         <label for="idTipoGrupo">Tipo de Grupo</label>
                         <datalist id="tGrupo-list">
                             <option *ngFor='let tipoGrupo of tipoGrupos' [value]="tipoGrupo.nombreTipoGrupo"></option>
