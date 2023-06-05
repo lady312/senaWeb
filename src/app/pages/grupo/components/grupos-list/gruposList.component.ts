@@ -35,7 +35,6 @@ export class GruposListComponent {
   }
 
   eliminar(idGrupo:number){
-    console.log(idGrupo)
     this.delete.emit(idGrupo);
   }
 

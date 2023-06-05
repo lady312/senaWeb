@@ -186,32 +186,39 @@
                 </div>
             </div>
 
-
             <div class="card">
-                <div class="card-header">
-                    <strong> Seleccione la jornada </strong>
-                </div>
-                <div class="card-body">
+              <div class="card-header">
+                <strong> Seleccione la jornada </strong>
+              </div>
+              <div class="card-body">
 
-                    <div class="row row-cols-3">
-                        <div class="col">
-                            <label class="pointer">
-                                <app-custom-switch [size]="5" [checked]="allJornadas"
-                                    (checkedChange)="changeAllJornadas($event)">
-                                </app-custom-switch>
-                                Todas
-                            </label>
-                        </div>
-                        <div class="col-md-3" *ngFor="let jor of jornadas; let i = index;">
-                            <label class="pointer">
-                                <app-custom-switch [size]="5" [checked]="jor.checked"
-                                    (checkedChange)="changeJornada($event, i)" id="check{{ jor.id }}">
-                                </app-custom-switch>
-                                {{jor.nombreJornada}}
-                            </label>
-                        </div>
-                    </div>
+                <div class="row row-cols-3">
+                  <div class="col">
+                    <label class="pointer">
+                      <app-custom-switch
+                        [size]="7"
+                        [checked]="allJornadas"
+                        (checkedChange)="changeAllJornadas($event)"
+                      >
+                      </app-custom-switch>
+                      Todas
+                    </label>
+                  </div>
+                  <div class="col-md-3" *ngFor="let jor of jornadas; let i = index;">
+                    <label class="pointer"
+                    >
+                      <app-custom-switch
+                        [size]="7"
+                        [checked]="jor.checked"
+                        (checkedChange)="changeJornada($event, i)"
+                        id="check{{ jor.id }}"
+                      >
+                      </app-custom-switch>
+                      {{jor.nombreJornada}}
+                    </label>
+                  </div>
                 </div>
+              </div>
             </div>
 
         </form>

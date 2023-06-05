@@ -158,10 +158,8 @@ export class GrupoComponent implements OnInit {
   }
 
   eliminarGrupo(grupoId: number) {
-    console.log(grupoId)
     this._grupoService.eliminarGrupo(grupoId).subscribe(() => {
       this.getGrupos();
-
     });
   }
 
