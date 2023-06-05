@@ -48,7 +48,7 @@
                             <td>
                                 <ng-container *ngIf="grupo.jornadas.length > 0 else mostrarJornadas">
                                     <span *ngFor="let jornada of grupo.jornadas">
-                                        {{jornada.nombreJornada }} 
+                                        {{jornada.nombreJornada }}
                                     </span>
                                 </ng-container>
                                 <ng-template #mostrarJornadas>
@@ -65,7 +65,7 @@
                                 </ng-container>
                                 <ng-template #mostrarInfras>
                                     <span>Infraestructura no disponible</span>
-                                </ng-template> 
+                                </ng-template>
                             </td>
 
                             <td>

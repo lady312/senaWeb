@@ -23,7 +23,7 @@ export class InfraestructuraComponent implements OnInit{
     infrsSedeArea:Map<number,
       Map<number,{
         infrs:InfraestructuraModel[]
-      }>> 
+      }>>
   }>();
 
   protected showFormInfr:boolean = false;
@@ -58,7 +58,7 @@ export class InfraestructuraComponent implements OnInit{
     this.cache.set(0,{
       areas:null,
       sedes:null,
-      infrsSedeArea:new Map<number, 
+      infrsSedeArea:new Map<number,
         Map<number,{
           infrs:InfraestructuraModel[]
         }>>()});
@@ -80,7 +80,7 @@ export class InfraestructuraComponent implements OnInit{
         this._uiNotificationService.error('Error de Conexión');
       });
     }
- 
+
   }
 
   getCiudades(){
@@ -315,11 +315,11 @@ export class InfraestructuraComponent implements OnInit{
       infrsSedeArea:Map<number,
         Map<number,{
           infrs:InfraestructuraModel[]
-        }>> 
+        }>>
     }>();
     if(event.id){
       this._infraestructuraService.actualizarInfraestructura(event).subscribe(()=>{
-        this.iniciarCache();        
+        this.iniciarCache();
         this.getInfraestructuras();
         this.reset();
       });

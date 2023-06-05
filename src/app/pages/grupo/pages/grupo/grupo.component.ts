@@ -37,7 +37,7 @@ export class GrupoComponent implements OnInit {
 
   /**
    * datos pasados a los modales hijos
-   * estos almacenan todos los datos para que 
+   * estos almacenan todos los datos para que
    * al cargar el formulario o otro componente hijo
    * no haga mas solicitudes al backend
    */
@@ -157,9 +157,18 @@ export class GrupoComponent implements OnInit {
     this.formTitle = 'Actualizar Grupo';
   }
 
+  eliminarGrupo(grupoId: number) {
+    console.log(grupoId)
+    this._grupoService.eliminarGrupo(grupoId).subscribe(() => {
+      this.getGrupos();
+
+    });
+  }
+
   reset() {
     this.showFormGrupo = false;
     this.formTitle = '';
     this.grupo = null;
   }
+
 }

@@ -25,7 +25,7 @@ export class GruposListComponent {
     const num: number = event.target.value;
     this.numReg = num;
   }
-  
+
   agregar(){
     this.create.emit();
   }
@@ -35,6 +35,7 @@ export class GruposListComponent {
   }
 
   eliminar(idGrupo:number){
+    console.log(idGrupo)
     this.delete.emit(idGrupo);
   }
 
