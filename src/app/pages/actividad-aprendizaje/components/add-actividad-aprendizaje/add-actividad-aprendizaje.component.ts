@@ -19,7 +19,7 @@ export class AddActividadAprendizajeComponent implements OnInit {
   @Output() cancel: EventEmitter<void> = new EventEmitter();
 
   formAA: UntypedFormGroup;
-  resultadoAprendizaje: ResultadoAprendizajeModel[] = [];
+  resultadoAprendizajes: ResultadoAprendizajeModel[] = [];
 
   constructor(
     private formBuilder: UntypedFormBuilder,
@@ -45,7 +45,7 @@ export class AddActividadAprendizajeComponent implements OnInit {
   traerResultadoAprendizaje() {
     this.resultadoAprendizajeService.traerRap()
       .subscribe((proceso: ResultadoAprendizajeModel[]) => {
-        this.resultadoAprendizaje = proceso;
+        this.resultadoAprendizajes = proceso;
       }, error => {
         this._uiNotificationService.error('Error de conexión');
       });
@@ -55,7 +55,7 @@ export class AddActividadAprendizajeComponent implements OnInit {
     return this.formAA.get('NombreAA');
   }
 
-  get rap() {
+  get resultados() {
     return this.formAA.get('rap');
   }
   get codigo() {

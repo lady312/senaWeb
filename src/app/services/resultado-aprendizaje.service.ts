@@ -16,7 +16,7 @@ export class ResultadoAprendizajeService  {
 
 
   public Raps() {
-    return this._coreService.get<ResultadoAprendizajeModel[]>('resultadoAprendizaje');  ///////7
+    return this._coreService.get<ResultadoAprendizajeModel[]>('resultadoAprendizaje');
   }
 
 
@@ -26,9 +26,7 @@ export class ResultadoAprendizajeService  {
     rap.numeroHoras = rap.numeroHoras;
     rap.idTipoRaps = rap.idTipoRaps;
     rap.idCompetencia = rap.idCompetencia;
-    return this._coreService.post<ResultadoAprendizajeModel[]>('resultadoAprendizaje', rap);
-    
-  
+    return this._coreService.post<ResultadoAprendizajeModel[]>(`resultados/${1}/competencias/${rap.idCompetencia}`, rap);
   }
   eliminarRaps(rapId: number) {
     return this._coreService.delete('resultadoAprendizaje/' + rapId);
