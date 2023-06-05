@@ -26,6 +26,9 @@ import { TipoProgramaModel } from '@models/tipo-programa.model';
 import { TipoProgramaService } from '@services/tipo-programa.service';
 import { ProyectoFormativoService } from '@services/proyecto-formativo.service';
 import { ProyectoFormativoModel } from '@models/proyecto-formativo.model ';
+
+
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
 
   selector: 'app-matricula',
@@ -79,7 +82,7 @@ export class MatriculaComponent implements OnInit {
     private _matriculaService: MatriculaService,
     private _uiNotificationService: UINotificationService,
     private _programaService: ProgramaService,
-    private _tipoGrupoService: TipoGrupoService
+    private _tipoGrupoService: TipoGrupoService,
 
   ) {
 
@@ -94,6 +97,12 @@ export class MatriculaComponent implements OnInit {
       email: ['', Validators.required],
       telefonoFijo: ['', Validators.required]
     });
+  // funcion de mensaje
+
+
+
+
+
 
     this.activoForm = this._formBuilder.group({
       idTipoGrupo: ['', Validators.required],
@@ -158,7 +167,6 @@ export class MatriculaComponent implements OnInit {
               this.personForm.get('direccion').setValue(persona.direccion);
               this.personForm.get('email').setValue(persona.email);
               this.personForm.get('telefonoFijo').setValue(persona.telefonoFijo);
-
             }
           } catch (error) {
           }
@@ -182,7 +190,6 @@ export class MatriculaComponent implements OnInit {
       }
     );
   }
-
   traerTipoGrupos() {
     this._tipoGrupoService.traerTipoGrupos().subscribe(
       (tipoGrupo: TipoGrupoModel[]) => {
@@ -193,10 +200,11 @@ export class MatriculaComponent implements OnInit {
       }
     );
   }
-
-  // get idTipoGrupo() {
-  //   return this.formMatricula.get("idTipoGrupo");
-  // }
-
-
+  // validar cada campo
+  validarCampos() {
+    Object.keys(this.personForm.controls).forEach(field => {
+      const control = this.personForm.get(field);
+      control.markAsTouched({ onlySelf: true });
+    });
+  }
 }

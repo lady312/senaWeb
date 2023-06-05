@@ -2,14 +2,19 @@
 
   <mat-step label="persona" [stepControl]="personForm">
 
-    <ng-template matStepLabel>Aprendiz</ng-template>
+    <ng-template  matStepLabel> <i class="fa fa-user-circle-o fa-2x" aria-hidden="true"></i>
+      Aprendiz</ng-template>
 
-    <form [formGroup]="personForm">
+
+    <form [formGroup]="personForm" >
 
       <div class="form-floating mb-3">
         <input type="number" class="form-control" id="floatingInput" placeholder="name@example.com"
           (input)="onIdentificacionInput($event.target.value)" formControlName="identificacion">
         <label for="floatingInput">Identificación</label>
+        <div class="text-danger" *ngIf="personForm.get('identificacion').invalid && personForm.get('identificacion').touched">
+          Identificación es requerida.
+        </div>
       </div>
 
       <div>
@@ -17,42 +22,63 @@
           <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com"
             formControlName="nombre1">
           <label for="floatingInput">Primer Nombre</label>
+          <div class="text-danger" *ngIf="personForm.get('nombre1').invalid && personForm.get('nombre1').touched">
+            Primer nombre es requerida.
+          </div>
         </div>
 
         <div class="form-floating mb-3">
           <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com"
             formControlName="nombre2">
           <label for="floatingInput">Segundo Nombre</label>
+          <div class="text-danger" *ngIf="personForm.get('nombre2').invalid && personForm.get('nombre2').touched">
+            Segundo nombre es requerida.
+          </div>
         </div>
 
         <div class="form-floating mb-3">
           <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com"
             formControlName="apellido1">
           <label for="floatingInput">Primer Apellido</label>
+          <div class="text-danger" *ngIf="personForm.get('apellido1').invalid && personForm.get('apellido1').touched">
+           Primer apellido es requerido.
+          </div><!--Alertas  -->
         </div>
 
         <div class="form-floating mb-3">
           <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com"
             formControlName="apellido2">
           <label for="floatingInput">Segundo Apellido</label>
+          <div class="text-danger" *ngIf="personForm.get('apellido2').invalid && personForm.get('apellido2').touched">
+            Segundo apellido es requerido.
+          </div>
         </div>
 
         <div class="form-floating mb-3">
           <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com"
             formControlName="email">
           <label for="floatingInput">Correo</label>
+          <div class="text-danger" *ngIf="personForm.get('email').invalid && personForm.get('email').touched">
+            El correo es requerida.
+          </div>
         </div>
 
         <div class="form-floating mb-3">
           <input type="date" class="form-control" id="floatingInput" placeholder="name@example.com"
             formControlName="fechaNac">
           <label for="floatingInput">Fecha de nacimiento</label>
+          <div class="text-danger" *ngIf="personForm.get('fechaNac').invalid && personForm.get('fechaNac').touched">
+            Fecha de nacimiento es requerida.
+          </div>
         </div>
 
         <div class="form-floating mb-3">
           <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com"
             formControlName="direccion">
           <label for="floatingInput">Dirección</label>
+          <div class="text-danger" *ngIf="personForm.get('email').invalid && personForm.get('email').touched">
+            La dirreción es requerida
+          </div>
         </div>
 
 
@@ -60,23 +86,19 @@
           <input type="number" class="form-control" id="floatingInput" placeholder="name@example.com"
             formControlName="telefonoFijo">
           <label for="floatingInput">Teléfono</label>
+          <div class="text-danger" *ngIf="personForm.get('telefonoFijo').invalid && personForm.get('telefonoFijo').touched">
+            El teléfono es requerido.
+          </div>
         </div>
       </div>
-
       <div class="text-center">
-
-        <button class="btn btn-success" mat-button matStepperNext type="button">Seguir</button>
-
+        <button class="btn btn-success" mat-button matStepperNext type="button" (click)="validarCampos()">Seguir</button>
       </div>
-
     </form>
-
   </mat-step>
-
   <mat-step [stepControl]="activoForm" label="Activos">
-
     <form class="my-form" [formGroup]="activoForm">
-
+      <ng-template  matStepLabel> <i class="fa fa-list fa-2x" aria-hidden="true"></i>Activos</ng-template>
       <div class="form-floating mb-3">
         <select class="form-select" id="programa" aria-label="Floating label select example"
           formControlName="idPrograma">
@@ -125,7 +147,8 @@
   <mat-step [stepControl]="documentoForm" label="Documentos">
 
 
-    <ng-template matStepLabel>Documentos</ng-template>
+    <ng-template matStepLabel><i class="fa fa-book fa-2x" aria-hidden="true"></i>
+      Documentos</ng-template>
 
     <form class="my-form" [formGroup]="documentoForm">
       <div class="form-floating mb-3">
@@ -156,7 +179,8 @@
   <mat-step label="Datos enviados"> <!--Vista de datos enviados correctamente-->
 
 
-    <ng-template matStepLabel>Fin</ng-template>
+    <ng-template matStepLabel><i class="fa fa-check-square-o fa-2x" aria-hidden="true"></i>
+      Fin</ng-template>
 
     <div class="container">
 
