@@ -1,0 +1,177 @@
+<mat-stepper [linear]="isLinear" #stepper>
+
+  <mat-step label="persona" [stepControl]="personForm">
+
+    <ng-template matStepLabel>Aprendiz</ng-template>
+
+    <form [formGroup]="personForm">
+
+      <div class="form-floating mb-3">
+        <input type="number" class="form-control" id="floatingInput" placeholder="name@example.com"
+          (input)="onIdentificacionInput($event.target.value)" formControlName="identificacion">
+        <label for="floatingInput">Identificación</label>
+      </div>
+
+      <div>
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com"
+            formControlName="nombre1">
+          <label for="floatingInput">Primer Nombre</label>
+        </div>
+
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com"
+            formControlName="nombre2">
+          <label for="floatingInput">Segundo Nombre</label>
+        </div>
+
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com"
+            formControlName="apellido1">
+          <label for="floatingInput">Primer Apellido</label>
+        </div>
+
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com"
+            formControlName="apellido2">
+          <label for="floatingInput">Segundo Apellido</label>
+        </div>
+
+        <div class="form-floating mb-3">
+          <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com"
+            formControlName="email">
+          <label for="floatingInput">Correo</label>
+        </div>
+
+        <div class="form-floating mb-3">
+          <input type="date" class="form-control" id="floatingInput" placeholder="name@example.com"
+            formControlName="fechaNac">
+          <label for="floatingInput">Fecha de nacimiento</label>
+        </div>
+
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com"
+            formControlName="direccion">
+          <label for="floatingInput">Dirección</label>
+        </div>
+
+
+        <div class="form-floating mb-3">
+          <input type="number" class="form-control" id="floatingInput" placeholder="name@example.com"
+            formControlName="telefonoFijo">
+          <label for="floatingInput">Teléfono</label>
+        </div>
+      </div>
+
+      <div class="text-center">
+
+        <button class="btn btn-success" mat-button matStepperNext type="button">Seguir</button>
+
+      </div>
+
+    </form>
+
+  </mat-step>
+
+  <mat-step [stepControl]="activoForm" label="Activos">
+
+    <form class="my-form" [formGroup]="activoForm">
+
+      <div class="form-floating mb-3">
+        <select class="form-select" id="programa" aria-label="Floating label select example"
+          formControlName="idPrograma">
+          <option selected>Selecionar programa</option>
+          <option *ngFor='let programa of programas' [ngValue]="programa.id">{{programa.nombrePrograma}}
+          </option>
+        </select>
+        <label for="programa">Programa</label>
+        <!-- <div class="valid-feedback" *ngIf="!idTipoGrupo.hasError('required')">
+          Valor válido
+        </div>
+        <div class="invalid-feedback">
+          Por favor ingresé un valor válido para el tipo de grupo
+        </div> -->
+      </div>
+
+
+      <div class="form-floating mb-3">
+        <select class="form-select" id="tipoGrupo" aria-label="Floating label select example"
+          formControlName="idTipoGrupo">
+          <option selected>Selecionar tipo de grupo</option>
+          <option *ngFor='let tipoGrupo of tipoGrupos' [ngValue]="tipoGrupo.id">{{tipoGrupo.nombreTipoGrupo}}
+          </option>
+        </select>
+        <label for="tipoGrupo">Tipo de grupo</label>
+        <!-- <div class="valid-feedback" *ngIf="!idTipoGrupo.hasError('required')">
+          Valor válido
+        </div>
+        <div class="invalid-feedback">
+          Por favor ingresé un valor válido para el tipo de grupo
+        </div> -->
+      </div>
+
+    </form>
+
+    <div class="text-center">
+      <button class="btn btn-danger" mat-button matStepperPrevious>Atrás</button>
+
+      <button class="btn btn-success" mat-button matStepperNext type="button">Seguir</button>
+    </div>
+
+
+
+  </mat-step>
+
+  <mat-step [stepControl]="documentoForm" label="Documentos">
+
+
+    <ng-template matStepLabel>Documentos</ng-template>
+
+    <form class="my-form" [formGroup]="documentoForm">
+      <div class="form-floating mb-3">
+        <input type="file" class="form-control" id="floatingInput" placeholder="name@example.com">
+        <label for="floatingInput">Documento1</label>
+      </div>
+
+      <div class="form-floating mb-3">
+        <input type="file" class="form-control" id="floatingInput" placeholder="name@example.com">
+        <label for="floatingInput">Documento2</label>
+      </div>
+      <div class="form-floating mb-3">
+        <input type="file" class="form-control" id="floatingInput" placeholder="name@example.com">
+        <label for="floatingInput">Documento3</label>
+      </div>
+    </form>
+
+    <div class="text-center">
+      <button class="btn btn-danger" mat-button matStepperPrevious>Regresar</button>
+      <!-- <button mat-button (click)="stepper.reset()">Reset</button> -->
+      <!-- <button type="submit" class="btn btn-success" mat-button>Enviar</button> -->
+      <button class="btn btn-success" mat-button matStepperNext type="button">Enviar</button>
+
+
+    </div>
+  </mat-step>
+
+  <mat-step label="Datos enviados"> <!--Vista de datos enviados correctamente-->
+
+
+    <ng-template matStepLabel>Fin</ng-template>
+
+    <div class="container">
+
+      <h1 class="text-center">Datos enviados correctamente!!!</h1>
+
+      <div class="text-center mb-3">
+        <img class="mx-auto rounded-circle" src="../../../../../assets/img/gif/verificado.gif" alt="Verficación"
+          width="200px">
+      </div>
+
+    </div>
+
+    <div class="text-center">
+      <button type="button" class="btn btn-success" mat-button>Regresar</button>
+    </div>
+  </mat-step>
+
+</mat-stepper>
