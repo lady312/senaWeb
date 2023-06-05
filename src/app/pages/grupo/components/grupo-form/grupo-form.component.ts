@@ -297,9 +297,11 @@ export class GrupoFormComponent implements OnInit {
         return jor;
       });
     } else {
-      this.jornadas.map((jor) => {
+      this.jornadasGrupo=this.jornadas.map((jor) => {
         jor["checked"] = false;
-        return jor;
+        if( jor["checked"]){
+          return jor;
+        }
       });
     }
   }
