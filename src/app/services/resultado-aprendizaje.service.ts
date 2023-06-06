@@ -26,7 +26,8 @@ export class ResultadoAprendizajeService  {
     rap.numeroHoras = rap.numeroHoras;
     rap.idTipoRaps = rap.idTipoRaps;
     rap.idCompetencia = rap.idCompetencia;
-    return this._coreService.post<ResultadoAprendizajeModel[]>(`resultados/${1}/competencias/${rap.idCompetencia}`, rap);
+
+    return this._coreService.post<ResultadoAprendizajeModel[]>('resultados',rap);
   }
   eliminarRaps(rapId: number) {
     return this._coreService.delete('resultadoAprendizaje/' + rapId);
