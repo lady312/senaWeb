@@ -14,5 +14,5 @@ export interface JornadaModel {
   diaJornada?: DiaJornadaModel[];
 
   jornada_grupo?:AsignacionJornadaGrupoModel;
-  
+
 }

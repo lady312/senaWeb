@@ -17,6 +17,9 @@ import { UINotificationService } from '@services/uinotification.service';
 import { debounceTime } from 'rxjs/operators';
 import { DiaModel } from '@models/dia.model';
 import { DiaService } from '@services/dia.service';
+import { AsignacionJornadaGrupoService } from '@services/asignacion-jornada-grupo.service';
+import { AsignacionJornadaGrupoModel } from '@models/asignacion-jornada-grupo.model';
+import { JornadaService } from '@services/jornada.service';
 
 @Component({
   selector: 'app-grupo-form',
@@ -31,7 +34,6 @@ export class GrupoFormComponent implements OnInit {
   @Input() tipoFormaciones: TipoFormacionModel[] = [];
   @Input() estadoGrupos: EstadoGrupoModel[] = [];
   @Input() tipoOfertas: TipoOfertaModel[] = [];
-  @Input() jornadas: JornadaModel[] = [];
   @Input() infraestructuras: InfraestructuraModel[] = [];
 
   @Input() grupo: GrupoModel;
@@ -41,12 +43,10 @@ export class GrupoFormComponent implements OnInit {
   @Output() store = new EventEmitter<GrupoModel>();
   @Output() cancel = new EventEmitter<void>();
 
-  jornadasGrupo: JornadaModel[] = [];
   horariosInfra: InfraestructuraModel[] = [];
 
   showFormHorario: boolean = false;
   showFormTipoG: boolean = false;
-  allJornadas: boolean = false;
 
   formGrupo: UntypedFormGroup;
   idTipoGrupo: number = 0;
@@ -56,10 +56,22 @@ export class GrupoFormComponent implements OnInit {
   idEstado: number = 0;
   idTipoOferta: number = 0;
 
+
+
+  jornadasGrupo: JornadaModel[] = [];
+  jornadasInput: JornadaModel[] = [];
+  @Input() jornadas: JornadaModel[] = [];
+  allJornadas = false;
+  public jornadasChecked: any[];
+
+
   constructor(
     private formBuilder: UntypedFormBuilder,
     private _tipoGrupoService: TipoGrupoService,
-    private _uiNotificationService: UINotificationService
+    private _uiNotificationService: UINotificationService,
+    private _asignacionJornadaGrupoService: AsignacionJornadaGrupoService,
+    private _jornadaService: JornadaService,
+
   ) {
     this.grupo = {
       id: null,
@@ -85,9 +97,8 @@ export class GrupoFormComponent implements OnInit {
       this.setGrupo();
       this.setIndexes(this.grupo);
       this.setLists(this.grupo);
-      // this.setJornada();
-      // this.cargarDias();
-      // this.checkedDias();
+      // this.cargarJornadas();
+      this.traercheckedJornadas();
     } else {
       this.grupo = {
         id: null,
@@ -112,39 +123,49 @@ export class GrupoFormComponent implements OnInit {
   get nombreGrupoField() {
     return this.formGrupo.get('nombreGrupo');
   }
+
   get fechaInicialField() {
     return this.formGrupo.get('fechaInicial');
   }
+
   get fechaFinalField() {
     return this.formGrupo.get('fechaFinal');
   }
+
   get observacionField() {
     return this.formGrupo.get('observacion');
   }
+
   get nombreJornadaField() {
     return this.formGrupo.get('nombreJornada');
   }
+
   get idTipoGrupoField() {
     return this.formGrupo.get('idTipoGrupo');
   }
+
   get idProgramaField() {
     return this.formGrupo.get('idPrograma');
   }
+
   get idNivelField() {
     return this.formGrupo.get('idNivel');
   }
+
   get idTipoFormacionField() {
     return this.formGrupo.get('idTipoFormacion');
   }
+
   get idEstadoField() {
     return this.formGrupo.get('idEstado');
   }
+
   get idTipoOfertaField() {
     return this.formGrupo.get('idTipoOferta');
   }
 
   get totalJornadasSeleccionadas() {
-    return this.jornadas.filter((j) => j["checked"]).length;
+    return this.jornadasGrupo.filter((j) => j['checked']).length;
   }
 
   setGrupo() {
@@ -215,13 +236,19 @@ export class GrupoFormComponent implements OnInit {
     console.log(this.idTipoOferta)
   }
 
+  public jornadaChecked: any[];
+
   setLists(grupo: GrupoModel) {
-    this.jornadasGrupo = grupo.jornadas.map((jornadaGrupo) => {
-      const index = this.jornadas.findIndex((jornada) => jornada == jornadaGrupo);
-      this.changeJornada(true, index + 1);
-      jornadaGrupo.jornada_grupo = { idJornada: jornadaGrupo.id };
-      return jornadaGrupo;
-    });
+    // this.jornadasGrupo = grupo.jornadas.map((jornadaGrupo) => {
+    //   const index = this.jornadas.findIndex((jornada) => jornada == jornadaGrupo);
+    //   this.changeJornada(true, index + 1);
+    //   jornadaGrupo.jornada_grupo = { idJornada: jornadaGrupo.id };
+    //   return jornadaGrupo;
+    // });
+
+
+
+
     this.horariosInfra = grupo.infraestructuras;
   }
 
@@ -282,7 +309,26 @@ export class GrupoFormComponent implements OnInit {
 
   }
 
-  getGrupo() {
+  getGrupo(): GrupoModel {
+
+    // const jornadasGrupo: AsignacionJornadaGrupoModel[] = this.jornadasGrupo
+    //   .filter((j) => j['checked'])
+    //   .map((j) => {
+    //     return {
+    //       idJornada: j.id,
+    //     };
+    //   });
+
+    const jornadasGrupo: AsignacionJornadaGrupoModel[] = this.jornadas
+      .filter((j) => j["checked"])
+      .map((j) => {
+        return {
+          idJornada: j.id,
+        };
+      });
+
+      console.log(jornadasGrupo);
+
     return {
       id: this.grupo?.id,
       nombre: this.getControl('nombreGrupo').value,
@@ -295,8 +341,9 @@ export class GrupoFormComponent implements OnInit {
       idTipoFormacion: this.idTipoFormacion,
       idEstado: this.idEstado,
       idTipoOferta: this.idTipoOferta,
-      jornadas: this.jornadasGrupo,
-      infraestructuras: this.horariosInfra
+      infraestructuras: this.horariosInfra,
+      jornadas: jornadasGrupo,
+
     }
   }
 
@@ -317,38 +364,76 @@ export class GrupoFormComponent implements OnInit {
     this.showFormTipoG = false;
   }
 
+  onChange(jornada: JornadaModel, isChecked: boolean, pos: number)
+  {
+    if(isChecked){
+      this.jornadasInput.push(jornada);
+    }
+    else{
+      this.jornadasInput.splice(pos, 1);
+    }
+  }
+
+  cargarJornadas() {
+    this._jornadaService.traerJornada().subscribe(
+      (dias) => {
+        this.jornadasGrupo = dias;
+      },
+      (error) => {
+        this._uiNotificationService.error('Error de conexión');
+      }
+    );
+  }
+
+  //jornadas
+
+  changeJornada(checked: boolean, index: number) {
+    this.jornadas[index]["checked"] = checked;
+    this.allJornadas = this.totalJornadasSeleccionadas === 3;
+  }
+
+  // get totalJornadasSeleccionadas() {
+  //   return this.jornadas.filter((j) => j["checked"]).length;
+  // }
   changeAllJornadas(allJor: boolean) {
     this.allJornadas = allJor;
-    if (this.allJornadas) {
-      this.jornadasGrupo = this.jornadas.map((jor) => {
-        jor.jornada_grupo = { idJornada: jor.id };
+    if (allJor) {
+      this.jornadas.map((jor) => {
         jor["checked"] = true;
         return jor;
       });
     } else {
-      this.jornadasGrupo=this.jornadas.map((jor) => {
+      this.jornadas.map((jor) => {
         jor["checked"] = false;
-        if( jor["checked"]){
-          return jor;
-        }
+        return jor;
       });
     }
   }
 
-  changeJornada(checked: boolean, index: number) {
-    if (index < 0) {
-      return;
-    }
-    this.jornadas[index]["checked"] = checked;
-    this.allJornadas = this.totalJornadasSeleccionadas === 3;
-    if (this.jornadas[index]['checked']) {
-      let newJornada = this.jornadas[index];
-      newJornada.jornada_grupo = { idJornada: newJornada.id }
-      this.jornadasGrupo.push(newJornada);
-    } else {
-      const deleteIndex = this.jornadasGrupo.findIndex((jornada) => jornada === this.jornadas[index]);
-      this.jornadasGrupo.splice(deleteIndex, 1);
-    }
+  traercheckedJornadas() {
+    this.jornadasChecked = [];
+    this._asignacionJornadaGrupoService.getGrupoJornadaByGrupo(this.grupo.id).subscribe(
+      (savedData: any) => {
+        console.log(savedData);
+        if (savedData && savedData.length > 0) {
+          this.jornadasChecked = savedData;
+          this.jornadas = this.jornadas.map((jorSe) => {
+            jorSe.checked =
+              this.jornadasChecked.findIndex(
+                (j) => j.idJornada === jorSe.id
+              ) !== -1;
+            return jorSe;
+          });
+        } else {
+          this.jornadas.forEach((jorSe) => {
+            jorSe.checked = false;
+          });
+        }
+      },
+      (error) => {
+        console.log("There was an error while retrieving data !!!", error);
+      }
+    );
   }
 
   guardarTipoGrupo(tipoGrupo: TipoGrupoModel) {
@@ -361,129 +446,5 @@ export class GrupoFormComponent implements OnInit {
       this.showFormTipoG = false;
     });
   }
-
-
-
-
-//   onChange(dia: DiaModel, isChecked: boolean, pos: number) {
-//     if (isChecked) {
-//       this.diasInput.push(dia);
-//     } else {
-//       this.diasInput.splice(pos, 1);
-//     }
-//   }
-
-
-//   cargarDias() {
-//     this._diaService.traerDia().subscribe(
-//       (dias) => {
-//         this.diasSeman = dias;
-//       },
-//       (error) => {
-//         this._uiNotificationService.error('Error de conexión');
-//       }
-//     );
-//   }
-
-
-//   calcularCantidadH() {
-//     const horaInicial = this.formJornada.get('horaInicial').value;
-//     const horaFinal = this.formJornada.get('horaFinal').value;
-//     if (horaInicial && horaFinal) {
-//       const horaInicialDate = new Date(`01/01/2000 ${horaInicial}`);
-//       const horaFinalDate = new Date(`01/01/2000 ${horaFinal}`);
-//       let diff = horaFinalDate.getTime() - horaInicialDate.getTime();
-//       if (diff < 0) {
-//         diff += 24 * 60 * 60 * 1000;
-//       }
-//       const diffHoras = diff / (60 * 60 * 1000);
-//       this.formJornada.get('numeroHoras').setValue(diffHoras.toFixed(2));
-//     } else {
-//       this.formJornada.get('numeroHoras').setValue(null);
-//     }
-//   }
-
-
-//   get totalDiasSeleccionados() {
-//     return this.diasSeman.filter((d) => d['checked']).length;
-//   }
-
-
-//   setJornada() {
-//     if (this.jorna) {
-//       this.formJornada.patchValue({
-//         id: this.jorna?.id,
-//         descripcion: this.jorna.descripcion,
-//         horaFinal: this.jorna.horaFinal,
-//         horaInicial: this.jorna.horaInicial,
-//         nombreJornada: this.jorna.nombreJornada,
-//         numeroHoras: this.jorna.numeroHoras,
-//       });
-//     }
-//   }
-
-
-//   getJornada(): JornadaModel {
-//     let description = '';
-//     const diaJornadas: DiaJornadaModel[] = this.diasSeman
-//       .filter((d) => d['checked'])
-//       .map((d) => {
-//         description += d.dia + ' | | ';
-//         return {
-//           idDia: d.id,
-//         };
-//       });
-//       console.log(diaJornadas);
-
-//     return {
-//       id: this.jorna?.id,
-//       nombreJornada: this.getControl('nombreJornada').value,
-//       descripcion: description,
-//       horaInicial: this.getControl('horaInicial').value,
-//       horaFinal: this.getControl('horaFinal').value,
-//       numeroHoras: this.getControl('numeroHoras').value,
-//       diaJornada: diaJornadas,
-//     };
-//   }
-
-
-//   changeTodosLosDias(allDays: boolean) {
-//     this.todosLosDias = allDays;
-//     if (allDays) {
-//       this.diasSeman.map((dia) => {
-//         dia['checked'] = true;
-//         return dia;
-//       });
-//     } else {
-//       this.diasSeman.map((dia) => {
-//         dia['checked'] = false;
-//         return dia;
-//     this.diasChecked = [];
-//     this._diajornadaService.getDiaJornadaByJornada(this.jorna.id).subscribe(
-//       (savedData: any) => {
-//         console.log(savedData);
-//         if (savedData && savedData.length > 0) {
-//           this.diasChecked = savedData;
-//           this.diasSeman = this.diasSeman.map((diaSe) => {
-//             diaSe.checked =
-//               this.diasChecked.findIndex((p) => p.idDia === diaSe.id) !== -1;
-//             return diaSe;
-//           });
-//         } else {
-//           this.diasSeman.forEach((diaSe) => {
-//             diaSe.checked = false;
-//           });
-//         }
-//       },
-//       (error) => {
-//         console.log('There was an error while retrieving data !!!', error);
-//       }
-//     );
-//   }
-
-
-// }
-
-//   }
 
 }
