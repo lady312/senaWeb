@@ -44,7 +44,7 @@
           <div class="col-md-7">
             <select class="form-control is-valid" formControlName='rap'>
               <option [ngValue]="null">Seleccionar resultado </option>
-              <option *ngFor='lef resultado of resultadoAprendizaje' [ngValue]="resultado.id">{{resultado.codigoRap}}</option>
+              <option *ngFor='let resultados of resultadoAprendizajes' [ngValue]="resultados.id">{{resultados.rap}}</option>
             </select>
             <div class="valid-feedback" *ngIf="!resultados.hasError('required')">
               Valor válido
