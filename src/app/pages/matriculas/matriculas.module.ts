@@ -11,33 +11,33 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/compiler';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
+import { UsuarioModule } from "../usuario/usuario.module";
 
 
 
 
 @NgModule({
-  // schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  exports: [
-    MatriculaComponent,
-    MatIconModule
-
-  ],
-  declarations: [
-    MatriculaComponent
-  ],
-  imports: [
-    // TipogrupoModule,
-    CommonModule,
-    ComunModule,
-    MatriculasRoutingModule,
-    ReactiveFormsModule,
-    MatIconModule,
-    MatStepperModule,
-    MatFormFieldModule,
-    MatInputModule,
-    // StepsModule,
-    FormsModule
-  ]
-
+    // schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    exports: [
+        MatriculaComponent,
+        MatIconModule
+    ],
+    declarations: [
+        MatriculaComponent
+    ],
+    imports: [
+        // TipogrupoModule,
+        CommonModule,
+        ComunModule,
+        MatriculasRoutingModule,
+        ReactiveFormsModule,
+        MatIconModule,
+        MatStepperModule,
+        MatFormFieldModule,
+        MatInputModule,
+        // StepsModule,
+        FormsModule,
+        UsuarioModule
+    ]
 })
 export class MatriculasModule { }

@@ -26,6 +26,10 @@ import { TipoProgramaModel } from '@models/tipo-programa.model';
 import { TipoProgramaService } from '@services/tipo-programa.service';
 import { ProyectoFormativoService } from '@services/proyecto-formativo.service';
 import { ProyectoFormativoModel } from '@models/proyecto-formativo.model ';
+import { PersonaService } from '@services/persona.service';
+import { TipoIdentificacionModel } from '@models/tipo-identificacion.model';
+
+
 @Component({
 
   selector: 'app-matricula',
@@ -46,6 +50,8 @@ export class MatriculaComponent implements OnInit {
   @Input() tipoGrupos: TipoGrupoModel[] = [];
   @Input() programas: ProgramaModel[] = [];
   @Input() proyectoFormativos: ProyectoFormativoModel[] = [];
+
+  @Input() tipoIdent: TipoIdentificacionModel[] = [];
 
 
   personForm: FormGroup;
@@ -79,8 +85,8 @@ export class MatriculaComponent implements OnInit {
     private _matriculaService: MatriculaService,
     private _uiNotificationService: UINotificationService,
     private _programaService: ProgramaService,
-    private _tipoGrupoService: TipoGrupoService
-
+    private _tipoGrupoService: TipoGrupoService,
+    private _tipoIdentificacion: PersonaService
   ) {
 
     this.personForm = this._formBuilder.group({
@@ -110,6 +116,8 @@ export class MatriculaComponent implements OnInit {
     this.traerTipoGrupos();
     this.traerProgramas();
 
+    this.tipoIdentificacion();
+
 
     this.identificacionSubject.pipe(
       filter(identificacion => identificacion >= 10000000000),
@@ -119,6 +127,20 @@ export class MatriculaComponent implements OnInit {
     });
 
   }
+
+  tipoIdentificacion()
+  {
+    this._tipoIdentificacion.traerTiposId().subscribe(
+      (tIdentificacion: TipoIdentificacionModel[]) => {
+        this.tipoIdent = tIdentificacion;
+        console.log(this.tipoIdent)
+      },
+      (error) => {
+        // this._uiNotificationService.error('Error al obtener los tipos de identificación', 'Tipo identificación');
+      }
+    )
+  }
+
 
   onIdentificacionInput(identificacion: number)
    {
@@ -131,43 +153,33 @@ export class MatriculaComponent implements OnInit {
   }
 
   personaByIdentificacion(identificacion: number) {
-    if (identificacion) {
-      this._matriculaService.personByIdentificacion(identificacion).pipe(
-        debounceTime(500), // Retraso de 500 milisegundos (ajusta según tus necesidades)
-        catchError(() => {
-          // Manejo silencioso de errores
-          return [];
-        })
-      ).subscribe(
-        (personas: PersonaModel[]) => {
-          try {
-            if (identificacion) {
-              const persona = personas.find((person) => person); // Asignación segura del primer elemento del array
-              console.log(persona);
-              this._uiNotificationService.success("Tus datos han sido registrados anteriormente", "Persona encontrada");
-              this.validacionExistencia = true;
-              // const persona = personas[0];
-              // console.log("A" + persona);
-              this.personForm.patchValue(persona);
-              console.log(this.personForm.patchValue(persona));
-              this.personForm.get('nombre1').setValue(persona.nombre1);
-              this.personForm.get('nombre2').setValue(persona.nombre2);
-              this.personForm.get('apellido1').setValue(persona.apellido1);
-              this.personForm.get('apellido2').setValue(persona.apellido2);
-              this.personForm.get('fechaNac').setValue(persona.fechaNac);
-              this.personForm.get('direccion').setValue(persona.direccion);
-              this.personForm.get('email').setValue(persona.email);
-              this.personForm.get('telefonoFijo').setValue(persona.telefonoFijo);
-
-            }
-          } catch (error) {
-          }
+   
+    this._matriculaService.personByIdentificacion(identificacion).subscribe(
+      (response: any) => {
+        if (response.message === "Se encontró la persona") {
+          const persona = response.person;
+          this.validacionExistencia = true;
+          this.personForm.get('identificacion').setValue(persona.identificacion);
+          this.personForm.get('nombre1').setValue(persona.nombre1);
+          this.personForm.get('nombre2').setValue(persona.nombre2);
+          this.personForm.get('apellido1').setValue(persona.apellido1);
+          this.personForm.get('apellido2').setValue(persona.apellido2);
+          this.personForm.get('fechaNac').setValue(persona.fechaNac);
+          this.personForm.get('direccion').setValue(persona.direccion);
+          this.personForm.get('email').setValue(persona.email);
+          this.personForm.get('telefonoFijo').setValue(persona.telefonoFijo);
+        } else {
+          this.validacionExistencia = false;
         }
-      );
-    } else {
-      this.validacionExistencia = false;
-      this.personForm.reset();
-    }
+      },
+      (error) => {
+        this._uiNotificationService.error("Ocurrió un error al obtener la persona");
+        console.log(error);
+      }
+    );
+
+
+
   }
 
 
