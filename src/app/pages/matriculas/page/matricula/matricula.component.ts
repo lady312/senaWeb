@@ -100,6 +100,12 @@ export class MatriculaComponent implements OnInit {
       email: ['', Validators.required],
       telefonoFijo: ['', Validators.required]
     });
+  // funcion de mensaje
+
+
+
+
+
 
     this.activoForm = this._formBuilder.group({
       idTipoGrupo: ['', Validators.required],
@@ -153,7 +159,7 @@ export class MatriculaComponent implements OnInit {
   }
 
   personaByIdentificacion(identificacion: number) {
-   
+
     this._matriculaService.personByIdentificacion(identificacion).subscribe(
       (response: any) => {
         if (response.message === "Se encontró la persona") {
@@ -194,7 +200,6 @@ export class MatriculaComponent implements OnInit {
       }
     );
   }
-
   traerTipoGrupos() {
     this._tipoGrupoService.traerTipoGrupos().subscribe(
       (tipoGrupo: TipoGrupoModel[]) => {
@@ -205,10 +210,11 @@ export class MatriculaComponent implements OnInit {
       }
     );
   }
-
-  // get idTipoGrupo() {
-  //   return this.formMatricula.get("idTipoGrupo");
-  // }
-
-
+  // validar cada campo
+  validarCampos() {
+    Object.keys(this.personForm.controls).forEach(field => {
+      const control = this.personForm.get(field);
+      control.markAsTouched({ onlySelf: true });
+    });
+  }
 }
