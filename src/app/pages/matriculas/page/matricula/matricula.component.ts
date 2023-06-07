@@ -29,6 +29,7 @@ import { ProyectoFormativoModel } from '@models/proyecto-formativo.model ';
 
 
 import { MatSnackBar } from '@angular/material/snack-bar';
+
 @Component({
 
   selector: 'app-matricula',
@@ -44,13 +45,10 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 export class MatriculaComponent implements OnInit {
-
-
   @Input() tipoGrupos: TipoGrupoModel[] = [];
   @Input() programas: ProgramaModel[] = [];
   @Input() proyectoFormativos: ProyectoFormativoModel[] = [];
-
-
+  matricula: FormGroup;
   personForm: FormGroup;
   activoForm: FormGroup;
   documentoForm: FormGroup;
@@ -84,7 +82,10 @@ export class MatriculaComponent implements OnInit {
     private _programaService: ProgramaService,
     private _tipoGrupoService: TipoGrupoService,
 
-  ) {
+  )
+
+
+  {
 
     this.personForm = this._formBuilder.group({
       identificacion: ['', Validators.required],
@@ -97,7 +98,7 @@ export class MatriculaComponent implements OnInit {
       email: ['', Validators.required],
       telefonoFijo: ['', Validators.required]
     });
-  // funcion de mensaje
+
 
 
 
@@ -207,4 +208,16 @@ export class MatriculaComponent implements OnInit {
       control.markAsTouched({ onlySelf: true });
     });
   }
+  // obtenerCampos() {
+  //   this.matricula.obtenerCampos().subscribe(
+  //     ([programa, tipoGrupo]) => {
+  //       this.programa = campo1;
+  //       this.campo2 = campo2;
+  //       console.log('Campos obtenidos:', this.campo1, this.campo2);
+  //     },
+  //     (error) => {
+  //       console.log('Error al obtener los campos:', error);
+  //     }
+  //   );
+  // }
 }
