@@ -97,8 +97,9 @@ export class MatriculaComponent implements OnInit {
       apellido2: ['', Validators.required],
       fechaNac: ['', Validators.required],
       direccion: ['', Validators.required],
-      email: ['', Validators.required],
-      telefonoFijo: ['', Validators.required]
+      email: ['', [Validators.required, Validators.email]],
+      telefonoFijo: ['', Validators.required],
+      celular: ['', Validators.required]
     });
   // funcion de mensaje
 
@@ -174,6 +175,7 @@ export class MatriculaComponent implements OnInit {
           this.personForm.get('direccion').setValue(persona.direccion);
           this.personForm.get('email').setValue(persona.email);
           this.personForm.get('telefonoFijo').setValue(persona.telefonoFijo);
+          this.personForm.get('celular').setValue(persona.celular);
         } else {
           this.validacionExistencia = false;
         }

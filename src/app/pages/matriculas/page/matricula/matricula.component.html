@@ -56,7 +56,7 @@
 
         <div class="form-floating mb-3">
           <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com"
-            formControlName="email">
+            formControlName="email" required>
           <label for="floatingInput">Correo</label>
           <div class="text-danger" *ngIf="personForm.get('email').invalid && personForm.get('email').touched">
             El correo es requerida.
@@ -91,9 +91,10 @@
 
         <div class="form-floating mb-3">
           <input type="number" class="form-control" id="floatingInput" placeholder="name@example.com"
-            formControlName="telefonoFijo">
+            formControlName="celular">
           <label for="floatingInput">Celular</label>
         </div>
+
       </div>
       <div class="text-center">
         <button class="btn btn-success" mat-button matStepperNext type="button" (click)="validarCampos()">Seguir</button>
