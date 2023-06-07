@@ -19,7 +19,6 @@
                             <th>Programa</th>
                             <th>Nivel formativo</th>
                             <th>Nombre del grupo</th>
-                            <th>Instructor</th>
                             <th>Tipo de formación</th>
                             <th>Estado</th>
                             <th>Tipo de oferta</th>
@@ -37,7 +36,6 @@
                             <td>{{ grupo?.programa?.nombrePrograma || 'Programa no disponible' }}</td>
                             <td>{{ grupo.nivel_formacion?.nivel }}</td>
                             <td>{{ grupo.nombre || 'Nombre no disponible'}}</td>
-                            <td>{{'Lider no disponible ' }}</td>
                             <td>{{ grupo?.tipo_formacion?.nombreTipoFormacion || 'Tipo de formación no disponible'}}
                             </td>
                             <td>{{ grupo?.estado_grupo.nombreEstado || 'Estado no disponible'}}</td>
