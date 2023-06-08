@@ -53,7 +53,7 @@ export class MatriculaComponent implements OnInit {
 
 
   personForm: FormGroup;
-  activoForm: FormGroup;
+  matriculaForm: FormGroup;
   documentoForm: FormGroup;
 
 
@@ -108,7 +108,7 @@ export class MatriculaComponent implements OnInit {
 
 
 
-    this.activoForm = this._formBuilder.group({
+    this.matriculaForm = this._formBuilder.group({
       idTipoGrupo: ['', Validators.required],
       idPrograma: ['', Validators.required]
     })
