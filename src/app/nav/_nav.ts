@@ -25,6 +25,7 @@ import {  GESTION_MEDIO_PAGO,
           GESTION_RESULTADO_APRENDIZAJE,
           REGIONAL,
           CENTRO_FORMACION,//i
+          GESTION_DOCUMENTOS,
 } from './permissions';
           
 export const navItems: NavegacionModel[] = [
@@ -186,6 +187,12 @@ export const navItems: NavegacionModel[] = [
     icon: 'cil-columns',
     permiso: CENTRO_FORMACION
   },
+  {
+    name: "Gestion documentos",
+    url: 'gestion_documentos',//muestra la vista para resultado aprendizaje''''''''''''''''''''
+    icon: 'cil-columns',
+    permiso:  GESTION_DOCUMENTOS
+  },
 ];
 
 export const routesNav: Routes = [
@@ -338,5 +345,9 @@ export const routesNav: Routes = [
   {
     path: 'add_centro_formacion',
     loadChildren: () => import('../pages/centro-formacion/centro-formacion.module').then(m => m.CentroFormacionModule)
+  },
+  {
+    path: 'gestion_documentos',
+    loadChildren: () => import('../pages/gestion-documentos/gestion-documentos.module').then(m => m.GestionDocumentosModule)
   },
 ];

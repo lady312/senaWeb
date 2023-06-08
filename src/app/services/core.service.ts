@@ -8,12 +8,17 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { ActivationCompanyUserModel } from '@models/activation-company-user.model';
 import { environment } from './../../environments/environment';
 
+
 const API_URL = environment.url;
 
 @Injectable({
   providedIn: 'root'
 })
 export class CoreService {
+  getApiUrl(): string {
+    // Utiliza la propiedad 'url' del objeto 'environment' para obtener la URL base de la API
+    return environment.url;
+  }  
 
   public persona: BehaviorSubject<PersonaModel> = new BehaviorSubject<PersonaModel>(null);
   public empresa: BehaviorSubject<EmpresaModel> = new BehaviorSubject<EmpresaModel>(null);
