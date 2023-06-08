@@ -28,6 +28,7 @@ import { FormsModule } from '@angular/forms';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { CalendarioComponent } from './components/calendario/calendario.component';
 import { SedeModule } from './pages/sede/sede.module';
+import { GestionFichasComponent } from './pages/gestion-fichas/page/gestion-fichas/gestion-fichas.component';
 
 
 
@@ -68,7 +69,8 @@ const APP_CONTAINERS = [
     ...APP_CONTAINERS,
     P404Component,
     P500Component,
-    CalendarioComponent
+    CalendarioComponent,
+    GestionFichasComponent
   ],
 
   providers: [

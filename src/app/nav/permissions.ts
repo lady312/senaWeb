@@ -28,4 +28,4 @@ export const GESTION_COMPETENCIA           = 'GESTION_COMPETENCIA'; //se crea co
 export const GESTION_ACTIVIDAD_APRENDIZAJE = 'GESTION_ACTIVIDAD_APRENDIZAJE';//se crea constante exportable pra el nav.ts que sera una vistad de Aa
 export const GESTION_RESULTADO_APRENDIZAJE = 'GESTION_RESULTADO_APRENDIZAJE';//se crea constante exportable pra el nav.ts que sera una vista de rap
 
-
+export const GESTION_FICHAS = 'GESTION_FICHAS';

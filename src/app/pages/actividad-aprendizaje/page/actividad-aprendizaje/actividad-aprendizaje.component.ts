@@ -51,12 +51,12 @@ export class ActividadAprendizajeComponent implements OnInit {
 
   guardarActividadAprendizaje(Aa: ActividadAprendizajeModel) {
     if (Aa.id) {
-      this._AaService.actualizarActividadAprendizaje(Aa).subscribe(rol => {
+      this._AaService.actualizarActividadAprendizaje(Aa).subscribe(aa => {
         this.getActividadAprendizaje();
         this.reset();
       });
     } else {
-      this._AaService.crearActividadAprendizaje(Aa).subscribe(rol => {
+      this._AaService.crearActividadAprendizaje(Aa).subscribe(aa => {
         this.getActividadAprendizaje();
         this.reset();
       })

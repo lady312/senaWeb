@@ -7,12 +7,12 @@ import { ActividadAprendizajeModel } from '@models/actividad-aprendizaje.model';
 })
 export class ActividadAprendizajeService {
 
-  
+
   constructor(
     private _coreService: CoreService
   ) { }
 
- 
+
 
   public traerActividadAprendizaje() {
     return this._coreService.get<ActividadAprendizajeModel[]>('actividadAprendizaje');
@@ -22,6 +22,8 @@ export class ActividadAprendizajeService {
   crearActividadAprendizaje(Aa: ActividadAprendizajeModel) {
     Aa.NombreAA = Aa.NombreAA.toUpperCase();
     Aa.codigoAA=Aa.codigoAA.toUpperCase();
+    Aa.idRap=Aa.idRap;
+
     return this._coreService.post<ActividadAprendizajeModel>('actividadAprendizaje', Aa);
   }
 
@@ -31,7 +33,10 @@ export class ActividadAprendizajeService {
     return this._coreService.delete('actividadAprendizaje/' + tipoDocId);
   }
   actualizarActividadAprendizaje(Aa: ActividadAprendizajeModel) {
+
     Aa.NombreAA = Aa.NombreAA.toUpperCase();
+
+
     return this._coreService.put('actividadAprendizaje/' + Aa.id, Aa);
   }
 }
