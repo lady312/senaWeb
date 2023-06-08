@@ -21,6 +21,11 @@ export class MatriculaService {
     return this._coreService.get<PersonaModel[]>(url);
   }
 
+  numeroFichaByGrupo(numeroFicha: number): Observable<MatriculaModel[]>{
+    const url: string = `numero_ficha_by_grupo/${numeroFicha}`;
+    return this._coreService.get<MatriculaModel[]>(url);
+  }
+
 
   crearMatricula(matricula: MatriculaModel)
   {
