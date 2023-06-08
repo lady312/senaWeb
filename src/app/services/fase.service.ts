@@ -24,6 +24,7 @@ export class FaseService {
 
     fase.nombreFase = fase.nombreFase.toUpperCase();
     fase.codigoFase = fase.codigoFase.toUpperCase();
+    console.log('el id es:',fase.id);
     return this._coreService.post<FaseModel>('fases', fase);
   }
 

@@ -117,12 +117,12 @@ export class AddResultadoAprendizajeComponent {
         debounceTime(350),
       )
       .subscribe(data => {
-        console.log(data,'data');
       });
   }
 
   guardarRap() {
     this.store.emit(this.getRap());
+    console.log(this.getRap());
   }
 
   closeModal() {
