@@ -2,7 +2,7 @@
   <div class="card style">
     <div class="card-header style">
 
-      
+
       <i class="fa fa-align-justify"></i>Gestion de fichas  aprendices
       <div class="container">
         <div class="row">
@@ -14,7 +14,20 @@
               </li>
             </ul>
           </div>
+          <p> Cedula</p>
+          <div class="col-lg-6">
+            <input type="text" class="form-control"  placeholder="Buscar...">
+            <ul class="list-group mt-2">
+              <li class="list-group-item" *ngFor="let ficha of fichasFiltradas" (click)="seleccionarFicha(ficha)">
+                {{ ficha.nombre }}
+              </li>
+            </ul>
+          </div>
+
+
+
         </div>
+
 
         <div class="row mt-4" *ngIf="fichaSeleccionada">
           <div class="col-lg-12">

@@ -14,7 +14,11 @@ import { TipogrupoModule } from '../tipo-grupo/tipoGrupo.module';
 
 @NgModule({
   exports: [
-    GruposComponent
+    GruposComponent,
+    GruposListComponent,
+    GrupoComponent,
+
+
   ],
   declarations: [
     GruposComponent,

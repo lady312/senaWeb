@@ -11,7 +11,7 @@ import { ActividadProyectoModel } from '@models/actividad-proyecto.model';
 import { ActividadProyectoService } from '@services/actividad-proyecto.service'
 import { FaseModel } from '@models/fase.model';
 import { FaseService } from '@services/fase.service';
-import { ProgramaModel } from '@models/programa.model'; 
+import { ProgramaModel } from '@models/programa.model';
 import { CompetenciaRapModel } from '@models/competencia_rap.model';
 import { CompetenciaRapService } from '@services/competencia-rap.service';
 import { ResultadoAprendizajeModel } from '@models/resultado-aprendizaje.model';
@@ -44,7 +44,13 @@ export class GestionProgramaComponent implements OnInit {
   @Input() CompetenciasRaps: CompetenciaRapModel[] = [];
   @Input() actividadProyecto: ActividadProyectoModel;
   @Input() ActividadProyectos: ActividadProyectoModel[] = [];
-  @Input() programas: ProgramaModel[] = [];
+
+
+  @Input() programas: ProgramaModel[] = [];  
+
+
+
+
   @Input() proyectos: ProyectoFormativoModel[] = [];
   @Input() resultados: ResultadoAprendizajeModel[] = [];
   @Input() programa: ProgramaModel;
@@ -134,7 +140,7 @@ export class GestionProgramaComponent implements OnInit {
   get etapaLectiva() {
       return this.formPrograma.get('etapaLectiva');
     }
-  
+
   get etapaProductiva() {
       return this.formPrograma.get('etapaProductiva');
     }
@@ -146,11 +152,11 @@ export class GestionProgramaComponent implements OnInit {
   get creditosProductiva() {
       return this.formPrograma.get('creditosProductiva');
     }
-    
+
   get rutaArchivo() {
       return this.formPrograma.get('rutaArchivo');
     }
-  
+
 
 
     setPrograma() {
@@ -340,7 +346,7 @@ export class GestionProgramaComponent implements OnInit {
       data.append('etapaProductiva', programa.etapaProductiva.toString());
       data.append('creditosLectiva', programa.creditosLectiva.toString());
       data.append('creditosProductiva', programa.creditosProductiva.toString());
-  
+
       if (programa.id) {
         this.programaService.actualizarProgramas(data).subscribe((programa) => {
           this.getPrograma();
@@ -557,7 +563,7 @@ export class GestionProgramaComponent implements OnInit {
   }
 
   //muestra los resultados de una competencia
-  traerCompetenciasRaps(id:number) {  
+  traerCompetenciasRaps(id:number) {
     this._competenciaRap.getCompetenciaRapByCompetencia(id)
       .subscribe((competenciaRap: CompetenciaRapModel[]) => {
         this.CompetenciasRaps = competenciaRap;
@@ -570,7 +576,7 @@ export class GestionProgramaComponent implements OnInit {
 
 
 
-  
+
 
 
 
