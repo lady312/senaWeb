@@ -20,6 +20,13 @@ import { DiaService } from '@services/dia.service';
 import { AsignacionJornadaGrupoService } from '@services/asignacion-jornada-grupo.service';
 import { AsignacionJornadaGrupoModel } from '@models/asignacion-jornada-grupo.model';
 import { JornadaService } from '@services/jornada.service';
+import { ProgramaService } from '@services/programa.service';
+import { InfraestructuraService } from '@services/infraestructura.service';
+import { NivelFormacionService } from '@services/nivel-formacion.service';
+import { TipoFormacionService } from '@services/tipo-formacion.service';
+import { EstadoGrupoService } from '@services/estado-grupo.service';
+import { TipoOfertaService } from '@services/tipo-oferta.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-grupo-form',
@@ -35,6 +42,7 @@ export class GrupoFormComponent implements OnInit {
   @Input() estadoGrupos: EstadoGrupoModel[] = [];
   @Input() tipoOfertas: TipoOfertaModel[] = [];
   @Input() infraestructuras: InfraestructuraModel[] = [];
+  @Input() estados: EstadoGrupoModel[] = [];
 
   @Input() grupo: GrupoModel;
 
@@ -71,6 +79,14 @@ export class GrupoFormComponent implements OnInit {
     private _uiNotificationService: UINotificationService,
     private _asignacionJornadaGrupoService: AsignacionJornadaGrupoService,
     private _jornadaService: JornadaService,
+    private _programaService: ProgramaService,
+    private _infraestructuraService: InfraestructuraService,
+    private _nivelFormacionService: NivelFormacionService,
+    private _tipoFormacionService: TipoFormacionService,
+    private _estadoService: EstadoGrupoService,
+    private _tipoOfertaService: TipoOfertaService,
+    private _jornadasService: JornadaService,
+    private _modalService: NgbModal, //Modal
 
   ) {
     this.grupo = {
@@ -99,6 +115,20 @@ export class GrupoFormComponent implements OnInit {
       this.setLists(this.grupo);
       // this.cargarJornadas();
       this.traercheckedJornadas();
+
+
+      this.traerTipoGrupos();
+      this.traerProgramas();
+      this.traerNivelesFormacion();
+      this.traerInfraestructuras();
+      this.traerTipoFormaciones();
+      this.traerEstados();
+      this.traerTipoOfertas();
+      this.traerJornadas();
+      this.setGrupo();
+      this.traercheckedJornadas();
+
+
     } else {
       this.grupo = {
         id: null,
@@ -176,12 +206,121 @@ export class GrupoFormComponent implements OnInit {
       observacion: this.grupo.observacion,
       nombreJornada: this.grupo.nombreJornada,
       idPrograma: this.grupo.programa.nombrePrograma,
-      idNivel:this.grupo.nivel_formacion.nivel,
-      idTipoFormacion: this.grupo.tipo_formacion.nombreTipoFormacion,
-      idEstado:this.grupo.estado_grupo.nombreEstado,
-      idTipoOferta:this.grupo.tipo_oferta.nombreOferta,
-      idTipoGrupo:this.grupo.tipo_grupo.nombreTipoGrupo
+      // idNivel:this.grupo.nivel_formacion.nivel,
+      // idTipoFormacion: this.grupo.tipo_formacion.nombreTipoFormacion,
+      // idEstado:this.grupo.estado_grupo.nombreEstado,
+      // idTipoOferta:this.grupo.tipo_oferta.nombreOferta,
+      // idTipoGrupo:this.grupo.tipo_grupo.nombreTipoGrupo,
+      idTipoGrupo: this.grupo.idTipoGrupo,
+      tipogrupo: this.grupo.tipo_grupo,
+
+      // idPrograma: this.grupo.idPrograma,
+      // programa: this.grupo.programa,
+
+      // idInfraestructura: this.grupo.idInfraestructura,
+      // infraestructura: this.grupo.infraestructura,
+
+      idNivel: this.grupo.idNivel,
+      nivel: this.grupo.nivel_formacion,
+
+      idTipoFormacion: this.grupo.idTipoFormacion,
+      tipoFormacion: this.grupo.tipo_formacion,
+
+      idEstado: this.grupo.idEstado,
+      estado: this.grupo.estado_grupo,
+
+      idTipoOferta: this.grupo.idTipoOferta,
+      tipoOferta: this.grupo.tipo_oferta,
     });
+  }
+
+
+  traerTipoGrupos() {
+    this._tipoGrupoService.traerTipoGrupos().subscribe(
+      (tipoGrupo: TipoGrupoModel[]) => {
+        this.tipoGrupos = tipoGrupo;
+      },
+      (error) => {
+        this._uiNotificationService.error("Error de conexión");
+      }
+    );
+  }
+
+  traerProgramas() {
+    this._programaService.traerProgramas().subscribe(
+      (programa: ProgramaModel[]) => {
+        this.programas = programa;
+      },
+      (error) => {
+        this._uiNotificationService.error("Error de conexión");
+      }
+    );
+  }
+
+  traerInfraestructuras() {
+    this._infraestructuraService.traerInfraestructuras().subscribe(
+      (infraestructura: InfraestructuraModel[]) => {
+        this.infraestructuras = infraestructura;
+      },
+      (error) => {
+        this._uiNotificationService.error("Error de conexión");
+      }
+    );
+  }
+
+  traerNivelesFormacion() {
+    this._nivelFormacionService.traerNivelesFormacion().subscribe(
+      (niveles: NivelFormacionModel[]) => {
+        this.niveles = niveles;
+      },
+      (error) => {
+        this._uiNotificationService.error("Error de conexión");
+      }
+    );
+  }
+
+  traerTipoFormaciones() {
+    this._tipoFormacionService.traerTipoFormaciones().subscribe(
+      (tiposF: TipoFormacionModel[]) => {
+        this.tipoFormaciones = tiposF;
+      },
+      (error) => {
+        this._uiNotificationService.error("Error de conexión");
+      }
+    );
+  }
+
+  traerEstados() {
+    this._estadoService.traerEstadoGrupos().subscribe(
+      (estado: EstadoGrupoModel[]) => {
+        this.estados = estado;
+      },
+      (error) => {
+        this._uiNotificationService.error("Error de conexión");
+      }
+    );
+  }
+
+  traerTipoOfertas() {
+    this._tipoOfertaService.traerTipoOfertas().subscribe(
+      (tipoOferta: TipoOfertaModel[]) => {
+        this.tipoOfertas = tipoOferta;
+      },
+      (error) => {
+        this._uiNotificationService.error("Error de conexión");
+      }
+    );
+  }
+
+  traerJornadas() {
+    this._jornadasService.traerJornada().subscribe(
+      (jorn: JornadaModel[]) => {
+        this.jornadas = jorn;
+      },
+      (error) => {
+        this._uiNotificationService.error("Error de conexión");
+      }
+    );
   }
 
   setIndexes(grupo: GrupoModel) {
@@ -196,16 +335,30 @@ export class GrupoFormComponent implements OnInit {
   selectIdTipoGrupo(event: any) {
     const value: string = event.target.value;
     const tipoPrograma: TipoGrupoModel = this.tipoGrupos.find((tipoP) =>
-    tipoP.nombreTipoGrupo.toLocaleLowerCase() === value.toLocaleLowerCase());
+      tipoP.nombreTipoGrupo.toLocaleLowerCase() === value.toLocaleLowerCase());
     this.idTipoGrupo = tipoPrograma.id;
   }
+
+  // selectIdPrograma(event: any) {
+  //   const value: string = event.target.value;
+  //   const programa: ProgramaModel = this.programas.find((programa) =>
+  //     programa.nombrePrograma.toLocaleLowerCase() === value.toLocaleLowerCase());
+  //   this.idPrograma = programa.id;
+  // }
 
   selectIdPrograma(event: any) {
     const value: string = event.target.value;
     const programa: ProgramaModel = this.programas.find((programa) =>
       programa.nombrePrograma.toLocaleLowerCase() === value.toLocaleLowerCase());
-    this.idPrograma = programa.id;
+
+    if (programa) {
+      // El programa existe en la lista
+      this.idPrograma = programa.id;
+    } else {
+      this._uiNotificationService.error('Por favor seleccione un programa existente');
+    }
   }
+
 
   selectIdNivel(event: any) {
     const value: string = event.target.value;
@@ -231,7 +384,7 @@ export class GrupoFormComponent implements OnInit {
   selectIdTipoOferta(event: any) {
     const value: string = event.target.value;
     const tipoOferta = this.tipoOfertas.find((tOfertas) =>
-    tOfertas.nombreOferta.toLocaleLowerCase() === value.toLocaleLowerCase());
+      tOfertas.nombreOferta.toLocaleLowerCase() === value.toLocaleLowerCase());
     this.idTipoOferta = tipoOferta.id;
     console.log(this.idTipoOferta)
   }
@@ -239,18 +392,10 @@ export class GrupoFormComponent implements OnInit {
   public jornadaChecked: any[];
 
   setLists(grupo: GrupoModel) {
-    // this.jornadasGrupo = grupo.jornadas.map((jornadaGrupo) => {
-    //   const index = this.jornadas.findIndex((jornada) => jornada == jornadaGrupo);
-    //   this.changeJornada(true, index + 1);
-    //   jornadaGrupo.jornada_grupo = { idJornada: jornadaGrupo.id };
-    //   return jornadaGrupo;
-    // });
-
-
-
-
     this.horariosInfra = grupo.infraestructuras;
   }
+
+
 
   addJornada(jornada: JornadaModel) {
     this.jornadasGrupo.push(jornada);
@@ -327,7 +472,7 @@ export class GrupoFormComponent implements OnInit {
         };
       });
 
-      console.log(jornadasGrupo);
+    console.log(jornadasGrupo);
 
     return {
       id: this.grupo?.id,
@@ -335,12 +480,25 @@ export class GrupoFormComponent implements OnInit {
       fechaInicialGrupo: this.getControl('fechaInicial').value,
       fechaFinalGrupo: this.getControl('fechaFinal').value,
       observacion: this.getControl('observacion').value,
-      idTipoGrupo: this.idTipoGrupo,
+
+
+      // idTipoGrupo: this.idTipoGrupo,
+      // idPrograma: this.idPrograma,
+      // idNivel: this.idNivel,
+      // idTipoFormacion: this.idTipoFormacion,
+      // idEstado: this.idEstado,
+      // idTipoOferta: this.idTipoOferta,
+
+
+      idTipoGrupo: this.getControl("idTipoGrupo").value,
       idPrograma: this.idPrograma,
-      idNivel: this.idNivel,
-      idTipoFormacion: this.idTipoFormacion,
-      idEstado: this.idEstado,
-      idTipoOferta: this.idTipoOferta,
+      // idPrograma: this.getControl("idPrograma").value,
+      idNivel: this.getControl("idNivel").value,
+      idTipoFormacion: this.getControl("idTipoFormacion").value,
+      idEstado: this.getControl("idEstado").value,
+      idTipoOferta: this.getControl("idTipoOferta").value,
+
+
       infraestructuras: this.horariosInfra,
       jornadas: jornadasGrupo,
 
@@ -364,12 +522,11 @@ export class GrupoFormComponent implements OnInit {
     this.showFormTipoG = false;
   }
 
-  onChange(jornada: JornadaModel, isChecked: boolean, pos: number)
-  {
-    if(isChecked){
+  onChange(jornada: JornadaModel, isChecked: boolean, pos: number) {
+    if (isChecked) {
       this.jornadasInput.push(jornada);
     }
-    else{
+    else {
       this.jornadasInput.splice(pos, 1);
     }
   }

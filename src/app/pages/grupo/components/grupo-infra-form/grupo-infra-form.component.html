@@ -3,7 +3,7 @@
         <p class="h4">Añadir Infraestructura</p>
     </div>
     <div class="card-body">
-        <form [formGroup]="formGrupoInfr" class="was-validated" novalidate>
+        <form [formGroup]="formGrupoInfr" class="was-validated" novalidate #form="ngForm">
             <div class="form-floating mb-3">
                 <input (change)="seleccionarInfraestructura($event)" class="form-control" list="infr-list" type="text"
                     formControlName="idInfraestructura" id="idInfr" required>
@@ -47,7 +47,7 @@
                 </div>
             </div>
             <div class="row">
-                <button (click)="addInfraestructura()" class="col col-md-6 btn btn-success">Agregar</button>
+                <button (click)="enviarInfraestructura(formGrupoInfr)" class="col col-md-6 btn btn-success">Agregar</button>
                 <button (click)="cancelar()" class="col col-md-6 btn btn-danger">Cancelar</button>
             </div>
         </form>
