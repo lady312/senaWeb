@@ -58,18 +58,7 @@ export class MatriculaComponent implements OnInit {
   activoForm: FormGroup;
   documentoForm: FormGroup;
 
-
-  title = 'angular-stepper-ejercicio';
-
   stepperForm!: FormGroup;
-
-
-  firstFormGroup = this._formBuilder.group({
-    firstCtrl: ['', Validators.required],
-  });
-  secondFormGroup = this._formBuilder.group({
-    secondCtrl: ['', Validators.required],
-  });
 
   validacionExistencia: boolean = false;
   identificacionForm: FormGroup;
@@ -102,11 +91,6 @@ export class MatriculaComponent implements OnInit {
       celular: ['', Validators.required]
     });
   // funcion de mensaje
-
-
-
-
-
 
     this.activoForm = this._formBuilder.group({
       idTipoGrupo: ['', Validators.required],
