@@ -2,7 +2,8 @@
 
   <mat-step label="persona" [stepControl]="personForm">
 
-    <ng-template  matStepLabel> <i class="fa fa-user-circle-o fa-2x" aria-hidden="true"></i>
+
+    <ng-template  matStepLabel> <i class="fa fa-user-circle-o fa-2x" aria-hidden="true"></i><br>
       Aprendiz</ng-template>
 
 
@@ -101,9 +102,9 @@
       </div>
     </form>
   </mat-step>
-  <mat-step [stepControl]="activoForm" label="Activos">
-    <form class="my-form" [formGroup]="activoForm">
-      <ng-template  matStepLabel> <i class="fa fa-list fa-2x" aria-hidden="true"></i>Activos</ng-template>
+  <mat-step [stepControl]="matriculaForm" label="Activos">
+    <form class="my-form" [formGroup]="matriculaForm">
+      <ng-template  matStepLabel> <i class="fa fa-list fa-2x" aria-hidden="true"></i>Matricula</ng-template>
       <div class="form-floating mb-3">
         <select class="form-select" id="programa" aria-label="Floating label select example"
           formControlName="idPrograma">
@@ -136,6 +137,19 @@
           Por favor ingresé un valor válido para el tipo de grupo
         </div> -->
       </div>
+
+
+
+      <div class="form-floating mb-3">
+        <input type="number" class="form-control" id="floatingInput" placeholder="name@example.com"
+          (input)="onNumeroFichaInput($event.target.value)" >
+        <label for="floatingInput">Número de ficha</label>
+        <!-- <div class="text-danger" *ngIf="personForm.get('nombre').invalid && personForm.get('nombre').touched">formControlName="nombre"
+          El número de ficha es requerida.
+        </div> -->
+      </div>
+
+
 
     </form>
 

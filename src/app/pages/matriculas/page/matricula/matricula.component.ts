@@ -45,8 +45,6 @@ import { TipoIdentificacionModel } from '@models/tipo-identificacion.model';
 
 
 export class MatriculaComponent implements OnInit {
-
-
   @Input() tipoGrupos: TipoGrupoModel[] = [];
   @Input() programas: ProgramaModel[] = [];
   @Input() proyectoFormativos: ProyectoFormativoModel[] = [];
@@ -55,7 +53,7 @@ export class MatriculaComponent implements OnInit {
 
 
   personForm: FormGroup;
-  activoForm: FormGroup;
+  matriculaForm: FormGroup;
   documentoForm: FormGroup;
 
   stepperForm!: FormGroup;
@@ -63,6 +61,8 @@ export class MatriculaComponent implements OnInit {
   validacionExistencia: boolean = false;
   identificacionForm: FormGroup;
   private identificacionSubject: Subject<number> = new Subject<number>();
+  private numeroFichaSubject: Subject<number> = new Subject<number>();
+
 
   isLinear = true;
 
@@ -90,9 +90,14 @@ export class MatriculaComponent implements OnInit {
       telefonoFijo: ['', Validators.required],
       celular: ['', Validators.required]
     });
-  // funcion de mensaje
 
-    this.activoForm = this._formBuilder.group({
+
+
+
+
+
+
+    this.matriculaForm = this._formBuilder.group({
       idTipoGrupo: ['', Validators.required],
       idPrograma: ['', Validators.required]
     })
@@ -101,13 +106,17 @@ export class MatriculaComponent implements OnInit {
       this.personaByIdentificacion(identificacion);
     });
 
+    this.numeroFichaSubject.pipe(debounceTime(700)).subscribe((numeroFicha) => {
+      this.numeroFichaByGrupo(numeroFicha);
+    });
+
   }
 
   ngOnInit(): void {
     this.traerTipoGrupos();
     this.traerProgramas();
 
-    this.tipoIdentificacion();
+    // this.tipoIdentificacion();
 
 
     this.identificacionSubject.pipe(
@@ -115,6 +124,13 @@ export class MatriculaComponent implements OnInit {
       debounceTime(700)
     ).subscribe((identificacion: number) => {
       this.personaByIdentificacion(identificacion);
+    });
+
+    this.numeroFichaSubject.pipe(
+      filter(numeroFicha => numeroFicha >= 10000000000),
+      debounceTime(700)
+    ).subscribe((numeroFicha: number) => {
+      this.numeroFichaByGrupo(numeroFicha);
     });
 
   }
@@ -143,6 +159,16 @@ export class MatriculaComponent implements OnInit {
     }
   }
 
+  onNumeroFichaInput(numeroFicha: number)
+   {
+    if (numeroFicha) {
+      this.numeroFichaSubject.next(numeroFicha);
+    } else {
+      this.validacionExistencia = false;
+      this.personForm.reset();
+    }
+  }
+
   personaByIdentificacion(identificacion: number) {
 
     this._matriculaService.personByIdentificacion(identificacion).subscribe(
@@ -150,7 +176,7 @@ export class MatriculaComponent implements OnInit {
         if (response.message === "Se encontró la persona") {
           const persona = response.person;
           this.validacionExistencia = true;
-          this.personForm.get('identificacion').setValue(persona.identificacion);
+          // this.personForm.get('identificacion').setValue(persona.identificacion);
           this.personForm.get('nombre1').setValue(persona.nombre1);
           this.personForm.get('nombre2').setValue(persona.nombre2);
           this.personForm.get('apellido1').setValue(persona.apellido1);
@@ -175,6 +201,18 @@ export class MatriculaComponent implements OnInit {
   }
 
 
+  numeroFichaByGrupo(numeroFicha: number)
+  {
+    this._matriculaService.numeroFichaByGrupo(numeroFicha).subscribe(
+      (data) => {
+        console.log(data);
+      },
+      (error) => {
+        console.log(error);
+      }
+    )
+
+  }
 
   traerProgramas() {
     this._programaService.traerProgramas().subscribe(
@@ -203,4 +241,16 @@ export class MatriculaComponent implements OnInit {
       control.markAsTouched({ onlySelf: true });
     });
   }
+  // obtenerCampos() {
+  //   this.matricula.obtenerCampos().subscribe(
+  //     ([programa, tipoGrupo]) => {
+  //       this.programa = campo1;
+  //       this.campo2 = campo2;
+  //       console.log('Campos obtenidos:', this.campo1, this.campo2);
+  //     },
+  //     (error) => {
+  //       console.log('Error al obtener los campos:', error);
+  //     }
+  //   );
+  // }
 }
