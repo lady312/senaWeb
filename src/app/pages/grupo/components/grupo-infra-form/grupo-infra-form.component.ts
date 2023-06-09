@@ -3,6 +3,8 @@ import { FormControl, FormGroup, NgForm, UntypedFormGroup } from '@angular/forms
 import { GrupoModel } from '@models/grupo.model';
 import { InfraestructuraModel } from '@models/infraestructura.model';
 import { UINotificationService } from '@services/uinotification.service';
+// import '@ng-select/ng-select/themes/default.theme.css';
+
 
 @Component({
   selector: 'app-grupo-infra-form',
@@ -82,4 +84,15 @@ export class GrupoInfraFormComponent {
   private getControl(control: string) {
     return this.formGrupoInfr.controls[control];
   }
+
+
+  opciones = [
+    { id: 1, nombre: 'Opción 1' },
+    { id: 2, nombre: 'Opción 2' },
+    { id: 3, nombre: 'Opción 3' },
+    { id: 4, nombre: 'Opción 4' },
+    { id: 5, nombre: 'Opción 5' }
+  ];
+  opcionSeleccionada: any;
+
 }

@@ -14,6 +14,8 @@ import { InfraestructuraModule } from '../infraestructura/infraestructura.module
 import { GrupoFormComponent } from './components/grupo-form/grupo-form.component';
 import { GrupoInfraComponent } from './components/grupo-infra/grupo-infra.component';
 import { GrupoInfraFormComponent } from './components/grupo-infra-form/grupo-infra-form.component';
+// import { NgSelectModule } from '@ng-select/ng-select';
+
 
 @NgModule({
   exports: [
@@ -40,7 +42,8 @@ import { GrupoInfraFormComponent } from './components/grupo-infra-form/grupo-inf
     ReactiveFormsModule,
     FormsModule,
     TipogrupoModule,
-    InfraestructuraModule
+    InfraestructuraModule,
+    // NgSelectModule
   ],
   providers: [GruposService,DatePipe],
 })
