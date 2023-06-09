@@ -68,6 +68,12 @@ export class MatriculaComponent implements OnInit {
 
   formMatricula: UntypedFormGroup;
 
+  dataFicha: any;
+  mostrar:boolean =  false;
+
+  numeroFicha: number;
+mostrarFormulario: boolean = false;
+
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -206,6 +212,7 @@ export class MatriculaComponent implements OnInit {
     this._matriculaService.numeroFichaByGrupo(numeroFicha).subscribe(
       (data) => {
         console.log(data);
+        this.dataFicha = data;
       },
       (error) => {
         console.log(error);
@@ -213,6 +220,24 @@ export class MatriculaComponent implements OnInit {
     )
 
   }
+
+
+
+  // mostrarDatos():boolean
+  // {
+  //   if(this.dataFicha)
+  //   {
+  //     return this.mostrar = true;
+  //   }else{
+  //     return this.mostrar = false;
+  //   }
+  // }
+
+
+  mostrarDatos(): boolean {
+    return !!this.dataFicha;
+  }
+
 
   traerProgramas() {
     this._programaService.traerProgramas().subscribe(
@@ -224,6 +249,7 @@ export class MatriculaComponent implements OnInit {
       }
     );
   }
+
   traerTipoGrupos() {
     this._tipoGrupoService.traerTipoGrupos().subscribe(
       (tipoGrupo: TipoGrupoModel[]) => {
@@ -241,16 +267,5 @@ export class MatriculaComponent implements OnInit {
       control.markAsTouched({ onlySelf: true });
     });
   }
-  // obtenerCampos() {
-  //   this.matricula.obtenerCampos().subscribe(
-  //     ([programa, tipoGrupo]) => {
-  //       this.programa = campo1;
-  //       this.campo2 = campo2;
-  //       console.log('Campos obtenidos:', this.campo1, this.campo2);
-  //     },
-  //     (error) => {
-  //       console.log('Error al obtener los campos:', error);
-  //     }
-  //   );
-  // }
+
 }

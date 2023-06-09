@@ -151,6 +151,18 @@
 
 
 
+
+      <div *ngIf="mostrarDatos()">
+        <p>Nombre de la ficha: {{ dataFicha.ficha.nombre }}</p>
+        <p>Fecha inicial: {{ dataFicha.ficha.fechaInicialGrupo }}</p>
+        <p>Fecha final: {{ dataFicha.ficha.fechaFinalGrupo }}</p>
+        <p>Estado: {{ dataFicha.ficha.estado_grupo.nombreEstado }}</p>
+        <p>Observación: {{ dataFicha.ficha.observacion }}</p>
+        <p>Programa: {{ dataFicha.ficha.programa.nombrePrograma }}</p>
+        <!-- ... otros datos que desees mostrar -->
+      </div>
+
+
     </form>
 
     <div class="text-center">
