@@ -45,7 +45,6 @@ export class InfraestructuraService {
     if(infraestructura.descripcion){
       infraestructura.descripcion=infraestructura.descripcion.toLowerCase();
     }
-    console.log(infraestructura.newQr);
     return this._coreService.post<InfraestructuraModel>('infraestructuras',infraestructura);
   }
   //crea varias infraestructuras
