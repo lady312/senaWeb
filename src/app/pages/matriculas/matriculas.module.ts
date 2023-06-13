@@ -14,12 +14,15 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { MatDialogModule } from '@angular/material/dialog';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { NgxExtendedPdfViewerModule ,pdfDefaultOptions} from 'ngx-extended-pdf-viewer';
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
+import { MyDatePickerModule } from 'mydatepicker';
 
 import { ListGestionDocumentosComponent } from '../gestion-documentos/components/list-gestion-documentos/list-gestion-documentos.component';
 
-
 @NgModule({
-    // schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
     exports: [
         MatriculaComponent,
         MatIconModule
@@ -41,7 +44,22 @@ import { ListGestionDocumentosComponent } from '../gestion-documentos/components
         FormsModule,
         UsuarioModule,
         MatDialogModule,
-        NgxPaginationModule
-    ]
+        NgxPaginationModule,
+        NgxExtendedPdfViewerModule,
+        ModalModule,
+        NgbPaginationModule,
+        MyDatePickerModule
+    ],
+    providers: [
+      // Otros proveedores
+      {
+        provide: pdfDefaultOptions,
+        useValue: {
+          textLayer: true,
+          showHandToolButton: true
+          // Otras opciones predeterminadas que desees configurar
+        }
+      }
+    ],
 })
 export class MatriculasModule { }
