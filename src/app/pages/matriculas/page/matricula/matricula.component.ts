@@ -227,23 +227,9 @@ export class MatriculaComponent implements OnInit {
 
   }
 
-
-
-  // mostrarDatos():boolean
-  // {
-  //   if(this.dataFicha)
-  //   {
-  //     return this.mostrar = true;
-  //   }else{
-  //     return this.mostrar = false;
-  //   }
-  // }
-
-
   mostrarDatos(): boolean {
     return !!this.dataFicha;
   }
-
 
   traerProgramas() {
     this._programaService.traerProgramas().subscribe(
@@ -274,7 +260,6 @@ export class MatriculaComponent implements OnInit {
     });
   }
 
-
   mostrarModal() {
     return Swal.fire({
       title: '¿Estás seguro de aceptar esta ficha?',
@@ -290,11 +275,14 @@ export class MatriculaComponent implements OnInit {
     });
   }
 
-
   seguirAceptar() {
     this.mostrarModal().then((confirmado) => {
       if (confirmado) {
         this.stepper.next();
+      }
+      else if(this.matriculaForm.invalid)
+      {
+        alert('Por favor, llena todos los cambios');
       }
     });
   }

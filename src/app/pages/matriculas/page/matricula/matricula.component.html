@@ -144,9 +144,9 @@
         <input type="number" class="form-control" id="floatingInput" placeholder="name@example.com"
           (input)="onNumeroFichaInput($event.target.value)" formControlName="ficha">
         <label for="floatingInput">Número de ficha</label>
-        <!-- <div class="text-danger" *ngIf="personForm.get('nombre').invalid && personForm.get('nombre').touched">formControlName="nombre"
+        <div class="text-danger" *ngIf="matriculaForm.get('ficha').invalid && matriculaForm.get('ficha').touched">
           El número de ficha es requerida.
-        </div> -->
+        </div>
       </div>
 
 
