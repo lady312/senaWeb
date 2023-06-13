@@ -12,8 +12,8 @@ import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { UsuarioModule } from "../usuario/usuario.module";
 import { MatIconModule } from '@angular/material/icon';
-
-
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { MatDialogModule } from '@angular/material/dialog';
 
 
 @NgModule({
@@ -35,9 +35,10 @@ import { MatIconModule } from '@angular/material/icon';
         MatStepperModule,
         MatFormFieldModule,
         MatInputModule,
-        // StepsModule,
+        SweetAlert2Module.forChild(),
         FormsModule,
         UsuarioModule,
+        MatDialogModule
     ]
 })
 export class MatriculasModule { }

@@ -168,7 +168,10 @@
     <div class="text-center">
       <button class="btn btn-danger" mat-button matStepperPrevious>Atrás</button>
 
-      <button class="btn btn-success" mat-button matStepperNext type="button">Seguir</button>
+      <!-- <button class="btn btn-success" mat-button matStepperNext type="button" [swal]="{ title: '¿Estás seguro de aceptar esta ficha?',  showCancelButton: true }" (click)="seguirAceptar()">Seguir</button> -->
+      <button class="btn btn-success" mat-button  type="button" (click)="seguirAceptar()">Seguir</button>
+
+
     </div>
 
 

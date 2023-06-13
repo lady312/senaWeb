@@ -20,7 +20,8 @@ import { TipoGrupoModel } from "@models/tipogrupo.model";
 import { MatriculaModel } from "@models/matricula.model";
 import { TipoGrupoService } from "@services/tipo-grupo.service";
 import { delay, filter, catchError } from 'rxjs/operators';
-
+import Swal from 'sweetalert2';
+import { MatDialog } from '@angular/material/dialog';
 
 import { TipoProgramaModel } from '@models/tipo-programa.model';
 import { TipoProgramaService } from '@services/tipo-programa.service';
@@ -28,7 +29,7 @@ import { ProyectoFormativoService } from '@services/proyecto-formativo.service';
 import { ProyectoFormativoModel } from '@models/proyecto-formativo.model ';
 import { PersonaService } from '@services/persona.service';
 import { TipoIdentificacionModel } from '@models/tipo-identificacion.model';
-
+import { MatStepper } from '@angular/material/stepper';
 
 @Component({
 
@@ -45,6 +46,9 @@ import { TipoIdentificacionModel } from '@models/tipo-identificacion.model';
 
 
 export class MatriculaComponent implements OnInit {
+
+  @ViewChild(MatStepper) stepper: MatStepper;
+
   @Input() tipoGrupos: TipoGrupoModel[] = [];
   @Input() programas: ProgramaModel[] = [];
   @Input() proyectoFormativos: ProyectoFormativoModel[] = [];
@@ -72,7 +76,7 @@ export class MatriculaComponent implements OnInit {
   mostrar:boolean =  false;
 
   numeroFicha: number;
-mostrarFormulario: boolean = false;
+  mostrarFormulario: boolean = false;
 
 
   constructor(
@@ -81,7 +85,8 @@ mostrarFormulario: boolean = false;
     private _uiNotificationService: UINotificationService,
     private _programaService: ProgramaService,
     private _tipoGrupoService: TipoGrupoService,
-    private _tipoIdentificacion: PersonaService
+    private _tipoIdentificacion: PersonaService,
+    private dialog: MatDialog
   ) {
 
     this.personForm = this._formBuilder.group({
@@ -265,6 +270,31 @@ mostrarFormulario: boolean = false;
     Object.keys(this.personForm.controls).forEach(field => {
       const control = this.personForm.get(field);
       control.markAsTouched({ onlySelf: true });
+    });
+  }
+
+
+  mostrarModal() {
+    return Swal.fire({
+      title: '¿Estás seguro de aceptar esta ficha?',
+      showCancelButton: true
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // El usuario hizo clic en "Aceptar" en el modal
+        return true;
+      } else {
+        // El usuario hizo clic en "Cancelar" o cerró el modal
+        return false;
+      }
+    });
+  }
+
+
+  seguirAceptar() {
+    this.mostrarModal().then((confirmado) => {
+      if (confirmado) {
+        this.stepper.next();
+      }
     });
   }
 
