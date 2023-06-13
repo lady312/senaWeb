@@ -104,7 +104,7 @@
   </mat-step>
   <mat-step [stepControl]="matriculaForm" label="Activos">
     <form class="my-form" [formGroup]="matriculaForm">
-      <ng-template  matStepLabel> <i class="fa fa-list fa-2x" aria-hidden="true"></i>Matricula</ng-template>
+      <ng-template  matStepLabel><i class="fa fa-list fa-2x" aria-hidden="true"></i>Matricula</ng-template>
       <div class="form-floating mb-3">
         <select class="form-select" id="programa" aria-label="Floating label select example"
           formControlName="idPrograma">
@@ -153,13 +153,20 @@
 
 
       <div *ngIf="mostrarDatos()">
-        <p>Nombre de la ficha: {{ dataFicha.ficha.nombre }}</p>
-        <p>Fecha inicial: {{ dataFicha.ficha.fechaInicialGrupo }}</p>
-        <p>Fecha final: {{ dataFicha.ficha.fechaFinalGrupo }}</p>
-        <p>Estado: {{ dataFicha.ficha.estado_grupo.nombreEstado }}</p>
-        <p>Observación: {{ dataFicha.ficha.observacion }}</p>
-        <p>Programa: {{ dataFicha.ficha.programa.nombrePrograma }}</p>
+        <ng-container *ngIf="fichaNoEncontrada; else datosFicha">
+          <p class="alert alert-danger">Ficha no encontrada</p>
+        </ng-container>
+        <ng-template #datosFicha>
+          <p>Nombre de la ficha: {{ dataFicha.ficha.nombre }}</p>
+          <p>Fecha inicial: {{ dataFicha.ficha.fechaInicialGrupo }}</p>
+          <p>Fecha final: {{ dataFicha.ficha.fechaFinalGrupo }}</p>
+          <p>Estado: {{ dataFicha.ficha.estado_grupo.nombreEstado }}</p>
+          <p>Observación: {{ dataFicha.ficha.observacion }}</p>
+          <p>Programa: {{ dataFicha.ficha.programa.nombrePrograma }}</p>
+          <!-- ... otros datos que desees mostrar -->
+        </ng-template>
       </div>
+
 
 
     </form>
