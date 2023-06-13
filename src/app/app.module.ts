@@ -28,6 +28,11 @@ import { FormsModule } from '@angular/forms';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { CalendarioComponent } from './components/calendario/calendario.component';
 import { SedeModule } from './pages/sede/sede.module';
+import { ExamplePdfViewerComponent } from './example-pdf-viewer/example-pdf-viewer.component';
+import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
+
+
+
 
 
 
@@ -61,14 +66,19 @@ const APP_CONTAINERS = [
     RouterModule,
     FormsModule,
     FullCalendarModule,
-    SedeModule
+    SedeModule,
+    NgxExtendedPdfViewerModule
   ],
   declarations: [
     AppComponent,
     ...APP_CONTAINERS,
     P404Component,
     P500Component,
-    CalendarioComponent
+    CalendarioComponent,
+    ExamplePdfViewerComponent,
+   
+ 
+
   ],
 
   providers: [

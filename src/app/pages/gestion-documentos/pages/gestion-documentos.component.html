@@ -1,0 +1,27 @@
+
+  <app-list-gestion-documentos
+  
+      [documetoGestiones]="documetoGestiones">
+  </app-list-gestion-documentos>
+  
+  
+  <app-custom-modal
+  title="Subir Documentos"
+  [(show)]="showModalDocumentos">
+    <app-add-gestion-documentos
+   >
+    </app-add-gestion-documentos>
+  
+  </app-custom-modal>
+  
+  
+  <app-custom-modal
+    title="Documentos"
+    
+    [(show)]="showModalGetDocumentos">
+    <app-get-documentos>
+  
+    </app-get-documentos>
+  
+  </app-custom-modal>
+ 

@@ -25,7 +25,8 @@ import {  GESTION_MEDIO_PAGO,
           GESTION_RESULTADO_APRENDIZAJE,
           REGIONAL,
           CENTRO_FORMACION,//i
-          GESTION_MATRICULA
+          GESTION_MATRICULA,
+          GESTION_DOCUMENTOS,
 } from './permissions';
 import { MatriculasModule } from '../pages/matriculas/matriculas.module';
 
@@ -194,6 +195,12 @@ export const navItems: NavegacionModel[] = [
     icon: 'cil-folder-open',
     permiso: GESTION_MATRICULA
   },
+  {
+    name: "Gestion documentos",
+    url: 'gestion_documentos',//muestra la vista para resultado aprendizaje''''''''''''''''''''
+    icon: 'cil-columns',
+    permiso:  GESTION_DOCUMENTOS
+  },
 ];
 
 export const routesNav: Routes = [
@@ -350,5 +357,9 @@ export const routesNav: Routes = [
   {
     path: 'matricula',
     loadChildren: () => import('../pages/matriculas/matriculas.module').then(m => MatriculasModule)
+  },
+  {
+    path: 'gestion_documentos',
+    loadChildren: () => import('../pages/gestion-documentos/gestion-documentos.module').then(m => m.GestionDocumentosModule)
   },
 ];

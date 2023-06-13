@@ -29,3 +29,5 @@ export const GESTION_ACTIVIDAD_APRENDIZAJE = 'GESTION_ACTIVIDAD_APRENDIZAJE';//s
 export const GESTION_RESULTADO_APRENDIZAJE = 'GESTION_RESULTADO_APRENDIZAJE';//se crea constante exportable pra el nav.ts que sera una vista de rap
 
 export const GESTION_MATRICULA             = 'GESTION_MATRICULA';
+export const GESTION_DOCUMENTOS ='GESTION_DOCUMENTOS';
+
