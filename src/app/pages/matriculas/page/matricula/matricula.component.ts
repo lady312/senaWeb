@@ -260,9 +260,9 @@ export class MatriculaComponent implements OnInit {
     });
   }
 
-  mostrarModal() {
+  mostrarModal(textTitle:string) {
     return Swal.fire({
-      title: '¿Estás seguro de aceptar esta ficha?',
+      title: textTitle,
       showCancelButton: true
     }).then((result) => {
       if (result.isConfirmed) {
@@ -276,7 +276,7 @@ export class MatriculaComponent implements OnInit {
   }
 
   seguirAceptar() {
-    this.mostrarModal().then((confirmado) => {
+    this.mostrarModal('¿Estás seguro de aceptar esta ficha?').then((confirmado) => {
       if (confirmado) {
         this.stepper.next();
       }
@@ -286,5 +286,8 @@ export class MatriculaComponent implements OnInit {
       }
     });
   }
+
+
+  
 
 }
