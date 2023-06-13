@@ -1,18 +1,31 @@
 <app-grupos-list
-  [grupos]="grupos"
-  (delete)="eliminarGrupo($event)"
-  (update)="actualizarGrupo($event)"
-  (create)="createGrupo()"></app-grupos-list>
+
+    [grupos]="grupos"
+    (create)="crearGrupo()"
+    (update)="actualizarGrupo($event)"
+    (delete)="eliminarGrupo($event)">
+
+
+</app-grupos-list>
 
 <app-custom-modal
-  title="Gestión Grupo"
-  [(show)]="showModalGrupo">
+    title="Gestionar Grupos"
+    [(show)]="showFormGrupo">
 
-  <app-grupos
-    *ngIf="showModalGrupo"
-    [grupo]="grupo"
-    (store)="guardarGrupo($event)"
-    (cancel)="reset()">
-  </app-grupos>
+    <app-grupo-form
+        *ngIf="showFormGrupo"
+        [title]="formTitle"
+        [grupo]="grupo"
+        [infraestructuras]="infraestructuras"
+        [jornadas]="jornadas"
+        [programas]="programas"
+        [niveles]="nivelFormaciones"
+        [tipoGrupos]="tipoGrupos"
+        [tipoFormaciones]="tipoFormaciones"
+        [estadoGrupos]="estadoGrupos"
+        [tipoOfertas]="tipoOfertas"
+        (store)="guardarGrupo($event)"
+        (cancel)="reset()">
+    </app-grupo-form>
 
-</app-custom-modal>
+<app-custom-modal>

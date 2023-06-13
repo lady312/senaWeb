@@ -23,7 +23,7 @@ export class InfraestructuraComponent implements OnInit{
     infrsSedeArea:Map<number,
       Map<number,{
         infrs:InfraestructuraModel[]
-      }>> 
+      }>>
   }>();
 
   protected showFormInfr:boolean = false;
@@ -58,7 +58,7 @@ export class InfraestructuraComponent implements OnInit{
     this.cache.set(0,{
       areas:null,
       sedes:null,
-      infrsSedeArea:new Map<number, 
+      infrsSedeArea:new Map<number,
         Map<number,{
           infrs:InfraestructuraModel[]
         }>>()});
@@ -80,7 +80,7 @@ export class InfraestructuraComponent implements OnInit{
         this._uiNotificationService.error('Error de Conexión');
       });
     }
- 
+
   }
 
   getCiudades(){
@@ -290,7 +290,10 @@ export class InfraestructuraComponent implements OnInit{
   }
   eliminarInfraestructura(event:number){
     this._infraestructuraService.borrarInfraestructura(event).subscribe(()=>{
+      this.resetCache();
+      this.iniciarCache();
       this.getInfraestructuras();
+      this.reset();
     })
   }
   actualizarInfraestructura(event:InfraestructuraModel){
@@ -299,14 +302,17 @@ export class InfraestructuraComponent implements OnInit{
     this.showFormInfr = true;
   }
   guardarInfraestructura(event:InfraestructuraModel){
-    console.log(event);
     if(event.id){
       this._infraestructuraService.actualizarInfraestructura(event).subscribe(()=>{
+        this.resetCache();
+        this.iniciarCache();
         this.getInfraestructuras();
         this.reset();
       });
     }else{
       this._infraestructuraService.guardarInfraestructura(event).subscribe(()=>{
+        this.resetCache();
+        this.iniciarCache();
         this.getInfraestructuras();
         this.reset();
       });
@@ -334,6 +340,16 @@ export class InfraestructuraComponent implements OnInit{
     this.showResultadoBusqueda = false;
     this.resultadoBusqueda = null;
     this.formTitle = '';
-    this.infraestructura = null;
+    this.infraestructura = undefined;
+  }
+  resetCache(){
+    this.cache = new Map<number, {
+      areas:AreaModel[],
+      sedes:SedeModel[],
+      infrsSedeArea:Map<number,
+        Map<number,{
+          infrs:InfraestructuraModel[]
+        }>>
+    }>();
   }
 }

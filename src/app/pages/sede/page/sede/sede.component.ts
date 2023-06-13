@@ -193,7 +193,7 @@ export class SedeComponent implements OnInit{
   guardarSede(event:SedeModel){
     if(event.id){
       this._sedeService.actualizarSede(event).subscribe(()=>{
-        new Map<number, { 
+        this.cache= new Map<number, { 
           ciudades: CiudadModel[], 
           sedesPorCiudad: Map<number, { 
             sedes: SedeModel[] }> 
@@ -204,7 +204,7 @@ export class SedeComponent implements OnInit{
       });
     }else{
       this._sedeService.guardarSede(event).subscribe(()=>{
-        new Map<number, { 
+        this.cache= new Map<number, { 
           ciudades: CiudadModel[], 
           sedesPorCiudad: Map<number, { 
             sedes: SedeModel[] }> 

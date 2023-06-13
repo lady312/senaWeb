@@ -52,6 +52,7 @@
     "@fullcalendar/multimonth": "^6.1.7",
     "@fullcalendar/timegrid": "^6.1.8",
     "@ng-bootstrap/ng-bootstrap": "^14.1.0",
+    "@ng-select/ng-select": "^11.0.0",
     "@sweetalert2/ngx-sweetalert2": "^10.0.0",
     "bootstrap": "^4.6.0",
     "bootstrap-icons": "^1.10.4",

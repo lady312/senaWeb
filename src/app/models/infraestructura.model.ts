@@ -1,4 +1,5 @@
 import { AreaModel } from "./area.model";
+import { HorarioInfrModel } from "./horario-infraestructura.model";
 import { SedeModel } from "./sede.model";
 
 export interface InfraestructuraModel{
@@ -13,6 +14,8 @@ export interface InfraestructuraModel{
 
     sede?:SedeModel;
     area?:AreaModel;
+
+    horario_infraestructura?:HorarioInfrModel;
 
     newQr?:string;
 }

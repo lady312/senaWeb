@@ -1,47 +1,49 @@
-import { DiaJornadaModel } from '@models/dia_jornada.model';
 import { TipoGrupoModel } from '@models/tipogrupo.model';
 import { NivelFormacionModel } from '@models/nivel-formacion.model';
 import { TipoFormacionModel } from '@models/tipo-formacion.model';
 import { TipoOfertaModel } from '@models/tipo-oferta.model';
 import { EstadoGrupoModel } from '@models/estado-grupo.model';
-import { AsignacionJornadaGrupoModel } from '@models/asignacion-jornada-grupo.model';
+import { ProgramaModel } from '@models/programa.model';
+import { UsuarioModel } from '@models/usuario.model';
+import { AsignacionParticipanteModel } from '@models/asignacion-participante.model';
 import { JornadaModel } from './jornada.model';
 import { InfraestructuraModel } from './infraestructura.model';
-import { ProgramaModel } from './programa.model';
-import { UsuarioModel } from './usuario.model';
+import { HorarioInfrModel } from './horario-infraestructura.model';
+import { AsignacionJornadaGrupoModel } from './asignacion-jornada-grupo.model';
 export interface GrupoModel {
+
   id?: number;
   nombre: string;
-  fechaInicial: Date;
-  fechaFinal: Date;
+  fechaInicialGrupo: Date;
+  fechaFinalGrupo: Date;
   observacion: string;
+
+  nombreJornada?: string;
 
   idTipoGrupo?: number;
   tipo_grupo?: TipoGrupoModel;
 
-  idLider?: number;
-  lider?: UsuarioModel;
-
   idPrograma?: number;
   programa?: ProgramaModel;
 
-  idInfraestructura?: number;
-  infraestructura?: InfraestructuraModel;
+  idNivel?: number;
+  nivel_formacion?: NivelFormacionModel;
 
-  idNivel?:number;
-  nivel_formacion?:NivelFormacionModel;
+  idTipoFormacion?: number;
+  tipo_formacion?: TipoFormacionModel;
 
-  idTipoFormacion?:number;
-  tipo_formacion?:TipoFormacionModel;
+  idEstado?: number;
+  estado_grupo?: EstadoGrupoModel;
 
-  idEstado?:number;
-  estado_grupo?:EstadoGrupoModel;
+  idTipoOferta?: number;
+  tipo_oferta?: TipoOfertaModel;
 
-  idTipoOferta?:number;
-  tipo_oferta?:TipoOfertaModel;
+  horario_infraestructura?: HorarioInfrModel;
+  infraestructuras?: InfraestructuraModel[];
 
-  grupos_jornada?:AsignacionJornadaGrupoModel[];
+  grupos_jornada?: AsignacionJornadaGrupoModel;
+  jornadas?: JornadaModel[];
 
-  diaJor?: DiaJornadaModel[];
+  participantes?: AsignacionParticipanteModel[];
 
 }
