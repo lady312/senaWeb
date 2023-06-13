@@ -188,20 +188,14 @@
     <ng-template matStepLabel><i class="fa fa-book fa-2x" aria-hidden="true"></i>
       Documentos</ng-template>
 
-    <form class="my-form" [formGroup]="documentoForm">
-      <div class="form-floating mb-3">
-        <input type="file" class="form-control" id="floatingInput" placeholder="name@example.com">
-        <label for="floatingInput">Documento1</label>
-      </div>
+      <app-list-gestion-documentos></app-list-gestion-documentos>
 
-      <div class="form-floating mb-3">
-        <input type="file" class="form-control" id="floatingInput" placeholder="name@example.com">
-        <label for="floatingInput">Documento2</label>
-      </div>
-      <div class="form-floating mb-3">
-        <input type="file" class="form-control" id="floatingInput" placeholder="name@example.com">
-        <label for="floatingInput">Documento3</label>
-      </div>
+
+    <form class="my-form" [formGroup]="documentoForm">
+
+
+
+
     </form>
 
     <div class="text-center">

@@ -52,5 +52,11 @@ import { MyDatePickerModule } from 'mydatepicker';
           }
         }
       ],
+      exports: [
+        [ ListGestionDocumentosComponent,
+          GetDocumentosComponent,
+          AddGestionDocumentosComponent
+        ]
+      ],
 })
 export class GestionDocumentosModule { }

@@ -2,18 +2,20 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatriculasRoutingModule } from './matriculas-routing.module';
 import { MatriculaComponent } from './page/matricula/matricula.component';
-import { ReactiveFormsModule } from '@angular/forms';
 import { MatStepperModule } from '@angular/material/stepper';
 // import { StepsModule } from 'primeng/steps';
 import { ComunModule } from '@components/comun.module';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/compiler';
 import { MatInputModule } from '@angular/material/input';
-import { FormsModule } from '@angular/forms';
 import { UsuarioModule } from "../usuario/usuario.module";
 import { MatIconModule } from '@angular/material/icon';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { MatDialogModule } from '@angular/material/dialog';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgxPaginationModule } from 'ngx-pagination';
+
+import { ListGestionDocumentosComponent } from '../gestion-documentos/components/list-gestion-documentos/list-gestion-documentos.component';
 
 
 @NgModule({
@@ -23,10 +25,10 @@ import { MatDialogModule } from '@angular/material/dialog';
         MatIconModule
     ],
     declarations: [
-        MatriculaComponent
+        MatriculaComponent,
+        ListGestionDocumentosComponent,
     ],
     imports: [
-        // TipogrupoModule,
         CommonModule,
         ComunModule,
         MatriculasRoutingModule,
@@ -38,7 +40,8 @@ import { MatDialogModule } from '@angular/material/dialog';
         SweetAlert2Module.forChild(),
         FormsModule,
         UsuarioModule,
-        MatDialogModule
+        MatDialogModule,
+        NgxPaginationModule
     ]
 })
 export class MatriculasModule { }
