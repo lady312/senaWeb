@@ -46,7 +46,7 @@ export class GestionProgramaComponent implements OnInit {
   @Input() ActividadProyectos: ActividadProyectoModel[] = [];
 
 
-  @Input() programas: ProgramaModel[] = [];  
+  @Input() programas: ProgramaModel[] = [];
 
 
 

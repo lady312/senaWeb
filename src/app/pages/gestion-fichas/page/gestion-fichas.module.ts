@@ -6,6 +6,10 @@ import { GestionFichasComponent } from './gestion-fichas/gestion-fichas.componen
 import { GruposComponent } from '../../grupo/components/grupos/grupos.component';
 import { GruposListComponent } from '../../grupo/components/grupos-list/gruposList.component';
 import { GrupoComponent } from '../../grupo/pages/grupo/grupo.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ComunModule } from '@components/comun.module';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -16,6 +20,13 @@ import { GrupoComponent } from '../../grupo/pages/grupo/grupo.component';
   imports: [
     CommonModule,
     GestionFichasRoutingModule,
+    ReactiveFormsModule,
+    ComunModule,
+    SweetAlert2Module.forChild(),
+    FormsModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+    FormsModule,
 
   ],
   entryComponents:[
