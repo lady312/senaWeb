@@ -110,7 +110,8 @@ export class MatriculaComponent implements OnInit {
 
     this.matriculaForm = this._formBuilder.group({
       idTipoGrupo: ['', Validators.required],
-      idPrograma: ['', Validators.required]
+      idPrograma: ['', Validators.required],
+      ficha: ['', Validators.required]
     })
 
     this.identificacionSubject.pipe(debounceTime(700)).subscribe((identificacion) => {
