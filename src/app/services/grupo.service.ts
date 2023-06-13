@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class GruposService {
-  
+
   constructor(
     private _coreService: CoreService
   ) { }
@@ -41,7 +41,7 @@ export class GruposService {
 
   actualizarGrupo(grupo: GrupoModel) {
     const url = `grupos/${grupo.id}`;
-    grupo.nombre            = grupo.nombre.toUpperCase();
+    // grupo.nombre            = grupo.nombre.toUpperCase();
     grupo.observacion       = grupo.observacion.toUpperCase();
     return this._coreService.put(url, grupo);
   }

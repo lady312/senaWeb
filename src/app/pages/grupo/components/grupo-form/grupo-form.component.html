@@ -23,7 +23,7 @@
 
       <!--Campo para introducir el nombre del grupo-->
       <div class="form-floating mb-3">
-        <input type="Text" onkeyup="javascript:this.value=this.value.toUpperCase();" class="form-control"
+        <input type="text" onkeyup="javascript:this.value=this.value.toUpperCase();" class="form-control"
           id="nombreGrupo" formControlName='nombreGrupo'>
         <label for="nombreGrupo">Número de ficha / nombre</label>
         <div class="valid-feedback" *ngIf="!nombreGrupoField.hasError('required')">
@@ -54,69 +54,6 @@
           </ng-container>
         </div>
       </div>
-
-      <!-- Campo para selecionar el nivel de formacion
-            <div class="form-floating mb-3">
-                <input (change)="selectIdNivel($event)" class="form-control" list="nivel-list" type="text"
-                    formControlName="idNivel" id="idNivel" required>
-                <label for="idNivel">Nivel de formación</label>
-                <datalist id="nivel-list">
-                    <option *ngFor='let nivel of niveles' [value]="nivel.nivel"></option>
-                </datalist>
-                <div class="valid-feedback" *ngIf="!idNivelField.hasError('required')">
-                    Valor válido
-                </div>
-                <div class="invalid-feedback">
-                    Por favor ingresé un valor válido para la nivel
-                </div>
-            </div>
-
-            Campo para seleccionar el tipo de formacion
-            <div class="form-floating mb-3">
-                <input (change)="selectIdTipoFormacion($event)" class="form-control" list="tFormacion-list" type="text"
-                    formControlName="idTipoFormacion" id="idTipoFormacion" required>
-                <label for="idTipoFormacion">Tipo de formación</label>
-                <datalist id="tFormacion-list">
-                    <option *ngFor='let tipoFormacion of tipoFormaciones' [value]="tipoFormacion.nombreTipoFormacion">
-                    </option>
-                </datalist>
-                <div class="valid-feedback" *ngIf="!idTipoFormacionField.hasError('required')">
-                    Valor válido
-                </div>
-                <div class="invalid-feedback">
-                    Por favor ingresé un valor válido para el tipo de formación
-                </div>
-            </div>
-
-            <div class="form-floating mb-3">
-                <input (change)="selectIdEstado($event)" class="form-control" list="estado-list" type="text"
-                    formControlName="idEstado" id="idEstado" required>
-                <label for="idEstado">Estado de formación</label>
-                <datalist id="estado-list">
-                    <option *ngFor='let estado of estadoGrupos' [value]="estado.nombreEstado"></option>
-                </datalist>
-                <div class="valid-feedback" *ngIf="!idEstadoField.hasError('required')">
-                    Valor válido
-                </div>
-                <div class="invalid-feedback">
-                    Por favor ingresé un valor válido para el estado
-                </div>
-            </div>
-
-            <div class="form-floating mb-3">
-                <input (change)="selectIdTipoOferta($event)" class="form-control" list="tOferta-list" type="text"
-                    formControlName="idTipoOferta" id="idTipoOferta" required>
-                <label for="idTipoOferta">Tipo de oferta formativa</label>
-                <datalist id="tOferta-list">
-                    <option *ngFor='let tipoOferta of tipoOfertas' [value]="tipoOferta.nombreOferta"></option>
-                </datalist>
-                <div class="valid-feedback" *ngIf="!idTipoOfertaField.hasError('required')">
-                    Valor válido
-                </div>
-                <div class="invalid-feedback">
-                    Por favor ingresé un valor válido para el tipo de oferta
-                </div>
-            </div> -->
 
       <div class="form-floating mb-3">
         <select class="form-select" id="nivel" aria-label="Floating label select example" formControlName="idNivel">
@@ -205,30 +142,6 @@
           </div>
         </div>
       </div>
-      <!--<div class="row mb-2">
-                <div class="col-sm-10">
-                    <div class="form-floating mb-3">
-                        <input (change)="selectIdTipoGrupo($event)" class="form-control" list="tGrupo-list" type="text"
-                            formControlName="idTipoGrupo" id="idTipoGrupo" required>
-                        <label for="idTipoGrupo">Tipo de Grupo</label>
-                        <datalist id="tGrupo-list">
-                            <option *ngFor='let tipoGrupo of tipoGrupos' [value]="tipoGrupo.nombreTipoGrupo"></option>
-                        </datalist>
-                        <div class="valid-feedback" *ngIf="!idTipoGrupoField.hasError('required')">
-                            Valor válido
-                        </div>
-                        <div class="invalid-feedback">
-                            Por favor ingresé un valor válido para el tipo de grupo
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-2 mt-2">
-                    <button (click)="agregarTipoGrupo()" type="button" class="btn btn-success rounded-circle">+</button>
-                </div>
-                <app-tipogrupos *ngIf="showFormTipoG" [tipoGrupos]="tipoGrupos" (store)="guardarTipoGrupo($event)"
-                    (cancel)="cancelarTipoGrupo()">
-                </app-tipogrupos>
-            </div> -->
 
 
       <div class="row mb-2">
