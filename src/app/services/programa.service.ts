@@ -22,7 +22,6 @@ export class ProgramaService {
 
 
   crearProgramas(programa: any) {
-    
     return this._coreService.post<ProgramaModel>('programas', programa);
   }
 
@@ -30,7 +29,7 @@ export class ProgramaService {
     return this._coreService.delete('programas/' + programaId);
   }
 
-  
+
   actualizarProgramas(programa: any) {
 
     return this._coreService.put('programas/' + programa.id, programa);

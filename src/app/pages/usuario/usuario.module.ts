@@ -14,6 +14,9 @@ import { AsignarRolComponent } from './components/asignar-rol/asignar-rol.compon
 
 
 @NgModule({
+  exports: [
+    AddUsuarioComponent
+  ],
   declarations: [
     UsuarioComponent,
     ListUsuarioComponent,

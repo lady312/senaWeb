@@ -21,8 +21,7 @@ export class AddProgramaComponent implements OnInit {
   @Output() create: EventEmitter<void> = new EventEmitter();
   @Output() formDocs: EventEmitter<FileList> = new EventEmitter<FileList>();
 
-  // @Output() formDocs:EventEmitter <{[key:number]:{files:FileList; fechaVig: string};}> = new EventEmitter();
-  filesRuta: FileList;
+    filesRuta: FileList;
   formPrograma: UntypedFormGroup;
   formTipoProgramas: UntypedFormGroup;
   showModalTipoProgramas = false;
@@ -62,28 +61,12 @@ export class AddProgramaComponent implements OnInit {
     this.idDocumento=[];
     this.buildForms();
   }
-
-  // onFileSelected(event:any) {
-  //   const file: File = event.target.files[0];
-  //   const objectUrl: string = URL.createObjectURL(file);
-  //   console.log('este es al archivo', objectUrl);
-  // }
+  
   onFileChangeDoc(files: FileList) {
-    const file = files[0]; // Obtener solo el primer archivo seleccionado
-    this.formDocs.emit(files); // Emitir el archivo
-    console.log(file, 'dfd'); // Mostrar el archivo en la consola
+    const file = files[0]; 
+    this.formDocs.emit(files); 
   }
   
-  // onFileChangeDoc(tipo: any, files: FileList){
-  //   var nameDoc = [];
-
-  //   var fechaVig = this.formPrograma.value.fechaVig;
-  //   this.filesRutaDoc[tipo.id]= {files, fechaVig};
-   
-  //   this.formDocs.emit(this.filesRutaDoc);
-  //   console.log(this.filesRutaDoc,'dfd')
-  // }
-
   get nombreTipoProgramaField() {
     return this.formTipoProgramas.get('nombreTipoPrograma');
   }
@@ -217,11 +200,8 @@ export class AddProgramaComponent implements OnInit {
         etapaProductiva:this.programa.etapaProductiva,
         creditosLectiva:this.programa.creditosLectiva,
         creditosProductiva:this.programa.creditosProductiva,
-        // rutaArchivo: this.programa.rutaArchivo,
-        
       })
     }
-    console.log(this.programa,'asi llega al set');
   }
 
   private buildForm() {
@@ -244,7 +224,6 @@ export class AddProgramaComponent implements OnInit {
         debounceTime(350),
       )
       .subscribe((data) => {
-        console.log(data);
       });
   }
 

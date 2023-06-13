@@ -1,0 +1,84 @@
+<div class="div-principal col-lg-12 grid-margin stretch-card">
+  <div class="card">
+    <div class="card-header">
+    </div>
+    <div class="card-body">
+      <div class="div table-container">
+        <table class="table table-striped table-hover table-responsive">
+          <thead>
+            <tr class="table-info">
+              <th>Documentos Adjuntos</th>
+              <th>Subir Documentos</th>
+              <th>id documento</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let documento of documentos | paginate: { itemsPerPage: numReg, currentPage: pageActual }">
+              <td>
+                <ng-container *ngIf="tieneArchivoAdjunto(documento)">
+                  <!-- Visor de PDF -->
+                  <a  data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="seleccionarDocumento(documento.id)" (click)="obtenerUrlPDF(documento.id)">
+                    <i class="bi bi-file-earmark-pdf-fill icono-pdf" title="Archivo PDF"></i>
+                  </a>
+                </ng-container>
+                <ng-container *ngIf="!tieneArchivoAdjunto(documento)">
+                  <!-- Botón de subir documento -->
+                  <label for="documentoInput">
+                    <input  id="documentoInput" type="file"  (click)="seleccionarDocumento(documento.id)"  (change)="seleccionarDocumentos($event)" accept=".pdf" style="display: none">
+                    <i title="cargar documentos" class="bi bi-filetype-pdf icono-pdf"></i>
+                    
+                  </label>
+                  <a title="subir documento" (click)="subirDocumento()"><i class="bi bi-arrow-up-circle icono-pdf"></i></a>
+                </ng-container>
+              </td>
+            <td>{{documento.id}}</td>
+            </tr>
+          </tbody>
+        </table>
+        <div>
+          <ul>
+            <span>
+              <pagination-controls (pageChange)="pageActual = $event"></pagination-controls>
+            </span>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" (hidden.bs.modal)="reiniciarModal()">
+  <div class="modal-dialog modal-custom">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <ngx-extended-pdf-viewer [src]="pdfurl" [textLayer]="true" [showHandToolButton]="true" [height]="'90vh'" [showPresentationModeButton]="true" [showRotateButton]="false" [showOpenFileButton]="openFileButtonEnabled" zoom="50%"  [showSidebarButton]="true"  [(page)]="page"
+        >
+        </ngx-extended-pdf-viewer>
+      </div>
+      <div class="modal-footer">
+        <input type="file" id="inputArchivo" (change)="onFileSelected($event)" class="form-control">
+        <div *ngIf="mostrarFormulario" class="mt-2">
+          <form (ngSubmit)="onOpenFileButtonClicked()">
+            <button type="submit" class="btn btn-success">Cargar Documento</button>
+          </form>
+        </div>
+      </div>
+      <div *ngIf="documentoGuardado" class="alert alert-success mt-2">
+        {{ mensajeExito }}
+      </div>
+      <div *ngIf="documentoError" class="alert alert-danger mt-2">
+        {{ mensajeError }}
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="documentoGuardado" class="alert alert-success mt-2">
+  {{ mensajeExito }}
+</div>
+<div *ngIf="documentoError" class="alert alert-danger mt-2">
+  {{ mensajeError }}
+</div>

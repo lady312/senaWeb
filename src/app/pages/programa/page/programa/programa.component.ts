@@ -50,10 +50,7 @@ export class ProgramaComponent {
   }
 
   guardarProgramas(programa: any) {
-    console.log(programa, 'padre');
-   
       const file = this.filesPrograma;
-      console.log(this.filesPrograma, 'dic');
       const data = new FormData();
       data.append('archivo', file[0]);
       data.append('nombrePrograma', programa.nombrePrograma);
@@ -71,19 +68,19 @@ export class ProgramaComponent {
         this._programaService.actualizarProgramas(data).subscribe((programa) => {
           this.getPrograma();
           this.reset();
+          this.showModalPrograma=false;
         });
       } else {
         this._programaService.crearProgramas(data).subscribe((programa) => {
-          console.log('Así llega al componente principal', programa);
           this.getPrograma();
           this.reset();
+          this.showModalPrograma=false;
         });
       }
+      
   
   }
-  
-  
-      
+ 
   reset() {
     this.programa = null;
     this.showModalPrograma = false;

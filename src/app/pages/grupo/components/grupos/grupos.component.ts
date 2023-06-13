@@ -74,7 +74,7 @@ export class GruposComponent implements OnInit {
   @Input() jornadas: JornadaModel[] = [];
 
   @Input() grupo: GrupoModel;
-  
+
   tipoGrupoForm: FormGroup;
   formGrupo: UntypedFormGroup;
 

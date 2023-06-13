@@ -23,6 +23,9 @@ export class ResultadoAprendizajeService  {
   crearRaps(rap: ResultadoAprendizajeModel) {
     rap.rap=rap.rap.toUpperCase();
     rap.codigoRap=rap.codigoRap.toUpperCase();
+    rap.numeroHoras = rap.numeroHoras;
+    rap.idTipoRaps = rap.idTipoRaps;
+    rap.idCompetencia = rap.idCompetencia;
     return this._coreService.post<ResultadoAprendizajeModel[]>('resultadoAprendizaje', rap);
     
   

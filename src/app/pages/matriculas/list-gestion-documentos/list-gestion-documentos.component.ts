@@ -3,14 +3,6 @@ import { GestiondocumentoService } from '@services/gestiondocumento.service';
 import { Documento } from '@models/documento.model';
 import { ProcesoModel } from '@models/proceso.model';
 import { ResponsiveVisibility } from 'ngx-extended-pdf-viewer';
-import { ProcesoService } from '@services/proceso.service';
-import { PersonaModel } from '@models/persona.model';
-import { PersonaService } from '@services/persona.service';
-import { TipoDocumentoModel } from '@models/tipo-documento.model';
-import { TipoDocumentoService } from '@services/tipo-documento.service';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { AsignacionEstadoDocumentoService } from '@services/asignacion-estado-documento';
-
 
 
 @Component({
@@ -21,7 +13,7 @@ import { AsignacionEstadoDocumentoService } from '@services/asignacion-estado-do
 
 export class ListGestionDocumentosComponent implements OnInit {
 
-  isViewerOpen: boolean = false;
+ 
   page : number;
   public zoom: number | string = 'auto';
   @ViewChild('pdfViewer') pdfViewer: any;
@@ -31,10 +23,8 @@ export class ListGestionDocumentosComponent implements OnInit {
   archivoSeleccionado: File;
   numReg = 5;
   pageActual = 0;
-  Documentos:TipoDocumentoModel [] =[];
   documentos: Documento[] = [];
   procesos: ProcesoModel[] = [];
-  personas:PersonaModel []= [];
   idDocumento: number | null = null;
   idSeleccionada: number;
   archivo: File; // Archivo a cargar
@@ -49,26 +39,12 @@ export class ListGestionDocumentosComponent implements OnInit {
   documentoCargado: File | null = null;
   hayDocumento: boolean = false;
 
-  checkboxValue: string | null = null;
-  isLeft: boolean = false;
-  isRight: boolean = false;
-  isCenter: boolean = true;
-  isRedBorder: boolean = false;
-  isGreenBorder: boolean = false;
 
-
-  constructor(private gestionDocumentoService: GestiondocumentoService, private elementRef: ElementRef,private procesoService: ProcesoService, private  persona: PersonaService ,private tipodocumento:TipoDocumentoService,
-    private modalService: NgbModal,  private asignacionEstadoDocumentoService: AsignacionEstadoDocumentoService ) {
+  constructor(private gestionDocumentoService: GestiondocumentoService, private elementRef: ElementRef) {
 
   }
-  modalOpen = false;
+
   mostrarFormulario = true;
-  openSecondModal() {
-    this.modalService.dismissAll(); // Cierra todos los modals abiertos
-    this.modalService.open('#exampleModal');
-  }
-
-
 
   tieneArchivoAdjunto(documento: Documento): boolean {
     // Verificar si la propiedad rutaDocumento tiene un valor válido para un archivo PDF
@@ -83,41 +59,8 @@ export class ListGestionDocumentosComponent implements OnInit {
       // Restablecer el formulario
 
     });
-this.obtenerEstadoDocumento();
-    this.obtenerProcesos();
-    this. traerPersonas();
-    this.  traerDocumentos();
   }
-  obtenerProcesos() {
-    this.procesoService. traerProcesos().subscribe(
-      (response: ProcesoModel[]) => {
-        this.procesos = response;
-      },
-      (error) => {
-        console.error('Error al obtener los procesos:', error);
-      }
-    );
 
-   
-  }
-  traerPersonas(){
-    this.persona.traerPersonas().subscribe(
-      (response:PersonaModel[])=>{
-        this. personas =response;
-      }
-
-    )
-
-  }
-  traerDocumentos(){
-    this.tipodocumento.traerTipoDocumentos().subscribe(
-      (response:TipoDocumentoModel[])=>{
-        this. Documentos =response;
-      }
-
-    )
-
-  }
   
   seleccionarDocumento(id: number): void {
     this.idDocumento = id;
@@ -213,7 +156,6 @@ this.obtenerEstadoDocumento();
     this.documentoError = false; // Reiniciar el estado de error del documento
     this.mensajeExito = ''; // Reiniciar el mensaje de éxito
     this.mensajeError = ''; // Reiniciar el mensaje de error
-    this.modalOpen = false;
   }
   seleccionarDocumentos(event: any) {
     const archivos = event.target.files;
@@ -270,65 +212,6 @@ this.obtenerEstadoDocumento();
   }
   
   
-  openModal() {
-    this.modalOpen = true;
-  }
 
-  closeModal() {
-    this.modalOpen = false;
-  }
-
-
-
-
-// estado documento 
-
-
-obtenerEstadoDocumento(): void {
-  this.asignacionEstadoDocumentoService.getEstadoDocumento().subscribe(
-    (estado: any) => {
-      console.log('Estado recibido:', estado);
-      this.setCheckboxPosicion(estado.nombreEstado);
-    },
-    (error: any) => {
-      console.error('Error al obtener el estado del documento:', error);
-    }
-  );
-}
-
-/*
-===================================================================================================
-Funcion para que el checkbox aparacezca en la posicion dependiendo de como este en la base de datos
-===================================================================================================
-*/
-
-setCheckboxPosicion(estado: string): void {
-  switch (estado) {
-    case 'DENEGADO':
-      this.checkboxValue = 'DENEGADO';
-      this.isLeft = true;
-      this.isRight = false;
-      this.isCenter = false;
-      this.isRedBorder = true;
-      this.isGreenBorder = false;
-      break;
-    case 'APROBADO':
-      this.checkboxValue = 'APROBADO';
-      this.isLeft = false;
-      this.isRight = true;
-      this.isCenter = false;
-      this.isRedBorder = false;
-      this.isGreenBorder = true;
-      break;
-    default:
-      this.checkboxValue = 'PENDIENTE';
-      this.isLeft = false;
-      this.isRight = false;
-      this.isCenter = true;
-      this.isRedBorder = false;
-      this.isGreenBorder = false;
-      break;
-  }
-}
 
 }
