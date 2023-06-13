@@ -25,7 +25,7 @@ import { MyDatePickerModule } from 'mydatepicker';
         AddGestionDocumentosComponent,
         ListGestionDocumentosComponent,
         GetDocumentosComponent,
-       
+
     ],
     imports: [
         CommonModule,
@@ -38,7 +38,7 @@ import { MyDatePickerModule } from 'mydatepicker';
         NgbPaginationModule,
         ReactiveFormsModule,
         MyDatePickerModule
-        
+
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     providers: [
