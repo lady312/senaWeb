@@ -212,20 +212,26 @@ export class MatriculaComponent implements OnInit {
 
   }
 
+  fichaNoEncontrada: boolean = false;
+    numeroFichaByGrupo(numeroFicha: number)
+    {
+      this._matriculaService.numeroFichaByGrupo(numeroFicha).subscribe(
+        (data) => {
+          console.log(data);
+          this.dataFicha = data;
+          if (!this.dataFicha) {
+            this.fichaNoEncontrada = true;
+          } else {
+            this.fichaNoEncontrada = false;
+          }
+        },
+        (error) => {
+          console.log(error);
+          this.fichaNoEncontrada = true;
+        }
+      );
 
-  numeroFichaByGrupo(numeroFicha: number)
-  {
-    this._matriculaService.numeroFichaByGrupo(numeroFicha).subscribe(
-      (data) => {
-        console.log(data);
-        this.dataFicha = data;
-      },
-      (error) => {
-        console.log(error);
-      }
-    )
-
-  }
+    }
 
   mostrarDatos(): boolean {
     return !!this.dataFicha;
