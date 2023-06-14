@@ -3,48 +3,31 @@
     <div class="card-header style">
 
 
-      <i class="fa fa-align-justify"></i>Gestion de fichas  aprendices
+      <i class="fa fa-align-justify"></i>Gestion de fichas aprendices
       <div class="container">
         <div class="row">
           <div>
             <p>Programas:</p>
-            <input type="text" list="programas" [(ngModel)]="busquedaPrograma" placeholder="Buscar programa..." (input)="filtrarProgramas()" (change)="obtenerGruposPorPrograma()">
+            <input type="text" list="programas" [(ngModel)]="busquedaPrograma" placeholder="Buscar programa..."
+              (input)="filtrarProgramas()" (change)="obtenerGruposPorPrograma()">
             <datalist id="programas">
               <option *ngFor="let programa of programasFiltrados" [value]="programa.nombrePrograma"></option>
             </datalist>
           </div>
 
-
           <div *ngIf="grupos && grupos.length > 0">
-            <p>Grupos del Programa Seleccionado:</p>
-            <input type="text" list="grupos" [(ngModel)]="busquedaGrupo" placeholder="Buscar grupo..." (input)="filtrarGrupos()">
+            <p>Ficha seleccionada:</p>
+            <input type="text" list="grupos" [(ngModel)]="busquedaGrupo" placeholder="Buscar grupo..."
+              (input)="filtrarGrupos()">
             <datalist id="grupos">
               <option *ngFor="let grupo of gruposFiltrados" [value]="grupo.nombre"></option>
             </datalist>
           </div>
 
-
-
-
-          <!-- <p> Cedula</p>
-          <div class="col-lg-6">
-            <input type="text" class="form-control"  placeholder="Buscar...">
-            <ul class="list-group mt-2">
-              <li class="list-group-item" *ngFor="let ficha of fichasFiltradas" (click)="seleccionarFicha(ficha)">
-                {{ ficha.nombre }}
-              </li>
-            </ul>
-          </div> -->
-
-
-
-        </div>
-
-
-        <div class="row mt-4" *ngIf="fichaSeleccionada">
-          <div class="col-lg-12">
-            <!-- Aquí puedes colocar el componente que deseas asignar la ficha seleccionada -->
-            <p>Ficha seleccionada: {{ fichaSeleccionada.nombre }}</p>
+          <div *ngIf="aprendices && aprendices.length > 0">
+            <p>Aprendices activos:</p>
+            <input type="text" list="aprendices" [(ngModel)]="busquedaAprendiz" placeholder="Buscar aprendiz..."
+              (input)="filtrarAprendices()">
           </div>
         </div>
       </div>
@@ -55,10 +38,21 @@
 
 
 
+
     </div>
-    <div class="card-body">
-      <div class="div table-container style">
-      <p>vandssssssssssss</p>
+
+<div class="row">
+  <div *ngFor="let aprendiz of aprendicesFiltrados" class="col-xx-2 mb-4 m-5" style="width: 250px;">
+    <div class="card card-sm " style="background-color: #A15D55;">
+      <div class="d-flex justify-content-center align-items-center">
+        <img [src]="aprendiz.usuario.foto || 'assets/img/avatars/7.png'" alt="Foto de perfil" class="card-img-top img-thumbnail rounded-circle m-3" style="width: 100px;">
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">{{ aprendiz.usuario.identificacion }}</h5>
+        <p class="card-text">
+          <strong>Nombre:</strong> {{ aprendiz.usuario.nombre1 }} {{ aprendiz.usuario.nombre2 }}<br>
+          <strong>Apellido:</strong> {{ aprendiz.usuario.apellido1 }}
+        </p>
       </div>
     </div>
   </div>
@@ -66,35 +60,13 @@
 
 
 
-<!-- FUNCIONAAAAAAAAAAAAAAAAAAAAAAAAAA
-<div>
-  <h3>Programas:</h3>
-  <input type="text" list="programas" [(ngModel)]="busqueda" placeholder="Buscar programa..." (input)="filtrarProgramas()" (change)="obtenerGruposPorPrograma()">
-  <datalist id="programas">
-    <option *ngFor="let programa of programasFiltrados" [value]="programa.nombrePrograma"></option>
-  </datalist>
+
+
+
+
+  </div>
 </div>
 
-<div *ngIf="grupos && grupos.length > 0">
-  <h3>Grupos del Programa Seleccionado:</h3>
-  <ul>
-    <li *ngFor="let grupo of grupos">{{ grupo.nombre }}</li>
-  </ul>
-</div> -->
 
-<!-- <div>
-  <h3>Programas:</h3>
-  <input type="text" list="programas" [(ngModel)]="busquedaPrograma" placeholder="Buscar programa..." (input)="filtrarProgramas()" (change)="obtenerGruposPorPrograma()">
-  <datalist id="programas">
-    <option *ngFor="let programa of programasFiltrados" [value]="programa.nombrePrograma"></option>
-  </datalist>
-</div>
 
-<div *ngIf="grupos && grupos.length > 0">
-  <h3>Grupos del Programa Seleccionado:</h3>
-  <input type="text" list="grupos" [(ngModel)]="busquedaGrupo" placeholder="Buscar grupo..." (input)="filtrarGrupos()">
-  <datalist id="grupos">
-    <option *ngFor="let grupo of gruposFiltrados" [value]="grupo.nombre"></option>
-  </datalist>
-</div> -->
-<!-- vanesaaaaaaaaaaaaaaaaaaaaaaaaaa -->
+<p>nuevo apartado para pruebas</p>

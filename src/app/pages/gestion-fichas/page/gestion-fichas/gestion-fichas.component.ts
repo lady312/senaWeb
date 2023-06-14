@@ -9,18 +9,21 @@ import { AsignacionParticipantesService } from '@services/asignacion-participant
 export class GestionFichasComponent {
   programas: any[];
   grupos: any[];
-  programaSeleccionadoId: number;
-  grupoSeleccionadoId: number;
+  aprendices: any[];
 
   busquedaPrograma: string;
   busquedaGrupo: string;
+  busquedaAprendiz: string;
+
   programasFiltrados: any[];
   gruposFiltrados: any[];
+  aprendicesFiltrados: any[];
 
   constructor(private asignacionParticipanteService: AsignacionParticipantesService) {}
 
   ngOnInit() {
     this.obtenerProgramas();
+    this.obtenerAprendicesActivos();
   }
 
   obtenerProgramas() {
@@ -35,12 +38,30 @@ export class GestionFichasComponent {
   }
 
   obtenerGruposPorPrograma() {
-    this.asignacionParticipanteService.obtenerGruposPorPrograma(this.obtenerIdProgramaSeleccionado())
+    // Obtener el programa seleccionado por el nombre
+    const programaSeleccionado = this.programas.find(programa => programa.nombrePrograma === this.busquedaPrograma);
+
+    if (programaSeleccionado) {
+      this.asignacionParticipanteService.obtenerGruposPorPrograma(programaSeleccionado.id)
+        .subscribe(
+          grupos => {
+            this.grupos = grupos;
+            this.gruposFiltrados = grupos;
+          },
+          error => console.log(error)
+        );
+    } else {
+      this.grupos = [];
+      this.gruposFiltrados = [];
+    }
+  }
+
+  obtenerAprendicesActivos() {
+    this.asignacionParticipanteService.obtenerAprendicesActivos()
       .subscribe(
-        grupos => {
-          this.grupos = grupos;
-          this.gruposFiltrados = grupos;
-          console.log(this.grupos); // Verificar los datos en la consola
+        aprendices => {
+          this.aprendices = aprendices;
+          this.aprendicesFiltrados = aprendices;
         },
         error => console.log(error)
       );
@@ -52,7 +73,7 @@ export class GestionFichasComponent {
         programa.nombrePrograma.toLowerCase().includes(this.busquedaPrograma.toLowerCase())
       );
     } else {
-      this.programasFiltrados = this.programas; // Mostrar todos los programas si no hay término de búsqueda
+      this.programasFiltrados = this.programas;
     }
   }
 
@@ -62,22 +83,17 @@ export class GestionFichasComponent {
         grupo.nombre.toLowerCase().includes(this.busquedaGrupo.toLowerCase())
       );
     } else {
-      this.gruposFiltrados = this.grupos; // Mostrar todos los grupos si no hay término de búsqueda
+      this.gruposFiltrados = this.grupos;
     }
   }
 
-  obtenerIdProgramaSeleccionado(): number {
-    const programaSeleccionado = this.programas.find(programa => programa.nombrePrograma === this.busquedaPrograma);
-    return programaSeleccionado ? programaSeleccionado.id : null;
-  }
-
-  obtenerIdGrupoSeleccionado(): number {
-    const grupoSeleccionado = this.grupos.find(grupo => grupo.nombre === this.busquedaGrupo);
-    return grupoSeleccionado ? grupoSeleccionado.id : null;
-  }
-
-  seleccionarPrograma(programa: any) {
-    this.programaSeleccionadoId = programa.id;
-    this.obtenerGruposPorPrograma();
+  filtrarAprendices() {
+    if (this.busquedaAprendiz) {
+      this.aprendicesFiltrados = this.aprendices.filter(aprendiz =>
+        aprendiz.usuario.identificacion.toLowerCase().includes(this.busquedaAprendiz.toLowerCase())
+      );
+    } else {
+      this.aprendicesFiltrados = this.aprendices;
+    }
   }
 }
