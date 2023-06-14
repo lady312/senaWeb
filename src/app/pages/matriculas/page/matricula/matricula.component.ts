@@ -359,7 +359,7 @@ export class MatriculaComponent implements OnInit {
       this._personaService.crearUsuario(usuario).subscribe(() => {
         // Realiza las acciones adicionales necesarias después de guardar el usuario
         // Por ejemplo, puedes reiniciar el formulario o navegar a otra página
-        this.personForm.reset();
+        // this.personForm.reset();
       });
     } else {
       this.validarCamposPersona(); // Marcas los campos como tocados para mostrar los mensajes de error
