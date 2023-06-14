@@ -377,6 +377,7 @@ export class MatriculaComponent implements OnInit {
   getUsuario() {
     return {
       id: this.usuario?.id,
+      identificacion: this.getControl('identificacion').value,
       email: this.getControl('email').value,
       contrasena: 'contraseña',
       nombre1: this.getControl('nombre1').value,

@@ -68,6 +68,7 @@ export class AddUsuarioComponent implements OnInit {
   private buildForm() {
     this.formUsuario = this.formBuilder.group({
       id: [0],
+      identificacion: ['', [Validators.required]],
       email: ['', [Validators.required]],
       contrasena: ['', [Validators.required]],
       nombre1: ['', [Validators.required]],
@@ -111,6 +112,7 @@ export class AddUsuarioComponent implements OnInit {
   getUsuario() {
     return {
       id: this.usuario?.id,
+      identificacion: this.getControl('identificacion').value,
       email: this.getControl('email').value,
       contrasena: this.getControl('contrasena').value,
       nombre1: this.getControl('nombre1').value,
@@ -131,6 +133,10 @@ export class AddUsuarioComponent implements OnInit {
       rutaFoto: '/default/user.svg',
 
     }
+  }
+
+  get identificacionField() {
+    return this.formUsuario.get('identificacion');
   }
 
   get emailField() {
