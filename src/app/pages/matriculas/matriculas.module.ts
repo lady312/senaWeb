@@ -18,11 +18,9 @@ import { NgxExtendedPdfViewerModule ,pdfDefaultOptions} from 'ngx-extended-pdf-v
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { MyDatePickerModule } from 'mydatepicker';
-
 import { ListGestionDocumentosComponent } from '../gestion-documentos/components/list-gestion-documentos/list-gestion-documentos.component';
 
 @NgModule({
-    schemas: [CUSTOM_ELEMENTS_SCHEMA],
     exports: [
         MatriculaComponent,
         MatIconModule
@@ -48,7 +46,8 @@ import { ListGestionDocumentosComponent } from '../gestion-documentos/components
         NgxExtendedPdfViewerModule,
         ModalModule,
         NgbPaginationModule,
-        MyDatePickerModule
+        MyDatePickerModule,
+    
     ],
     providers: [
       // Otros proveedores

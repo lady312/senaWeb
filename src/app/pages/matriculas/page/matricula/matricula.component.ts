@@ -31,6 +31,7 @@ import { PersonaService } from '@services/persona.service';
 import { TipoIdentificacionModel } from '@models/tipo-identificacion.model';
 import { MatStepper } from '@angular/material/stepper';
 
+
 @Component({
 
   selector: 'app-matricula',
@@ -212,26 +213,45 @@ export class MatriculaComponent implements OnInit {
 
   }
 
-  fichaNoEncontrada: boolean = false;
-    numeroFichaByGrupo(numeroFicha: number)
-    {
-      this._matriculaService.numeroFichaByGrupo(numeroFicha).subscribe(
-        (data) => {
-          console.log(data);
-          this.dataFicha = data;
-          if (!this.dataFicha) {
-            this.fichaNoEncontrada = true;
-          } else {
-            this.fichaNoEncontrada = false;
-          }
-        },
-        (error) => {
-          console.log(error);
-          this.fichaNoEncontrada = true;
-        }
-      );
 
+
+  fichaNoEncontrada: boolean = false;
+  fichaIncorrecta: boolean = false;
+
+numeroFichaByGrupo(numeroFicha: number) {
+  this._matriculaService.numeroFichaByGrupo(numeroFicha).subscribe(
+    (data) => {
+      console.log(data);
+      this.dataFicha = data;
+      if (!this.dataFicha) {
+        this.fichaNoEncontrada = true;
+        // alert('La ficha no se encuentra');
+      } else {
+        this.fichaNoEncontrada = false;
+        // Continuar con el resto del código si la ficha se encuentra
+      }
+    },
+    (error) => {
+      console.log(error);
+      this.fichaNoEncontrada = true;
+      // alert('Error al buscar la ficha');
     }
+  );
+}
+seguirAceptar(): void {
+  this.mostrarModal('¿Estás seguro de aceptar esta ficha?').then((confirmado) => {
+  if (this.fichaNoEncontrada) {
+   this.mostrarModal('La ficha es incorrecta');
+  } else {
+   
+    this.stepper.next();
+  }
+  });
+}
+
+
+
+
 
   mostrarDatos(): boolean {
     return !!this.dataFicha;
@@ -281,19 +301,19 @@ export class MatriculaComponent implements OnInit {
     });
   }
 
-  seguirAceptar() {
-    this.mostrarModal('¿Estás seguro de aceptar esta ficha?').then((confirmado) => {
-      if (confirmado) {
-        this.stepper.next();
-      }
-      else if(this.matriculaForm.invalid)
-      {
-        alert('Por favor, llena todos los cambios');
-      }
-    });
-  }
+  // seguirAceptar() {
+  //   this.mostrarModal('¿Estás seguro de aceptar esta ficha?').then((confirmado) => {
+  //     if (confirmado) {
+  //       this.stepper.next();
+  //     }
+  //     else if(this.matriculaForm.invalid)
+  //     {
+  //       alert('Por favor, llena todos los cambios');
+  //     }
+  //   });
+  // }
 
 
-  
+
 
 }
