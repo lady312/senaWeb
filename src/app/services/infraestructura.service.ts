@@ -45,14 +45,15 @@ export class InfraestructuraService {
     if(infraestructura.descripcion){
       infraestructura.descripcion=infraestructura.descripcion.toLowerCase();
     }
-    console.log(infraestructura.newQr);
     return this._coreService.post<InfraestructuraModel>('infraestructuras',infraestructura);
   }
   //crea varias infraestructuras
   guardarInfraestructuras(infrs:InfraestructuraModel[]){
     infrs.forEach(infr=>{
       infr.nombreInfraestructura=infr.nombreInfraestructura.toUpperCase();
-      infr.descripcion=infr.descripcion.toLocaleLowerCase();
+      if(infr.descripcion){
+        infr.descripcion=infr.descripcion.toLocaleLowerCase();
+      } 
     });
     return this._coreService.post<InfraestructuraModel[]>('infraestructuras',infrs);
   }
@@ -60,7 +61,9 @@ export class InfraestructuraService {
   actualizarInfraestructura(infraestructura: InfraestructuraModel){
     const url:string=`infraestructuras/${infraestructura.id}`;
     infraestructura.nombreInfraestructura=infraestructura.nombreInfraestructura.toUpperCase();
-    infraestructura.descripcion=infraestructura.descripcion.toLowerCase();
+    if(infraestructura.descripcion){
+      infraestructura.descripcion=infraestructura.descripcion.toLowerCase();
+    }
     return this._coreService.put<InfraestructuraModel>(url,infraestructura);
   }
 }

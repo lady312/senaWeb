@@ -3,5 +3,5 @@ export interface ActividadAprendizajeModel {
   NombreAA: string;
   codigoAA: string;
   idEstado: number;
-  rap: number;
+  idRap: number;
 }

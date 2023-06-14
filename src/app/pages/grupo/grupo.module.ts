@@ -1,6 +1,5 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { GrupoRoutingModule } from './grupo-routing.module';
-import { GruposComponent } from './components/grupos/grupos.component';
 import { GruposListComponent } from './components/grupos-list/gruposList.component';
 import { GrupoComponent } from './pages/grupo/grupo.component';
 import { ComunModule } from '@components/comun.module';
@@ -11,16 +10,23 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { GruposService } from '@services/grupo.service';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { TipogrupoModule } from '../tipo-grupo/tipoGrupo.module';
+import { InfraestructuraModule } from '../infraestructura/infraestructura.module';
+import { GrupoFormComponent } from './components/grupo-form/grupo-form.component';
+import { GrupoInfraComponent } from './components/grupo-infra/grupo-infra.component';
+import { GrupoInfraFormComponent } from './components/grupo-infra-form/grupo-infra-form.component';
+// import { NgSelectModule } from '@ng-select/ng-select';
+
 
 @NgModule({
   exports: [
-    GruposComponent
+    GrupoFormComponent
   ],
   declarations: [
-    GruposComponent,
     GruposListComponent,
     GrupoComponent,
-    // TipogrupoModalComponent,
+    GrupoFormComponent,
+    GrupoInfraComponent,
+    GrupoInfraFormComponent,
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
@@ -32,13 +38,13 @@ import { TipogrupoModule } from '../tipo-grupo/tipoGrupo.module';
     NgxPaginationModule,
     ComunModule,
     SweetAlert2Module.forChild(),
-    FormsModule,
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
     TipogrupoModule,
+    InfraestructuraModule,
+    // NgSelectModule
   ],
-  providers: [GruposService],
-  bootstrap: [GruposComponent]
+  providers: [GruposService,DatePipe],
 })
 export class GrupoModule { }

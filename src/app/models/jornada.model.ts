@@ -1,3 +1,4 @@
+import { AsignacionJornadaGrupoModel } from './asignacion-jornada-grupo.model';
 import { DiaJornadaModel } from './dia_jornada.model';
 export interface JornadaModel {
 
@@ -11,4 +12,7 @@ export interface JornadaModel {
   numeroHoras?: number;
 
   diaJornada?: DiaJornadaModel[];
+
+  jornada_grupo?:AsignacionJornadaGrupoModel;
+
 }

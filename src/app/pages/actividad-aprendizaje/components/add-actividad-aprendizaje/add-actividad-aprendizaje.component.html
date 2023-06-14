@@ -18,11 +18,11 @@
             </div>
           </div>
           <div class="invalid-feedback">
-            por favor ingresé un valor válido 
+            por favor ingresé un valor válido
           </div>
         </div>
 
-    
+
 
         <div class="form-group row">
         <label class="col-md-4 col-form-label" for="codigoAA">Código AA</label>
@@ -40,22 +40,22 @@
         </div>
 
         <div class="form-group row">
-          <label class="col-md-4 col-form-label" for="rap">resultado</label>
+          <label class="col-md-4 col-form-label" for="idRap"> Resultado</label>
           <div class="col-md-7">
-            <select class="form-control is-valid" formControlName='rap'>
-              <option [ngValue]="null">Seleccionar resultado </option>
-              <option *ngFor='lef resultado of resultadoAprendizaje' [ngValue]="resultado.id">{{resultado.codigoRap}}</option>
+            <select class="form-control is-valid" formControlName='idRap'>
+              <option [ngValue]="null">Seleccionar idRap </option>
+              <option *ngFor='let aa of resultadoAprendizaje' [ngValue]="aa.id">{{aa.rap}}</option>
             </select>
-            <div class="valid-feedback" *ngIf="!resultados.hasError('required')">
+            <div class="valid-feedback" *ngIf="!idRap.hasError('required')">
               Valor válido
             </div>
           </div>
           <div class="invalid-feedback">
-            por favor ingresé un valor para Fase
+            por favor ingresé un valor válido
           </div>
         </div>
-        
-  
+
+
       </form>
       <div class="card-footer">
         <button
@@ -75,4 +75,4 @@
       </div>
     </div>
   </div>
-  
+

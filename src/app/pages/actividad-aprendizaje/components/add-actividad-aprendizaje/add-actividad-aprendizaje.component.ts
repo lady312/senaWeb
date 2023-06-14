@@ -19,7 +19,7 @@ export class AddActividadAprendizajeComponent implements OnInit {
   @Output() cancel: EventEmitter<void> = new EventEmitter();
 
   formAA: UntypedFormGroup;
-  resultadoAprendizajes: ResultadoAprendizajeModel[] = [];
+  resultadoAprendizaje: ResultadoAprendizajeModel[] = [];
 
   constructor(
     private formBuilder: UntypedFormBuilder,
@@ -31,21 +31,22 @@ export class AddActividadAprendizajeComponent implements OnInit {
       NombreAA: '',
       codigoAA: '',
       idEstado: 1,
-      rap: null
+      idRap: null,
 
     };
     this.buildForm();
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
+
     this.traerResultadoAprendizaje();
-    this.setAA()
+    this.setAA();
   }
- 
+
   traerResultadoAprendizaje() {
     this.resultadoAprendizajeService.traerRap()
       .subscribe((proceso: ResultadoAprendizajeModel[]) => {
-        this.resultadoAprendizajes = proceso;
+        this.resultadoAprendizaje = proceso;
       }, error => {
         this._uiNotificationService.error('Error de conexión');
       });
@@ -55,8 +56,8 @@ export class AddActividadAprendizajeComponent implements OnInit {
     return this.formAA.get('NombreAA');
   }
 
-  get resultados() {
-    return this.formAA.get('rap');
+  get idRap() {
+    return this.formAA.get('idRap');
   }
   get codigo() {
     return this.formAA.get('codigoAA');
@@ -67,7 +68,8 @@ export class AddActividadAprendizajeComponent implements OnInit {
       this.formAA.patchValue({
         NombreAA: this.actividadAprendizaje.NombreAA,
         codigoAA: this.actividadAprendizaje.codigoAA,
-        idProceso: this.actividadAprendizaje.rap,
+        idEstado: this.actividadAprendizaje.idEstado,
+        idRap:this.actividadAprendizaje.idRap,
       })
     }
   }
@@ -77,7 +79,8 @@ export class AddActividadAprendizajeComponent implements OnInit {
       id: [0],
       NombreAA: ['', [Validators.required]],
       codigoAA: ['', [Validators.required]],
-      rap: ['', [Validators.required]],
+      idEstado:[1],
+      idRap: ['', [Validators.required]],
     });
 
     this.formAA.valueChanges
@@ -103,7 +106,7 @@ export class AddActividadAprendizajeComponent implements OnInit {
   getAA(): ActividadAprendizajeModel {
     return {
       id: this.actividadAprendizaje?.id,
-      rap: this.getControl('rap').value,
+      idRap: this.getControl('idRap').value,
       NombreAA: this.getControl('NombreAA').value,
       codigoAA: this.getControl('codigoAA').value,
       idEstado: 1
