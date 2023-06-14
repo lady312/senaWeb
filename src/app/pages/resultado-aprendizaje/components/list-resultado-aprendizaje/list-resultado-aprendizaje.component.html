@@ -29,7 +29,12 @@
               <td>{{RAP.codigoRap}}</td>
               <td>{{RAP.numeroHoras}}</td>
               <td>{{RAP.tipoRaps.nombre}}</td>
-              <td>{{RAP.competencias.nombreCompetencia}}</td>
+
+              <td>
+                <div *ngFor="let RAP of RAP.competencias">
+                  {{RAP.nombreCompetencia}}
+                </div>
+              </td>
               <td>
                 
                 <span class="badge badge-primary" style="cursor: pointer;"

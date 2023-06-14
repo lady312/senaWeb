@@ -1,7 +1,9 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { CentroFormacionModel } from '@models/centro-formacion.model';
 import { ProgramaModel } from '@models/programa.model';
 import { ProyectoFormativoModel } from '@models/proyecto-formativo.model ';
+import { CentroFormacionService } from '@services/centro-formacion.service';
 import { ProgramaService } from '@services/programa.service';
 import { UINotificationService } from '@services/uinotification.service';
 import { debounceTime } from 'rxjs/operators';
@@ -20,10 +22,12 @@ export class AddProyectoFormativoComponent {
 
   formProyecto: UntypedFormGroup;
   Programas: ProgramaModel[] = [];
+  centrosFormativos: CentroFormacionModel[] = [];
 
   constructor(
     private formBuilder: UntypedFormBuilder,
     private programaService: ProgramaService,
+    private _centroFormacionService: CentroFormacionService,
     private _uiNotificationService: UINotificationService
   ) {
     this.proyecto = {
@@ -40,7 +44,17 @@ export class AddProyectoFormativoComponent {
 
   ngOnInit(): void {
     this.traerPrograma();
-    this.setProyecto()
+    this.setProyecto(),
+    this.traerCentroFormacion()
+  }
+
+  traerCentroFormacion(){
+    this._centroFormacionService.traerCentroFormacion()
+    .subscribe((centro: CentroFormacionModel[])=>{
+      this.centrosFormativos = centro;
+    }, error => {
+      this._uiNotificationService.error('Error de conexión')
+    })
   }
 
   traerPrograma() {
@@ -106,7 +120,6 @@ export class AddProyectoFormativoComponent {
         debounceTime(350),
       )
       .subscribe(data => {
-        console.log(data);
       });
   }
 
@@ -130,9 +143,7 @@ export class AddProyectoFormativoComponent {
       codigo: this.getControl('codigo').value,
       tiempoEstimado: this.getControl('tiempoEstimado').value,
       numeroTotalRaps: this.getControl('numeroTotalRaps').value,
-      idCentroFormacion: this.getControl('idCentroFormacion').value
-
-      
+      idCentroFormacion: this.getControl('idCentroFormacion').value      
     }
   }
 }
