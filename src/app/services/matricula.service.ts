@@ -35,7 +35,7 @@ export class MatriculaService {
   actualizarMatricula(matricula: MatriculaModel)
   {
 
-    return this._coreService.put('matriculas' + matricula.id, matricula);
+    return this._coreService.put('matriculas/' + matricula.id, matricula);
 
   }
 
