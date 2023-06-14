@@ -37,7 +37,6 @@ import { PersonaService } from "@services/persona.service";
 import { TipoIdentificacionModel } from "@models/tipo-identificacion.model";
 import { MatStepper } from "@angular/material/stepper";
 
-
 @Component({
   selector: "app-matricula",
   templateUrl: "./matricula.component.html",
@@ -80,7 +79,7 @@ export class MatriculaComponent implements OnInit {
   mostrarFormulario: boolean = false;
 
   fichaNoEncontrada: boolean = false;
-
+  fichaIncorrecta: boolean = false;
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -191,6 +190,7 @@ export class MatriculaComponent implements OnInit {
           this.personForm.get("telefonoFijo").setValue(persona.telefonoFijo);
           this.personForm.get("celular").setValue(persona.celular);
         } else {
+          this.resetPersonForm();
           this.validacionExistencia = false;
         }
       },
@@ -199,49 +199,56 @@ export class MatriculaComponent implements OnInit {
           "Ocurrió un error al obtener la persona"
         );
         console.log(error);
+        this.resetPersonForm();
       }
     );
   }
 
-
-
-  fichaNoEncontrada: boolean = false;
-  fichaIncorrecta: boolean = false;
-
-numeroFichaByGrupo(numeroFicha: number) {
-  this._matriculaService.numeroFichaByGrupo(numeroFicha).subscribe(
-    (data) => {
-      console.log(data);
-      this.dataFicha = data;
-      if (!this.dataFicha) {
-        this.fichaNoEncontrada = true;
-        // alert('La ficha no se encuentra');
-      } else {
-        this.fichaNoEncontrada = false;
-        // Continuar con el resto del código si la ficha se encuentra
-      }
-    },
-    (error) => {
-      console.log(error);
-      this.fichaNoEncontrada = true;
-      // alert('Error al buscar la ficha');
-    }
-  );
-}
-seguirAceptar(): void {
-  this.mostrarModal('¿Estás seguro de aceptar esta ficha?').then((confirmado) => {
-  if (this.fichaNoEncontrada) {
-   this.mostrarModal('La ficha es incorrecta');
-  } else {
-
-    this.stepper.next();
+  resetPersonForm() {
+    this.personForm.get("nombre1").setValue(null);
+    this.personForm.get("nombre2").setValue(null);
+    this.personForm.get("apellido1").setValue(null);
+    this.personForm.get("apellido2").setValue(null);
+    this.personForm.get("fechaNac").setValue(null);
+    this.personForm.get("direccion").setValue(null);
+    this.personForm.get("email").setValue(null);
+    this.personForm.get("telefonoFijo").setValue(null);
+    this.personForm.get("celular").setValue(null);
   }
-  });
-}
 
 
+  numeroFichaByGrupo(numeroFicha: number) {
+    this._matriculaService.numeroFichaByGrupo(numeroFicha).subscribe(
+      (data) => {
+        console.log(data);
+        this.dataFicha = data;
+        if (!this.dataFicha) {
+          this.fichaNoEncontrada = true;
+          // alert('La ficha no se encuentra');
+        } else {
+          this.fichaNoEncontrada = false;
+          // Continuar con el resto del código si la ficha se encuentra
+        }
+      },
+      (error) => {
+        console.log(error);
+        this.fichaNoEncontrada = true;
+        // alert('Error al buscar la ficha');
+      }
+    );
+  }
 
-
+  seguirAceptar(): void {
+    this.mostrarModal("¿Estás seguro de aceptar esta ficha?").then(
+      (confirmado) => {
+        if (this.fichaNoEncontrada) {
+          this.mostrarModal("La ficha es incorrecta");
+        } else {
+          this.stepper.next();
+        }
+      }
+    );
+  }
 
   mostrarDatos(): boolean {
     return !!this.dataFicha;
@@ -309,8 +316,4 @@ seguirAceptar(): void {
   //     }
   //   });
   // }
-
-
-
-
 }
