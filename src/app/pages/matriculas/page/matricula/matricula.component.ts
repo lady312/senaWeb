@@ -329,18 +329,6 @@ export class MatriculaComponent implements OnInit {
     });
   }
 
-  // seguirAceptar() {
-  //   this.mostrarModal('¿Estás seguro de aceptar esta ficha?').then((confirmado) => {
-  //     if (confirmado) {
-  //       this.stepper.next();
-  //     }
-  //     else if(this.matriculaForm.invalid)
-  //     {
-  //       alert('Por favor, llena todos los cambios');
-  //     }
-  //   });
-  // }
-
   getUsuarios() {
     this._personaService.traerUsuarios()
       .subscribe(usuarios => {
@@ -352,14 +340,10 @@ export class MatriculaComponent implements OnInit {
       });
   }
 
-
   guardarUsuarios() {
     if (this.personForm.valid) {
       const usuario: UsuarioModel = this.getUsuario();
       this._personaService.crearUsuario(usuario).subscribe(() => {
-        // Realiza las acciones adicionales necesarias después de guardar el usuario
-        // Por ejemplo, puedes reiniciar el formulario o navegar a otra página
-        // this.personForm.reset();
       });
     } else {
       this.validarCamposPersona(); // Marcas los campos como tocados para mostrar los mensajes de error
@@ -367,12 +351,9 @@ export class MatriculaComponent implements OnInit {
     }
   }
 
-
-
   private getControl(name: string) {
     return this.personForm.controls[name];
   }
-
 
   getUsuario() {
     return {
@@ -406,9 +387,6 @@ export class MatriculaComponent implements OnInit {
     return this.personForm.get('email');
   }
 
-  // get contrasenaField() {
-  //   return this.formMatricula.get('contrasena');
-  // }
   get nombre1Field() {
     return this.personForm.get('nombre1');
   }
@@ -449,55 +427,15 @@ export class MatriculaComponent implements OnInit {
   }
 
 
-  // crearUsuario() {
-  //   if (this.personForm.valid) {
-  //     const personaFormData = new FormData();
-  //     personaFormData.append('idtipoIdentificacion', '1');
-  //     personaFormData.append('identificacion', this.personForm.get('identificacion').value.toString());
-  //     personaFormData.append('nombre1', this.personForm.get('nombre1').value.toUpperCase());
-  //     personaFormData.append('nombre2', this.personForm.get('nombre2').value.toUpperCase());
-  //     personaFormData.append('apellido1', this.personForm.get('apellido1').value.toUpperCase());
-  //     personaFormData.append('apellido2', this.personForm.get('apellido2').value.toUpperCase());
-  //     personaFormData.append('direccion', this.personForm.get('direccion').value.toUpperCase());
-  //     personaFormData.append('idciudadNac', '1');
-  //     personaFormData.append('idciudad', '1');
-  //     personaFormData.append('telefonoFijo', this.personForm.get('telefonoFijo').value);
-  //     personaFormData.append('celular', this.personForm.get('celular').value);
-  //     personaFormData.append('idciudadUbicacion', '1');
-  //     personaFormData.append('email', this.personForm.get('email').value);
-  //     personaFormData.append('fechaNac', this.personForm.get('fechaNac').value['formatted']);
-
-  //     personaFormData.forEach((value, key) => {
-  //       console.log(key + ': ' + value);
-  //     });
-
-  //     this._personaService.crearPersona(personaFormData).subscribe(
-  //       (response: any) => {
-  //         // Maneja la respuesta exitosa del servicio si es necesario
-  //         console.log("Se enviaron los hptasss datosssss")
-  //         console.log(response);
-  //       },
-  //       (error) => {
-  //         // Maneja el error del servicio si ocurre
-  //         console.log(error);
-  //       }
-  //     );
-  //   } else {
-  //     // El formulario no es válido, realiza las acciones necesarias
-  //     console.log('El formulario no es válido');
-  //   }
-  // }
-
-
   crearUsuario() {
     if (this.personForm.valid) {
-      const personaData = this.getPersonaData();
+      // const personaData = this.getPersonaData();
       const usuarioData = this.getUsuario();
 
       // Realiza las acciones necesarias para guardar la persona y el usuario
       // ...
 
-      console.log(personaData);
+      // console.log(personaData);
       console.log(usuarioData);
     } else {
       console.log('El formulario no es válido');

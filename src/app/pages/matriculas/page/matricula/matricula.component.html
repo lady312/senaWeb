@@ -121,7 +121,7 @@
   </mat-step>
   <mat-step [stepControl]="matriculaForm" label="Activos">
     <form class="my-form" [formGroup]="matriculaForm">
-      <ng-template matStepLabel><i class="fa fa-list fa-2x" aria-hidden="true"></i>Matricula</ng-template>
+      <ng-template matStepLabel><i class="fa fa-list fa-2x" aria-hidden="true"></i><br>Matricula</ng-template>
       <div class="form-floating mb-3">
         <select class="form-select" id="programa" aria-label="Floating label select example"
           formControlName="idPrograma">
@@ -205,7 +205,7 @@
   <mat-step [stepControl]="documentoForm" label="Documentos">
 
 
-    <ng-template matStepLabel><i class="fa fa-book fa-2x" aria-hidden="true"></i>
+    <ng-template matStepLabel><i class="fa fa-book fa-2x" aria-hidden="true"></i><br>
       Documentos</ng-template>
 
 
@@ -230,7 +230,7 @@
   <mat-step label="Datos enviados"> <!--Vista de datos enviados correctamente-->
 
 
-    <ng-template matStepLabel><i class="fa fa-check-square-o fa-2x" aria-hidden="true"></i>
+    <ng-template matStepLabel><i class="fa fa-check-square-o fa-2x" aria-hidden="true"></i><br>
       Fin</ng-template>
 
     <div class="container">
