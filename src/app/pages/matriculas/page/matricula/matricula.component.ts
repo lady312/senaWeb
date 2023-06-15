@@ -316,7 +316,7 @@ export class MatriculaComponent implements OnInit {
     if (this.personForm.valid) {
       const usuario: UsuarioModel = this.getUsuario();
 
-      if(this.detectarPersonaEnElSistema){
+      if (this.detectarPersonaEnElSistema) {
         this._personaService.crearUsuario(usuario).subscribe(
           (response) => {
             console.log(response);
@@ -325,12 +325,25 @@ export class MatriculaComponent implements OnInit {
             console.log(error);
           }
         );
-      }else{
+      } else {
+        // const matricula: MatriculaModel = new MatriculaModel();
+        // matricula.idGrupo = 1; // Asignar el valor del idGrupo
+        // matricula.idEstadoGrupo = 2; // Asignar el valor del idEstadoGrupo
+        // matricula.idPersona = 3; // Asignar el valor del idPersona
+        // Asignar los demás valores necesarios.
         //Si existe la persona que se cree
-        console.log("Asignar id a la foranea de la matricula entre Matricula y persona");
+        console.log(
+          "Asignar id a la foranea de la matricula entre Matricula y persona"
+        );
+      //   this._matriculaService.crearMatricula(matricula).subscribe(
+      //     (response) => {
+      //       console.log(response);
+      //     },
+      //     (error) => {
+      //       console.log(error);
+      //     }
+      //   );
       }
-
-
     } else {
       this.validarCamposPersona();
       console.log("Formulario inválido. No se pueden guardar los datos.");
