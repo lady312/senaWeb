@@ -84,6 +84,8 @@ export class MatriculaComponent implements OnInit {
   fichaNoEncontrada: boolean = false;
   fichaIncorrecta: boolean = false;
 
+  detectarPersonaEnElSistema: boolean = false;
+
   constructor(
     private _formBuilder: FormBuilder,
     private _matriculaService: MatriculaService,
@@ -196,12 +198,12 @@ export class MatriculaComponent implements OnInit {
           this.personForm.get("celular").setValue(persona.celular);
         } else {
           this.resetPersonForm();
-          this.validacionExistencia = false;
         }
       },
       (error) => {
+        this.detectarPersonaEnElSistema = true;
         this._uiNotificationService.error(
-          "Ocurrió un error al obtener la persona"
+          "No se encontro la persona en el sistema"
         );
         console.log(error);
         this.resetPersonForm();
@@ -313,14 +315,22 @@ export class MatriculaComponent implements OnInit {
   guardarUsuario() {
     if (this.personForm.valid) {
       const usuario: UsuarioModel = this.getUsuario();
-      this._personaService.crearUsuario(usuario).subscribe(
-        (response) => {
-          console.log(response);
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
+
+      if(this.detectarPersonaEnElSistema){
+        this._personaService.crearUsuario(usuario).subscribe(
+          (response) => {
+            console.log(response);
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+      }else{
+        //Si existe la persona que se cree
+        console.log("Asignar id a la foranea de la matricula entre Matricula y persona");
+      }
+
+
     } else {
       this.validarCamposPersona();
       console.log("Formulario inválido. No se pueden guardar los datos.");
