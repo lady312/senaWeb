@@ -32,6 +32,7 @@ export class GestionFichasComponent {
         programas => {
           this.programas = programas;
           this.programasFiltrados = programas;
+          console.log(programas)
         },
         error => console.log(error)
       );
@@ -53,6 +54,8 @@ export class GestionFichasComponent {
     } else {
       this.grupos = [];
       this.gruposFiltrados = [];
+      this.busquedaGrupo = '';
+      this.aprendicesFiltrados = [];
     }
   }
 
@@ -84,16 +87,18 @@ export class GestionFichasComponent {
       );
     } else {
       this.gruposFiltrados = this.grupos;
+      this.busquedaAprendiz = '';
+      this.aprendicesFiltrados = [];
     }
   }
 
-  filtrarAprendices() {
-    if (this.busquedaAprendiz) {
+  filtrarAprendicesPorGrupo() {
+    if (this.busquedaGrupo) {
       this.aprendicesFiltrados = this.aprendices.filter(aprendiz =>
-        aprendiz.usuario.identificacion.toLowerCase().includes(this.busquedaAprendiz.toLowerCase())
+        aprendiz.grupo.id === +this.busquedaGrupo
       );
     } else {
-      this.aprendicesFiltrados = this.aprendices;
+      this.aprendicesFiltrados = [];
     }
   }
 }

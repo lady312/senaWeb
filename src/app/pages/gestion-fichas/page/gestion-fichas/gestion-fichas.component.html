@@ -1,8 +1,6 @@
 <div class="div-principal col-lg-12 grid-margin stretch-card">
   <div class="card style">
     <div class="card-header style">
-
-
       <i class="fa fa-align-justify"></i>Gestion de fichas aprendices
       <div class="container">
         <div class="row">
@@ -15,7 +13,7 @@
             </datalist>
           </div>
 
-          <div *ngIf="grupos && grupos.length > 0">
+          <div *ngIf="gruposFiltrados && gruposFiltrados.length > 0">
             <p>Ficha seleccionada:</p>
             <input type="text" list="grupos" [(ngModel)]="busquedaGrupo" placeholder="Buscar grupo..."
               (input)="filtrarGrupos()">
@@ -24,49 +22,33 @@
             </datalist>
           </div>
 
-          <div *ngIf="aprendices && aprendices.length > 0">
+          <div *ngIf="busquedaGrupo && aprendices && aprendices.length > 0">
             <p>Aprendices activos:</p>
             <input type="text" list="aprendices" [(ngModel)]="busquedaAprendiz" placeholder="Buscar aprendiz..."
-              (input)="filtrarAprendices()">
+              (input)="filtrarAprendicesPorGrupo()">
           </div>
         </div>
       </div>
-
-
-
-
-
-
-
-
     </div>
 
-<div class="row">
-  <div *ngFor="let aprendiz of aprendicesFiltrados" class="col-xx-2 mb-4 m-5" style="width: 250px;">
-    <div class="card card-sm " style="background-color: #A15D55;">
-      <div class="d-flex justify-content-center align-items-center">
-        <img [src]="aprendiz.usuario.foto || 'assets/img/avatars/7.png'" alt="Foto de perfil" class="card-img-top img-thumbnail rounded-circle m-3" style="width: 100px;">
-      </div>
-      <div class="card-body">
-        <h5 class="card-title">{{ aprendiz.usuario.identificacion }}</h5>
-        <p class="card-text">
-          <strong>Nombre:</strong> {{ aprendiz.usuario.nombre1 }} {{ aprendiz.usuario.nombre2 }}<br>
-          <strong>Apellido:</strong> {{ aprendiz.usuario.apellido1 }}
-        </p>
+    <div class="row" *ngIf="busquedaGrupo && aprendicesFiltrados && aprendicesFiltrados.length > 0">
+      <div *ngFor="let aprendiz of aprendicesFiltrados" class="col-xx-2 mb-4 m-5" style="width: 250px;">
+        <div class="card card-sm">
+          <div class="d-flex justify-content-center align-items-center">
+            <img [src]="aprendiz.usuario.foto || 'assets/img/avatars/7.png'" alt="Foto de perfil"
+              class="card-img-top img-thumbnail rounded-circle m-3" style="width: 100px;">
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">{{ aprendiz.usuario.identificacion }}</h5>
+            <p class="card-text">
+              <strong>Nombre:</strong> {{ aprendiz.usuario.nombre1 }} {{ aprendiz.usuario.nombre2 }}<br>
+              <strong>Apellido:</strong> {{ aprendiz.usuario.apellido1 }}
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </div>
-
-
-
-
-
-
-
-  </div>
-</div>
-
-
 
 <p>nuevo apartado para pruebas</p>
