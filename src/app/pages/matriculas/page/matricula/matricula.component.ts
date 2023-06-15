@@ -25,13 +25,10 @@ import { ProgramaService } from "@services/programa.service";
 import { TipoGrupoModel } from "@models/tipogrupo.model";
 import { MatriculaModel } from "@models/matricula.model";
 import { TipoGrupoService } from "@services/tipo-grupo.service";
-import { delay, filter, catchError } from "rxjs/operators";
+import { filter } from "rxjs/operators";
 import Swal from "sweetalert2";
 import { MatDialog } from "@angular/material/dialog";
 
-import { TipoProgramaModel } from "@models/tipo-programa.model";
-import { TipoProgramaService } from "@services/tipo-programa.service";
-import { ProyectoFormativoService } from "@services/proyecto-formativo.service";
 import { ProyectoFormativoModel } from "@models/proyecto-formativo.model ";
 import { PersonaService } from "@services/persona.service";
 import { TipoIdentificacionModel } from "@models/tipo-identificacion.model";
@@ -55,7 +52,7 @@ export class MatriculaComponent implements OnInit {
 
   usuarios: UsuarioModel[] = [];
 
-  @Input() usuario: UsuarioModel;//actualizar
+  @Input() usuario: UsuarioModel; //actualizar
 
   @Input() tipoGrupos: TipoGrupoModel[] = [];
   @Input() programas: ProgramaModel[] = [];
@@ -184,9 +181,7 @@ export class MatriculaComponent implements OnInit {
     this._matriculaService.personByIdentificacion(identificacion).subscribe(
       (response: any) => {
         if (response.message === "Se encontró la persona") {
-          this._uiNotificationService.success(
-            "Ya te encuentras registrado!!!"
-          );
+          this._uiNotificationService.success("Ya te encuentras registrado!!!");
           const persona = response.person;
           this.validacionExistencia = true;
           // this.personForm.get('identificacion').setValue(persona.identificacion);
@@ -225,7 +220,6 @@ export class MatriculaComponent implements OnInit {
     this.personForm.get("telefonoFijo").setValue(null);
     this.personForm.get("celular").setValue(null);
   }
-
 
   numeroFichaByGrupo(numeroFicha: number) {
     this._matriculaService.numeroFichaByGrupo(numeroFicha).subscribe(
@@ -291,21 +285,7 @@ export class MatriculaComponent implements OnInit {
       const control = this.personForm.get(field);
       control.markAsTouched({ onlySelf: true });
     });
-
   }
-
-
-  guardarPersona() {
-    if (this.personForm.valid) {
-      // Aquí puedes escribir la lógica para guardar los datos de la persona
-      this.crearUsuario();
-      console.log('Datos guardados correctamente');
-    } else {
-      this.validarCamposPersona(); // Marcas los campos como tocados para mostrar los mensajes de error
-      console.log('Formulario inválido. No se pueden guardar los datos.');
-    }
-  }
-
 
   validarCamposMatricula() {
     Object.keys(this.matriculaForm.controls).forEach((field) => {
@@ -329,25 +309,21 @@ export class MatriculaComponent implements OnInit {
     });
   }
 
-  getUsuarios() {
-    this._personaService.traerUsuarios()
-      .subscribe(usuarios => {
-        this.usuarios = usuarios;
-        // this.rolesByCompany();
-        console.log('user', this.usuarios)
-      }, error => {
-        this._uiNotificationService.error("Error de conexión");
-      });
-  }
-
-  guardarUsuarios() {
+  //Funcion para guardar el usuario
+  guardarUsuario() {
     if (this.personForm.valid) {
       const usuario: UsuarioModel = this.getUsuario();
-      this._personaService.crearUsuario(usuario).subscribe(() => {
-      });
+      this._personaService.crearUsuario(usuario).subscribe(
+        (response) => {
+          console.log(response);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
     } else {
-      this.validarCamposPersona(); // Marcas los campos como tocados para mostrar los mensajes de error
-      console.log('Formulario inválido. No se pueden guardar los datos.');
+      this.validarCamposPersona();
+      console.log("Formulario inválido. No se pueden guardar los datos.");
     }
   }
 
@@ -358,92 +334,54 @@ export class MatriculaComponent implements OnInit {
   getUsuario() {
     return {
       id: this.usuario?.id,
-      identificacion: this.getControl('identificacion').value,
-      email: this.getControl('email').value,
-      contrasena: 'contraseña',
-      nombre1: this.getControl('nombre1').value,
-      nombre2: this.getControl('nombre2').value,
-      apellido1: this.getControl('apellido1').value,
-      apellido2: this.getControl('apellido2').value,
+      identificacion: this.getControl("identificacion").value,
+      email: this.getControl("email").value,
+      contrasena: "contraseña",
+      nombre1: this.getControl("nombre1").value,
+      nombre2: this.getControl("nombre2").value,
+      apellido1: this.getControl("apellido1").value,
+      apellido2: this.getControl("apellido2").value,
       // fechaNac: this.getControl('fechaNac').value['formatted'],
-      fechaNac: '2012/12/12',
-      celular: this.getControl('celular').value,
-      direccion: 'Sin registro',
-      telefonoFijo: 'Sin registro',
-      perfil: 'Sin registro',
-      sexo: '-',
-      rh: '-',
+      fechaNac: "2012/12/12",
+      celular: this.getControl("celular").value,
+      direccion: "Sin registro",
+      telefonoFijo: "Sin registro",
+      perfil: "Sin registro",
+      sexo: "-",
+      rh: "-",
       idTipoIdentificacion: 1,
       idCiudad: 1,
       idCiudadNac: 1,
       idCiudadUbicacion: 1,
-      rutaFoto: '/default/user.svg',
-
-    }
-  }
-
-
-  get emailField() {
-    return this.personForm.get('email');
-  }
-
-  get nombre1Field() {
-    return this.personForm.get('nombre1');
-  }
-  get nombre2Field() {
-    return this.personForm.get('nombre2');
-  }
-  get apellido1Field() {
-    return this.personForm.get('apellido1');
-  }
-  get apellido2Field() {
-    return this.personForm.get('apellido2');
-  }
-  get fechaNacField() {
-    return this.personForm.get('fechaNac');
-  }
-
-  get celularField() {
-    return this.personForm.get('celular');
-  }
-
-  getPersonaData() {
-    return {
-      idtipoIdentificacion: '1',
-      identificacion: this.personForm.get('identificacion').value.toString(),
-      nombre1: this.personForm.get('nombre1').value.toUpperCase(),
-      nombre2: this.personForm.get('nombre2').value.toUpperCase(),
-      apellido1: this.personForm.get('apellido1').value.toUpperCase(),
-      apellido2: this.personForm.get('apellido2').value.toUpperCase(),
-      direccion: this.personForm.get('direccion').value.toUpperCase(),
-      idciudadNac: '1',
-      idciudad: '1',
-      telefonoFijo: this.personForm.get('telefonoFijo').value,
-      celular: this.personForm.get('celular').value,
-      idciudadUbicacion: '1',
-      email: this.personForm.get('email').value,
-      fechaNac: this.personForm.get('fechaNac').value['formatted']
+      rutaFoto: "/default/user.svg",
     };
   }
 
-
-  crearUsuario() {
-    if (this.personForm.valid) {
-      // const personaData = this.getPersonaData();
-      const usuarioData = this.getUsuario();
-
-      // Realiza las acciones necesarias para guardar la persona y el usuario
-      // ...
-
-      // console.log(personaData);
-      console.log(usuarioData);
-    } else {
-      console.log('El formulario no es válido');
-    }
+  get emailField() {
+    return this.personForm.get("email");
   }
 
+  get nombre1Field() {
+    return this.personForm.get("nombre1");
+  }
 
+  get nombre2Field() {
+    return this.personForm.get("nombre2");
+  }
 
+  get apellido1Field() {
+    return this.personForm.get("apellido1");
+  }
 
+  get apellido2Field() {
+    return this.personForm.get("apellido2");
+  }
 
+  get fechaNacField() {
+    return this.personForm.get("fechaNac");
+  }
+
+  get celularField() {
+    return this.personForm.get("celular");
+  }
 }

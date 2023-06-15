@@ -115,11 +115,13 @@
       </div>
       <div class="text-center">
         <button class="btn btn-success" mat-button matStepperNext type="button"
-          (click)="guardarUsuarios()">Seguir</button>
+          (click)="guardarUsuario()">Seguir</button>
       </div>
     </form>
+
   </mat-step>
-  <mat-step [stepControl]="matriculaForm" label="Activos">
+  <mat-step [stepControl]="matriculaForm">
+
     <form class="my-form" [formGroup]="matriculaForm">
       <ng-template matStepLabel><i class="fa fa-list fa-2x" aria-hidden="true"></i><br>Matricula</ng-template>
       <div class="form-floating mb-3">
@@ -218,11 +220,10 @@
     </form>
 
     <div class="text-center">
-      <button class="btn btn-danger" mat-button matStepperPrevious>Regresar</button>
-      <!-- <button mat-button (click)="stepper.reset()">Reset</button> -->
-      <!-- <button type="submit" class="btn btn-success" mat-button>Enviar</button> -->
-      <button class="btn btn-success" mat-button matStepperNext type="button">Enviar</button>
 
+      <button class="btn btn-danger" mat-button matStepperPrevious>Regresar</button>
+
+      <button class="btn btn-success" mat-button matStepperNext type="button">Enviar</button>
 
     </div>
   </mat-step>
