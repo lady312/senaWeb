@@ -317,32 +317,37 @@ export class MatriculaComponent implements OnInit {
       const usuario: UsuarioModel = this.getUsuario();
 
       if (this.detectarPersonaEnElSistema) {
+        //Detectar si el usuario no existe
         this._personaService.crearUsuario(usuario).subscribe(
           (response) => {
+            console.log("Vamos a crear el fucking usuario");
             console.log(response);
+
+            // Obtener el ID de la persona creada
+            const personaId = response.id;
+
+              this._matriculaService.asignarPersona(personaId).subscribe(
+                (response) => {
+                  console.log('Persona asignada correctamente a la matrícula');
+                  console.log(response);
+                },
+                (error) => {
+                  console.log('Error al asignar persona a la matrícula');
+                  console.log(error);
+                }
+              );
+
           },
           (error) => {
+            console.log("Ese hpta usuario no existe");
             console.log(error);
+            this.detectarPersonaEnElSistema = false;
           }
         );
       } else {
-        // const matricula: MatriculaModel = new MatriculaModel();
-        // matricula.idGrupo = 1; // Asignar el valor del idGrupo
-        // matricula.idEstadoGrupo = 2; // Asignar el valor del idEstadoGrupo
-        // matricula.idPersona = 3; // Asignar el valor del idPersona
-        // Asignar los demás valores necesarios.
-        //Si existe la persona que se cree
         console.log(
           "Asignar id a la foranea de la matricula entre Matricula y persona"
         );
-      //   this._matriculaService.crearMatricula(matricula).subscribe(
-      //     (response) => {
-      //       console.log(response);
-      //     },
-      //     (error) => {
-      //       console.log(error);
-      //     }
-      //   );
       }
     } else {
       this.validarCamposPersona();

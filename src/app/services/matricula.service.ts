@@ -26,6 +26,11 @@ export class MatriculaService {
     return this._coreService.get<MatriculaModel[]>(url);
   }
 
+  asignarPersona(personId: number): Observable<any> {
+    return this._coreService.post<MatriculaModel>('matricula/' + personId + '/asignar-persona', personId);
+  }
+
+
 
   crearMatricula(matricula: MatriculaModel)
   {
