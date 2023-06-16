@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+// gestion-fichas.component.ts
+import { Component, OnInit } from '@angular/core';
 import { AsignacionParticipantesService } from '@services/asignacion-participantes.service';
 
 @Component({
@@ -6,7 +7,7 @@ import { AsignacionParticipantesService } from '@services/asignacion-participant
   templateUrl: './gestion-fichas.component.html',
   styleUrls: ['./gestion-fichas.component.scss']
 })
-export class GestionFichasComponent {
+export class GestionFichasComponent implements OnInit {
   programas: any[];
   grupos: any[];
   aprendices: any[];
@@ -32,14 +33,12 @@ export class GestionFichasComponent {
         programas => {
           this.programas = programas;
           this.programasFiltrados = programas;
-          console.log(programas)
         },
         error => console.log(error)
       );
   }
 
   obtenerGruposPorPrograma() {
-    // Obtener el programa seleccionado por el nombre
     const programaSeleccionado = this.programas.find(programa => programa.nombrePrograma === this.busquedaPrograma);
 
     if (programaSeleccionado) {
@@ -48,6 +47,8 @@ export class GestionFichasComponent {
           grupos => {
             this.grupos = grupos;
             this.gruposFiltrados = grupos;
+            this.busquedaGrupo = ''; // Limpiar la búsqueda de grupos cuando se selecciona un programa
+            this.filtrarAprendicesPorGrupo(); // Filtrar los aprendices automáticamente
           },
           error => console.log(error)
         );
@@ -87,16 +88,26 @@ export class GestionFichasComponent {
       );
     } else {
       this.gruposFiltrados = this.grupos;
-      this.busquedaAprendiz = '';
-      this.aprendicesFiltrados = [];
     }
+    this.filtrarAprendicesPorGrupo(); // Filtrar los aprendices automáticamente al cambiar la búsqueda de grupos
   }
 
   filtrarAprendicesPorGrupo() {
     if (this.busquedaGrupo) {
-      this.aprendicesFiltrados = this.aprendices.filter(aprendiz =>
-        aprendiz.grupo.id === +this.busquedaGrupo
-      );
+      const grupoSeleccionado = this.grupos.find(grupo => grupo.nombre === this.busquedaGrupo);
+      if (grupoSeleccionado) {
+        this.asignacionParticipanteService.obtenerAprendicesPorGrupo(grupoSeleccionado.id)
+          .subscribe(
+            aprendices => {
+              this.aprendicesFiltrados = aprendices;
+              console.log(this.aprendicesFiltrados)
+            },
+            error => console.log(error)
+          );
+      } else {
+        this.aprendicesFiltrados = [];
+    
+      }
     } else {
       this.aprendicesFiltrados = [];
     }

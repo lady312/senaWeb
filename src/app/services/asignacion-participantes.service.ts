@@ -1,35 +1,28 @@
-import { HttpClient } from '@angular/common/http';
+
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { CoreService } from './core.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AsignacionParticipantesService {
 
-  private apiUrl = 'http://localhost:8000/api';
+  constructor(private coreService: CoreService) {}
 
-  constructor(private http: HttpClient) {}
-
-  obtenerProgramas() {
-    return this.http.get<any[]>(`${this.apiUrl}/programas`);
+  obtenerProgramas(): Observable<any[]> {
+    return this.coreService.get<any[]>('programas');
   }
 
-  obtenerGruposPorPrograma(idPrograma: number) {
-    return this.http.get<any[]>(`${this.apiUrl}/asignacionParticipantes/programas/${idPrograma}/grupos`);
+  obtenerGruposPorPrograma(idPrograma: number): Observable<any[]> {
+    return this.coreService.get<any[]>(`asignacionParticipantes/programas/${idPrograma}/grupos`);
   }
-  
+
   obtenerAprendicesPorGrupo(idGrupo: number): Observable<any[]> {
-    const url = `${this.apiUrl}/asignacionParticipantes/grupos/${idGrupo}/aprendices`;
-    return this.http.get<any[]>(url);
+    return this.coreService.get<any[]>(`asignacionParticipantes/grupos/${idGrupo}/aprendices`);
   }
 
   obtenerAprendicesActivos(): Observable<any[]> {
-    const url = `${this.apiUrl}/usuarios_aprendices`;
-    return this.http.get<any[]>(url);
+    return this.coreService.get<any[]>('usuarios_aprendices');
   }
-
-
-
-
 }
