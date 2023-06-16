@@ -310,6 +310,50 @@ export class MatriculaComponent implements OnInit {
   }
 
   //Funcion para guardar el usuario
+  // guardarUsuario() {
+  //   if (this.personForm.valid) {
+  //     const usuario: UsuarioModel = this.getUsuario();
+
+  //     if (this.detectarPersonaEnElSistema) {
+  //       this._personaService.crearUsuario(usuario).subscribe(
+  //         (response) => {
+  //           console.log(response);
+
+  //           const personaId = response.id;
+
+  //           this._uiNotificationService.success(
+  //             "La persona se creo correctamente y se asigno a la matricula"
+  //           );
+
+  //           this._matriculaService.asignarPersona(personaId).subscribe(
+  //             (response) => {
+  //               console.log(response);
+  //             },
+  //             (error) => {
+  //               console.log("Error al asignar persona a la matrícula");
+  //               console.log(error);
+  //             }
+  //           );
+  //         },
+  //         (error) => {
+  //           this._uiNotificationService.error(
+  //             "Ups hubo un error, refresca la página o intentalo más tarde"
+  //           );
+  //           console.log(error);
+  //           this.detectarPersonaEnElSistema = false;
+  //         }
+  //       );
+  //     } else {
+  //       console.log(
+  //         "Asignar id a la foranea de la matricula entre Matricula y persona"
+  //       );
+  //     }
+  //   } else {
+  //     this.validarCamposPersona();
+  //     console.log("Formulario inválido. No se pueden guardar los datos.");
+  //   }
+  // }
+
   guardarUsuario() {
     if (this.personForm.valid) {
       const usuario: UsuarioModel = this.getUsuario();
@@ -319,33 +363,22 @@ export class MatriculaComponent implements OnInit {
           (response) => {
             console.log(response);
 
-            const personaId = response.id;
-
-            this._uiNotificationService.success(
-              "La persona se creo correctamente y se asigno a la matricula"
-            );
-            
-            this._matriculaService.asignarPersona(personaId).subscribe(
-              (response) => {
-                console.log(response);
-              },
-              (error) => {
-                console.log("Error al asignar persona a la matrícula");
-                console.log(error);
-              }
-            );
+            if (response && response.id) {
+              const personaId = response.id;
+              this.asignarPersonaAMatricula(personaId);
+            } else {
+              this.mostrarErrorCreacionPersona();
+            }
           },
           (error) => {
-            this._uiNotificationService.error(
-              "Ups hubo un error, refresca la página o intentalo más tarde"
-            );
+            this.mostrarErrorCreacionPersona();
             console.log(error);
             this.detectarPersonaEnElSistema = false;
           }
         );
       } else {
         console.log(
-          "Asignar id a la foranea de la matricula entre Matricula y persona"
+          "Asignar ID a la foranea de la matricula entre Matricula y persona"
         );
       }
     } else {
@@ -353,6 +386,31 @@ export class MatriculaComponent implements OnInit {
       console.log("Formulario inválido. No se pueden guardar los datos.");
     }
   }
+
+  private asignarPersonaAMatricula(personaId: number) {
+    this._matriculaService.asignarPersona(personaId).subscribe(
+      (response) => {
+        console.log(response);
+        this._uiNotificationService.success(
+          "Se asignó correctamente la persona a la matrícula"
+        );
+      },
+      (error) => {
+        console.log("Error al asignar persona a la matrícula");
+        console.log(error);
+        this._uiNotificationService.error(
+          "Hubo un error al asignar la persona a la matrícula"
+        );
+      }
+    );
+  }
+
+  private mostrarErrorCreacionPersona() {
+    this._uiNotificationService.error(
+      "No se pudo crear la persona. Por favor, inténtalo nuevamente."
+    );
+  }
+
 
   private getControl(name: string) {
     return this.personForm.controls[name];
