@@ -302,10 +302,8 @@ export class MatriculaComponent implements OnInit {
       showCancelButton: true,
     }).then((result) => {
       if (result.isConfirmed) {
-        // El usuario hizo clic en "Aceptar" en el modal
         return true;
       } else {
-        // El usuario hizo clic en "Cancelar" o cerró el modal
         return false;
       }
     });
@@ -317,29 +315,30 @@ export class MatriculaComponent implements OnInit {
       const usuario: UsuarioModel = this.getUsuario();
 
       if (this.detectarPersonaEnElSistema) {
-        //Detectar si el usuario no existe
         this._personaService.crearUsuario(usuario).subscribe(
           (response) => {
-            console.log("Vamos a crear el fucking usuario");
             console.log(response);
 
-            // Obtener el ID de la persona creada
             const personaId = response.id;
 
-              this._matriculaService.asignarPersona(personaId).subscribe(
-                (response) => {
-                  console.log('Persona asignada correctamente a la matrícula');
-                  console.log(response);
-                },
-                (error) => {
-                  console.log('Error al asignar persona a la matrícula');
-                  console.log(error);
-                }
-              );
-
+            this._uiNotificationService.success(
+              "La persona se creo correctamente y se asigno a la matricula"
+            );
+            
+            this._matriculaService.asignarPersona(personaId).subscribe(
+              (response) => {
+                console.log(response);
+              },
+              (error) => {
+                console.log("Error al asignar persona a la matrícula");
+                console.log(error);
+              }
+            );
           },
           (error) => {
-            console.log("Ese hpta usuario no existe");
+            this._uiNotificationService.error(
+              "Ups hubo un error, refresca la página o intentalo más tarde"
+            );
             console.log(error);
             this.detectarPersonaEnElSistema = false;
           }
