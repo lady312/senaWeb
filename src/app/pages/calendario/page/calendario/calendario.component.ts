@@ -22,6 +22,16 @@ import { UsuarioService } from "@services/usuario.service";
 import { UsuarioModel } from "@models/usuario.model";
 import { AsignacionJornadaGrupoModel } from "@models/asignacion-jornada-grupo.model";
 import { AsignacionJornadaGrupoService } from "@services/asignacion-jornada-grupo.service";
+import { TipoGrupoService } from "@services/tipo-grupo.service";
+import { TipoGrupoModel } from "@models/tipogrupo.model";
+import { NivelFormacionModel } from "@models/nivel-formacion.model";
+import { NivelFormacionService } from "@services/nivel-formacion.service";
+import { EstadoGrupoService } from "@services/estado-grupo.service";
+import { EstadoGrupoModel } from "@models/estado-grupo.model";
+import { TipoFormacionService } from "@services/tipo-formacion.service";
+import { TipoFormacionModel } from "@models/tipo-formacion.model";
+import { TipoOfertaModel } from "@models/tipo-oferta.model";
+import { TipoOfertaService } from "@services/tipo-oferta.service";
 
 interface formacion {
   fecha?: Date;
@@ -69,6 +79,11 @@ export class CalendarioComponent implements OnInit {
   infreaestructuras: InfraestructuraModel[] = [];
   usuarios: UsuarioModel[] = [];
   gruposJornada: AsignacionJornadaGrupoModel[] = [];
+  tipoGrupos:TipoGrupoModel[] = [];
+  niveles:NivelFormacionModel[] = [];
+  estadoGrupos:EstadoGrupoModel[] = [];
+  tipoFormaciones:TipoFormacionModel[] = [];
+  tipoOfertas:TipoOfertaModel[] = [];
 
   constructor(
     private _uiNotificationService: UINotificationService,
@@ -81,7 +96,12 @@ export class CalendarioComponent implements OnInit {
     private _areaService: AreaService,
     private _jornadaService: JornadaService,
     private _grupoJornadaService: AsignacionJornadaGrupoService,
-    private _usuarioService: UsuarioService
+    private _usuarioService: UsuarioService,
+    private _tipoGruposService:TipoGrupoService,
+    private _nivelFormacionService:NivelFormacionService,
+    private _estadoGrupoService:EstadoGrupoService,
+    private _tipoFormacionService:TipoFormacionService,
+    private _tipoOfertaService:TipoOfertaService
   ) {}
 
   ngOnInit(): void {
@@ -96,6 +116,11 @@ export class CalendarioComponent implements OnInit {
     this.getJornadas();
     this.getGruposJornada();
     this.getUsuarios();
+    this.getTipoGrupos();
+    this.getNiveles();
+    this.getEstados();
+    this.getTipoFormaciones();
+    this.getTipoOfertas();
   }
 
   //sedes
@@ -123,6 +148,36 @@ export class CalendarioComponent implements OnInit {
   getGrupo() {
     this._gruposService.traerGrupos().subscribe((grupos) => {
       this.grupos = grupos;
+    });
+  }
+
+  getTipoGrupos(){
+    this._tipoGruposService.traerTipoGrupos().subscribe((tGrupos)=>{
+      this.tipoGrupos = tGrupos;
+    });
+  }
+
+  getNiveles(){
+    this._nivelFormacionService.traerNivelesFormacion().subscribe((niveles)=>{
+      this.niveles = niveles;
+    });
+  }
+
+  getEstados(){
+    this._estadoGrupoService.traerEstadoGrupos().subscribe((estados)=>{
+      this.estadoGrupos = estados;
+    });
+  }
+
+  getTipoFormaciones(){
+    this._tipoFormacionService.traerTipoFormaciones().subscribe((tFormaciones)=>{
+      this.tipoFormaciones = tFormaciones;
+    });
+  }
+
+  getTipoOfertas(){
+    this._tipoOfertaService.traerTipoOfertas().subscribe((tOfertas)=>{
+      this.tipoOfertas = tOfertas;
     });
   }
 

@@ -37,7 +37,16 @@
 </app-custom-modal>
 
 <app-custom-modal title="Grupos" [(show)]="showModalGrupo">
-  <app-grupo-form>
+  <app-grupo-form
+  [tipoGrupos]="tipoGrupos"
+  [programas]="programas"
+  [niveles]="niveles"
+  [tipoFormaciones]="tipoFormaciones"
+  [estadoGrupos]="estadoGrupos"
+  [tipoOfertas]="tipoOfertas"
+  [infraestructuras]="infraestructuras"
+  [estados]="estadoGrupos"
+  (store)="guardarGrupo($event)">
   </app-grupo-form>
 </app-custom-modal>
 
