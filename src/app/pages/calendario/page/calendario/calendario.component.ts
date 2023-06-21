@@ -61,7 +61,6 @@ export class CalendarioComponent implements OnInit {
   sede: SedeModel = null;
   grupo: GrupoModel = null;
   programa: ProgramaModel = null;
-  infraestructura: InfraestructuraModel = null;
   area: AreaModel = null;
   jornada: JornadaModel = null;
 
@@ -69,7 +68,7 @@ export class CalendarioComponent implements OnInit {
 
   calendarios: CalendarioModel[] = [];
   sedes: SedeModel[] = [];
-  formTitle: string;
+  formTitle: string= 'Añadir Infraestructura';
   ciudades: CiudadModel[] = [];
   departamentos: DepartamentoModel[] = [];
   grupos: GrupoModel[] = [];
@@ -108,7 +107,7 @@ export class CalendarioComponent implements OnInit {
     this.getCiudades();
     this.getDepartamento();
     this.getSedes();
-    this.getGrupo();
+    this.getGrupos();
     this.getPrograma();
     this.getInfraestructuras();
     this.getCiudades();
@@ -145,7 +144,7 @@ export class CalendarioComponent implements OnInit {
   }
 
   //grupos
-  getGrupo() {
+  getGrupos() {
     this._gruposService.traerGrupos().subscribe((grupos) => {
       this.grupos = grupos;
     });
@@ -214,13 +213,7 @@ export class CalendarioComponent implements OnInit {
   }
 
   getSedesByCiudad(idCiudad: number) {
-    this._sedeService.sedesByCiudad(idCiudad).subscribe((sedes) => {
-      if (sedes) {
-        this.sedes = sedes;
-      } else {
-        this.sedes = [];
-      }
-    });
+    
   }
   getJornadas() {
     this._jornadaService.traerJornada().subscribe((jornadas) => {
@@ -234,26 +227,15 @@ export class CalendarioComponent implements OnInit {
     });
   }
 
-  getGruposJornadaByIdGrupo(event: number) {
-    const grupo = this.grupos.find((grupo) => grupo.id == event);
-    if (grupo) {
-      this.gruposJornada = this.gruposJornada.filter(
-        (grupoJornada) => grupoJornada.idGrupo == grupo.id
-      );
-    } else {
-      this.getGruposJornada();
-    }
+  getGrupoById(event: number) {
+    this._gruposService.traerGrupo(event).subscribe((grupo)=>{
+      this.reset();
+      this.grupo = grupo;
+      this.showCalendar = true;
+    });
   }
   getByIdSede(event: number) {
-    const sede = this.sedes.find((sede) => sede.id == event);
-
-    if (sede) {
-      this._infraestructuraService.infrBySede(sede.id).subscribe((infrs) => {
-        this.infraestructuras = infrs;
-      });
-    } else {
-      this.getInfraestructuras();
-    }
+    
   }
   getGruposJornadaByIdInfra(event: number) {
     const infra = this.infraestructuras.find((infra) => infra.id === event);
@@ -294,7 +276,6 @@ export class CalendarioComponent implements OnInit {
     this.showModalPrograma = true;
   }
   createCalendario4() {
-    this.infraestructura = null;
     this.showFormInfr = true;
   }
   createJornada() {
@@ -311,12 +292,12 @@ export class CalendarioComponent implements OnInit {
   guardarGrupo(grupo: GrupoModel) {
     if (grupo.id) {
       this._gruposService.actualizarGrupo(grupo).subscribe((gr) => {
-        this.getGrupo();
+        this.getGrupos();
         this.reset();
       });
     } else {
       this._gruposService.crearGrupo(grupo).subscribe((gr) => {
-        this.getGrupo();
+        this.getGrupos();
         this.reset();
       });
     }
@@ -372,7 +353,6 @@ export class CalendarioComponent implements OnInit {
     this.programa = null;
     this.showModalPrograma = false;
     this.showFormInfr = false;
-    this.infraestructura = null;
     this.jornada = null;
     this.showModalJornada = false;
   }

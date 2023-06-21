@@ -5,30 +5,22 @@
 
       <label>Cerrar todo el calendario</label>
       <div class="col-sm-3">
-        <app-custom-switch
-            [size]="6"
-            [checked]="calendarVisible"
-            (change)="handleCalendarToggle()"
-          ></app-custom-switch>
+        <app-custom-switch [size]="6" [checked]="calendarVisible" (change)="handleCalendarToggle()"></app-custom-switch>
       </div>
 
       <label>Con fin de semana</label>
       <div class="col-sm-2">
-        <app-custom-switch
-            [size]="6"
-            [checked]="calendarOptions.weekends"
-            (change)="handleWeekendsToggle()"
-          ></app-custom-switch>
+        <app-custom-switch [size]="6" [checked]="calendarOptions.weekends"
+          (change)="handleWeekendsToggle()"></app-custom-switch>
       </div>
 
     </div>
     <full-calendar *ngIf="calendarVisible" [options]="calendarOptions">
       <ng-template #eventContent let-arg>
-        {{ arg.timeText }} <br>
-        {{ arg.event.title}}<br>
-        {{arg.event.extendedProps.infra}}<br>
-        {{arg.event.extendedProps.jornada}}<br>
-        {{arg.event.extendedProps.tipoGrupo}} <br>
+        <h2>{{ arg.timeText }} {{ arg.event.title}}:</h2>
+        <p>
+          {{arg.event.extendedProps.descripcion}}
+        </p>
       </ng-template>
     </full-calendar>
   </div>

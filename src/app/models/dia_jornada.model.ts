@@ -7,7 +7,9 @@ export interface DiaJornadaModel {
   idDia?: number;
   idJornada?: number;
 
-// objetos de dia y jornada
+  // objetos de dia y jornada
   dia?: DiaModel[];
   JornadaModel?: JornadaModel[];
+
+  pivot?: DiaJornadaModel
 }
