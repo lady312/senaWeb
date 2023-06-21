@@ -82,10 +82,10 @@ export class ViewCalendarComponent implements OnInit {
   ngOnInit(): void {
     if (this.grupo) {
       this.Eventos = this.crearEventosGrupo(this.grupo);
-      this.calendarOptions.initialEvents = this.Eventos;
     } else {
-      this.crearEventosGrupos();
+      this.Eventos= this.crearEventosGrupos(this.grupos);
     }
+    this.calendarOptions.initialEvents = this.Eventos;
   }
 
   currentEvents: EventApi[] = [];
@@ -119,41 +119,20 @@ export class ViewCalendarComponent implements OnInit {
               descripcion: infr ? infr.nombreInfraestructura : 'Ambiente no asignado',
             }
           });
-
         }
       }
     }
     return Eventos;
   }
-  crearEventosGrupos() {
-    //const fechaConHora = new Date(`${fecha.toISOString().slice(0, 10)}T${hora}`);
+  crearEventosGrupos(grupos: GrupoModel[]) {
 
     let Eventos: EventInput[] = [];
 
+    for (const grupo of grupos) {
+      Eventos.concat(this.crearEventosGrupo(grupo));
+    }
 
-    /*this.gruposJornadas.forEach((gruposJornadas) => {
-      const fInit:Date = new Date(gruposJornadas.grupo.fechaInicialGrupo);
-      const fEnd:Date = new Date(gruposJornadas.grupo.fechaFinalGrupo);
-      const hInit:string = gruposJornadas.jornada.horaInicial
-      const hEnd:string =gruposJornadas.jornada.horaFinal;
-      for (let fecha = fInit; fecha <= fEnd; fecha = addDays(fecha, 1)) {
-        const grupo = this.grupos.find(
-        (grupo) => grupo.id == gruposJornadas.idGrupo
-        );
-        //const lider= this.listUsers.find(lider=>(lider.id==lider.id));
-        Eventos.push({
-          id: createEventId(),
-          title: gruposJornadas.grupo.nombre,
-          jornada: gruposJornadas.jornada.nombreJornada,
-          start: new Date(`${fecha.toISOString().slice(0, 10)}T${hInit}`),
-          end: new Date(`${fecha.toISOString().slice(0, 10)}T${hEnd}`),
-          infra: grupo.horario_infraestructura.infraestructura.nombreInfraestructura,
-          //lider: lider.persona.nombre1+' '+lider.persona.nombre2
-        });
-      }
-    });*/
-    this.Eventos = Eventos;
-    this.calendarOptions.initialEvents = this.Eventos;
+    return Eventos;
   }
 
   handleCalendarToggle() {

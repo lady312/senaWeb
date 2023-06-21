@@ -109,7 +109,6 @@ export class CalendarioComponent implements OnInit {
     this.getSedes();
     this.getGrupos();
     this.getPrograma();
-    this.getInfraestructuras();
     this.getCiudades();
     this.getAreas();
     this.getJornadas();
@@ -120,6 +119,7 @@ export class CalendarioComponent implements OnInit {
     this.getEstados();
     this.getTipoFormaciones();
     this.getTipoOfertas();
+    this.getInfraestructuras()
   }
 
   //sedes
@@ -199,11 +199,10 @@ export class CalendarioComponent implements OnInit {
     );
   }
   getInfraestructuras() {
-    this._infraestructuraService
-      .traerInfraestructuras()
-      .subscribe((infraestructuras) => {
-        this.infraestructuras = infraestructuras;
-      });
+    this._infraestructuraService.traerInfraestructuras().subscribe((infrs)=>{
+      console.log(infrs)
+      this.infreaestructuras = infrs;
+    })
   }
 
   getAreas() {
@@ -212,9 +211,7 @@ export class CalendarioComponent implements OnInit {
     });
   }
 
-  getSedesByCiudad(idCiudad: number) {
-    
-  }
+
   getJornadas() {
     this._jornadaService.traerJornada().subscribe((jornadas) => {
       this.jornadas = jornadas;
@@ -234,8 +231,12 @@ export class CalendarioComponent implements OnInit {
       this.showCalendar = true;
     });
   }
-  getByIdSede(event: number) {
-    
+  getByIdInfra(event: number) {
+    this._gruposService.traerGrupoByIdInfra(event).subscribe((grupos)=>{
+      this.reset();
+      this.grupos = grupos;
+      this.showCalendar = true;
+    });
   }
   getGruposJornadaByIdInfra(event: number) {
     const infra = this.infraestructuras.find((infra) => infra.id === event);
