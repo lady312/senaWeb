@@ -26,4 +26,23 @@ actualizarEstado(estadoId: number, estado: string): Observable<any> {
     const url = `estadoDocumentos/1`;
     return this.coreService.get(url);
   }
+
+  obtenerComentarios(): Observable<any> {
+    return this.coreService.get<any>('asignacion');
+  }
+  subirComentario(comentario: string) {
+    const body = { comentario: comentario };
+    return this.coreService.post( 'comentario', { body: body });
+  }
+  
+  actualizarComentario(idAlmacenDocumento: number, comentario: string) {
+    const url = `comentarios/actualizar`;
+    const body = {
+      idAlmacenDocumento: idAlmacenDocumento,
+      comentario: comentario
+    };
+
+    return this.coreService.post(url, body);
+  }
+
 }

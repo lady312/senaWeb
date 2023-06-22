@@ -10,8 +10,8 @@ import { TipoDocumentoModel } from '@models/tipo-documento.model';
 import { TipoDocumentoService } from '@services/tipo-documento.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AsignacionEstadoDocumentoService } from '@services/asignacion-estado-documento';
-
-
+import { AsignacionEstadoDocumentoModel } from '@models/AsignacionEstadoDocumento.model';
+import { CoreService } from '@services/core.service';
 
 @Component({
   selector: 'app-list-gestion-documentos',
@@ -35,6 +35,7 @@ export class ListGestionDocumentosComponent implements OnInit {
   documentos: Documento[] = [];
   procesos: ProcesoModel[] = [];
   personas:PersonaModel []= [];
+  asignacion: AsignacionEstadoDocumentoModel []= [];
   idDocumento: number | null = null;
   idSeleccionada: number;
   archivo: File; // Archivo a cargar
@@ -49,6 +50,23 @@ export class ListGestionDocumentosComponent implements OnInit {
   documentoCargado: File | null = null;
   hayDocumento: boolean = false;
 
+
+  ///// comentarios 
+  nuevosComentarios: string = '';
+  comentariosGuardados: string[] = [];
+  nuevoComentario: string;
+  documentoSeleccionadoIndex: number = -1; 
+ 
+  comentariosIndividuales: string[] = [];
+  comentariosPorDocumento: { [documentoId: string]: string[] } = {};
+
+
+
+
+  ////////// chekcbox 
+
+
+  camposSeleccionados: number[] = []; // Arreglo para almacenar los índices de los campos seleccionados
   checkboxValue: string | null = null;
   isLeft: boolean = false;
   isRight: boolean = false;
@@ -57,16 +75,34 @@ export class ListGestionDocumentosComponent implements OnInit {
   isGreenBorder: boolean = false;
 
 
-  constructor(private gestionDocumentoService: GestiondocumentoService, private elementRef: ElementRef,private procesoService: ProcesoService, private  persona: PersonaService ,private tipodocumento:TipoDocumentoService,
-    private modalService: NgbModal,  private asignacionEstadoDocumentoService: AsignacionEstadoDocumentoService ) {
+  constructor(private gestionDocumentoService: GestiondocumentoService,
+     private elementRef: ElementRef,
+     private procesoService: ProcesoService,
+      private  persona: PersonaService 
+      ,private tipodocumento:TipoDocumentoService,
+    private modalService: NgbModal, 
+     private asignacionEstadoDocumentoService: AsignacionEstadoDocumentoService,
+     private coreService: CoreService ) {
 
   }
   modalOpen = false;
   mostrarFormulario = true;
+  
   openSecondModal() {
     this.modalService.dismissAll(); // Cierra todos los modals abiertos
     this.modalService.open('#exampleModal');
   }
+
+
+asignacionEstado(){
+  this.asignacionEstadoDocumentoService.obtenerComentarios().subscribe(
+    (response:AsignacionEstadoDocumentoModel[])=>{
+      this. asignacion =response;
+    }
+
+  )
+
+}
 
 
 
@@ -87,6 +123,13 @@ this.obtenerEstadoDocumento();
     this.obtenerProcesos();
     this. traerPersonas();
     this.  traerDocumentos();
+    this.asignacionEstado();
+    ///comentarios 
+    const comentariosGuardadosStr = localStorage.getItem('comentariosGuardados');
+    if (comentariosGuardadosStr) {
+      this.comentariosGuardados = JSON.parse(comentariosGuardadosStr);
+    }
+    
   }
   obtenerProcesos() {
     this.procesoService. traerProcesos().subscribe(
@@ -119,10 +162,11 @@ this.obtenerEstadoDocumento();
 
   }
   
-  seleccionarDocumento(id: number): void {
-    this.idDocumento = id;
+  seleccionarDocumento(indice: number): void {
+    this.idDocumento = this.Documentos[indice - 1].id;
     this.reiniciarModal(); 
   }
+  
   
   onOpenFileButtonClicked(): void {
     const inputFile: HTMLInputElement | null = document.querySelector('#inputArchivo');
@@ -331,4 +375,82 @@ setCheckboxPosicion(estado: string): void {
   }
 }
 
+//////////// seccion comentarios 
+
+
+llenarComentarios(comentario: string) {
+  this.nuevosComentarios = comentario;
 }
+agregarComentarios() {
+  if (this.nuevosComentarios) {
+    const comentario = { comentario: this.nuevosComentarios };
+
+    // Utilizar el método post del coreService para enviar el comentario
+    this.coreService.post('comentario', comentario).subscribe(
+      response => {
+        // El comentario se envió correctamente
+        console.log('Comentario enviado:', response);
+        this.nuevosComentarios = '';
+      },
+      error => {
+        // Error al enviar el comentario
+        console.error('Error al enviar el comentario:', error);
+      }
+    );
+  }
+  if (this.nuevosComentarios.trim() !== '') {
+    this.comentariosGuardados.push(this.nuevosComentarios);
+    this.nuevosComentarios = '';
+
+    // Verificar si hay más de 10 comentarios
+    if (this.comentariosGuardados.length > 10) {
+      // Eliminar los 7 comentarios más antiguos
+      this.comentariosGuardados.splice(0, this.comentariosGuardados.length - 3);
+    }
+
+    // Guardar comentarios en localStorage
+    localStorage.setItem('comentariosGuardados', JSON.stringify(this.comentariosGuardados));
+  }
+   if (this.documentoSeleccionadoIndex !== -1) {
+    const documentoId = this.Documentos[this.documentoSeleccionadoIndex].id;
+
+    if (!this.comentariosPorDocumento[documentoId]) {
+      this.comentariosPorDocumento[documentoId] = [];
+    }
+
+    this.comentariosPorDocumento[documentoId].push(this.nuevosComentarios);
+    this.nuevosComentarios = '';
+  }
+
+}
+
+openComentariosModal() {
+  this.modalVisible = true;
+}
+
+closeComentariosModal() {
+  this.modalVisible = false;
+}
+
+guardarComentario() {
+  if (this.nuevosComentarios) {
+    this.comentariosGuardados.push(this.nuevosComentarios);
+    console.log('Comentario guardado:', this.nuevosComentarios);
+    this.nuevosComentarios = '';
+  }
+}
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
+

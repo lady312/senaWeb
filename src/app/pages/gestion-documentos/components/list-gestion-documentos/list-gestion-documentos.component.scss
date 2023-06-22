@@ -30,7 +30,7 @@ ngx-extended-pdf-viewer {
   width: 520px;
   position: relative;
   top: -20px;
-  left: -20px;
+  left: 5px;
 }
 
 .alert {
@@ -86,7 +86,7 @@ ngx-extended-pdf-viewer {
   position: relative;
   margin: 10% auto;
   padding: 20px;
-  max-width: 600px;
+  max-width: 800px;
   background-color: #fff;
   border-radius: 5px;
 }
@@ -209,4 +209,320 @@ ngx-extended-pdf-viewer {
 .mover{
   position: relative;
   left: 65px;
+}
+
+
+
+
+
+/////////// modal 2 
+/* comentarios-modal.component.css */
+/* Estilos generales del modal */
+#comentariosModal.modal {
+  z-index: 9999;
+}
+
+#comentariosModal .modal-dialog {
+  max-width: 800px;
+  margin: 10% auto;
+  padding: 20px;
+}
+
+#comentariosModal .modal-content {
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+#comentariosModal .modal-header {
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+#comentariosModal .modal-title {
+  margin: 0;
+}
+
+#comentariosModal .modal-body {
+  padding: 10px;
+}
+
+#comentariosModal .modal-footer {
+  padding: 10px;
+  border-top: 1px solid #ccc;
+  text-align: right;
+}
+
+#comentariosModal .btn-primary {
+  color: #fff;
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+#comentariosModal .btn-secondary {
+  color: #fff;
+  background-color: #6c757d;
+  border-color: #6c757d;
+}
+
+#comentariosModal .btn-close {
+  float: right;
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1;
+  color: #000;
+  text-shadow: 0 1px 0 #fff;
+  opacity: 0.5;
+  cursor: pointer;
+}
+
+/* Estilos específicos del modal de comentarios */
+#comentariosModal {
+  color: #333;
+}
+
+#comentariosModal .modal-body {
+  padding-top: 0;
+}
+
+#comentariosModal .btn-group {
+  margin-bottom: 1rem;
+}
+
+#comentariosModal .form-group {
+
+  margin-bottom: 0;
+}
+
+#comentariosModal .form-group label {
+  margin-bottom: 0.5rem;
+  
+}
+
+#comentariosModal .form-control {
+  resize: none;
+}
+
+#comentariosModal .modal-footer {
+  justify-content: space-between;
+}
+
+/* Estilos específicos de los botones de colores */
+#comentariosModal .verde {
+  background-color: green;
+}
+
+#comentariosModal .gris {
+  background-color: gray;
+}
+
+#comentariosModal .rojo {
+  background-color: red;
+}
+
+/* Estilos específicos de la caja de check */
+#comentariosModal .caja.red-border {
+  border-color: red !important;
+}
+
+#comentariosModal .caja.green-border {
+  border-color: green !important;
+}
+
+#comentariosModal .caja {
+  position: relative !important;
+  width: 79px !important;
+  height: 30px !important;
+  border: 2px solid grey !important;
+  background-color: #eaeaea !important;
+  border-radius: 25px !important;
+  transition: border-color 0.5s !important;
+}
+
+#comentariosModal .bolita {
+  width: 27px !important;
+  height: 27px !important;
+  background-color: #ccc !important;
+  border-radius: 50% !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: calc(50% - 15px) !important;
+  transition: all 0.3s ease-in-out !important;
+}
+
+#comentariosModal .left {
+  left: 0.5% !important;
+  background-color: #FF5733 !important;;
+}
+
+#comentariosModal .right {
+  left: 64% !important;
+  background-color: #4CAF50 !important;
+}
+
+#comentariosModal .center {
+  left: calc(50% - 15px) !important;
+  background-color: #676767 !important;
+}
+
+#comentariosModal .mover {
+  position: relative;
+  left: 65px;
+}
+
+/* Estilos adicionales */
+#comentariosModal .icono-pdf {
+  font-size: 34px;
+}
+
+#comentariosModal .file-input-container {
+  position: relative;
+  display: inline-block;
+}
+
+#comentariosModal .file-input-container input[type="file"] {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+#comentariosModal .file-input-container i {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+}
+
+#comentariosModal .alert {
+  width: 600px;
+  text-align: center;
+  position: relative;
+  left: 80px;
+  top: -25px;
+}
+
+#comentariosModal .btn-success {
+  position: relative;
+  left: -23px;
+  top: -21px;
+}
+
+#comentariosModal .form-control {
+  width: 520px;
+  position: relative;
+  top: -20px;
+  left: -20px;
+}
+
+#comentariosModal ngx-extended-pdf-viewer {
+  height: 10%;
+}
+
+.comentarios-container {
+  margin-top: 20px;
+  background-color: lightblue;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.comentarios-container h6 {
+  color: blue;
+  font-weight: bold;
+}
+
+.comentarios-container ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.comentarios-container ul li {
+  position: relative;
+  margin-bottom: 10px;
+  padding-left: 30px;
+}
+
+.comentarios-container ul li:before {
+  content: '';
+  position: absolute;
+  top: 7px;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: blue;
+}
+
+.comentarios-container ul li:after {
+  content: '';
+  position: absolute;
+  top: 17px;
+  left: 9px;
+  width: 2px;
+  height: 20px;
+  background-color: blue;
+}
+
+.anadir{
+  position: relative;
+  left: 8px;
+}
+.boton{
+  position: relative;
+  left: 400px;
+  top: 65px;
+  font-size: 20px;
+}
+.tipo{
+  font-size: 20px;
+}
+.tipo3{
+  font-size: 20px;
+  position: relative;
+  left: 12px;
+  top: -1px;
+}
+.tipo2{
+  font-size: 20px;
+  position: relative;
+  left: 6px;
+}
+
+
+
+////////////// estilos checkbox
+.checkbox-group {
+  margin-bottom: 10px;
+}
+
+.checkbox-input {
+  display: none;
+}
+
+.checkbox-custom {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+.checkbox-input:checked + .checkbox-custom::before {
+  content: '\2713';
+  display: inline-block;
+  color: #fff;
+  font-weight: bold;
+  text-align: center;
+  line-height: 18px;
+  background-color: #007bff;
+}
+
+.checkbox-input:focus + .checkbox-custom {
+  outline: 2px solid #007bff;
 }

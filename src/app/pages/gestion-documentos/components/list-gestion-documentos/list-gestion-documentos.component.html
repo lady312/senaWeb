@@ -9,7 +9,7 @@
           <thead>
             <tr class="table-info">
               <th>Codigo</th>
-              <th>Nombre del apreniz</th>
+              <th>Nombre del aprendiz</th>
               <th>Documentos Adjuntos</th>
               <th>Estado </th>
             </tr>
@@ -22,7 +22,7 @@
                 {{ persona.nombre2}}
                 {{ persona.apellido1}}
               </td>
-             
+
               <td>
                 <!-- Button trigger modal -->
                 <!-- Button trigger modal -->
@@ -41,8 +41,8 @@
                         <table>
                           <tbody>
                             <td>
-                              <tr *ngFor="let Documento of  Documentos">
-                                <td> {{ Documento.tituloDocumento}}</td>
+                              <tr *ngFor="let Documento of Documentos; let i = index">
+                                <td>{{ Documento.tituloDocumento }}</td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
@@ -52,17 +52,17 @@
                                 <ng-container *ngIf="tieneArchivoAdjunto(documento)">
                                   <!-- Visor de PDF -->
                                   <a data-bs-toggle="modal" data-bs-target="#exampleModal"
-                                    (click)="seleccionarDocumento(documento.id)" (click)="obtenerUrlPDF(documento.id)">
+                                    (click)="seleccionarDocumento(i + 1)" (click)="obtenerUrlPDF(i + 1)">
                                     <i class="bi bi-file-earmark-pdf-fill icono-pdf" title="Archivo PDF"></i>
                                   </a>
                                 </ng-container>
                                 <ng-container *ngIf="!tieneArchivoAdjunto(documento)">
                                   <!-- Botón de subir documento -->
-                                  <label for="documentoInput">
-                                    <input id="documentoInput" type="file" (click)="seleccionarDocumento(documento.id)"
-                                      (change)="seleccionarDocumentos($event)" accept=".pdf" style="display: none">
+                                  <label for="documentoInput{{ i + 1 }}">
+                                    <input id="documentoInput{{ i + 1 }}" type="file"
+                                      (click)="seleccionarDocumento(i + 1)" (change)="seleccionarDocumentos($event)"
+                                      accept=".pdf" style="display: none">
                                     <i title="cargar documentos" class="bi bi-filetype-pdf icono-pdf"></i>
-
                                   </label>
                                   <a title="subir documento" (click)="subirDocumento()"><i
                                       class="bi bi-arrow-up-circle icono-pdf"></i></a>
@@ -80,8 +80,20 @@
                                       [ngClass]="{'left': isLeft, 'right': isRight, 'center': isCenter}"></div>
                                   </div>
                                 </td>
-                              </tr>
+
+                                <td><a type="button" (click)="openComentariosModal()"><i
+                                      class="bi bi-receipt-cutoff"></i></a></td>
+                                <td>
+                                  <div class="checkbox-group">
+                                    <label>
+                                      <input type="checkbox" class="checkbox-input" />
+                                      <span class="checkbox-custom"></span>
+                                    </label>
+                                  </div>
+                                </td>
+
                             </td>
+
                           </tbody>
                         </table>
                       </div>
@@ -93,11 +105,14 @@
                   </div>
                 </div>
               </td>
+
               <td>
                 <div class="caja" [ngClass]="{'red-border': isRedBorder, 'green-border': isGreenBorder}">
                   <div class="bolita" [ngClass]="{'left': isLeft, 'right': isRight, 'center': isCenter}"></div>
                 </div>
               </td>
+
+
               <!-- <td>
                 <ng-container *ngIf="tieneArchivoAdjunto(documento)">
                  
@@ -157,9 +172,6 @@
       <div *ngIf="documentoError" class="alert alert-danger mt-2">
         {{ mensajeError }}
       </div>
-      <div *ngIf="documentoActualizado" class="alert alert-success mt-2">
-        {{ mensajeActualizado }}
-      </div>
     </div>
   </div>
 </div>
@@ -170,6 +182,41 @@
 <div *ngIf="documentoError" class="alert alert-danger mt-2">
   {{ mensajeError }}
 </div>
-<div *ngIf="documentoActualizado" class="alert alert-success mt-2">
-  {{ mensajeActualizado }}
-</div>
+<a type="button" (click)="openComentariosModal()"><i class="bi bi-receipt-cutoff"></i></a>
+
+<div class="modal" [class.modal-open]="modalVisible">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Comentarios</h5>
+        <button type="button" class="btn-close" (click)="closeComentariosModal()" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="btn-group mb-3" role="group" aria-label="Botones de comentarios">
+          <button type="button" class="btn btn-danger tipo" (click)="llenarComentarios('Documento no válido')">Documento
+            no válido</button>
+          <button type="button" class="btn btn-primary tipo2" (click)="llenarComentarios('El formato es legible')">El
+            formato es legible</button>
+          <button type="button" class="btn btn-success tipo3" (click)="llenarComentarios('Realizar cambios')">Realizar
+            cambios</button>
+        </div>
+        <div class="form-group">
+          <label class="anadir" for="comentariosTextarea">Añadir comentarios:</label> <button type="button"
+            class="btn btn-primary boton" (click)="agregarComentarios()">Añadir comentarios </button>
+          <br>
+          <br>
+          <textarea class="form-control" id="comentariosTextarea" rows="3" [(ngModel)]="nuevosComentarios"></textarea>
+        </div>
+        <div class="comentarios-container">
+          <h6>Comentarios Guardados:</h6>
+          <ul>
+            <li *ngFor="let comentario of comentariosGuardados">{{ comentario }}</li>
+          </ul>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="closeComentariosModal()">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>

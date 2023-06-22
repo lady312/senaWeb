@@ -4,4 +4,5 @@ export interface TipoDocumentoModel {
   descripcion: string;
   idEstado: number;
   idProceso: number;
+ 
 }
