@@ -41,13 +41,10 @@ export class TipoProgramaComponent implements OnInit {
   }
 
   actualizarTipoP(tipoP: TipoProgramaModel) {
-    this.tipoP = tipoP;
-    this.showModalTipoP = true;
-  }
-
-  createTipoP() {
-    this.tipoP = null;
-    this.showModalTipoP = true;
+    this._tipoPService.actualizarTipoPrograma(tipoP).subscribe(tipoP => {
+      this.getTipoP();
+      this.reset();
+    });
   }
 
   guardarTipoP(tipoP: TipoProgramaModel) {
