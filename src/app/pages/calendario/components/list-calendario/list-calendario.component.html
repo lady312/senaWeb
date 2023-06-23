@@ -9,22 +9,36 @@
       <button type="button" class="btn btn-success mr-10 btn-sm" (click)="jornadas()">Jornadas</button>
     </div>
 
-    <app-selects (enviarIdInfra)="enviarIdInfra($event)"></app-selects>
 
 
-    <div class="row">
-      <div class="col">
-        <div class="card-body" style="width: 400px;  margin: auto;">
-          <label for="gruposF">Grupos</label>
-          <select class="form-select" (change)="enviarIdGrupo($event)">
-            <option value="">selecione un grupo</option>
-            <option *ngFor="let grupo of gruposList" [value]="grupo.id">
-              {{grupo.nombre}}
-            </option>
-          </select>
-        </div>
+    <div class="filter-container">
+      <div class="select-container">
+        <label for="sedesF">Sede</label>
+        <select class="form-control" id="sedesF" [(ngModel)]="selectSede" (change)="enviarIdInfra($event)">
+          <option value="0">selecione una infraestructura</option>
+          <option *ngFor="let sede of sedes" [value]="sede.id">
+            {{sede.nombreSede}}
+          </option>
+        </select>
+      </div>
+      <div class="select-container" *ngIf="selectSede>0">
+        <label for="infrasF">Infraestructura</label>
+        <select class="form-control" id="infrasF" [disabled]="!(infraestructuras.length>0)" [(ngModel)]="selectInfr" (change)="enviarIdInfra($event)">
+          <option value="0">selecione una infraestructura</option>
+          <option *ngFor="let infraestructura of infraestructuras" [value]="infraestructura.id">
+            {{infraestructura.nombreInfraestructura}}
+          </option>
+        </select>
+      </div>
+      <div class="select-container" *ngIf="selectInfr>0">
+        <label for="gruposF">Grupo</label>
+        <select class="form-control" gruposF="gruposF" [disabled]="!(gruposList.length>0)" (change)="enviarIdGrupo($event)">
+          <option value="0">selecione un grupo</option>
+          <option *ngFor="let grupo of gruposList" [value]="grupo.id">
+            {{grupo.nombre}}
+          </option>
+        </select>
       </div>
     </div>
-
   </div>
 </div>

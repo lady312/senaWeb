@@ -5,8 +5,10 @@ import {
   Component,
   ChangeDetectorRef,
   Input,
-  Output,
   OnInit,
+  ViewChild,
+  OnChanges,
+  AfterViewInit
 } from "@angular/core";
 
 import {
@@ -22,32 +24,27 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import listPlugin from "@fullcalendar/list";
 import esLocale from "@fullcalendar/core/locales/es";
-import { JornadaModel } from "@models/jornada.model";
 import { GrupoModel } from "@models/grupo.model";
 import { addDays } from "@fullcalendar/core/internal";
-import { UsuarioModel } from "@models/usuario.model";
 import { SedeModel } from "@models/sede.model";
 import { AsignacionJornadaGrupoModel } from "@models/asignacion-jornada-grupo.model";
-import { DiaJornadaModel } from "@models/dia_jornada.model";
-import { DiaJornadaService } from '@services/dia-jornada.service';
 import { InfraestructuraModel } from '@models/infraestructura.model';
+import { FullCalendarComponent } from '@fullcalendar/angular';
 
 @Component({
   selector: "view-calendar",
   templateUrl: "./view-calendar.component.html",
   styleUrls: ["./view-calendar.component.css"],
 })
-export class ViewCalendarComponent implements OnInit {
+export class ViewCalendarComponent implements OnInit,OnChanges {
+  @ViewChild('fullCalendar') fullCalendar: FullCalendarComponent;
   //prueba con grupo y jornada
-  @Input() jornadas: JornadaModel;
   @Input() grupos: GrupoModel[];
-  @Input() grupo: GrupoModel;
-  @Input() diaJornada: DiaJornadaModel[];
+  @Input() grupo: GrupoModel= {} as GrupoModel;
   //grupo y jornada
   @Input() gruposJornadas: AsignacionJornadaGrupoModel[];
 
   @Input() sedes: SedeModel;
-  @Output() Eventtos: EventInput[];
 
   Eventos: EventInput[] = [];
   calendarVisible = true;
@@ -80,18 +77,43 @@ export class ViewCalendarComponent implements OnInit {
   };
 
   ngOnInit(): void {
-    if (this.grupo) {
-      this.Eventos = this.crearEventosGrupo(this.grupo);
-    } else {
-      this.Eventos= this.crearEventosGrupos(this.grupos);
-    }
-    this.calendarOptions.initialEvents = this.Eventos;
+    this.loadEvents();
+  }
+
+  ngOnChanges():void{
+    this.calendarVisible = false;
+    this.loadEvents();
+    this.resetEvents();
   }
 
   currentEvents: EventApi[] = [];
   constructor(
     private changeDetector: ChangeDetectorRef,
   ) { }
+
+  loadEvents(){
+    if (this.grupo != null) {
+      this.Eventos = this.crearEventosGrupo(this.grupo);
+      this.calendarOptions.initialEvents = this.Eventos;
+    } else if(this.grupos.length > 0){
+      this.Eventos= this.crearEventosGrupos(this.grupos);
+      this.calendarOptions.initialEvents = this.Eventos;
+    }else{
+      this.Eventos = [];
+      this.calendarOptions.initialEvents = this.Eventos;
+    }
+
+  }
+
+  async resetEvents(){
+    if (this.fullCalendar) {
+      const calendarApi = await this.fullCalendar.getApi();
+      if (calendarApi) {
+        calendarApi.refetchEvents(); 
+      }
+    }
+    this.calendarVisible = true;
+  }
 
   crearEventosGrupo(grupo: GrupoModel): EventInput[] {
     const fInit: Date = new Date(grupo.fechaInicialGrupo);
@@ -129,15 +151,12 @@ export class ViewCalendarComponent implements OnInit {
     let Eventos: EventInput[] = [];
 
     for (const grupo of grupos) {
-      Eventos.concat(this.crearEventosGrupo(grupo));
-    }
-
+      Eventos = Eventos.concat(this.crearEventosGrupo(grupo));
+    };
     return Eventos;
   }
 
-  handleCalendarToggle() {
-    this.calendarVisible = !this.calendarVisible;
-  }
+
 
   handleWeekendsToggle() {
     const { calendarOptions } = this;

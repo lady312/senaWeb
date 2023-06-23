@@ -1,15 +1,15 @@
 <app-list-calendario
-  [calendarios]="calendarios"
   [gruposList]="grupos"
-  [infraestructuras]="infraestructuras"
+  [infraestructuras]="infreaestructuras"
   [sedes]="sedes"
-  (create)="createCalendario()"
-  (create1)="createCalendario2()"
-  (create2)="createCalendario3()"
-  (create3)="createCalendario4()"
+  (create)="createSede()"
+  (createGrupo)="createGrupo()"
+  (createPrograma)="createPrograma()"
+  (createInfra)="createInfra()"
   (crearJornada)="createJornada();"
   (idGrupo)="getGrupoById($event)"
-  (idInfraestructura)="getGruposJornadaByIdInfra($event)"
+  (idInfraestructura)="getByIdInfra($event)"
+  (idSede)="getByIdSede($event)"
 >
 </app-list-calendario>
 
@@ -38,6 +38,7 @@
 <app-custom-modal title="Grupos" [(show)]="showModalGrupo">
   <app-grupo-form
   [tipoGrupos]="tipoGrupos"
+  [infraestructuras]="infraestructuras"
   [programas]="programas"
   [niveles]="niveles"
   [tipoFormaciones]="tipoFormaciones"
@@ -72,7 +73,6 @@
   >
   </app-infraestructura-form>
 </app-custom-modal>
-
 
 <view-calendar
   *ngIf="showCalendar"

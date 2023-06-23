@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild } from "@angular/core";
 import { CalendarioModel } from "@models/calendario.model";
 import { SedeModel } from "@models/sede.model";
 import { UINotificationService } from "@services/uinotification.service";
@@ -32,18 +32,15 @@ import { TipoFormacionService } from "@services/tipo-formacion.service";
 import { TipoFormacionModel } from "@models/tipo-formacion.model";
 import { TipoOfertaModel } from "@models/tipo-oferta.model";
 import { TipoOfertaService } from "@services/tipo-oferta.service";
+import { FullCalendarComponent } from '@fullcalendar/angular';
 
-interface formacion {
-  fecha?: Date;
-  horaInicial?: Time;
-  horaFinal?: Time;
-}
 @Component({
   selector: "app-calendario",
   templateUrl: "./calendario.component.html",
   styleUrls: ["./calendario.component.scss"],
 })
 export class CalendarioComponent implements OnInit {
+
   protected showModalCalendario = false;
   protected showModalCalendario2 = false;
   protected showModalCalendario3 = false;
@@ -55,9 +52,6 @@ export class CalendarioComponent implements OnInit {
   protected showCalendar: boolean = false;
   protected showModalJornada: boolean = false;
 
-  calendario2: CalendarioModel = null;
-  calendario3: CalendarioModel = null;
-  calendario4: CalendarioModel = null;
   sede: SedeModel = null;
   grupo: GrupoModel = null;
   programa: ProgramaModel = null;
@@ -68,7 +62,7 @@ export class CalendarioComponent implements OnInit {
 
   calendarios: CalendarioModel[] = [];
   sedes: SedeModel[] = [];
-  formTitle: string= 'Añadir Infraestructura';
+  formTitle: string = 'Añadir Infraestructura';
   ciudades: CiudadModel[] = [];
   departamentos: DepartamentoModel[] = [];
   grupos: GrupoModel[] = [];
@@ -78,11 +72,11 @@ export class CalendarioComponent implements OnInit {
   infreaestructuras: InfraestructuraModel[] = [];
   usuarios: UsuarioModel[] = [];
   gruposJornada: AsignacionJornadaGrupoModel[] = [];
-  tipoGrupos:TipoGrupoModel[] = [];
-  niveles:NivelFormacionModel[] = [];
-  estadoGrupos:EstadoGrupoModel[] = [];
-  tipoFormaciones:TipoFormacionModel[] = [];
-  tipoOfertas:TipoOfertaModel[] = [];
+  tipoGrupos: TipoGrupoModel[] = [];
+  niveles: NivelFormacionModel[] = [];
+  estadoGrupos: EstadoGrupoModel[] = [];
+  tipoFormaciones: TipoFormacionModel[] = [];
+  tipoOfertas: TipoOfertaModel[] = [];
 
   constructor(
     private _uiNotificationService: UINotificationService,
@@ -96,12 +90,12 @@ export class CalendarioComponent implements OnInit {
     private _jornadaService: JornadaService,
     private _grupoJornadaService: AsignacionJornadaGrupoService,
     private _usuarioService: UsuarioService,
-    private _tipoGruposService:TipoGrupoService,
-    private _nivelFormacionService:NivelFormacionService,
-    private _estadoGrupoService:EstadoGrupoService,
-    private _tipoFormacionService:TipoFormacionService,
-    private _tipoOfertaService:TipoOfertaService
-  ) {}
+    private _tipoGruposService: TipoGrupoService,
+    private _nivelFormacionService: NivelFormacionService,
+    private _estadoGrupoService: EstadoGrupoService,
+    private _tipoFormacionService: TipoFormacionService,
+    private _tipoOfertaService: TipoOfertaService
+  ) { }
 
   ngOnInit(): void {
     this.getCiudades();
@@ -150,32 +144,32 @@ export class CalendarioComponent implements OnInit {
     });
   }
 
-  getTipoGrupos(){
-    this._tipoGruposService.traerTipoGrupos().subscribe((tGrupos)=>{
+  getTipoGrupos() {
+    this._tipoGruposService.traerTipoGrupos().subscribe((tGrupos) => {
       this.tipoGrupos = tGrupos;
     });
   }
 
-  getNiveles(){
-    this._nivelFormacionService.traerNivelesFormacion().subscribe((niveles)=>{
+  getNiveles() {
+    this._nivelFormacionService.traerNivelesFormacion().subscribe((niveles) => {
       this.niveles = niveles;
     });
   }
 
-  getEstados(){
-    this._estadoGrupoService.traerEstadoGrupos().subscribe((estados)=>{
+  getEstados() {
+    this._estadoGrupoService.traerEstadoGrupos().subscribe((estados) => {
       this.estadoGrupos = estados;
     });
   }
 
-  getTipoFormaciones(){
-    this._tipoFormacionService.traerTipoFormaciones().subscribe((tFormaciones)=>{
+  getTipoFormaciones() {
+    this._tipoFormacionService.traerTipoFormaciones().subscribe((tFormaciones) => {
       this.tipoFormaciones = tFormaciones;
     });
   }
 
-  getTipoOfertas(){
-    this._tipoOfertaService.traerTipoOfertas().subscribe((tOfertas)=>{
+  getTipoOfertas() {
+    this._tipoOfertaService.traerTipoOfertas().subscribe((tOfertas) => {
       this.tipoOfertas = tOfertas;
     });
   }
@@ -199,8 +193,7 @@ export class CalendarioComponent implements OnInit {
     );
   }
   getInfraestructuras() {
-    this._infraestructuraService.traerInfraestructuras().subscribe((infrs)=>{
-      console.log(infrs)
+    this._infraestructuraService.traerInfraestructuras().subscribe((infrs) => {
       this.infreaestructuras = infrs;
     })
   }
@@ -225,58 +218,56 @@ export class CalendarioComponent implements OnInit {
   }
 
   getGrupoById(event: number) {
-    this._gruposService.traerGrupo(event).subscribe((grupo)=>{
-      this.reset();
+    if(event == 0){
+      this.grupos=[];
+      return;
+    }
+    this._gruposService.traerGrupo(event).subscribe((grupo) => {
       this.grupo = grupo;
       this.showCalendar = true;
     });
   }
   getByIdInfra(event: number) {
-    this._gruposService.traerGrupoByIdInfra(event).subscribe((grupos)=>{
-      this.reset();
+    if(event == 0){
+      this.grupos=[];
+      return;
+    }
+    this._gruposService.traerGrupoByIdInfra(event).subscribe((grupos) => {
       this.grupos = grupos;
       this.showCalendar = true;
     });
   }
-  getGruposJornadaByIdInfra(event: number) {
-    const infra = this.infraestructuras.find((infra) => infra.id === event);
-    if (infra) {
-      const grupos = this.grupos.filter(
-        (grupo) => grupo.horario_infraestructura.idInfraestructura === infra.id
-      );
-      if (grupos) {
-        let gruposJornada: AsignacionJornadaGrupoModel[] = [];
-        grupos.forEach((grupo) => {
-          gruposJornada = gruposJornada.concat(
-            this.gruposJornada.filter(
-              (grupoJornada) => grupoJornada.idGrupo == grupo.id
-            )
-          );
-        });
-        if (gruposJornada) {
-          this.gruposJornada = gruposJornada;
-        }
-      }
-    } else {
-      this.getGruposJornada();
+
+  getByIdSede(event: number) {
+    if(event == 0){
+      this.grupos=[];
+      this.infreaestructuras = [];
+      return;
     }
-    this.showCalendar = true;
+    this._infraestructuraService.infrBySede(event).subscribe((infrs)=>{
+      this.infreaestructuras = infrs;
+    });
+    this._gruposService.traerGrupoByIdSede(event).subscribe((grupos) => {
+      this.grupos = grupos;
+      this.showCalendar = true;
+    });
   }
 
-  createCalendario() {
+  createSede() {
     this.sede = null;
     this.showFormSede = true;
   }
-  createCalendario2() {
+  createGrupo() {
     this.grupo = null;
     this.showModalGrupo = true;
   }
 
-  createCalendario3() {
+  createPrograma() {
     this.programa = null;
     this.showModalPrograma = true;
   }
-  createCalendario4() {
+  createInfra() {
+    this.infraestructuras = null;
     this.showFormInfr = true;
   }
   createJornada() {
@@ -305,44 +296,29 @@ export class CalendarioComponent implements OnInit {
   }
 
   guardarProgramas(programa: ProgramaModel) {
-    if (programa.id) {
-      this._programaService
-        .actualizarProgramas(programa)
-        .subscribe((programa) => {
-          this.getPrograma();
-          this.reset();
-        });
-    } else {
-      this._programaService.crearProgramas(programa).subscribe((programa) => {
-        this.getPrograma();
-        this.reset();
-      });
-    }
+
+    this._programaService.crearProgramas(programa).subscribe(() => {
+      this.getPrograma();
+      this.reset();
+    });
   }
 
   guardarJornada(event: JornadaModel) {
-    this._jornadaService.crearJornada(event).subscribe((jornada) => {
+    this._jornadaService.crearJornada(event).subscribe(() => {
       this.getJornadas();
       this.reset();
     });
   }
 
   guardarInfraestructura(event: InfraestructuraModel) {
-    if (event.id) {
-      this._infraestructuraService
-        .actualizarInfraestructura(event)
-        .subscribe(() => {
-          this.getInfraestructuras();
-          this.reset();
-        });
-    } else {
-      this._infraestructuraService
-        .guardarInfraestructura(event)
-        .subscribe(() => {
-          this.getInfraestructuras();
-          this.reset();
-        });
-    }
+
+    this._infraestructuraService
+      .guardarInfraestructura(event)
+      .subscribe(() => {
+        this.getInfraestructuras();
+        this.reset();
+      });
+
   }
 
   //Eliminar

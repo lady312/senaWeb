@@ -3,11 +3,6 @@
 
     <div class="row">
 
-      <label>Cerrar todo el calendario</label>
-      <div class="col-sm-3">
-        <app-custom-switch [size]="6" [checked]="calendarVisible" (change)="handleCalendarToggle()"></app-custom-switch>
-      </div>
-
       <label>Con fin de semana</label>
       <div class="col-sm-2">
         <app-custom-switch [size]="6" [checked]="calendarOptions.weekends"
@@ -15,7 +10,7 @@
       </div>
 
     </div>
-    <full-calendar *ngIf="calendarVisible" [options]="calendarOptions">
+    <full-calendar #fullCalendar *ngIf="calendarVisible" [options]="calendarOptions">
       <ng-template #eventContent let-arg>
         <h2>{{ arg.timeText }} {{ arg.event.title}}:</h2>
         <p>
