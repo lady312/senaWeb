@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
+import { Component, OnInit, OnChanges, ChangeDetectorRef, ViewChild } from "@angular/core";
 import { CalendarioModel } from "@models/calendario.model";
 import { SedeModel } from "@models/sede.model";
 import { UINotificationService } from "@services/uinotification.service";
@@ -32,7 +32,7 @@ import { TipoFormacionService } from "@services/tipo-formacion.service";
 import { TipoFormacionModel } from "@models/tipo-formacion.model";
 import { TipoOfertaModel } from "@models/tipo-oferta.model";
 import { TipoOfertaService } from "@services/tipo-oferta.service";
-import { FullCalendarComponent } from '@fullcalendar/angular';
+import { ListCalendarioComponent } from "../../components/list-calendario/list-calendario.component";
 
 @Component({
   selector: "app-calendario",
@@ -41,10 +41,6 @@ import { FullCalendarComponent } from '@fullcalendar/angular';
 })
 export class CalendarioComponent implements OnInit {
 
-  protected showModalCalendario = false;
-  protected showModalCalendario2 = false;
-  protected showModalCalendario3 = false;
-  protected showModalCalendario4 = false;
   protected showFormSede: boolean = false;
   protected showModalGrupo = false;
   protected showModalPrograma: boolean = false;
@@ -79,7 +75,6 @@ export class CalendarioComponent implements OnInit {
   tipoOfertas: TipoOfertaModel[] = [];
 
   constructor(
-    private _uiNotificationService: UINotificationService,
     private _sedeService: SedeService,
     private _ciudadService: CiudadService,
     private _departamentoService: DepartamentoService,
@@ -88,172 +83,186 @@ export class CalendarioComponent implements OnInit {
     private _infraestructuraService: InfraestructuraService,
     private _areaService: AreaService,
     private _jornadaService: JornadaService,
-    private _grupoJornadaService: AsignacionJornadaGrupoService,
-    private _usuarioService: UsuarioService,
     private _tipoGruposService: TipoGrupoService,
     private _nivelFormacionService: NivelFormacionService,
     private _estadoGrupoService: EstadoGrupoService,
     private _tipoFormacionService: TipoFormacionService,
-    private _tipoOfertaService: TipoOfertaService
+    private _tipoOfertaService: TipoOfertaService,
   ) { }
 
-  ngOnInit(): void {
-    this.getCiudades();
-    this.getDepartamento();
-    this.getSedes();
-    this.getGrupos();
-    this.getPrograma();
-    this.getCiudades();
-    this.getAreas();
-    this.getJornadas();
-    this.getGruposJornada();
-    this.getUsuarios();
-    this.getTipoGrupos();
-    this.getNiveles();
-    this.getEstados();
-    this.getTipoFormaciones();
-    this.getTipoOfertas();
-    this.getInfraestructuras()
+  async ngOnInit(): Promise<void> {
+    this.sedes = await this.getSedes();
   }
 
-  //sedes
-  getSedes() {
-    this._sedeService.traerSedes().subscribe((sedes) => {
-      this.sedes = sedes;
-    });
+  /**cargar datos */
+  async getSedes(): Promise<SedeModel[]> {
+    try {
+      let sedes = await this._sedeService.traerSedes().toPromise();
+      return sedes;
+    } catch (error) {
+      console.log(error);
+    }
   }
 
-  getCiudades() {
-    this._ciudadService.traerCiudades().subscribe((ciudades) => {
-      this.ciudades = ciudades;
-    });
+  async getCiudades(): Promise<CiudadModel[]> {
+    try {
+      let ciudades = await this._ciudadService.traerCiudades().toPromise();
+      return ciudades;
+    } catch (error) {
+      console.log(error);
+    }
   }
 
-  getDepartamento() {
-    this._departamentoService
-      .traerDepartamentos()
-      .subscribe((departamentos) => {
-        this.departamentos = departamentos;
-      });
+  async getDepartamento(): Promise<DepartamentoModel[]> {
+    try {
+      let departamentos = await this._departamentoService.traerDepartamentos().toPromise();
+      return departamentos;
+    } catch (error) {
+      console.log(error);
+    }
   }
 
-  //grupos
-  getGrupos() {
-    this._gruposService.traerGrupos().subscribe((grupos) => {
-      this.grupos = grupos;
-    });
+  async getGrupos(): Promise<GrupoModel[]> {
+    try {
+      let grupos = await this._gruposService.traerGrupos().toPromise();
+      return grupos;
+    } catch (error) {
+      console.log(error);
+    }
   }
 
-  getTipoGrupos() {
-    this._tipoGruposService.traerTipoGrupos().subscribe((tGrupos) => {
-      this.tipoGrupos = tGrupos;
-    });
+  async getTipoGrupos(): Promise<TipoGrupoModel[]> {
+    try {
+      let tipoGrupos = await this._tipoGruposService.traerTipoGrupos().toPromise();
+      return tipoGrupos;
+    } catch (error) {
+      console.log(error);
+    }
   }
 
-  getNiveles() {
-    this._nivelFormacionService.traerNivelesFormacion().subscribe((niveles) => {
-      this.niveles = niveles;
-    });
+  async getNiveles(): Promise<NivelFormacionModel[]> {
+    try {
+      let niveles = await this._nivelFormacionService.traerNivelesFormacion().toPromise();
+      return niveles;
+    } catch (error) {
+      console.log(error);
+    }
   }
 
-  getEstados() {
-    this._estadoGrupoService.traerEstadoGrupos().subscribe((estados) => {
-      this.estadoGrupos = estados;
-    });
+  async getEstados(): Promise<EstadoGrupoModel[]> {
+    try {
+      let estados = await this._estadoGrupoService.traerEstadoGrupos().toPromise();
+      return estados;
+    } catch (error) {
+      console.log(error);
+    }
   }
 
-  getTipoFormaciones() {
-    this._tipoFormacionService.traerTipoFormaciones().subscribe((tFormaciones) => {
-      this.tipoFormaciones = tFormaciones;
-    });
+  async getTipoFormaciones():Promise<TipoFormacionModel[]> {
+    try {
+      let tiposFormacion = await this._tipoFormacionService.traerTipoFormaciones().toPromise();
+      return tiposFormacion;
+    } catch (error) {
+      console.log(error);
+    }
   }
 
-  getTipoOfertas() {
-    this._tipoOfertaService.traerTipoOfertas().subscribe((tOfertas) => {
-      this.tipoOfertas = tOfertas;
-    });
+  async getTipoOfertas(): Promise<TipoOfertaModel[]> {
+    try {
+      let tipoOfertas = await this._tipoOfertaService.traerTipoOfertas().toPromise();
+      return tipoOfertas;
+    } catch (error) {
+      console.log(error);
+    }
   }
 
-  getGruposJornada() {
-    this._grupoJornadaService
-      .traerGruposJornada()
-      .subscribe((gruposJornada) => {
-        this.gruposJornada = gruposJornada;
-      });
+  async getProgramas():Promise<ProgramaModel[]> {
+    try {
+      let programas = await this._programaService.traerProgramas().toPromise();
+      return programas;
+    } catch (error) {
+      console.log(error);
+    }
   }
 
-  getPrograma() {
-    this._programaService.traerProgramas().subscribe(
-      (programa) => {
-        this.programas = programa;
-      },
-      (error) => {
-        this._uiNotificationService.error("Error de conexión");
-      }
-    );
-  }
-  getInfraestructuras() {
-    this._infraestructuraService.traerInfraestructuras().subscribe((infrs) => {
-      this.infreaestructuras = infrs;
-    })
+  async getInfraestructuras():Promise<InfraestructuraModel[]> {
+    try {
+      let infraestructuras = await this._infraestructuraService.traerInfraestructuras().toPromise();
+      return infraestructuras;
+    } catch (error) {
+      console.log(error);
+    }
   }
 
-  getAreas() {
-    this._areaService.traerAreas().subscribe((areas) => {
-      this.areas = areas;
-    });
+  async getAreas():Promise<AreaModel[]> {
+    try {
+      let areas = await this._areaService.traerAreas().toPromise();
+      return areas;
+    } catch (error) {
+      console.log(error);
+    }
   }
 
+  async getJornadas():Promise<JornadaModel[]> {
+    try {
+      let jornadas = await this._jornadaService.traerJornada().toPromise();
+      return jornadas;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  /**Fin traer data*/
 
-  getJornadas() {
-    this._jornadaService.traerJornada().subscribe((jornadas) => {
-      this.jornadas = jornadas;
-    });
+  /**Filtrar data */
+  async getGrupoById(event: number):Promise<void> {
+    try {
+      this.grupo = await this._gruposService.traerGrupo(event).toPromise();
+    } catch (error) {
+      console.log(error);
+    }
   }
 
-  getUsuarios() {
-    this._usuarioService.traerUsuarios().subscribe((usuario) => {
-      this.usuarios = usuario;
-    });
+  async getByIdInfra(event: number):Promise<void> {
+    try {
+      this.grupos = await this._gruposService.traerGrupoByIdInfra(event).toPromise();
+    } catch (error) {
+      console.log(error);
+    }
   }
-
-  getGrupoById(event: number) {
-    if(event == 0){
-      this.grupos=[];
+  async filterBySede(event: number):Promise<void> {
+    this.infreaestructuras = await this.getInfrsBySede(event);
+    if(!this.infreaestructuras){
+      this.grupos = [];
       return;
     }
-    this._gruposService.traerGrupo(event).subscribe((grupo) => {
-      this.grupo = grupo;
-      this.showCalendar = true;
-    });
+    this.getByIdSede(event);
+    
   }
-  getByIdInfra(event: number) {
-    if(event == 0){
-      this.grupos=[];
-      return;
+  async getInfrsBySede(event: number):Promise<InfraestructuraModel[]> {
+    if(event==0){
+      let infrs = [];
+      return infrs;
     }
-    this._gruposService.traerGrupoByIdInfra(event).subscribe((grupos) => {
-      this.grupos = grupos;
-      this.showCalendar = true;
-    });
-  }
-
-  getByIdSede(event: number) {
-    if(event == 0){
-      this.grupos=[];
-      this.infreaestructuras = [];
-      return;
+    try {
+      let infrs = await this._infraestructuraService.infrBySede(event).toPromise();
+      return infrs;
+    } catch (error) {
+      console.log(error);
     }
-    this._infraestructuraService.infrBySede(event).subscribe((infrs)=>{
-      this.infreaestructuras = infrs;
-    });
-    this._gruposService.traerGrupoByIdSede(event).subscribe((grupos) => {
-      this.grupos = grupos;
-      this.showCalendar = true;
-    });
   }
+  async getByIdSede(event: number):Promise<GrupoModel[]> {
+    try {
+      let grupos = await this._gruposService.traerGrupoByIdSede(event).toPromise();
+      return grupos;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  /**Fin filtrar data */
 
-  createSede() {
+  
+  async createSede():Promise<void> {
+    this.ciudades = await this.getCiudades();
     this.sede = null;
     this.showFormSede = true;
   }
@@ -296,9 +305,7 @@ export class CalendarioComponent implements OnInit {
   }
 
   guardarProgramas(programa: ProgramaModel) {
-
     this._programaService.crearProgramas(programa).subscribe(() => {
-      this.getPrograma();
       this.reset();
     });
   }

@@ -1,5 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { CalendarioModel } from '@models/calendario.model';
+import { Component, ElementRef, EventEmitter, Input, Output, ViewChild,Renderer2  } from '@angular/core';
 import { GrupoModel } from '@models/grupo.model';
 import { InfraestructuraModel } from '@models/infraestructura.model';
 import { SedeModel } from '@models/sede.model';
@@ -11,6 +10,8 @@ import { SedeModel } from '@models/sede.model';
   styleUrls: ['./list-calendario.component.scss']
 })
 export class ListCalendarioComponent {
+
+  @ViewChild('buttonFilter') buttonFilter:ElementRef;
 
   @Input() gruposList:GrupoModel[] = [];
   @Input() infraestructuras:InfraestructuraModel[]=[];
@@ -29,7 +30,11 @@ export class ListCalendarioComponent {
 
   selectInfr:number = 0;
   selectSede:number = 0;
- 
+
+  showFilters:boolean = false;
+
+  constructor(private renderer:Renderer2){}
+
   sede() {
     this.createSede.emit();
   }
@@ -44,6 +49,22 @@ export class ListCalendarioComponent {
   }
   jornadas(){
     this.crearJornada.emit();
+  }
+
+  onShowFilters(){
+    this.showFilters = !this.showFilters;
+    this.showFilters 
+    ? this.renderer.addClass(this.buttonFilter.nativeElement, 'buttonFilterRotate')
+    : this.renderer.removeClass(this.buttonFilter.nativeElement, 'buttonFilterRotate');
+
+    this.showFilters 
+    ? this.renderer.removeClass(this.buttonFilter.nativeElement, 'btn-primary')
+    : this.renderer.addClass(this.buttonFilter.nativeElement, 'btn-primary');
+
+    this.showFilters 
+    ? this.renderer.addClass(this.buttonFilter.nativeElement, 'btn-success')
+    : this.renderer.removeClass(this.buttonFilter.nativeElement, 'btn-success');
+    
   }
 
   enviarIdGrupo(event:any){
