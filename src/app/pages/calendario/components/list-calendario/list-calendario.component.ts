@@ -77,6 +77,9 @@ export class ListCalendarioComponent {
   }
   enviarIdSede(event:any){
     const idSede:number = event.target.value;
+    if (event==0) {
+      this.selectInfr=0;
+    }
     this.idSede.emit(idSede);
   }
 

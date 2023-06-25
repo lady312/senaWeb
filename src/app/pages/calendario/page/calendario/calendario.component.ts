@@ -1,7 +1,6 @@
-import { Component, OnInit, OnChanges, ChangeDetectorRef, ViewChild } from "@angular/core";
+import { Component, OnInit} from "@angular/core";
 import { CalendarioModel } from "@models/calendario.model";
 import { SedeModel } from "@models/sede.model";
-import { UINotificationService } from "@services/uinotification.service";
 import { SedeService } from "@services/sede.service";
 import { CiudadService } from "@services/ciudad.service";
 import { CiudadModel } from "@models/ciudad.model";
@@ -17,11 +16,8 @@ import { AreaService } from "@services/area.service";
 import { AreaModel } from "@models/area.model";
 import { JornadaService } from "@services/jornada.service";
 import { JornadaModel } from "@models/jornada.model";
-import { Time } from "@angular/common";
-import { UsuarioService } from "@services/usuario.service";
 import { UsuarioModel } from "@models/usuario.model";
 import { AsignacionJornadaGrupoModel } from "@models/asignacion-jornada-grupo.model";
-import { AsignacionJornadaGrupoService } from "@services/asignacion-jornada-grupo.service";
 import { TipoGrupoService } from "@services/tipo-grupo.service";
 import { TipoGrupoModel } from "@models/tipogrupo.model";
 import { NivelFormacionModel } from "@models/nivel-formacion.model";
@@ -32,7 +28,8 @@ import { TipoFormacionService } from "@services/tipo-formacion.service";
 import { TipoFormacionModel } from "@models/tipo-formacion.model";
 import { TipoOfertaModel } from "@models/tipo-oferta.model";
 import { TipoOfertaService } from "@services/tipo-oferta.service";
-import { ListCalendarioComponent } from "../../components/list-calendario/list-calendario.component";
+import { CentroFormacionModel } from "@models/centro-formacion.model";
+import { CentroFormacionService } from "@services/centro-formacion.service";
 
 @Component({
   selector: "app-calendario",
@@ -58,7 +55,7 @@ export class CalendarioComponent implements OnInit {
 
   calendarios: CalendarioModel[] = [];
   sedes: SedeModel[] = [];
-  formTitle: string = 'Añadir Infraestructura';
+  centrosFormacion: CentroFormacionModel[] = [];
   ciudades: CiudadModel[] = [];
   departamentos: DepartamentoModel[] = [];
   grupos: GrupoModel[] = [];
@@ -77,6 +74,7 @@ export class CalendarioComponent implements OnInit {
   constructor(
     private _sedeService: SedeService,
     private _ciudadService: CiudadService,
+    private _centroFormacionService: CentroFormacionService,
     private _departamentoService: DepartamentoService,
     private _gruposService: GruposService,
     private _programaService: ProgramaService,
@@ -117,6 +115,15 @@ export class CalendarioComponent implements OnInit {
     try {
       let departamentos = await this._departamentoService.traerDepartamentos().toPromise();
       return departamentos;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async getCentrosFormacion(): Promise<CentroFormacionModel[]>{
+    try {
+      let centrosFormacion = await this._centroFormacionService.traerCentroFormacion().toPromise();
+      return centrosFormacion;
     } catch (error) {
       console.log(error);
     }
@@ -229,6 +236,7 @@ export class CalendarioComponent implements OnInit {
       console.log(error);
     }
   }
+
   async filterBySede(event: number):Promise<void> {
     this.infreaestructuras = await this.getInfrsBySede(event);
     if(!this.infreaestructuras){
@@ -260,29 +268,62 @@ export class CalendarioComponent implements OnInit {
   }
   /**Fin filtrar data */
 
-  
+  /**control modales*/
+  //sede
   async createSede():Promise<void> {
     this.ciudades = await this.getCiudades();
+    this.centrosFormacion = await this.getCentrosFormacion();
     this.sede = null;
     this.showFormSede = true;
   }
-  createGrupo() {
-    this.grupo = null;
-    this.showModalGrupo = true;
+  closeFormSede(){
+    this.showFormSede = false;
   }
 
+  //infraestructura
+  async createInfra() {
+    this.areas = await this.getAreas();
+    this.showFormInfr = true;
+  }
+  closeFormInfra(){
+    this.showFormInfr = false;
+  }
+
+  //programa
   createPrograma() {
     this.programa = null;
     this.showModalPrograma = true;
   }
-  createInfra() {
-    this.infraestructuras = null;
-    this.showFormInfr = true;
+  closeFormPrograma(){
+    this.showModalPrograma = false;
   }
+
+  //grupos
+  async createGrupo() {
+    this.tipoFormaciones = await this.getTipoFormaciones();
+    this.jornadas = await this.getJornadas();
+    this.programas = await this.getProgramas();
+    this.niveles = await this.getNiveles();
+    this.tipoGrupos = await this.getTipoGrupos();
+    this.estadoGrupos = await this.getEstados();
+    this.tipoOfertas = await this.getTipoOfertas();
+    this.infreaestructuras = await this.getInfraestructuras();
+    this.grupo = null;
+    this.showModalGrupo = true;
+  }
+  closeFormGrupo(){
+    this.showModalGrupo = false;
+  }
+
+  //jornadas
   createJornada() {
     this.jornada = null;
     this.showModalJornada = true;
   }
+  closeFormJornada(){
+    this.showModalJornada = false;
+  }
+  /**fin control modales*/
 
   guardarSede(sede: SedeModel) {
     this._sedeService.guardarSede(sede).subscribe(() => {

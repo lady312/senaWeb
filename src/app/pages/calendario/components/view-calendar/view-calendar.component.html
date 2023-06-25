@@ -3,9 +3,9 @@
 
     <div class="demo-app-bar">
       <button (click)="handleWeekendsToggle()" *ngIf="calendarOptions.weekends else noShowWeekends"
-        class="btn-primary">Ocultar fines de Semanas</button>
+        class="btn btn-primary">Ocultar fines de Semanas</button>
       <ng-template #noShowWeekends>
-        <button (click)="handleWeekendsToggle()" class="btn-success">Ver Fin de Semanas</button>
+        <button (click)="handleWeekendsToggle()" class="btn btn-success">Ver Fin de Semanas</button>
       </ng-template>
     </div>
     <full-calendar #fullCalendar *ngIf="calendarVisible" [options]="calendarOptions">

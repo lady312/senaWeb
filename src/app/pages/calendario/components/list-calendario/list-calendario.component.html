@@ -31,7 +31,7 @@
           </option>
         </select>
       </div>
-      <div class="select-container" *ngIf="selectInfr>0 && selectSede>0">
+      <div class="select-container" *ngIf="selectInfr>0">
         <label for="gruposF">Grupo</label>
         <select class="form-control" gruposF="gruposF" [disabled]="!(gruposList.length>0)" (change)="enviarIdGrupo($event)">
           <option value="0">{{!(grupos.length>0) ? 'No hay grupos' :'Selecione un grupo'}}</option>
