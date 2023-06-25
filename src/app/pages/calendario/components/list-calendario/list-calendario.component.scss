@@ -19,7 +19,7 @@
 }
 
 .boton-filtrar::after{
-    content: '〈';
+    content: '▼';
 
     min-width: 50px;
 
@@ -28,14 +28,12 @@
 
     font-weight: 800;
 
-
-    transform: rotate(-90deg);
     transition:0.5s;
     transform-origin: center;
 }
 
 .buttonFilterRotate::after{
-    transform: rotate(90deg);
+    transform: rotate(180deg);
     transition: 0.5s;
 }
 

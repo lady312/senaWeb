@@ -1,14 +1,12 @@
 <div class="demo-app">
   <div class="demo-app-main">
 
-    <div class="row">
-
-      <label>Con fin de semana</label>
-      <div class="col-sm-2">
-        <app-custom-switch [size]="6" [checked]="calendarOptions.weekends"
-          (change)="handleWeekendsToggle()"></app-custom-switch>
-      </div>
-
+    <div class="demo-app-bar">
+      <button (click)="handleWeekendsToggle()" *ngIf="calendarOptions.weekends else noShowWeekends"
+        class="btn-primary">Ocultar fines de Semanas</button>
+      <ng-template #noShowWeekends>
+        <button (click)="handleWeekendsToggle()" class="btn-success">Ver Fin de Semanas</button>
+      </ng-template>
     </div>
     <full-calendar #fullCalendar *ngIf="calendarVisible" [options]="calendarOptions">
       <ng-template #eventContent let-arg>

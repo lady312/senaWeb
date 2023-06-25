@@ -48,6 +48,7 @@ export class ViewCalendarComponent implements OnInit,OnChanges {
 
   Eventos: EventInput[] = [];
   calendarVisible = true;
+  showWeekends:boolean = true;
 
   calendarOptions: CalendarOptions = {
     locale: esLocale,
@@ -155,8 +156,6 @@ export class ViewCalendarComponent implements OnInit,OnChanges {
     };
     return Eventos;
   }
-
-
 
   handleWeekendsToggle() {
     const { calendarOptions } = this;
