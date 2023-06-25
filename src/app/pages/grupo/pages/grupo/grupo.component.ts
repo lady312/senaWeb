@@ -142,6 +142,9 @@ export class GrupoComponent implements OnInit {
       this._grupoService.crearGrupo(event).subscribe(() => {
         this.getGrupos();
         this.reset();
+      },
+      (error) => {
+        this._uiNotificationService.error(error.error.error);
       });
     }
   }

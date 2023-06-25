@@ -58,7 +58,7 @@
                                 <ng-container *ngIf="grupo.infraestructuras.length > 0 else mostrarInfras">
                                     <span *ngFor="let infraestructura of grupo.infraestructuras">
                                         {{ infraestructura.nombreInfraestructura }} (
-                                        {{ infraestructura.horario_infraestructura.fechaInicial| date:'d-MMMM-y' }} -
+                                        {{ infraestructura.horario_infraestructura.fechaInicial | date:'d-MMMM-y' }} -
                                         {{ infraestructura.horario_infraestructura.fechaFinal| date:'d-MMMM-y' }})
                                     </span>
                                 </ng-container>
