@@ -1,7 +1,7 @@
 <div class="calendar-container">
   <view-calendar [grupo]="grupo" [grupos]="grupos" [gruposJornadas]="gruposJornada">
   </view-calendar>
-  <app-list-calendario [gruposList]="grupos" [infraestructuras]="infreaestructuras" [sedes]="sedes"
+  <app-list-calendario [gruposList]="grupos" [infraestructuras]="infraestructuras" [sedes]="sedes"
     (createSede)="createSede()" (createGrupo)="createGrupo()" (createPrograma)="createPrograma()"
     (createInfra)="createInfra()" (crearJornada)="createJornada();" (idGrupo)="getGrupoById($event)"
     (idInfraestructura)="getByIdInfra($event)" (idSede)="filterBySede($event)">

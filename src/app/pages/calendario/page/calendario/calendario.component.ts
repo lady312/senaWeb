@@ -62,7 +62,6 @@ export class CalendarioComponent implements OnInit {
   programas: ProgramaModel[] = [];
   infraestructuras: InfraestructuraModel[] = [];
   areas: AreaModel[] = [];
-  infreaestructuras: InfraestructuraModel[] = [];
   usuarios: UsuarioModel[] = [];
   gruposJornada: AsignacionJornadaGrupoModel[] = [];
   tipoGrupos: TipoGrupoModel[] = [];
@@ -238,8 +237,8 @@ export class CalendarioComponent implements OnInit {
   }
 
   async filterBySede(event: number):Promise<void> {
-    this.infreaestructuras = await this.getInfrsBySede(event);
-    if(!this.infreaestructuras){
+    this.infraestructuras = await this.getInfrsBySede(event);
+    if(!this.infraestructuras){
       
       this.grupos = [];
       return;
@@ -308,7 +307,7 @@ export class CalendarioComponent implements OnInit {
     this.tipoGrupos = await this.getTipoGrupos();
     this.estadoGrupos = await this.getEstados();
     this.tipoOfertas = await this.getTipoOfertas();
-    this.infreaestructuras = await this.getInfraestructuras();
+    this.infraestructuras = await this.getInfraestructuras();
     this.grupo = null;
     this.showModalGrupo = true;
   }
@@ -327,13 +326,11 @@ export class CalendarioComponent implements OnInit {
   /**fin control modales*/
 
   /**Guardar nuevos registros */
-  async guardarSede(sede: SedeModel):Promise<void> {
-    try {
-      await this._sedeService.guardarSede(sede).toPromise();
-      this.closeFormSede();
-    } catch (error) {
-      console.log(error);
-    }
+  guardarSede(sede: SedeModel) {
+    this._sedeService.guardarSede(sede).subscribe(()=>{
+    },(error)=>{
+      console.log(error)
+    });
   }
   async guardarGrupo(grupo: GrupoModel):Promise<void> {
     try {
