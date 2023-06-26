@@ -53,18 +53,17 @@ export class ListCalendarioComponent {
 
   onShowFilters(){
     this.showFilters = !this.showFilters;
-    this.showFilters 
-    ? this.renderer.addClass(this.buttonFilter.nativeElement, 'buttonFilterRotate')
-    : this.renderer.removeClass(this.buttonFilter.nativeElement, 'buttonFilterRotate');
 
-    this.showFilters 
-    ? this.renderer.removeClass(this.buttonFilter.nativeElement, 'btn-primary')
-    : this.renderer.addClass(this.buttonFilter.nativeElement, 'btn-primary');
+    if(this.showFilters){
+      this.renderer.addClass(this.buttonFilter.nativeElement, 'buttonFilterRotate');
+      this.renderer.removeClass(this.buttonFilter.nativeElement, 'btn-primary');
+      this.renderer.addClass(this.buttonFilter.nativeElement, 'btn-success');
+    }else{
+      this.renderer.removeClass(this.buttonFilter.nativeElement, 'buttonFilterRotate');
+      this.renderer.addClass(this.buttonFilter.nativeElement, 'btn-primary');
+      this.renderer.removeClass(this.buttonFilter.nativeElement, 'btn-success');
+    }
 
-    this.showFilters 
-    ? this.renderer.addClass(this.buttonFilter.nativeElement, 'btn-success')
-    : this.renderer.removeClass(this.buttonFilter.nativeElement, 'btn-success');
-    
   }
 
   enviarIdGrupo(event:any){

@@ -21,10 +21,10 @@
 </app-custom-modal>
 
 <app-custom-modal title="Grupos" [(show)]="showModalGrupo">
-  <app-grupo-form [tipoGrupos]="tipoGrupos" [infraestructuras]="infraestructuras" [programas]="programas"
-    [niveles]="niveles" [tipoFormaciones]="tipoFormaciones" [estadoGrupos]="estadoGrupos" [tipoOfertas]="tipoOfertas"
-    [infraestructuras]="infraestructuras" [estados]="estadoGrupos" [jornadas]="jornadas" (store)="guardarGrupo($event)"
-    (cancel)="closeFormGrupo()">
+  <app-grupo-form *ngIf="showModalGrupo" [title]="'Añadir grupo'" [grupo]="grupo" [infraestructuras]="infraestructuras"
+    [jornadas]="jornadas" [programas]="programas" [niveles]="niveles" [tipoGrupos]="tipoGrupos"
+    [tipoFormaciones]="tipoFormaciones" [estadoGrupos]="estadoGrupos" [tipoOfertas]="tipoOfertas"
+    (store)="guardarGrupo($event)" (cancel)="closeFormGrupo()">
   </app-grupo-form>
 </app-custom-modal>
 

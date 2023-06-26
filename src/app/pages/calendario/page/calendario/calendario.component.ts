@@ -325,49 +325,48 @@ export class CalendarioComponent implements OnInit {
   }
   /**fin control modales*/
 
-  guardarSede(sede: SedeModel) {
-    this._sedeService.guardarSede(sede).subscribe(() => {
-      this.sede = sede;
-      this.showFormSede = false;
-    });
-  }
-  guardarGrupo(grupo: GrupoModel) {
-    if (grupo.id) {
-      this._gruposService.actualizarGrupo(grupo).subscribe((gr) => {
-        this.getGrupos();
-        this.reset();
-      });
-    } else {
-      this._gruposService.crearGrupo(grupo).subscribe((gr) => {
-        this.getGrupos();
-        this.reset();
-      });
+  /**Guardar nuevos registros */
+  async guardarSede(sede: SedeModel):Promise<void> {
+    try {
+      await this._sedeService.guardarSede(sede).toPromise();
+      this.closeFormSede();
+    } catch (error) {
+      console.log(error);
     }
   }
-
-  guardarProgramas(programa: ProgramaModel) {
-    this._programaService.crearProgramas(programa).subscribe(() => {
-      this.reset();
-    });
+  async guardarGrupo(grupo: GrupoModel):Promise<void> {
+    try {
+      await this._gruposService.crearGrupo(grupo).toPromise();
+      this.closeFormGrupo();
+    } catch (error) {
+      console.log(error);
+    }
   }
-
-  guardarJornada(event: JornadaModel) {
-    this._jornadaService.crearJornada(event).subscribe(() => {
-      this.getJornadas();
-      this.reset();
-    });
+  async guardarProgramas(programa: ProgramaModel):Promise<void> {
+    try {
+      await this._programaService.crearProgramas(programa).toPromise();
+      this.closeFormPrograma();
+    } catch (error) {
+      console.log(error);
+    }
   }
-
-  guardarInfraestructura(event: InfraestructuraModel) {
-
-    this._infraestructuraService
-      .guardarInfraestructura(event)
-      .subscribe(() => {
-        this.getInfraestructuras();
-        this.reset();
-      });
-
+  async guardarJornada(event: JornadaModel):Promise<void> {
+    try {
+      await this._jornadaService.crearJornada(event).toPromise();
+      this.closeFormJornada();
+    } catch (error) {
+      console.log(error);
+    }
   }
+  async guardarInfraestructura(event: InfraestructuraModel):Promise<void> {
+    try {
+      await this._infraestructuraService.guardarInfraestructura(event).toPromise();
+      this.closeFormInfra();
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  /**Fin guardar registros */
 
   //Eliminar
   reset() {
