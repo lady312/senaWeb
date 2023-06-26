@@ -54,7 +54,6 @@ export class GrupoComponent implements OnInit {
     private _uiNotificationService: UINotificationService,
     private _grupoService: GruposService,
     private _tipoGrupoService: TipoGrupoService,
-    private _usuarioService: UsuarioService,//aun no se como vincular el lider
     private _programaService: ProgramaService,
     private _nivelFormacionService: NivelFormacionService,
     private _tipoFormacionService: TipoFormacionService,
