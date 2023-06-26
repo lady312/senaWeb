@@ -1,32 +1,31 @@
-import { Component, OnInit } from '@angular/core';
-import { EstadoGrupoModel } from '@models/estado-grupo.model';
-import { GrupoModel } from '@models/grupo.model';
-import { InfraestructuraModel } from '@models/infraestructura.model';
-import { JornadaModel } from '@models/jornada.model';
-import { NivelFormacionModel } from '@models/nivel-formacion.model';
-import { ProgramaModel } from '@models/programa.model';
-import { TipoFormacionModel } from '@models/tipo-formacion.model';
-import { TipoOfertaModel } from '@models/tipo-oferta.model';
-import { TipoGrupoModel } from '@models/tipogrupo.model';
-import { EstadoGrupoService } from '@services/estado-grupo.service';
-import { GruposService } from '@services/grupo.service';
-import { InfraestructuraService } from '@services/infraestructura.service';
-import { JornadaService } from '@services/jornada.service';
-import { NivelFormacionService } from '@services/nivel-formacion.service';
-import { ProgramaService } from '@services/programa.service';
-import { TipoFormacionService } from '@services/tipo-formacion.service';
-import { TipoGrupoService } from '@services/tipo-grupo.service';
-import { TipoOfertaService } from '@services/tipo-oferta.service';
-import { UINotificationService } from '@services/uinotification.service';
-import { UsuarioService } from '@services/usuario.service';
+import { Component, OnInit } from "@angular/core";
+import { EstadoGrupoModel } from "@models/estado-grupo.model";
+import { GrupoModel } from "@models/grupo.model";
+import { InfraestructuraModel } from "@models/infraestructura.model";
+import { JornadaModel } from "@models/jornada.model";
+import { NivelFormacionModel } from "@models/nivel-formacion.model";
+import { ProgramaModel } from "@models/programa.model";
+import { TipoFormacionModel } from "@models/tipo-formacion.model";
+import { TipoOfertaModel } from "@models/tipo-oferta.model";
+import { TipoGrupoModel } from "@models/tipogrupo.model";
+import { EstadoGrupoService } from "@services/estado-grupo.service";
+import { GruposService } from "@services/grupo.service";
+import { InfraestructuraService } from "@services/infraestructura.service";
+import { JornadaService } from "@services/jornada.service";
+import { NivelFormacionService } from "@services/nivel-formacion.service";
+import { ProgramaService } from "@services/programa.service";
+import { TipoFormacionService } from "@services/tipo-formacion.service";
+import { TipoGrupoService } from "@services/tipo-grupo.service";
+import { TipoOfertaService } from "@services/tipo-oferta.service";
+import { UINotificationService } from "@services/uinotification.service";
+import { UsuarioService } from "@services/usuario.service";
 
 @Component({
-  selector: 'app-grupo',
-  templateUrl: './grupo.component.html',
-  styleUrls: ['./grupo.component.scss']
+  selector: "app-grupo",
+  templateUrl: "./grupo.component.html",
+  styleUrls: ["./grupo.component.scss"],
 })
 export class GrupoComponent implements OnInit {
-
   //cambian el estado del formulario para crear y actualizar
   protected showFormGrupo: boolean = false;
   protected formTitle: string;
@@ -54,7 +53,7 @@ export class GrupoComponent implements OnInit {
     private _uiNotificationService: UINotificationService,
     private _grupoService: GruposService,
     private _tipoGrupoService: TipoGrupoService,
-    private _usuarioService: UsuarioService,//aun no se como vincular el lider
+    private _usuarioService: UsuarioService, //aun no se como vincular el lider
     private _programaService: ProgramaService,
     private _nivelFormacionService: NivelFormacionService,
     private _tipoFormacionService: TipoFormacionService,
@@ -62,7 +61,7 @@ export class GrupoComponent implements OnInit {
     private _tipoOfertaService: TipoOfertaService,
     private _infraestructuraService: InfraestructuraService,
     private _jornadaService: JornadaService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.getGrupos();
@@ -77,11 +76,14 @@ export class GrupoComponent implements OnInit {
   }
 
   getGrupos() {
-    this._grupoService.traerGrupos().subscribe((grupos) => {
-      this.grupos = grupos;
-    }, (error) => {
-      this._uiNotificationService.error('Error al cargar grupos');
-    });
+    this._grupoService.traerGrupos().subscribe(
+      (grupos) => {
+        this.grupos = grupos;
+      },
+      (error) => {
+        this._uiNotificationService.error("Error al cargar grupos");
+      }
+    );
   }
 
   getTipoGrupos() {
@@ -97,15 +99,19 @@ export class GrupoComponent implements OnInit {
   }
 
   getNivelesFormacion() {
-    this._nivelFormacionService.traerNivelesFormacion().subscribe((nivsFormacion) => {
-      this.nivelFormaciones = nivsFormacion;
-    });
+    this._nivelFormacionService
+      .traerNivelesFormacion()
+      .subscribe((nivsFormacion) => {
+        this.nivelFormaciones = nivsFormacion;
+      });
   }
 
   getTipoFormacion() {
-    this._tipoFormacionService.traerTipoFormaciones().subscribe((tFormaciones) => {
-      this.tipoFormaciones = tFormaciones;
-    });
+    this._tipoFormacionService
+      .traerTipoFormaciones()
+      .subscribe((tFormaciones) => {
+        this.tipoFormaciones = tFormaciones;
+      });
   }
 
   getEstadoGrupos() {
@@ -134,30 +140,37 @@ export class GrupoComponent implements OnInit {
 
   guardarGrupo(event: GrupoModel) {
     if (event.id) {
-      this._grupoService.actualizarGrupo(event).subscribe(() => {
-        this.getGrupos();
-        this.reset();
-      });
+      this._grupoService.actualizarGrupo(event).subscribe(
+        () => {
+          this.getGrupos();
+          this.reset();
+        },
+        (error) => {
+          this._uiNotificationService.error(error.error.error);
+        }
+      );
     } else {
-      this._grupoService.crearGrupo(event).subscribe(() => {
-        this.getGrupos();
-        this.reset();
-      },
-      (error) => {
-        this._uiNotificationService.error(error.error.error);
-      });
+      this._grupoService.crearGrupo(event).subscribe(
+        () => {
+          this.getGrupos();
+          this.reset();
+        },
+        (error) => {
+          this._uiNotificationService.error(error.error.error);
+        }
+      );
     }
   }
 
   crearGrupo() {
     this.showFormGrupo = true;
-    this.formTitle = 'Añadir Grupo';
+    this.formTitle = "Añadir Grupo";
   }
 
   actualizarGrupo(event: GrupoModel) {
     this.showFormGrupo = true;
     this.grupo = event;
-    this.formTitle = 'Actualizar Grupo';
+    this.formTitle = "Actualizar Grupo";
   }
 
   eliminarGrupo(grupoId: number) {
@@ -168,8 +181,7 @@ export class GrupoComponent implements OnInit {
 
   reset() {
     this.showFormGrupo = false;
-    this.formTitle = '';
+    this.formTitle = "";
     this.grupo = null;
   }
-
 }
