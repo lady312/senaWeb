@@ -151,7 +151,7 @@ export const navItems: NavegacionModel[] = [
     permiso: GESTION_PRO
   },
   {
-    name: "Calendario",
+    name: "Gestión de Ambientes",
     url: "add_calendario",
     icon: "icon-drop",
     permiso: CALENDARIO,
