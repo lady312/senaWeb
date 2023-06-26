@@ -10,10 +10,14 @@
     </div>
     <full-calendar #fullCalendar *ngIf="calendarVisible" [options]="calendarOptions">
       <ng-template #eventContent let-arg>
-        <h2>{{ arg.timeText }} {{ arg.event.title}}:</h2>
-        <p>
-          {{arg.event.extendedProps.descripcion}}
-        </p>
+        <div>
+          <div>
+          <p>{{arg.timeText }} {{ arg.event.title}}</p>
+          </div>
+          <div>
+            <p>{{arg.event.extendedProps.descripcion}}</p>
+          </div>
+        </div>
       </ng-template>
     </full-calendar>
   </div>

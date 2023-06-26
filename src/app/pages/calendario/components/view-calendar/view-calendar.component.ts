@@ -69,12 +69,12 @@ export class ViewCalendarComponent implements OnInit,OnChanges {
     initialEvents: this.Eventos,
     weekends: true,
     editable: true,
-    selectable: true,
+    // selectable: true,
     selectMirror: true,
     dayMaxEvents: true,
-    select: this.handleDateSelect.bind(this),
-    eventClick: this.handleEventClick.bind(this),
-    eventsSet: this.handleEvents.bind(this),
+    // select: this.handleDateSelect.bind(this),
+    // eventClick: this.handleEventClick.bind(this),
+    // eventsSet: this.handleEvents.bind(this),
   };
 
   ngOnInit(): void {

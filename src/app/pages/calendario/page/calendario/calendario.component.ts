@@ -240,10 +240,11 @@ export class CalendarioComponent implements OnInit {
   async filterBySede(event: number):Promise<void> {
     this.infreaestructuras = await this.getInfrsBySede(event);
     if(!this.infreaestructuras){
+      
       this.grupos = [];
       return;
     }
-    this.getByIdSede(event);
+    this.grupos = await this.getByIdSede(event);
     
   }
   async getInfrsBySede(event: number):Promise<InfraestructuraModel[]> {
