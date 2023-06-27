@@ -1,5 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { CalendarioModel } from '@models/calendario.model';
+import { Component, ElementRef, EventEmitter, Input, Output, ViewChild,Renderer2  } from '@angular/core';
 import { GrupoModel } from '@models/grupo.model';
 import { InfraestructuraModel } from '@models/infraestructura.model';
 import { SedeModel } from '@models/sede.model';
@@ -12,56 +11,59 @@ import { SedeModel } from '@models/sede.model';
 })
 export class ListCalendarioComponent {
 
+  @ViewChild('buttonFilter') buttonFilter:ElementRef;
 
-  @Input() calendarios: CalendarioModel[] = [];
   @Input() gruposList:GrupoModel[] = [];
   @Input() infraestructuras:InfraestructuraModel[]=[];
   @Input() sedes: SedeModel[]=[];
 
-  @Output() update: EventEmitter<CalendarioModel> = new EventEmitter();
-  @Output() delete: EventEmitter<number> = new EventEmitter();
-  @Output() create: EventEmitter<void> = new EventEmitter();
-  @Output() create1: EventEmitter<void> = new EventEmitter();
-  @Output() create2: EventEmitter<void> = new EventEmitter();
-  @Output() create3: EventEmitter<void> = new EventEmitter();
+  @Output() createSede: EventEmitter<void> = new EventEmitter();
+  @Output() createGrupo: EventEmitter<void> = new EventEmitter();
+  @Output() createPrograma: EventEmitter<void> = new EventEmitter();
+  @Output() createInfra: EventEmitter<void> = new EventEmitter();
   @Output() crearJornada: EventEmitter<void> = new EventEmitter();
   @Output() idGrupo: EventEmitter<number> = new EventEmitter();
   @Output() idJornada: EventEmitter<number> = new EventEmitter();
   @Output() idInfraestructura: EventEmitter<number> = new EventEmitter();
   @Output() idSede: EventEmitter<number> = new EventEmitter();
 
-  numReg = 5;
-  pageActual = 0;
 
-  constructor() {
-  }
+  selectInfr:number = 0;
+  selectSede:number = 0;
 
-  enviarNumeroRegistros(num: number) {
-    this.numReg = num;
-  }
+  showFilters:boolean = false;
 
-  actualizar(Calendario: CalendarioModel) {
-    this.update.emit(Calendario);
-  }
-
-  eliminar(idCalendario: number) {
-    this.delete.emit(idCalendario);
-  }
+  constructor(private renderer:Renderer2){}
 
   sede() {
-    this.create.emit();
+    this.createSede.emit();
   }
   programa() {
-    this.create1.emit();
+    this.createGrupo.emit();
   }
   grupos() {
-    this.create2.emit();
+    this.createPrograma.emit();
   }
   ambientes() {
-    this.create3.emit();
+    this.createInfra.emit();
   }
   jornadas(){
     this.crearJornada.emit();
+  }
+
+  onShowFilters(){
+    this.showFilters = !this.showFilters;
+
+    if(this.showFilters){
+      this.renderer.addClass(this.buttonFilter.nativeElement, 'buttonFilterRotate');
+      this.renderer.removeClass(this.buttonFilter.nativeElement, 'btn-primary');
+      this.renderer.addClass(this.buttonFilter.nativeElement, 'btn-success');
+    }else{
+      this.renderer.removeClass(this.buttonFilter.nativeElement, 'buttonFilterRotate');
+      this.renderer.addClass(this.buttonFilter.nativeElement, 'btn-primary');
+      this.renderer.removeClass(this.buttonFilter.nativeElement, 'btn-success');
+    }
+
   }
 
   enviarIdGrupo(event:any){
@@ -74,6 +76,9 @@ export class ListCalendarioComponent {
   }
   enviarIdSede(event:any){
     const idSede:number = event.target.value;
+    if (event==0) {
+      this.selectInfr=0;
+    }
     this.idSede.emit(idSede);
   }
 

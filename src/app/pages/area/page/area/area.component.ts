@@ -34,7 +34,7 @@ export class AreaComponent implements OnInit {
   iniciarCache() {
     this.cache.set(0, { areas: null });
   }
-  getAreas() {
+  async getAreas():Promise<AreaModel[]> {
     const cacheAreas = this.cache.get(0).areas;
     if (cacheAreas) {
       if (this.areas !== cacheAreas) {
@@ -47,8 +47,9 @@ export class AreaComponent implements OnInit {
       }, error => {
         this._uiNotificationService.error("Error de conexión");
       });
-    }
 
+    }
+    return this.areas;
   }
 
   eliminarArea(event: number) {

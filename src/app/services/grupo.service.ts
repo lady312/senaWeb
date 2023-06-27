@@ -17,6 +17,16 @@ export class GruposService {
     return this._coreService.get<GrupoModel>(url);
   }
 
+  traerGrupoByIdInfra(id:number){
+    const url = `grupos/infraestructura/${id}`;
+    return this._coreService.get<GrupoModel[]>(url);
+  }
+
+  traerGrupoByIdSede(id:number){
+    const url = `grupos/sede/${id}`;
+    return this._coreService.get<GrupoModel[]>(url);
+  }
+
   searchGrupos(query: string): Observable<any[]> {
     return this._coreService.get<any[]>('grupos' + `/obtenergrupos?grupo=` + `${query}`);
   }

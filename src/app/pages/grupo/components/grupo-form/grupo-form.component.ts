@@ -113,20 +113,20 @@ export class GrupoFormComponent implements OnInit {
       this.setGrupo();
       this.setIndexes(this.grupo);
       this.setLists(this.grupo);
-      // this.cargarJornadas();
+      // // this.cargarJornadas();
       this.traercheckedJornadas();
 
 
-      this.traerTipoGrupos();
-      this.traerProgramas();
-      this.traerNivelesFormacion();
-      this.traerInfraestructuras();
-      this.traerTipoFormaciones();
-      this.traerEstados();
-      this.traerTipoOfertas();
-      this.traerJornadas();
-      this.setGrupo();
-      this.traercheckedJornadas();
+      // this.traerTipoGrupos();
+      // this.traerProgramas();
+      // this.traerNivelesFormacion();
+      // this.traerInfraestructuras();
+      // this.traerTipoFormaciones();
+      // this.traerEstados();
+      // this.traerTipoOfertas();
+      // this.traerJornadas();
+      // this.setGrupo();
+      // this.traercheckedJornadas();
 
 
     } else {
