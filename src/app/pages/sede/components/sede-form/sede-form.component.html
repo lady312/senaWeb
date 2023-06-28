@@ -103,7 +103,7 @@
             placeholder="Seleccione una ciudad"
             required>
             <datalist id="ciudad-list">
-              <option  *ngFor="let ciudad of ciudades" [value]="ciudad"></option>
+              <option  *ngFor="let ciudad of ciudades" [value]="ciudad.descripcion"></option>
             </datalist>
         </div>
       </div>

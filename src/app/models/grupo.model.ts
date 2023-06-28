@@ -4,7 +4,6 @@ import { TipoFormacionModel } from '@models/tipo-formacion.model';
 import { TipoOfertaModel } from '@models/tipo-oferta.model';
 import { EstadoGrupoModel } from '@models/estado-grupo.model';
 import { ProgramaModel } from '@models/programa.model';
-import { UsuarioModel } from '@models/usuario.model';
 import { AsignacionParticipanteModel } from '@models/asignacion-participante.model';
 import { JornadaModel } from './jornada.model';
 import { InfraestructuraModel } from './infraestructura.model';

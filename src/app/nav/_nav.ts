@@ -153,7 +153,7 @@ export const navItems: NavegacionModel[] = [
   {
     name: "Gestión de Ambientes",
     url: "add_calendario",
-    icon: "icon-drop",
+    icon: 'calendar2-event',
     permiso: CALENDARIO,
   },
   {
