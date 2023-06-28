@@ -81,7 +81,7 @@ export class MatriculaComponent implements OnInit {
   numeroFicha: number;
   mostrarFormulario: boolean = false;
 
-  fichaNoEncontrada: boolean = false;
+  fichaEncontrada: boolean = false;
   fichaIncorrecta: boolean = false;
 
   detectarPersonaEnElSistema: boolean = false;
@@ -174,7 +174,7 @@ export class MatriculaComponent implements OnInit {
     if (numeroFicha) {
       this.numeroFichaSubject.next(numeroFicha);
     } else {
-      this.validacionExistencia = false;
+      this.fichaEncontrada;
       this.personForm.reset();
     }
   }
@@ -224,21 +224,23 @@ export class MatriculaComponent implements OnInit {
   }
 
   numeroFichaByGrupo(numeroFicha: number) {
+
     this._matriculaService.numeroFichaByGrupo(numeroFicha).subscribe(
       (data) => {
-        console.log(data);
+        console.log('numero de ficha ', data);
         this.dataFicha = data;
-        if (!this.dataFicha) {
-          this.fichaNoEncontrada = true;
+        console.log('this is dataficha ', this.dataFicha);
+        if (this.dataFicha && this.dataFicha.message === 'Se encontro la ficha') {
+          this.fichaEncontrada = true;
           // alert('La ficha no se encuentra');
         } else {
-          this.fichaNoEncontrada = false;
+          this.fichaEncontrada;
           // Continuar con el resto del código si la ficha se encuentra
         }
       },
       (error) => {
         console.log(error);
-        this.fichaNoEncontrada = true;
+        this.fichaEncontrada;
         // alert('Error al buscar la ficha');
       }
     );
@@ -247,8 +249,9 @@ export class MatriculaComponent implements OnInit {
   seguirAceptar(): void {
     this.mostrarModal("¿Estás seguro de aceptar esta ficha?").then(
       (confirmado) => {
-        if (this.fichaNoEncontrada) {
-          this.mostrarModal("La ficha es incorrecta");
+        console.log(confirmado)
+        if (!this.fichaEncontrada) {
+          this.mostrarModal("No se encontró el tipo de grupo");
         } else {
           this.stepper.next();
         }

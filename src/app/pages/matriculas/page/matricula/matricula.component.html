@@ -176,7 +176,7 @@
 
 
       <div *ngIf="mostrarDatos()">
-        <ng-container *ngIf="fichaNoEncontrada; else datosFicha">
+        <ng-container *ngIf="fichaEncontrada == false; else datosFicha">
           <p class="alert alert-danger">Ficha no encontrada</p>
         </ng-container>
         <ng-template #datosFicha>
