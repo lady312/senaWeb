@@ -1,3 +1,5 @@
+import { EstadoModel } from "./estado.model";
+import { TipoProgramaModel } from "./tipo-programa.model";
 
 export interface ProgramaModel {
     id?: number;
@@ -12,4 +14,11 @@ export interface ProgramaModel {
     creditosLectiva:number;
     creditosProductiva:number;
     rutaArchivo:any;
+
+
+    tipoPrograma?:TipoProgramaModel;
+    estado?:EstadoModel;
+
+
+
   }

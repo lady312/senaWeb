@@ -59,7 +59,6 @@ export class ProyectoFormativoComponent {
       this._proyectoService.crearProyecto(proyecto).subscribe(proyecto => {
         this.getProyecto();
         this.reset();
-        console.log('llega asi',proyecto);
       })
     }
   }
