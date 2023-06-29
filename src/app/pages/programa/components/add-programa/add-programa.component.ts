@@ -21,13 +21,13 @@ export class AddProgramaComponent implements OnInit {
   @Output() create: EventEmitter<void> = new EventEmitter();
   @Output() formDocs: EventEmitter<FileList> = new EventEmitter<FileList>();
 
-    filesRuta: FileList;
+  filesRuta: FileList;
   formPrograma: UntypedFormGroup;
   formTipoProgramas: UntypedFormGroup;
   showModalTipoProgramas = false;
   TipoPrograma: TipoProgramaModel = null;
   idDocumento: number[];
- filesRutaDoc: {[key:number]: {files:FileList; fechaVig:string}} ={};
+  filesRutaDoc: {[key:number]: {files:FileList; fechaVig:string}} ={};
   selectedFile: File;
 
 
@@ -35,7 +35,6 @@ export class AddProgramaComponent implements OnInit {
     private formBuilder: UntypedFormBuilder,
     private TipoProgramaService: TipoProgramaService,
     private _uiNotificationService: UINotificationService,
-    private _programaService: TipoProgramaService,
   ) {
     this.programa = {
       id: null,
@@ -100,7 +99,6 @@ export class AddProgramaComponent implements OnInit {
   }
 
   guardarTipoProgramas(tipoPrograma: TipoProgramaModel) {
-
     this.TipoProgramaService.crearTipoPrograma(tipoPrograma).subscribe(tipoPrograma => {
       this.tipoProgramas.push(tipoPrograma);
       this.reset();

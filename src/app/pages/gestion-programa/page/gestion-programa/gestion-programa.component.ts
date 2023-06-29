@@ -74,12 +74,9 @@ export class GestionProgramaComponent implements OnInit {
   ActividadProyecto: ActividadProyectoModel = null;
   CompetenciaRap: CompetenciaRapModel = null;
 
-
-
   numReg = 5;
 
   constructor(
-
     private formBuilder: FormBuilder,    // private formBuilder : UntypedFormGroup,
     private programaService: ProgramaService,
     private proyectoFormativoService: ProyectoFormativoService,
@@ -222,6 +219,7 @@ export class GestionProgramaComponent implements OnInit {
   reset() {
     this.programa = null;
     this.showModalProgramas = false;
+    console.log("holi desde el reset");
   }
 
   agregar() {
@@ -327,12 +325,12 @@ export class GestionProgramaComponent implements OnInit {
     });
   }
 
-  guardarProgramas(programa: any) {
+  guardarProgramas(programa: any) {    
       const file = this.filesPrograma;
       const data = new FormData();
       data.append('archivo', file[0]);
       data.append('nombrePrograma', programa.nombrePrograma.toUpperCase());
-      data.append('codigoPrograma', programa.codigoPrograma);
+      data.append('codigoPrograma', programa.codigoPrograma.toUpperCase());
       data.append('descripcionPrograma', programa.descripcionPrograma.toUpperCase());
       data.append('idTipoPrograma', programa.idTipoPrograma.toString());
       data.append('idEstado', programa.idEstado.toString());
@@ -341,16 +339,16 @@ export class GestionProgramaComponent implements OnInit {
       data.append('etapaProductiva', programa.etapaProductiva.toString());
       data.append('creditosLectiva', programa.creditosLectiva.toString());
       data.append('creditosProductiva', programa.creditosProductiva.toString());
-  
       if (programa.id) {
         this.programaService.actualizarProgramas(data).subscribe((programa) => {
-          this.getPrograma();
           this.reset();
+          this.getPrograma();
         });
       } else {
         this.programaService.crearProgramas(data).subscribe((programa) => {
-          this.getPrograma();
+          this.programas.push(programa);
           this.reset();
+          this.getPrograma();
         });
       }
   }
@@ -388,19 +386,27 @@ export class GestionProgramaComponent implements OnInit {
     this.traerPrograma();
     this.traerProyectoFormativo(Number);
     this.traerCompetencia();
-    this.traerActividadProyecto();
+    this.traerActividadProyecto(Number);
     this.traerFase();
     this.setActividadProyecto();
   }
 
 
   //Actividad proyecto
-  traerActividadProyecto() {
+  // traerActividadProyecto() {
+  //   this._actividadProyectoService.traerActividadProyecto()
+  //     .subscribe((actividadProyectos: ActividadProyectoModel[]) => {
+  //       this.ActividadProyectos = actividadProyectos;
+  //     }, error => {
+  //       this._uiNotificationService.error('Error de conexión');
+  //     });
+  // }
+  traerActividadProyecto(capturarId) {
     this._actividadProyectoService.traerActividadProyecto()
-      .subscribe((actividadProyectos: ActividadProyectoModel[]) => {
-        this.ActividadProyectos = actividadProyectos;
+      .subscribe((actividadProyecto: ActividadProyectoModel[]) => {
+        this.ActividadProyectos = actividadProyecto;
       }, error => {
-        this._uiNotificationService.error('Error de conexión');
+        this._uiNotificationService.error('Error de conexión')
       });
   }
 
@@ -543,15 +549,14 @@ export class GestionProgramaComponent implements OnInit {
 
   }
 
-
   // Variable para almacenar la copia del array original
 
   filtrarCompetencias(actividadP: ActividadProyectoModel) {
-    this.actividadProyecto = actividadP;
-  
+    this.actividadProyecto = actividadP; 
     if (!this.competenciasOriginales) {
       this.competenciasOriginales = [...this.Competencias];
-    } else {
+    } 
+    else {
       this.Competencias = [...this.competenciasOriginales];
     }
   
