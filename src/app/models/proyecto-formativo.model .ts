@@ -1,3 +1,5 @@
+import { CentroFormacionModel } from "./centro-formacion.model";
+import { ProgramaModel } from "./programa.model";
 
 export interface ProyectoFormativoModel {
     id?: number;
@@ -7,4 +9,8 @@ export interface ProyectoFormativoModel {
     tiempoEstimado:number;
     numeroTotalRaps:number;
     idCentroFormacion:number;
+
+    Programas?:ProgramaModel;
+    centroFormativos?:CentroFormacionModel
+
   }

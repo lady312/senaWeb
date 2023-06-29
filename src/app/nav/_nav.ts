@@ -29,97 +29,97 @@ import {  GESTION_MEDIO_PAGO,
 } from './permissions';
 
 export const navItems: NavegacionModel[] = [
-  {
-    name: 'Roles',
-    url: 'add_roles',
-    icon: 'icon-drop',
-    permiso: GESTION_ROLES,
-  },
-  {
-    name: 'Permisos',
-    url: 'add_permission',
-    icon: 'icon-drop',
-    permiso: GESTION_ROL_PERMISOS,
-  },
-  {
-    name: 'Procesos',
-    url: 'add_proceso',
-    icon: 'icon-drop',
-    permiso: GESTION_PROCESOS,
-  },
-  {
-    name: 'Tipo Documentos',
-    url: 'add_tipo_documento',
-    icon: 'icon-drop',
-    permiso: GESTION_TIPO_DOCUMENTOS,
-  },
-  {
-    name: 'Medios de Pago',
-    url: 'add_medio_pago',
-    icon: 'icon-drop',
-    permiso: GESTION_MEDIO_PAGO,
-  },
-  {
-    name: 'Tipos de Pago',
-    url: 'add_tipo_pago',
-    icon: 'icon-drop',
-    permiso: GESTION_TIPO_PAGO,
-  },
-  {
-    name: 'Tipos de Transacción',
-    url: 'add_tipo_transaccion',
-    icon: 'icon-drop',
-    permiso: GESTION_TIPO_TRANSACCION,
-  },
-  {
-    name: 'Usuarios',
-    url: 'add_usuarios',
-    icon: 'icon-drop',
-    permiso: GESTION_TIPO_TRANSACCION,
-  },
+  // {
+  //   name: 'Roles',
+  //   url: 'add_roles',
+  //   icon: 'icon-drop',
+  //   permiso: GESTION_ROLES,
+  // },
+  // {
+  //   name: 'Permisos',
+  //   url: 'add_permission',
+  //   icon: 'icon-drop',
+  //   permiso: GESTION_ROL_PERMISOS,
+  // },
+  // {
+  //   name: 'Procesos',
+  //   url: 'add_proceso',
+  //   icon: 'icon-drop',
+  //   permiso: GESTION_PROCESOS,
+  // },
+  // {
+  //   name: 'Tipo Documentos',
+  //   url: 'add_tipo_documento',
+  //   icon: 'icon-drop',
+  //   permiso: GESTION_TIPO_DOCUMENTOS,
+  // },
+  // {
+  //   name: 'Medios de Pago',
+  //   url: 'add_medio_pago',
+  //   icon: 'icon-drop',
+  //   permiso: GESTION_MEDIO_PAGO,
+  // },
+  // {
+  //   name: 'Tipos de Pago',
+  //   url: 'add_tipo_pago',
+  //   icon: 'icon-drop',
+  //   permiso: GESTION_TIPO_PAGO,
+  // },
+  // {
+  //   name: 'Tipos de Transacción',
+  //   url: 'add_tipo_transaccion',
+  //   icon: 'icon-drop',
+  //   permiso: GESTION_TIPO_TRANSACCION,
+  // },
+  // {
+  //   name: 'Usuarios',
+  //   url: 'add_usuarios',
+  //   icon: 'icon-drop',
+  //   permiso: GESTION_TIPO_TRANSACCION,
+  // },
 
-  {
-    name: "Sedes",
-    url: 'gestionar_sede', //URL que mostrará la vista
-    icon: 'icon-home',
-    permiso: GESTION_SEDE,
-  },
-  {
-    name: "Area",
-    url: 'gestionar_area', //URL que mostrará la vista
-    icon: 'icon-home',
-    permiso: GESTION_AREA,
-  },
-  {
-    name: "Infraestructura",
-    url: 'gestionar_infraestructura', //URL que mostrará la vista
-    icon: 'icon-home',
-    permiso: GESTION_INFRAESTRUCTURA,
-  },
-  {
-    name: 'Grupo',
-    url: 'grupos',
-    icon: 'cil-group',
-    permiso: GESTION_GRUPO
-  },
-  {
-    name: 'Tipo grupos',
-    url: 'tipogrupos',
-    icon: 'cil-user',
-    permiso: GESTION_TIPO_GRUPO
-  },
-  {
-    name: 'Gestion Jornada',
-    url: 'add_jornada',
-    icon: 'cil-note-add',
-    permiso: GESTION_JORNADA,
-  },
-  {
-    name: "Tipos de Programa",
-    url: 'add_tipo_programa',
-    icon: 'icon-drop',
-    permiso: GESTION_TIPO_PROGRAMAS
-  },
+  // {
+  //   name: "Sedes",
+  //   url: 'gestionar_sede', //URL que mostrará la vista
+  //   icon: 'icon-home',
+  //   permiso: GESTION_SEDE,
+  // },
+  // {
+  //   name: "Area",
+  //   url: 'gestionar_area', //URL que mostrará la vista
+  //   icon: 'icon-home',
+  //   permiso: GESTION_AREA,
+  // },
+  // {
+  //   name: "Infraestructura",
+  //   url: 'gestionar_infraestructura', //URL que mostrará la vista
+  //   icon: 'icon-home',
+  //   permiso: GESTION_INFRAESTRUCTURA,
+  // },
+  // {
+  //   name: 'Grupo',
+  //   url: 'grupos',
+  //   icon: 'cil-group',
+  //   permiso: GESTION_GRUPO
+  // },
+  // {
+  //   name: 'Tipo grupos',
+  //   url: 'tipogrupos',
+  //   icon: 'cil-user',
+  //   permiso: GESTION_TIPO_GRUPO
+  // },
+  // {
+  //   name: 'Gestion Jornada',
+  //   url: 'add_jornada',
+  //   icon: 'cil-note-add',
+  //   permiso: GESTION_JORNADA,
+  // },
+  // {
+  //   name: "Tipos de Programa",
+  //   url: 'add_tipo_programa',
+  //   icon: 'icon-drop',
+  //   permiso: GESTION_TIPO_PROGRAMAS
+  // },
   {
     name: "Programas",
     url: 'add_programa',
@@ -175,18 +175,18 @@ export const navItems: NavegacionModel[] = [
     icon: 'cil-columns',
     permiso: GESTION_RESULTADO_APRENDIZAJE
   },
-  {
-    name: "Regional",
-    url: 'add_regional',//muestra la vista para regional''''''''''''''''''''
-    icon: 'cil-columns',
-    permiso: REGIONAL
-  },
-  {
-    name: "Centro Formacion",
-    url: 'add_centro_formacion',//muestra la vista para resultado aprendizaje''''''''''''''''''''
-    icon: 'cil-columns',
-    permiso: CENTRO_FORMACION
-  },
+  // {
+  //   name: "Regional",
+  //   url: 'add_regional',//muestra la vista para regional''''''''''''''''''''
+  //   icon: 'cil-columns',
+  //   permiso: REGIONAL
+  // },
+  // {
+  //   name: "Centro Formacion",
+  //   url: 'add_centro_formacion',//muestra la vista para resultado aprendizaje''''''''''''''''''''
+  //   icon: 'cil-columns',
+  //   permiso: CENTRO_FORMACION
+  // },
 
 
   // vanssssssssssssssssssssssssssss gestion fichas para la vista
