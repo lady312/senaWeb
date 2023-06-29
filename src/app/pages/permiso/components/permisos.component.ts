@@ -30,6 +30,7 @@ export class PermisosComponent implements OnInit {
   public func: PermisoModel[];
   public fun: number[];
   public roles: number[];
+  update:Boolean = false;
   formMenu: UntypedFormGroup;
   numReg: number;
   alerts: any[] = [];

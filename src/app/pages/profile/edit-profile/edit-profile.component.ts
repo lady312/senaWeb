@@ -142,7 +142,8 @@ export class EditProfileComponent implements OnInit {
     return "seleccione un archivo";
   }
 
-  onFileChange(files: FileList) {
+  onFileChange(event:any) {
+    const files:FileList = event.targt.files;
     this.avatar = files;
   }
 

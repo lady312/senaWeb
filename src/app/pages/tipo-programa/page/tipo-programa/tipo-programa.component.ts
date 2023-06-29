@@ -61,6 +61,11 @@ export class TipoProgramaComponent implements OnInit {
     }
   }
 
+  createTipoP() {
+    this.tipoP = null;
+    this.showModalTipoP = true;
+  }
+
   reset() {
     this.tipoP = null;
     this.showModalTipoP = false;

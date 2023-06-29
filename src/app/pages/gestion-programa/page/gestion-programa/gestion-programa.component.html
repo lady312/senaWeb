@@ -208,11 +208,14 @@
     <!--Para realizar los botones(etiquetas) de eliminar-->
     <label class="col-md-4 col-form-label">Resultados de aprendizaje</label>
     <div class="etiqueta" style="display: flex; flex-wrap: wrap; padding: 30px; width: 100%; border: 2px solid rgba(0, 0, 0, 0.185);background:rgb(255, 255, 255) ; " >
-      <button *ngFor="let competenciaRap of CompetenciasRaps" class="btn btn-outline-primary btn-sm " style="margin: 10px; width: 12%;"
+      <button 
+        *ngFor="let competenciaRap of CompetenciasRaps" 
+        class="btn btn-outline-primary btn-sm " 
+        style="margin: 10px; width: 12%;"
         (change)="capturarIdResultado()"
         [(ngModel)]="selectedResultadoId"
-        title="{{competenciaRap.resultadoAprendizaje.rap}}">
-        {{competenciaRap.resultadoAprendizaje.codigoRap}}
+        [title]="competenciaRap.rapModel.rap">
+        {{competenciaRap.rapModel.codigoRap}}
         <div class="spans">
           <span title="Eliminar" class="fa fa-close fa-lg " style="margin-left: 15px; color: rgb(210, 91, 91); position: sticky;"  (click)="eliminarResultado(resultado)"></span>
           <span title="Ver información" class="fa fa-info-circle fa-lg " data-bs-toggle="modal" data-bs-target="#modalId2" style="margin-left: 15px; color: rgb(132, 132, 132); position: sticky;"  

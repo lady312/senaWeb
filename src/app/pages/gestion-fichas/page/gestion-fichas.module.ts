@@ -6,7 +6,9 @@ import { GestionFichasComponent } from './gestion-fichas/gestion-fichas.componen
 
 
 @NgModule({
-
+  exports:[
+    GestionFichasComponent,
+  ],
   declarations: [
     GestionFichasComponent,
   ],

@@ -27,8 +27,8 @@
           <tbody>
             <tr *ngFor="let usuario of usuarios | paginate: { itemsPerPage: this.numReg, currentPage: pageActual }" data-aos="fade-left">
               <td>{{usuario.id}}</td>
-              <td>{{usuario.user.persona.nombre1}}</td>
-              <td>{{usuario.user.persona.apellido1}}</td>
+              <td>{{usuario.persona.nombre1}}</td>
+              <td>{{usuario.persona.apellido1}}</td>
               <td>
                 <div *ngIf="usuario.roles.length > 0; else noRol">
                   <label *ngFor="let rol of usuario.roles">{{rol.name}} {{ usuario.roles.length > 1?',':' ' }}</label>
@@ -39,7 +39,7 @@
 
               </td>
               <td>
-                {{ usuario.estado.estado }}
+                {{ usuario.user.estado.estado }}
                 <!-- <app-custom-switch [checked]="usuario.estado.estado=='ACTIVO'?true:false" size="5">
                 </app-custom-switch> -->
               </td>
@@ -48,7 +48,7 @@
                   class="badge badge-danger"
                   style="cursor: pointer;"
                   [swal]="{ title: 'Desea eliminar',  showCancelButton: true }"
-                  (confirm)="eliminar(usuario.user_id)">
+                  (confirm)="eliminar(usuario.id)">
                   Eliminar
                 </span>
                 <ng-template #noDelete>

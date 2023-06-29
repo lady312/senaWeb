@@ -1,5 +1,6 @@
 import { ResultadoAprendizajeModel } from './resultado-aprendizaje.model';
 import { CompetenciaModel } from './competencia.model';
+import { ResultadoAprendizajeModule } from '../pages/resultado-aprendizaje/resultado-aprendizaje.module';
 
 
 export interface CompetenciaRapModel {
@@ -9,5 +10,5 @@ export interface CompetenciaRapModel {
 
 // objetos de competencia programa
   competencia: CompetenciaModel[];
-  rapModel: ResultadoAprendizajeModel[];
+  rapModel: ResultadoAprendizajeModel;
 }

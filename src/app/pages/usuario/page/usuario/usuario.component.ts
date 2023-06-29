@@ -97,6 +97,10 @@ export class UsuarioComponent implements OnInit {
       });
   }
 
+  actualizarUsuarios(event:UsuarioModel){
+    this.usuario = event;
+    this.showModalUsuario = true;
+  }
 
   createUsuarios() {
     this.usuario = null;

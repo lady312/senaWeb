@@ -6,5 +6,5 @@ export interface RolModel {
 
   name: string;
   idCompany: number;
-  company:CompanyModel;
+  company?:CompanyModel;
 }

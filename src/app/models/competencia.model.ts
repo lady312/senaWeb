@@ -6,6 +6,6 @@ export interface CompetenciaModel {
   nombreCompetencia: string;
   codigoCompetencia: string;
   idActividadProyecto:number;
-  ActividadProyecto:ActividadAprendizajeModel;
+  actividadProyecto?:ActividadAprendizajeModel;
     
 }
