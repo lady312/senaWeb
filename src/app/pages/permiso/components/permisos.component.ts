@@ -70,8 +70,8 @@ export class PermisosComponent implements OnInit {
     );
   }
 
-  enviarNumeroRegistros(num: number) {
-    this.numReg = num;
+  enviarNumeroRegistros(event:any) {
+    this.numReg = event.target.value;
   }
 
   traerEmpresas() {

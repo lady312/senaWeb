@@ -10,7 +10,7 @@ import { UINotificationService } from '@services/uinotification.service';
 })
 export class ActividadAprendizajeComponent implements OnInit {
 
-  private showModalAA = false;
+  showModalAA = false;
 
   actividadAprendizaje: ActividadAprendizajeModel = null;
   actividadAprendizajes: ActividadAprendizajeModel[] = [];

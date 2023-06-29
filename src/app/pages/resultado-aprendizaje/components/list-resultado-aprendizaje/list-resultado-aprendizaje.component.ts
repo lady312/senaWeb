@@ -20,8 +20,8 @@ export class ListResultadoAprendizajeComponent   {
   constructor() {
   }
 
-  enviarNumeroRegistros(num: number) {
-    this.numReg = num;
+  enviarNumeroRegistros(event:any) {
+    this.numReg = event.target.value;
   }
 
   actualizar(Rap: ResultadoAprendizajeModel) {

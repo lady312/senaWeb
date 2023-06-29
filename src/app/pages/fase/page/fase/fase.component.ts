@@ -10,7 +10,7 @@ import { UINotificationService } from '@services/uinotification.service';
 })
 export class FaseComponent {
 
-  private showModalFase = false;
+  showModalFase = false;
 
   fase: FaseModel = null;
   fases: FaseModel[] = [];

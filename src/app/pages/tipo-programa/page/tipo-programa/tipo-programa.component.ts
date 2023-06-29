@@ -11,7 +11,7 @@ import { TipoProgramaModel } from '@models/tipo-programa.model';
 })
 export class TipoProgramaComponent implements OnInit {
 
-  private showModalTipoP = false;
+  showModalTipoP = false;
 
   tipoP: TipoProgramaModel = null;
   tipoPs: TipoProgramaModel[] = [];

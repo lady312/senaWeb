@@ -10,7 +10,7 @@ import { UINotificationService } from '@services/uinotification.service';
 })
 export class RegionalComponent implements OnInit {
 
-  private showModalRegional = false;
+  showModalRegional = false;
 
   regional: RegionalModel = null;
   regionales: RegionalModel[] = [];

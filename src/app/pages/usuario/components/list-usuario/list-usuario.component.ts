@@ -22,8 +22,8 @@ export class ListUsuarioComponent {
     console.log('user desde list', this.usuarios)
   }
 
-  enviarNumeroRegistros(num: number) {
-    this.numReg = num;
+  enviarNumeroRegistros(event:any) {
+    this.numReg = event.target.value;
   }
 
   actualizar(usuario: UsuarioModel) {

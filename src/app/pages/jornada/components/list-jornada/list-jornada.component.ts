@@ -35,8 +35,8 @@ export class ListJornadaComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  enviarNumeroRegistros(num: number) {
-    this.numReg = num;
+  enviarNumeroRegistros(event:any) {
+    this.numReg = event.target.value;
   }
 
   actualizar(jornada: JornadaModel) {

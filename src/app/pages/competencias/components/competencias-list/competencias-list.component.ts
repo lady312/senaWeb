@@ -25,9 +25,9 @@ export class CompetenciasListComponent {
 
 /////////////////////////////////////////////////////////////////////77
 
-  enviarNumeroRegistros(num: number) {
-    this.numReg = num;
-  }
+enviarNumeroRegistros(event:any) {
+  this.numReg = event.target.value;
+}
 
   actualizar(Competencia: CompetenciaModel) {
     this.update.emit(Competencia);

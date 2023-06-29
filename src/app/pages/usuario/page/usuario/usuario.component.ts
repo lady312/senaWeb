@@ -12,8 +12,8 @@ import { UsuarioService } from '@services/usuario.service';
 })
 export class UsuarioComponent implements OnInit {
 
-  private showModalUsuario = false;
-  private showModalAsignacion = false;
+  showModalUsuario = false;
+  showModalAsignacion = false;
 
   usuario: UsuarioModel = null;
   usuarios: UsuarioModel[] = [];

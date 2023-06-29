@@ -10,7 +10,7 @@ import { UINotificationService } from '@services/uinotification.service';
 })
 export class RolComponent implements OnInit {
 
-  private showModalRol = false;
+  showModalRol = false;
 
   rol: RolModel = null;
   roles: RolModel[] = [];

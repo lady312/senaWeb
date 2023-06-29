@@ -10,7 +10,7 @@ import { UINotificationService } from '@services/uinotification.service';
 })
 export class MedioPagoComponent implements OnInit {
 
-  private showModalMedioPago = false;
+  showModalMedioPago = false;
 
   medioPago: MedioPagoModel = null;
   medioPagos: MedioPagoModel[] = [];
