@@ -4,6 +4,8 @@ import { UsuarioModel } from './usuario.model';
 export interface AsignacionParticipanteModel {
   id: number;
   idGrupo?: number;
+grupo:GrupoModel;
+
   idParticipante: number;
 
   // grupo

@@ -1,3 +1,5 @@
+import { ActividadAprendizajeModel } from "./actividad-aprendizaje.model";
+
 export interface CompetenciaModel {
 
 
@@ -6,6 +8,7 @@ export interface CompetenciaModel {
   nombreCompetencia: string;
   codigoCompetencia: string;
   idActividadProyecto:number;
+  ActividadProyecto:ActividadAprendizajeModel;
 
   
 }

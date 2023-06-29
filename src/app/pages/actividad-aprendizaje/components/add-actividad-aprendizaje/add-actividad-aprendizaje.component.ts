@@ -67,7 +67,7 @@ export class AddActividadAprendizajeComponent implements OnInit {
       this.formAA.patchValue({
         NombreAA: this.actividadAprendizaje.NombreAA,
         codigoAA: this.actividadAprendizaje.codigoAA,
-        idProceso: this.actividadAprendizaje.rap,
+        rap: this.actividadAprendizaje.rap,
       })
     }
   }
