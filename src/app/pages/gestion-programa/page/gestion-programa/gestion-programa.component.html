@@ -91,21 +91,22 @@
   <div class="card-body">
     <div class="card-header">
      <!--Para realizar los botones(etiquetas) de eliminar-->
-        <label class="col-md-4 col-form-label">Actividad proyecto</label>
-        <button class="btn btn-success rounded-circle m-4" style="position: relative; left: -11rem;"
-          (click)="agregarAp()">+</button>
-        <div class="etiquet" style="display: flex; flex-wrap: wrap; padding: 30px; width: 100%; border: 2px solid rgba(0, 0, 0, 0.185);background:rgb(255, 255, 255) ; ">
-          <button *ngFor="let  ActividadProyecto of ActividadProyectos "(click)="filtrarCompetencias(ActividadProyecto)" class="btn btn-outline-primary btn-sm" 
-            style=" margin: 10px; width: 12%;" 
-            title="{{ ActividadProyecto.nombreActividadProyecto }}" >
-            {{ ActividadProyecto.codigoAP}} 
-           <div class="spanss">
-            <span title="Eliminar" class="fa fa-close fa-lg " style="margin-left: 15px; color: rgb(210, 91, 91); position: sticky;"  (click)="eliminarEtiquet(ActividadProyecto)"></span>
-            <span title="Ver información" class="fa fa-info-circle fa-lg " data-bs-toggle="modal" data-bs-target="#modalId1" style="margin-left: 15px; color: rgb(132, 132, 132); position: sticky;"  (click)="seleccionarActividadP(ActividadProyecto) "></span>
-           </div>
-          </button>
+     <div class="etiquet" style="display: flex; flex-wrap: wrap; padding: 30px; width: 100%; border: 2px solid rgba(0, 0, 0, 0.185);background:rgb(255, 255, 255) ; ">
+      <button *ngFor="let ActividadProyecto of ActividadProyectos" (click)="filtrarCompetencias(ActividadProyecto)" class="btn btn-outline-primary btn-sm" 
+        style=" margin: 10px; width: 12%;" 
+        title="{{ ActividadProyecto.nombreActividadProyecto }}">
+        {{ ActividadProyecto.codigoAP }} 
+        <div class="spanss">
+          <span title="Eliminar" class="fa fa-close fa-lg " style="margin-left: 15px; color: rgb(210, 91, 91); position: sticky;" (click)="eliminarEtiquet(ActividadProyecto)"></span>
+          <span title="Ver información" class="fa fa-info-circle fa-lg " data-bs-toggle="modal" data-bs-target="#modalId1" style="margin-left: 15px; color: rgb(132, 132, 132); position: sticky;" (click)="seleccionarActividadP(ActividadProyecto)"></span>
         </div>
-      </div>
+      </button>
+    </div>
+    
+    <!-- Agregar un elemento <div> para mostrar los códigos de las competencias -->
+    <div *ngIf="competenciasFiltradas">
+      Competencias: {{ competenciasFiltradas.join(', ') }}
+    </div>
 
       <div class="modal fade" id="modalId1" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-sm" role="document">
@@ -152,18 +153,17 @@
         <button class="btn btn-success rounded-circle m-4" style="position: relative; left: -14rem; "
           (click)="agregarC()">+</button>
         <div class="etiqueta" style="display: flex; flex-wrap: wrap; padding: 30px; width: 100%; border: 2px solid rgba(0, 0, 0, 0.185);background:rgb(255, 255, 255) ; " >
-          <button *ngFor="let Competencia of Competencias" class="btn btn-outline-primary btn-sm " style="margin: 10px; width: 12%;"
-            (change)="capturarIdCompetencia()"
-            [(ngModel)]="selectedCompetenciaId"
-            (click)="traerCompetenciasRaps(Competencia.id)"
-            title="{{ Competencia.nombreCompetencia }}">
-            {{ Competencia.codigoCompetencia}}
-            <div class="spans">
-              <span title="Eliminar" class="fa fa-close fa-lg " style="margin-left: 15px; color: rgb(210, 91, 91); position: sticky;"  (click)="eliminarEtiquet(ActividadProyecto)"></span>
-              <span title="Ver información" class="fa fa-info-circle fa-lg " data-bs-toggle="modal" data-bs-target="#modalId" style="margin-left: 15px; color: rgb(132, 132, 132); position: sticky;"  
-              (click)="seleccionarCompetencia(Competencia)"></span>
-             </div>
-          </button>
+          <button *ngFor="let Competencia of Competencias" class="btn btn-outline-primary btn-sm" style="margin: 10px; width: 12%;"
+        (change)="capturarIdCompetencia()"
+        [(ngModel)]="selectedCompetenciaId"
+        (click)="traerCompetenciasRaps(Competencia.id)"
+        title="{{ Competencia.nombreCompetencia }}">
+        {{ Competencia.codigoCompetencia }}
+        <div class="spans">
+          <span title="Eliminar" class="fa fa-close fa-lg" style="margin-left: 15px; color: rgb(210, 91, 91); position: sticky;" (click)="eliminarEtiquet(ActividadProyecto)"></span>
+          <span title="Ver información" class="fa fa-info-circle fa-lg" data-bs-toggle="modal" data-bs-target="#modalId" style="margin-left: 15px; color: rgb(132, 132, 132); position: sticky;" (click)="seleccionarCompetencia(Competencia)"></span>
+        </div>
+        </button>
         </div>
       </div>
           <!-- Modal Body-->
@@ -245,14 +245,26 @@
           
               <tr>
                 <th scope="row">codigo : </th>
-                <td>{{selectedCompetencia.codigoCompetencia}}</td>
+                <td>{{selectedResultado.resultadoAprendizaje.codigoRap}}</td>
                 <th ></th>
                 <td></td>
               </tr>
           
               <tr>
-                <th scope="row">Actividad proyecto:</th>
-                <td>{{selectedCompetencia.idActividadProyecto}}</td>
+                <th scope="row">Nro horas :</th>
+                <td>{{selectedResultado.resultadoAprendizaje.numeroHoras}}</td>
+                <th></th>
+                <th></th>
+              </tr>
+              <tr>
+                <th scope="row">Tipo resultado :</th>
+                <td>{{selectedResultado.resultadoAprendizaje.idTipoRaps}}</td>
+                <th></th>
+                <th></th>
+              </tr>
+              <tr>
+                <th scope="row">Competencia :</th>
+                <td>{{selectedResultado.resultadoAprendizaje.idCompetencia}}</td>
                 <th></th>
                 <th></th>
               </tr>

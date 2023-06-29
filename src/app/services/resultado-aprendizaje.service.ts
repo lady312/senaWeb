@@ -16,16 +16,18 @@ export class ResultadoAprendizajeService  {
 
 
   public Raps() {
-    return this._coreService.get<ResultadoAprendizajeModel[]>('resultadoAprendizaje');  ///////7
+    return this._coreService.get<ResultadoAprendizajeModel[]>('resultadoAprendizaje');
   }
 
 
   crearRaps(rap: ResultadoAprendizajeModel) {
     rap.rap=rap.rap.toUpperCase();
     rap.codigoRap=rap.codigoRap.toUpperCase();
-    return this._coreService.post<ResultadoAprendizajeModel[]>('resultadoAprendizaje', rap);
-    
-  
+    rap.numeroHoras = rap.numeroHoras;
+    rap.idTipoRaps = rap.idTipoRaps;
+    rap.idCompetencia = rap.idCompetencia;
+
+    return this._coreService.post<ResultadoAprendizajeModel[]>('resultados',rap);
   }
   eliminarRaps(rapId: number) {
     return this._coreService.delete('resultadoAprendizaje/' + rapId);

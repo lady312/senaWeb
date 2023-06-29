@@ -24,6 +24,7 @@ import { ResultadoAprendizajeModel } from '@models/resultado-aprendizaje.model';
   styleUrls: ['./gestion-programa.component.scss']
 })
 export class GestionProgramaComponent implements OnInit {
+  competenciasFiltradas: string[] = [];
 
   selectedActividadP: any;
   selectedCompetenciaRap: any;
@@ -369,6 +370,10 @@ export class GestionProgramaComponent implements OnInit {
     this.showModalActividad = false;
   }
 
+  resetCompetenciasRap(){
+    this.CompetenciaRap = null;
+  }
+
   agregarC() {
     this.showModalCompetencia = true;
     this.create.emit();
@@ -543,17 +548,17 @@ export class GestionProgramaComponent implements OnInit {
 
   filtrarCompetencias(actividadP: ActividadProyectoModel) {
     this.actividadProyecto = actividadP;
-
+  
     if (!this.competenciasOriginales) {
-
       this.competenciasOriginales = [...this.Competencias];
     } else {
-
       this.Competencias = [...this.competenciasOriginales];
     }
-
+  
     this.Competencias = this.Competencias.filter(c => c.idActividadProyecto === actividadP.id);
-
+  
+    // Asignar las competencias filtradas a una propiedad en el componente
+    this.competenciasFiltradas = this.Competencias.map(c => c.codigoCompetencia);
   }
 
   //muestra los resultados de una competencia
@@ -564,6 +569,7 @@ export class GestionProgramaComponent implements OnInit {
       }, error => {
         this._uiNotificationService.error('Error de conexión');
       });
+      this.resetCompetenciasRap();
   }
 
 }

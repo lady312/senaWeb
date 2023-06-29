@@ -201,10 +201,10 @@ export class CalendarioComponent implements OnInit {
     }
   }
   getGruposJornadaByIdInfra(event: number) {
-    const infra = this.infraestructuras.find((infra) => infra.id == event);
+    const infra = this.infraestructuras.find((infra) => infra.id === event);
     if (infra) {
       const grupos = this.grupos.filter(
-        (grupo) => grupo.idInfraestructura == infra.id
+        (grupo) => grupo.horario_infraestructura.idInfraestructura === infra.id
       );
       if (grupos) {
         let gruposJornada: AsignacionJornadaGrupoModel[] = [];

@@ -24,9 +24,10 @@ import {  GESTION_MEDIO_PAGO,
           GESTION_ACTIVIDAD_APRENDIZAJE,//importaciones
           GESTION_RESULTADO_APRENDIZAJE,
           REGIONAL,
-          CENTRO_FORMACION,//i
+          CENTRO_FORMACION,
+          GESTION_FICHAS,//i
 } from './permissions';
-          
+
 export const navItems: NavegacionModel[] = [
   {
     name: 'Roles',
@@ -186,6 +187,23 @@ export const navItems: NavegacionModel[] = [
     icon: 'cil-columns',
     permiso: CENTRO_FORMACION
   },
+
+
+  // vanssssssssssssssssssssssssssss gestion fichas para la vista
+  {
+    name: "Gestion fichas",
+    url: 'add_gestion_fichas',//muestra la vista para resultado aprendizaje''''''''''''''''''''
+    icon: 'cil-columns',
+    permiso: GESTION_FICHAS
+  },
+
+
+
+
+
+
+
+
 ];
 
 export const routesNav: Routes = [
@@ -338,5 +356,12 @@ export const routesNav: Routes = [
   {
     path: 'add_centro_formacion',
     loadChildren: () => import('../pages/centro-formacion/centro-formacion.module').then(m => m.CentroFormacionModule)
+  },
+
+
+// vanssssssssssssssssssssssssssssssssssssssssss gestion fichas
+  {
+    path: 'add_gestion_fichas',
+    loadChildren: () => import('../pages/gestion-fichas/page/gestion-fichas.module').then(m => m.GestionFichasModule)
   },
 ];

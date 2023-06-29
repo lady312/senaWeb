@@ -2,12 +2,12 @@ import { GrupoModel } from './grupo.model';
 import { UsuarioModel } from './usuario.model';
 
 export interface AsignacionParticipanteModel {
-  id: number;
+  id?: number;
   idGrupo?: number;
-grupo:GrupoModel;
-
-  idParticipante: number;
-
-  // grupo
-  participante?: UsuarioModel[];
+  idParticipante?: number;
+  fechaInicial: Date;
+  fechaFinal:Date;
+  descripcion:string;
+  participante?: UsuarioModel;
+  grupo?: GrupoModel;
 }

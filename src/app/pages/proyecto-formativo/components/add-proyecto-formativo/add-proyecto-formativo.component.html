@@ -26,7 +26,7 @@
         </div>
   
   
-        <!-- campos de codigo programa-->
+        <!-- campos de codigo proyecto-->
         <div class="form-group row">
           <label class="col-md-4 col-form-label" for="codigo">Código</label>
           <div class="col-md-7">
@@ -104,20 +104,18 @@
 
       <!-- campos de id centro de formacion-->
       <div class="form-group row">
-        <label class="col-md-4 col-form-label" for="idCentroFormacion">Centro de Formación</label>
+        <label class="col-md-4 col-form-label" for="idCentroFormacion">Centro de formación</label>
         <div class="col-md-7">
-          <input
-            type="number"
-            onkeyup="javascript:this.value=this.value"
-            placeholder="Ingrese el centro de formacion"
-            class="form-control is-valid"
-            formControlName='idCentroFormacion'>
+          <select class="form-select" formControlName='idCentroFormacion'>
+            <option [ngValue]="null">Seleccionar centro  de formación </option>
+            <option *ngFor='let centro of centrosFormativos' [ngValue]="centro.id">{{centro.nombreCentro}}</option>
+          </select>
           <div class="valid-feedback" *ngIf="!idCentroFormacion.hasError('required')">
             Valor válido
           </div>
         </div>
         <div class="invalid-feedback">
-          por favor ingresé un valor válido para el centro de formacion
+          por favor ingresé un valor valido para el centro de formación
         </div>
       </div>
   

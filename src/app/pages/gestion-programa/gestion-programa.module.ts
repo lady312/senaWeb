@@ -15,7 +15,7 @@ import { ProgramaModule } from '../programa/programa.module';
 import { ProgramaComponent } from '../programa/page/programa/programa.component';
 import { ActividadProyectoComponent } from '../actividad-proyecto/page/actividad-proyecto/actividad-proyecto.component';
 
-
+ 
 @NgModule({
   declarations: [
     GestionProgramaComponent
@@ -38,6 +38,6 @@ import { ActividadProyectoComponent } from '../actividad-proyecto/page/actividad
     ProgramaComponent,
     ActividadProyectoComponent
   ],
-  
+
 })
 export class GestionProgramaModule { }

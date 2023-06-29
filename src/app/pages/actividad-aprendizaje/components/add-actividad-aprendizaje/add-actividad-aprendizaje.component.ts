@@ -31,17 +31,17 @@ export class AddActividadAprendizajeComponent implements OnInit {
       NombreAA: '',
       codigoAA: '',
       idEstado: 1,
-      rap: null
-
+      rap: null,
     };
     this.buildForm();
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
+
     this.traerResultadoAprendizaje();
-    this.setAA()
+    this.setAA();
   }
- 
+
   traerResultadoAprendizaje() {
     this.resultadoAprendizajeService.traerRap()
       .subscribe((proceso: ResultadoAprendizajeModel[]) => {
@@ -55,8 +55,8 @@ export class AddActividadAprendizajeComponent implements OnInit {
     return this.formAA.get('NombreAA');
   }
 
-  get rap() {
-    return this.formAA.get('rap');
+  get idRap() {
+    return this.formAA.get('idRap');
   }
   get codigo() {
     return this.formAA.get('codigoAA');
@@ -67,7 +67,8 @@ export class AddActividadAprendizajeComponent implements OnInit {
       this.formAA.patchValue({
         NombreAA: this.actividadAprendizaje.NombreAA,
         codigoAA: this.actividadAprendizaje.codigoAA,
-        rap: this.actividadAprendizaje.rap,
+        idEstado: this.actividadAprendizaje.idEstado,
+        rap:this.actividadAprendizaje.rap,
       })
     }
   }
@@ -77,7 +78,8 @@ export class AddActividadAprendizajeComponent implements OnInit {
       id: [0],
       NombreAA: ['', [Validators.required]],
       codigoAA: ['', [Validators.required]],
-      rap: ['', [Validators.required]],
+      idEstado:[1],
+      idRap: ['', [Validators.required]],
     });
 
     this.formAA.valueChanges

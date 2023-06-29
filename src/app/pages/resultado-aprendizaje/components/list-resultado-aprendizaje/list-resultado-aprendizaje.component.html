@@ -17,6 +17,9 @@
               <th>Id</th>
               <th>Resultado de aprendizaje</th>
               <th>Código</th>
+              <th>Nro Horas</th>
+              <th>tipo Rap</th>
+              <th>Competencia</th>
               <th>Acciones</th>
           </thead>
           <tbody>
@@ -24,7 +27,16 @@
               <td>{{RAP.id}}</td>
               <td>{{RAP.rap}}</td>
               <td>{{RAP.codigoRap}}</td>
+              <td>{{RAP.numeroHoras}}</td>
+              <td>{{RAP.tipoRaps.nombre}}</td>
+
               <td>
+                <div *ngFor="let RAP of RAP.competencias">
+                  {{RAP.nombreCompetencia}}
+                </div>
+              </td>
+              <td>
+                
                 <span class="badge badge-primary" style="cursor: pointer;"
                   (click)="actualizar(RAP)">Actualizar</span>
                 <span
