@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivationCompanyUserModel } from '@models/activation-company-user.model';
 import { RolModel } from '@models/rol.model';
-import { UsuarioModel } from '@models/usuario.model';
 import { RolesService } from '@services/roles.service';
 import { UINotificationService } from '@services/uinotification.service';
 import { UsuarioService } from '@services/usuario.service';
@@ -15,8 +15,8 @@ export class UsuarioComponent implements OnInit {
   showModalUsuario = false;
   showModalAsignacion = false;
 
-  usuario: UsuarioModel = null;
-  usuarios: UsuarioModel[] = [];
+  usuario: ActivationCompanyUserModel = null;
+  usuarios: ActivationCompanyUserModel[] = [];
   userRoles: any[] = [];
   roles: any[] = [];
   rolUser: RolModel[];
@@ -64,7 +64,7 @@ export class UsuarioComponent implements OnInit {
   //   this.proceso = proceso;
   //   this.showModalAsignacion = true;
   // }
-  asignarRol(usuario: UsuarioModel) {
+  asignarRol(usuario: ActivationCompanyUserModel) {
     console.log(usuario, 'el usuario')
     // if (usuario.roles) {
     this.rolUser = [];
@@ -97,7 +97,7 @@ export class UsuarioComponent implements OnInit {
       });
   }
 
-  actualizarUsuarios(event:UsuarioModel){
+  actualizarUsuarios(event:ActivationCompanyUserModel){
     this.usuario = event;
     this.showModalUsuario = true;
   }
@@ -107,7 +107,7 @@ export class UsuarioComponent implements OnInit {
     this.showModalUsuario = true;
   }
 
-  guardarUsuarios(usuario: UsuarioModel) {
+  guardarUsuarios(usuario: ActivationCompanyUserModel) {
     if (usuario.id) {
       this._usuarioService.actualizarUsuario(usuario).subscribe(usuario => {
         this.getUsuarios();

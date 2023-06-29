@@ -45,7 +45,6 @@ export class PermisosComponent implements OnInit {
   ) {
     this.fun = new Array();
     // this.permisions = new Array();
-    this.enviarNumeroRegistros(10);
   }
 
   ngOnInit(): void {
