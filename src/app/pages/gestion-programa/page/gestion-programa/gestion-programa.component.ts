@@ -33,10 +33,13 @@ export class GestionProgramaComponent implements OnInit {
   selectedProgram: ProgramaModel;
   selectedProyecto: ProyectoFormativoModel;
   selectedProgramId: number;
+  selectedActividadId: number;
   selectedProyectoId: number;// lista de proyectos formativos disponibles
   selectedCompetenciaId: number;
   selectedResultadoId:number;
   filteredProjects: ProyectoFormativoModel[] = []; // lista de proyectos formativos filtrados según el programa seleccionado
+  filteredActividad: ActividadProyectoModel[] = [];
+  filteredCompetencias: CompetenciaModel[] = [];
 
   @Input() competencia: CompetenciaModel;
   @Input() Competencias: CompetenciaModel[] = [];
@@ -45,16 +48,11 @@ export class GestionProgramaComponent implements OnInit {
   @Input() CompetenciasRaps: CompetenciaRapModel[] = [];
   @Input() actividadProyecto: ActividadProyectoModel;
   @Input() ActividadProyectos: ActividadProyectoModel[] = [];
-
-
   @Input() programas: ProgramaModel[] = [];
-
-
-
-
+  @Input() programa: ProgramaModel;
   @Input() proyectos: ProyectoFormativoModel[] = [];
   @Input() resultados: ResultadoAprendizajeModel[] = [];
-  @Input() programa: ProgramaModel;
+  @Input() proyecto: ProyectoFormativoModel;
   @Output() update: EventEmitter<ProgramaModel> = new EventEmitter();
   @Output() delete: EventEmitter<number> = new EventEmitter();
   @Output() create: EventEmitter<void> = new EventEmitter();
@@ -62,15 +60,16 @@ export class GestionProgramaComponent implements OnInit {
   @Output() store: EventEmitter<CompetenciaModel> = new EventEmitter();
 
   formPrograma: UntypedFormGroup;
+  formProyecto: UntypedFormGroup;
   formCompetencia: UntypedFormGroup;
   formActividadProyecto: UntypedFormGroup;
 
   showModalProgramas = false;
   showModalCompetencia = false;
   showModalActividad = false;
+  showModalProyecto = false;
   Programa: ProgramaModel = null;
   filesPrograma :FileList;
-
 
 
   private competenciasOriginales: any[];
@@ -155,8 +154,6 @@ export class GestionProgramaComponent implements OnInit {
       return this.formPrograma.get('rutaArchivo');
     }
 
-
-
     setPrograma() {
       if (this.programa) {
         this.formPrograma.patchValue({
@@ -225,12 +222,17 @@ export class GestionProgramaComponent implements OnInit {
   reset() {
     this.programa = null;
     this.showModalProgramas = false;
-    console.log("holi desde el reset");
   }
 
   agregar() {
     this.showModalProgramas = true;
     this.create.emit;
+  }
+
+  agregarProyecto() {
+    this.showModalProyecto = true;
+    this.create.emit;
+    console.log("habriendo el modal");
   }
 
   //Competencia
@@ -273,6 +275,25 @@ export class GestionProgramaComponent implements OnInit {
       .subscribe(data => {
       });
   }
+
+  private buildFormProyecto() {
+    this.formProyecto = this.formBuilder.group({
+      id: [0],
+      nombre: ['', [Validators.required]],
+      codigo: ['', [Validators.required]],
+      tiempoEstimado: ['', [Validators.required]],
+      numeroTotalRaps: ['', [Validators.required]],
+      idCentroFormacion: ['', [Validators.required]],
+      idPrograma: ['', [Validators.required]],
+    });
+
+    this.formProyecto.valueChanges
+      .pipe(
+        debounceTime(350),
+      )
+      .subscribe(data => {
+      });
+  }
   //////////////////Actividad Proyecto/////////////////
   private buildFormss() {
     this.formActividadProyecto = this.formBuilder.group({
@@ -294,9 +315,26 @@ export class GestionProgramaComponent implements OnInit {
   private getControls(name: string) {
     return this.formCompetencia.controls[name];
   }
+  //proyecto Formativo
+  private getControlProyecto(name: string) {
+    return this.formProyecto.controls[name];
+  }
+
   //Actividad Proyecto
   private getControl(name: string) {
     return this.formActividadProyecto.controls[name];
+  }
+
+  getProyecto(): ProyectoFormativoModel {
+    return {
+      id: this.competencia?.id,
+      nombre: this.getControlProyecto('nombre').value,
+      codigo: this.getControlProyecto('codigo').value,
+      idPrograma: this.getControlProyecto('idPrograma').value,
+      tiempoEstimado: this.getControlProyecto('tiempoEstimado').value,
+      numeroTotalRaps: this.getControlProyecto('numeroTotalRaps').value,
+      idCentroFormacion: this.getControlProyecto('idCentroFormacion').value,
+    }
   }
 
   getCompetencias(): CompetenciaModel {
@@ -314,6 +352,13 @@ export class GestionProgramaComponent implements OnInit {
       idFase: this.getControl('idFase').value,
       codigoAP: this.getControl('codigoAP').value,
     }
+  }
+
+  guardarProyecto(proyecto: ProyectoFormativoModel) {
+    this.proyectoFormativoService.crearProyecto(proyecto).subscribe(proyectos => {
+      this.proyectos.push(proyecto);
+      this.resetProyectos();
+    });
   }
 
   guardarActividadProyecto(actividadP: ActividadProyectoModel) {
@@ -370,6 +415,11 @@ export class GestionProgramaComponent implements OnInit {
     this.showModalCompetencia = false;
   }
 
+  resetProyectos() {
+    this.proyecto = null;
+    this.showModalProyecto = false;
+  }
+
   resetActividadP() {
     this.ActividadProyecto = null;
     this.showModalActividad = false;
@@ -396,6 +446,7 @@ export class GestionProgramaComponent implements OnInit {
     this.traerActividadProyecto(Number);
     this.traerFase();
     this.setActividadProyecto();
+    this.setProyecto();
   }
 
 
@@ -470,6 +521,19 @@ export class GestionProgramaComponent implements OnInit {
     }
   }
 
+  setProyecto() {
+    if (this.proyecto) {
+      this.formProyecto.patchValue({
+        nombre: this.proyecto.nombre,
+        codigo: this.proyecto.codigo,
+        tiempoEstimado: this.proyecto.tiempoEstimado,
+        numeroTotalRaps: this.proyecto.numeroTotalRaps,
+        idCentroFormacion: this.proyecto.idCentroFormacion,
+        idPrograma: this.proyecto.idPrograma,
+      })
+    }
+  }
+
   setActividadProyecto() {
     if (this.actividadProyecto) {
       this.formActividadProyecto.patchValue({
@@ -500,6 +564,11 @@ export class GestionProgramaComponent implements OnInit {
     this.selectedProgram = this.programas.find(program => program.id === this.selectedProgramId);
   }
 
+  capturarIdActividad() {
+    this.selectedActividadP = this.ActividadProyectos.find(actividad => actividad.id === this.selectedActividadId);
+    console.log(this.selectedActividadP,'estas son las competencias filtradas');
+  }
+
   capturarIdCompetencia() {
     this.selectedCompetencia = this.Competencias.find(competencia => competencia.id === this.selectedCompetenciaId);
   }
@@ -514,6 +583,16 @@ export class GestionProgramaComponent implements OnInit {
 
   filterProjects() {
     this.filteredProjects = this.proyectos.filter(project => project.idPrograma === this.selectedProgramId);
+    console.log(this.filteredProjects,'estas son las competencias filtradas');
+  }
+
+  filterActividad(){
+    this.filteredActividad = this.ActividadProyectos.filter(actividad => actividad.idFase === this.selectedProyectoId);
+  }
+
+  filterCompetencias(){
+    this.filteredCompetencias = this.Competencias.filter(competencia => competencia.idActividadProyecto === this.selectedCompetenciaId);
+    // console.log(this.filteredCompetencias,'estas son las competencias filtradas');
   }
 
 

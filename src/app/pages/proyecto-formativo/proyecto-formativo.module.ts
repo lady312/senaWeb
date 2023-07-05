@@ -12,6 +12,12 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 
 @NgModule({
+  exports:[
+    ProyectoFormativoComponent,
+    ListProyectoFormativoComponent,
+    AddProyectoFormativoComponent
+  ],  
+
   declarations: [
     ListProyectoFormativoComponent,
     AddProyectoFormativoComponent,

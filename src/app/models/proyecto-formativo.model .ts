@@ -11,6 +11,5 @@ export interface ProyectoFormativoModel {
     idCentroFormacion:number;
 
     Programas?:ProgramaModel;
-    centroFormativos?:CentroFormacionModel
-
+    centroFormativo?:CentroFormacionModel;
   }

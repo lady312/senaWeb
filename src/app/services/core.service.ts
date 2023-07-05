@@ -6,7 +6,7 @@ import { EmpresaModel } from '@models/empresa.model';
 import { PersonaModel } from '@models/persona.model';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { ActivationCompanyUserModel } from '@models/activation-company-user.model';
-import { environment } from './../../environments/environment';
+import { environment } from '../../environments/environment';
 
 const API_URL = environment.url;
 
