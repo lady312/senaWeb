@@ -139,6 +139,10 @@ export class GrupoComponent implements OnInit {
   }
 
   guardarGrupo(event: GrupoModel) {
+
+    console.log('Aqui estan los datos del grupo', event)
+
+
     if (event.id) {
       this._grupoService.actualizarGrupo(event).subscribe(
         () => {
