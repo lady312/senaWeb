@@ -14,6 +14,8 @@ import { ActividadProyectoModule } from '../actividad-proyecto/actividad-proyect
 import { ProgramaModule } from '../programa/programa.module';
 import { ProgramaComponent } from '../programa/page/programa/programa.component';
 import { ActividadProyectoComponent } from '../actividad-proyecto/page/actividad-proyecto/actividad-proyecto.component';
+import { ProyectoFormativoComponent } from '../proyecto-formativo/page/proyecto-formativo/proyecto-formativo.component';
+import { ProyectoFormativoModule } from '../proyecto-formativo/proyecto-formativo.module';
 
  
 @NgModule({
@@ -30,13 +32,15 @@ import { ActividadProyectoComponent } from '../actividad-proyecto/page/actividad
     FormsModule,
     CompetenciasModule,
     ActividadProyectoModule,
-    ProgramaModule
+    ProgramaModule,
+    ProyectoFormativoModule
   ],
 
   entryComponents:[
     CompetenciaComponent,
     ProgramaComponent,
-    ActividadProyectoComponent
+    ActividadProyectoComponent,
+    ProyectoFormativoComponent
   ],
 
 })

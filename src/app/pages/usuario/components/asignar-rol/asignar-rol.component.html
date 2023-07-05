@@ -14,7 +14,7 @@
         <tbody>
           <tr *ngFor="let rol of roles; let indice=index">
             <td>{{ rol.name }}</td>
-            <app-custom-switch [(checked)]="rol.checked" size="8">
+            <app-custom-switch [(checked)]="rol.checked" [size]="8">
             </app-custom-switch>
           </tr>
         </tbody>

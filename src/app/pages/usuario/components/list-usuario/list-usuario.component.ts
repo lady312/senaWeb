@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { UsuarioModel } from '@models/usuario.model';
+import { ActivationCompanyUserModel } from '@models/activation-company-user.model';
 
 @Component({
   selector: 'app-list-usuario',
@@ -8,12 +8,12 @@ import { UsuarioModel } from '@models/usuario.model';
 })
 export class ListUsuarioComponent {
 
-  @Input() usuarios: UsuarioModel[] = [];
+  @Input() usuarios: ActivationCompanyUserModel[] = [];
 
-  @Output() update: EventEmitter<UsuarioModel> = new EventEmitter();
+  @Output() update: EventEmitter<ActivationCompanyUserModel> = new EventEmitter();
   @Output() delete: EventEmitter<number> = new EventEmitter();
   @Output() create: EventEmitter<void> = new EventEmitter();
-  @Output() asignation: EventEmitter<UsuarioModel> = new EventEmitter();
+  @Output() asignation: EventEmitter<ActivationCompanyUserModel> = new EventEmitter();
 
   numReg = 5;
   pageActual = 0;
@@ -22,11 +22,11 @@ export class ListUsuarioComponent {
     console.log('user desde list', this.usuarios)
   }
 
-  enviarNumeroRegistros(num: number) {
-    this.numReg = num;
+  enviarNumeroRegistros(event:any) {
+    this.numReg = event.target.value;
   }
 
-  actualizar(usuario: UsuarioModel) {
+  actualizar(usuario: ActivationCompanyUserModel) {
     this.update.emit(usuario);
   }
 
@@ -38,7 +38,7 @@ export class ListUsuarioComponent {
     this.create.emit();
   }
 
-  asignar(usuario: UsuarioModel) {
+  asignar(usuario: ActivationCompanyUserModel) {
     this.asignation.emit(usuario);
   }
 }

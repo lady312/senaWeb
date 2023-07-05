@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { UsuarioModel } from '@models/usuario.model';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { CoreService } from './core.service';
+import { ActivationCompanyUserModel } from '@models/activation-company-user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -16,21 +16,21 @@ export class UsuarioService {
 
 
   public traerUsuarios() {
-    return this._coreService.get<UsuarioModel[]>('lista_usuarios');
+    return this._coreService.get<ActivationCompanyUserModel[]>('usuarios');
   }
 
   public traerUsuariosActives() {
-    return this._coreService.get<UsuarioModel[]>('usuarios_instructores');
+    return this._coreService.get<ActivationCompanyUserModel[]>('usuarios');
   }
 
-  public actualizarUsuario(usuario: UsuarioModel) {
+  public actualizarUsuario(usuario: ActivationCompanyUserModel) {
     return this._coreService.put('usuarios/' + usuario.id, usuario);
 
   }
 
-  public crearUsuario(usuario: UsuarioModel) {
+  public crearUsuario(usuario: ActivationCompanyUserModel) {
 
-    return this._coreService.post<UsuarioModel>('usuarios', usuario);
+    return this._coreService.post<ActivationCompanyUserModel>('usuarios', usuario);
   }
 
 

@@ -1,41 +1,63 @@
 <div class="div-principal col-lg-12 grid-margin stretch-card">
   <div class="card style">
     <div class="card-header style">
-
-      
-      <i class="fa fa-align-justify"></i>Gestion de fichas  aprendices
+      <i class="fa fa-align-justify"></i>Gestión de fichas aprendices
       <div class="container">
         <div class="row">
-          <div class="col-lg-6">
-            <input type="text" class="form-control" [(ngModel)]="busqueda" (input)="filtrarFichas()" placeholder="Buscar...">
-            <ul class="list-group mt-2">
-              <li class="list-group-item" *ngFor="let ficha of fichasFiltradas" (click)="seleccionarFicha(ficha)">
-                {{ ficha.nombre }}
-              </li>
-            </ul>
+          <div>
+            <p>Programas:</p>
+            <input type="text" list="programas" [(ngModel)]="busquedaPrograma" placeholder="Buscar programa..."
+              (input)="filtrarProgramas()" (change)="obtenerGruposPorPrograma()">
+            <datalist id="programas">
+              <option *ngFor="let programa of programasFiltrados" [value]="programa.nombrePrograma"></option>
+            </datalist>
+            <div *ngIf="!programasFiltrados || programasFiltrados.length === 0">
+              <p>Programa no existente.</p>
+            </div>
           </div>
-        </div>
 
-        <div class="row mt-4" *ngIf="fichaSeleccionada">
-          <div class="col-lg-12">
-            <!-- Aquí puedes colocar el componente que deseas asignar la ficha seleccionada -->
-            <p>Ficha seleccionada: {{ fichaSeleccionada.nombre }}</p>
+          <div *ngIf="busquedaPrograma && grupos && grupos.length > 0">
+            <p>Ficha seleccionada:</p>
+            <input type="text" list="grupos" [(ngModel)]="busquedaGrupo" placeholder="Buscar grupo..."
+              (input)="filtrarGrupos()">
+            <datalist id="grupos">
+              <option *ngFor="let grupo of gruposFiltrados" [value]="grupo.nombre"></option>
+            </datalist>
+            <div *ngIf="!busquedaGrupo && (!gruposFiltrados || gruposFiltrados.length === 0)">
+              <p>No se encontraron grupos.</p>
+            </div>
+          </div>
+
+          <div *ngIf="mostrarAprendices && busquedaGrupo && aprendicesFiltrados && aprendicesFiltrados.length > 0">
+            <p>Aprendices activos:</p>
+            <input type="text" list="aprendices" [(ngModel)]="busquedaAprendiz" placeholder="Buscar aprendiz..."
+              (input)="filtrarAprendicesPorGrupo()">
           </div>
         </div>
       </div>
-
-
-
-
-
-
-
     </div>
-    <div class="card-body">
-      <div class="div table-container style">
-      <p>vandssssssssssss</p>
+
+    <div class="row" *ngIf="mostrarAprendices && busquedaGrupo && aprendicesFiltrados && aprendicesFiltrados.length > 0">
+      <div *ngFor="let aprendiz of aprendicesFiltrados" class="col-xx-2 mb-4 m-5" style="width: 250px;">
+        <div class="card card-sm">
+          <div class="d-flex justify-content-center align-items-center">
+            <img [src]="aprendiz.usuario.foto || 'assets/img/avatars/7.png'" alt="Foto de perfil"
+              class="card-img-top img-thumbnail rounded-circle m-3" style="width: 100px;">
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">{{ aprendiz.usuario.persona.identificacion }}</h5>
+            <p class="card-text">
+              <strong>Nombre:</strong> {{ aprendiz.usuario.persona.nombre1 }} {{ aprendiz.usuario.persona.nombre2 }}<br>
+              <strong>Apellido:</strong> {{ aprendiz.usuario.persona.apellido1 }}<br>
+              <strong>Correo:</strong> {{ aprendiz.usuario.persona.email }}<br>
+
+              <!-- Añadir más características según sea necesario -->
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </div>
 
+<p>nuevo apartado para pruebas</p>

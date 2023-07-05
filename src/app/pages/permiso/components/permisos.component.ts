@@ -30,6 +30,7 @@ export class PermisosComponent implements OnInit {
   public func: PermisoModel[];
   public fun: number[];
   public roles: number[];
+  update:Boolean = false;
   formMenu: UntypedFormGroup;
   numReg: number;
   alerts: any[] = [];
@@ -44,7 +45,6 @@ export class PermisosComponent implements OnInit {
   ) {
     this.fun = new Array();
     // this.permisions = new Array();
-    this.enviarNumeroRegistros(10);
   }
 
   ngOnInit(): void {
@@ -70,8 +70,8 @@ export class PermisosComponent implements OnInit {
     );
   }
 
-  enviarNumeroRegistros(num: number) {
-    this.numReg = num;
+  enviarNumeroRegistros(event:any) {
+    this.numReg = event.target.value;
   }
 
   traerEmpresas() {

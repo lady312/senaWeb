@@ -19,7 +19,11 @@ import { GrupoInfraFormComponent } from './components/grupo-infra-form/grupo-inf
 
 @NgModule({
   exports: [
-    GrupoFormComponent
+    GrupoFormComponent,
+    GruposListComponent,
+    GrupoComponent,
+
+
   ],
   declarations: [
     GruposListComponent,

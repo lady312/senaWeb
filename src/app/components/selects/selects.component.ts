@@ -107,8 +107,8 @@ openModal() {
   myModal.show();
 }
 
-enviarNumeroRegistros(num: number) {
-  this.numReg = num;
+enviarNumeroRegistros(event:any) {
+  this.numReg = event.target.value;
 }
 
 getInfraestructuras(): void{

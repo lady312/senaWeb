@@ -10,7 +10,7 @@ import { UINotificationService } from '@services/uinotification.service';
 })
 export class ProyectoFormativoComponent {
 
-  private showModalProyecto = false;
+  showModalProyecto = false;
 
   proyecto: ProyectoFormativoModel = null;
   proyectos: ProyectoFormativoModel[] = [];

@@ -10,7 +10,7 @@ import { UINotificationService } from '@services/uinotification.service';
 })
 export class CompetenciaComponent {
 
-  private showModalCompetencia = false; 
+  showModalCompetencia = false; 
 
   competencias: CompetenciaModel = null;
   competencia: CompetenciaModel[] = [];

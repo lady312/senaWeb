@@ -20,8 +20,8 @@ export class ListProyectoFormativoComponent {
   constructor() {
   }
 
-  enviarNumeroRegistros(num: number) {
-    this.numReg = num;
+  enviarNumeroRegistros(event:any) {
+    this.numReg = event.target.value;
   }
 
   actualizar(proyecto: ProyectoFormativoModel) {

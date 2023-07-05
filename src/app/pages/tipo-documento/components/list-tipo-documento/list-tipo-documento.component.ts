@@ -35,9 +35,9 @@ export class ListTipoDocumentoComponent  {
   }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  enviarNumeroRegistros(num: number) {
-    this.numReg = num;
-  }
+enviarNumeroRegistros(event:any) {
+  this.numReg = event.target.value;
+}
 
   actualizar(tipoDocumento: TipoDocumentoModel) {
     this.update.emit(tipoDocumento);

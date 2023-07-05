@@ -31,6 +31,7 @@ export class NotificacionComponent implements OnInit {
   notificacion: any[] = [];
   // modalRef: BsModalRef;
   alerts: any[] = [];
+  numReg:number = 5;
   persona: any;
   actividad: any;
   mensaje: any;
@@ -77,6 +78,10 @@ export class NotificacionComponent implements OnInit {
             msgStr: 'Ups!'
           });
         });
+  }
+
+  enviarNumeroRegistros(event:any){
+    this.numReg = event.target.value;
   }
 
   openModal(template: TemplateRef<any>, notificacion: NotificacionModel) {

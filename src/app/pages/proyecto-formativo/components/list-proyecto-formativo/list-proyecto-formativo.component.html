@@ -2,7 +2,7 @@
     <div class="card">
       <div class="card-header">
         <i class="fa fa-align-justify"></i>Proyectos Registrados
-        <select #nreg class="form-control col-lg-1" (change)="enviarNumeroRegistros($event.target.value)">
+        <select #nreg class="form-control col-lg-1" (change)="enviarNumeroRegistros($event)">
           <option>10</option>
           <option>15</option>
           <option>20</option>
@@ -31,7 +31,7 @@
                 <td>{{proyecto.Programas.nombrePrograma}}</td>
                 <td>{{proyecto.tiempoEstimado}}</td>
                 <td>{{proyecto.numeroTotalRaps}}</td>
-                <td>{{proyecto.centroFormativos.nombreCentro}}</td>
+                <td>{{proyecto.centroFormativo.nombreCentro}}</td>
                 
                 <td>
                   <span class="badge badge-primary" style="cursor: pointer;"

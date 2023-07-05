@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CalendarioRoutingModule } from './calendario-routing.module';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { ComunModule } from '@components/comun.module';
 import { SedeModule } from '../sede/sede.module';
@@ -24,6 +24,7 @@ import { JornadaModule } from '../jornada/jornada.module';
     CommonModule,
     CalendarioRoutingModule,
     ReactiveFormsModule,
+    FormsModule,
     NgxPaginationModule,
     ComunModule,
     SedeModule,

@@ -54,7 +54,6 @@ export class GrupoComponent implements OnInit {
     private _uiNotificationService: UINotificationService,
     private _grupoService: GruposService,
     private _tipoGrupoService: TipoGrupoService,
-    private _usuarioService: UsuarioService,//aun no se como vincular el lider
     private _programaService: ProgramaService,
     private _nivelFormacionService: NivelFormacionService,
     private _tipoFormacionService: TipoFormacionService,
@@ -137,11 +136,16 @@ export class GrupoComponent implements OnInit {
       this._grupoService.actualizarGrupo(event).subscribe(() => {
         this.getGrupos();
         this.reset();
+      },(error) => {
+        this._uiNotificationService.error(error.error.error);
       });
     } else {
       this._grupoService.crearGrupo(event).subscribe(() => {
         this.getGrupos();
         this.reset();
+      },
+      (error) => {
+        this._uiNotificationService.error(error.error.error);
       });
     }
   }

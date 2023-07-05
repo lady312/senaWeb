@@ -11,7 +11,7 @@ import { UINotificationService } from '@services/uinotification.service';
 })
 export class ResultadoAprendizajeComponent {
 
-  private showModalRap = false;
+  showModalRap = false;
 
   rap: ResultadoAprendizajeModel = null;
   raps: ResultadoAprendizajeModel[] = [];

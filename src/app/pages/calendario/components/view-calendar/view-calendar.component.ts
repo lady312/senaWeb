@@ -5,8 +5,10 @@ import {
   Component,
   ChangeDetectorRef,
   Input,
-  Output,
   OnInit,
+  ViewChild,
+  OnChanges,
+  AfterViewInit
 } from "@angular/core";
 
 import {
@@ -22,34 +24,31 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import listPlugin from "@fullcalendar/list";
 import esLocale from "@fullcalendar/core/locales/es";
-import { JornadaModel } from "@models/jornada.model";
 import { GrupoModel } from "@models/grupo.model";
 import { addDays } from "@fullcalendar/core/internal";
-import { UsuarioModel } from "@models/usuario.model";
 import { SedeModel } from "@models/sede.model";
 import { AsignacionJornadaGrupoModel } from "@models/asignacion-jornada-grupo.model";
-import { DiaJornadaModel } from "@models/dia_jornada.model";
-import { DiaJornadaService } from '@services/dia-jornada.service';
+import { InfraestructuraModel } from '@models/infraestructura.model';
+import { FullCalendarComponent } from '@fullcalendar/angular';
 
 @Component({
   selector: "view-calendar",
   templateUrl: "./view-calendar.component.html",
   styleUrls: ["./view-calendar.component.css"],
 })
-export class ViewCalendarComponent implements OnInit {
+export class ViewCalendarComponent implements OnInit,OnChanges {
+  @ViewChild('fullCalendar') fullCalendar: FullCalendarComponent;
   //prueba con grupo y jornada
-  @Input() jornadas: JornadaModel;
   @Input() grupos: GrupoModel[];
-  @Input() diaJornada: DiaJornadaModel[];
+  @Input() grupo: GrupoModel= {} as GrupoModel;
   //grupo y jornada
   @Input() gruposJornadas: AsignacionJornadaGrupoModel[];
-  @Input() listUsers: UsuarioModel[];
 
   @Input() sedes: SedeModel;
-  @Output() Eventtos: EventInput[];
 
   Eventos: EventInput[] = [];
   calendarVisible = true;
+  showWeekends:boolean = true;
 
   calendarOptions: CalendarOptions = {
     locale: esLocale,
@@ -70,55 +69,92 @@ export class ViewCalendarComponent implements OnInit {
     initialEvents: this.Eventos,
     weekends: true,
     editable: true,
-    selectable: true,
+    // selectable: true,
     selectMirror: true,
     dayMaxEvents: true,
-    select: this.handleDateSelect.bind(this),
-    eventClick: this.handleEventClick.bind(this),
-    eventsSet: this.handleEvents.bind(this),
+    // select: this.handleDateSelect.bind(this),
+    // eventClick: this.handleEventClick.bind(this),
+    // eventsSet: this.handleEvents.bind(this),
   };
 
   ngOnInit(): void {
-    this.crearEventosGrupoJornada();
+    this.loadEvents();
+  }
+
+  ngOnChanges():void{
+    this.calendarVisible = false;
+    this.loadEvents();
+    this.resetEvents();
   }
 
   currentEvents: EventApi[] = [];
-  constructor(private changeDetector: ChangeDetectorRef,
-    private _diajornadaService: DiaJornadaService) {}
+  constructor(
+    private changeDetector: ChangeDetectorRef,
+  ) { }
 
-  crearEventosGrupoJornada() {
-    //const fechaConHora = new Date(`${fecha.toISOString().slice(0, 10)}T${hora}`);
+  loadEvents(){
+    if (this.grupo != null) {
+      this.Eventos = this.crearEventosGrupo(this.grupo);
+      this.calendarOptions.initialEvents = this.Eventos;
+    } else if(this.grupos.length > 0){
+      this.Eventos= this.crearEventosGrupos(this.grupos);
+      this.calendarOptions.initialEvents = this.Eventos;
+    }else{
+      this.Eventos = [];
+      this.calendarOptions.initialEvents = this.Eventos;
+    }
+
+  }
+
+  async resetEvents(){
+    if (this.fullCalendar) {
+      const calendarApi = await this.fullCalendar.getApi();
+      if (calendarApi) {
+        calendarApi.refetchEvents(); 
+      }
+    }
+    this.calendarVisible = true;
+  }
+
+  crearEventosGrupo(grupo: GrupoModel): EventInput[] {
+    const fInit: Date = new Date(grupo.fechaInicialGrupo);
+    const fEnd: Date = new Date(grupo.fechaFinalGrupo);
 
     let Eventos: EventInput[] = [];
 
-
-    this.gruposJornadas.forEach((gruposJornadas) => {
-      const fInit:Date = new Date(gruposJornadas.grupo.fechaInicialGrupo);
-      const fEnd:Date = new Date(gruposJornadas.grupo.fechaFinalGrupo);
-      const hInit:string = gruposJornadas.jornada.horaInicial
-      const hEnd:string =gruposJornadas.jornada.horaFinal;
-      for (let fecha = fInit; fecha <= fEnd; fecha = addDays(fecha, 1)) {
-        const grupo = this.grupos.find(
-        (grupo) => grupo.id == gruposJornadas.idGrupo
-        );
-        //const lider= this.listUsers.find(lider=>(lider.id==lider.id));
-        Eventos.push({
-          id: createEventId(),
-          title: gruposJornadas.grupo.nombre,
-          jornada: gruposJornadas.jornada.nombreJornada,
-          start: new Date(`${fecha.toISOString().slice(0, 10)}T${hInit}`),
-          end: new Date(`${fecha.toISOString().slice(0, 10)}T${hEnd}`),
-          infra: grupo.horario_infraestructura.infraestructura.nombreInfraestructura,
-          //lider: lider.persona.nombre1+' '+lider.persona.nombre2
-        });
+    for (let fecha = fInit; fecha < fEnd; fecha = addDays(fecha, 1)) {
+      for (let jornada of grupo.jornadas) {
+        let day: number = 0;
+        day = fecha.getDay() === 0 ? 7 : fecha.getDay();
+        let laboralDay: Boolean = jornada.diaJornada.some((dia) => dia.pivot.idDia == day);
+        if (laboralDay) {
+          let hInit: string = jornada.horaInicial;
+          let fHInit:Date = new Date(`${fecha.toISOString().slice(0, 10)}T${hInit}`);
+          let hEnd: string = jornada.horaFinal;
+          let fHEnd: Date = new Date(`${fecha.toISOString().slice(0, 10)}T${hEnd}`);
+          let infr: InfraestructuraModel = grupo.infraestructuras.find((infra) => new Date(infra.horario_infraestructura.fechaFinal) >= fecha);
+          Eventos.push({
+            id: createEventId(),
+            title: grupo.nombre,
+            start: addDays(fHInit,-1),
+            end: addDays(fHEnd,-1),
+            extendedProps: {
+              descripcion: infr ? infr.nombreInfraestructura : 'Ambiente no asignado',
+            }
+          });
+        }
       }
-    });
-    this.Eventos = Eventos;
-    this.calendarOptions.initialEvents = this.Eventos;
+    }
+    return Eventos;
   }
+  crearEventosGrupos(grupos: GrupoModel[]) {
 
-  handleCalendarToggle() {
-    this.calendarVisible = !this.calendarVisible;
+    let Eventos: EventInput[] = [];
+
+    for (const grupo of grupos) {
+      Eventos = Eventos.concat(this.crearEventosGrupo(grupo));
+    };
+    return Eventos;
   }
 
   handleWeekendsToggle() {
@@ -129,7 +165,7 @@ export class ViewCalendarComponent implements OnInit {
   handleDateSelect(selectInfo: DateSelectArg) {
     const title = prompt("Introduce un nuevo título para tu evento");
     const calendarApi = selectInfo.view.calendar;
-    calendarApi.unselect(); 
+    calendarApi.unselect();
 
     if (title) {
       calendarApi.addEvent({

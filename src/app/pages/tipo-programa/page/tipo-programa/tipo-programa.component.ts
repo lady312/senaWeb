@@ -11,7 +11,7 @@ import { TipoProgramaModel } from '@models/tipo-programa.model';
 })
 export class TipoProgramaComponent implements OnInit {
 
-  private showModalTipoP = false;
+  showModalTipoP = false;
 
   tipoP: TipoProgramaModel = null;
   tipoPs: TipoProgramaModel[] = [];
@@ -60,6 +60,11 @@ export class TipoProgramaComponent implements OnInit {
       })
     }
   }
+
+  createTipoP() {
+    this.tipoP = null;
+    this.showModalTipoP = true;
+  }
 
   reset() {
     this.tipoP = null;

@@ -32,7 +32,6 @@ export class AddActividadAprendizajeComponent implements OnInit {
       codigoAA: '',
       idEstado: 1,
       idRap: null,
-
     };
     this.buildForm();
   }
@@ -69,7 +68,7 @@ export class AddActividadAprendizajeComponent implements OnInit {
         NombreAA: this.actividadAprendizaje.NombreAA,
         codigoAA: this.actividadAprendizaje.codigoAA,
         idEstado: this.actividadAprendizaje.idEstado,
-        idRap:this.actividadAprendizaje.idRap,
+        rap:this.actividadAprendizaje.rap,
       })
     }
   }
@@ -106,9 +105,9 @@ export class AddActividadAprendizajeComponent implements OnInit {
   getAA(): ActividadAprendizajeModel {
     return {
       id: this.actividadAprendizaje?.id,
-      idRap: this.getControl('idRap').value,
       NombreAA: this.getControl('NombreAA').value,
       codigoAA: this.getControl('codigoAA').value,
+      idRap: this.getControl('idRap').value,
       idEstado: 1
     }
   }

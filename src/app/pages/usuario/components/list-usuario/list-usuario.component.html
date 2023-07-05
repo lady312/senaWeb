@@ -2,7 +2,7 @@
   <div class="card mt-3 style">
     <div class="card-header style">
       <i class="fa fa-align-justify"></i> Usuarios Registrados
-      <select #nreg class="form-control col-lg-1" (change)="enviarNumeroRegistros($event.target.value) ">
+      <select #nreg class="form-control col-lg-1" (change)="enviarNumeroRegistros($event) ">
         <option>10</option>
         <option>15</option>
         <option>20</option>
@@ -20,7 +20,7 @@
               <th>Rol</th>
               <th>Estado</th>
               <th>Acciones</th>
-              <th>Asisgnar Rol<router-link></router-link>
+              <th>Asisgnar Rol
               </th>
 
           </thead>
@@ -31,7 +31,7 @@
               <td>{{usuario.user.persona.apellido1}}</td>
               <td>
                 <div *ngIf="usuario.roles.length > 0; else noRol">
-                  <label *ngFor="let rol of usuario.roles">{{rol.name}} {{ usuario.roles.length > 1?',':' ' }}</label>
+                  <span *ngFor="let rol of usuario.roles">{{rol.name}} {{ usuario.roles.length > 1?',':' ' }}</span>
                 </div>
                 <ng-template #noRol>
                   No hay roles asignados
@@ -48,7 +48,7 @@
                   class="badge badge-danger"
                   style="cursor: pointer;"
                   [swal]="{ title: 'Desea eliminar',  showCancelButton: true }"
-                  (confirm)="eliminar(usuario.user_id)">
+                  (confirm)="eliminar(usuario.id)">
                   Eliminar
                 </span>
                 <ng-template #noDelete>

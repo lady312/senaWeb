@@ -5,6 +5,7 @@ import { PermisoRoutingModule } from './permiso-routing.module';
 import { PermisosComponent } from './components/permisos.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ComunModule } from '@components/comun.module';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 
 @NgModule({
@@ -15,6 +16,7 @@ import { ComunModule } from '@components/comun.module';
     CommonModule,
     PermisoRoutingModule,
     ReactiveFormsModule,
+    NgxPaginationModule,
     ComunModule
   ]
 })

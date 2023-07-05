@@ -1,7 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { CalendarioModel } from "@models/calendario.model";
 import { SedeModel } from "@models/sede.model";
-import { UINotificationService } from "@services/uinotification.service";
 import { SedeService } from "@services/sede.service";
 import { CiudadService } from "@services/ciudad.service";
 import { CiudadModel } from "@models/ciudad.model";
@@ -17,27 +16,30 @@ import { AreaService } from "@services/area.service";
 import { AreaModel } from "@models/area.model";
 import { JornadaService } from "@services/jornada.service";
 import { JornadaModel } from "@models/jornada.model";
-import { Time } from "@angular/common";
-import { UsuarioService } from "@services/usuario.service";
 import { UsuarioModel } from "@models/usuario.model";
 import { AsignacionJornadaGrupoModel } from "@models/asignacion-jornada-grupo.model";
-import { AsignacionJornadaGrupoService } from "@services/asignacion-jornada-grupo.service";
+import { TipoGrupoService } from "@services/tipo-grupo.service";
+import { TipoGrupoModel } from "@models/tipogrupo.model";
+import { NivelFormacionModel } from "@models/nivel-formacion.model";
+import { NivelFormacionService } from "@services/nivel-formacion.service";
+import { EstadoGrupoService } from "@services/estado-grupo.service";
+import { EstadoGrupoModel } from "@models/estado-grupo.model";
+import { TipoFormacionService } from "@services/tipo-formacion.service";
+import { TipoFormacionModel } from "@models/tipo-formacion.model";
+import { TipoOfertaModel } from "@models/tipo-oferta.model";
+import { TipoOfertaService } from "@services/tipo-oferta.service";
+import { CentroFormacionModel } from "@models/centro-formacion.model";
+import { CentroFormacionService } from "@services/centro-formacion.service";
+import { UINotificationService } from "@services/uinotification.service";
+import { error } from "console";
 
-interface formacion {
-  fecha?: Date;
-  horaInicial?: Time;
-  horaFinal?: Time;
-}
 @Component({
   selector: "app-calendario",
   templateUrl: "./calendario.component.html",
   styleUrls: ["./calendario.component.scss"],
 })
 export class CalendarioComponent implements OnInit {
-  protected showModalCalendario = false;
-  protected showModalCalendario2 = false;
-  protected showModalCalendario3 = false;
-  protected showModalCalendario4 = false;
+
   protected showFormSede: boolean = false;
   protected showModalGrupo = false;
   protected showModalPrograma: boolean = false;
@@ -45,13 +47,9 @@ export class CalendarioComponent implements OnInit {
   protected showCalendar: boolean = false;
   protected showModalJornada: boolean = false;
 
-  calendario2: CalendarioModel = null;
-  calendario3: CalendarioModel = null;
-  calendario4: CalendarioModel = null;
   sede: SedeModel = null;
   grupo: GrupoModel = null;
   programa: ProgramaModel = null;
-  infraestructura: InfraestructuraModel = null;
   area: AreaModel = null;
   jornada: JornadaModel = null;
 
@@ -59,266 +57,299 @@ export class CalendarioComponent implements OnInit {
 
   calendarios: CalendarioModel[] = [];
   sedes: SedeModel[] = [];
-  formTitle: string;
+  centrosFormacion: CentroFormacionModel[] = [];
   ciudades: CiudadModel[] = [];
   departamentos: DepartamentoModel[] = [];
   grupos: GrupoModel[] = [];
   programas: ProgramaModel[] = [];
   infraestructuras: InfraestructuraModel[] = [];
   areas: AreaModel[] = [];
-  infreaestructuras: InfraestructuraModel[] = [];
   usuarios: UsuarioModel[] = [];
   gruposJornada: AsignacionJornadaGrupoModel[] = [];
+  tipoGrupos: TipoGrupoModel[] = [];
+  niveles: NivelFormacionModel[] = [];
+  estadoGrupos: EstadoGrupoModel[] = [];
+  tipoFormaciones: TipoFormacionModel[] = [];
+  tipoOfertas: TipoOfertaModel[] = [];
 
   constructor(
-    private _uiNotificationService: UINotificationService,
     private _sedeService: SedeService,
     private _ciudadService: CiudadService,
+    private _centroFormacionService: CentroFormacionService,
     private _departamentoService: DepartamentoService,
     private _gruposService: GruposService,
     private _programaService: ProgramaService,
     private _infraestructuraService: InfraestructuraService,
     private _areaService: AreaService,
     private _jornadaService: JornadaService,
-    private _grupoJornadaService: AsignacionJornadaGrupoService,
-    private _usuarioService: UsuarioService
-  ) {}
+    private _tipoGruposService: TipoGrupoService,
+    private _nivelFormacionService: NivelFormacionService,
+    private _estadoGrupoService: EstadoGrupoService,
+    private _tipoFormacionService: TipoFormacionService,
+    private _tipoOfertaService: TipoOfertaService,
+    private _uiNotificationService: UINotificationService
+  ) { }
 
-  ngOnInit(): void {
-    this.getCiudades();
-    this.getDepartamento();
+  ngOnInit() {
     this.getSedes();
-    this.getGrupo();
-    this.getPrograma();
-    this.getInfraestructuras();
-    this.getCiudades();
-    this.getAreas();
-    this.getJornadas();
-    this.getGruposJornada();
-    this.getUsuarios();
   }
 
-  //sedes
+  /**cargar datos */
   getSedes() {
     this._sedeService.traerSedes().subscribe((sedes) => {
       this.sedes = sedes;
+    }, (error) => {
+      console.log(error);
     });
   }
 
-  getCiudades() {
-    this._ciudadService.traerCiudades().subscribe((ciudades) => {
-      this.ciudades = ciudades;
-    });
+  async getCiudades():Promise<CiudadModel[]> {
+    try {
+      let ciudades = await this._ciudadService.traerCiudades().toPromise();
+      return ciudades;
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   getDepartamento() {
-    this._departamentoService
-      .traerDepartamentos()
-      .subscribe((departamentos) => {
-        this.departamentos = departamentos;
-      });
-  }
-
-  //grupos
-  getGrupo() {
-    this._gruposService.traerGrupos().subscribe((grupos) => {
-      this.grupos = grupos;
+    this._departamentoService.traerDepartamentos().subscribe((departamentos) => {
+      this.departamentos = departamentos;
+    }, (error) => {
+      console.log(error);
     });
   }
 
-  getGruposJornada() {
-    this._grupoJornadaService
-      .traerGruposJornada()
-      .subscribe((gruposJornada) => {
-        this.gruposJornada = gruposJornada;
-      });
+  getCentrosFormacion() {
+    this._centroFormacionService.traerCentroFormacion().subscribe((cFormacion) => {
+      this.centrosFormacion = cFormacion;
+    }, (error) => {
+      console.log(error);
+    })
   }
 
-  getPrograma() {
-    this._programaService.traerProgramas().subscribe(
-      (programa) => {
-        this.programas = programa;
-      },
-      (error) => {
-        this._uiNotificationService.error("Error de conexión");
-      }
-    );
+  getGrupos() {
+    this._gruposService.traerGrupos().subscribe((grupos) => {
+      this.grupos = grupos;
+    }, (error) => {
+      console.log(error);
+    })
   }
+
+  getTipoGrupos() {
+    this._tipoGruposService.traerTipoGrupos().subscribe((tGrupos) => {
+      this.tipoGrupos = tGrupos;
+    }, (error) => {
+      console.log(error);
+    })
+  }
+
+  getNiveles() {
+    this._nivelFormacionService.traerNivelesFormacion().subscribe((niveles) => {
+      this.niveles = niveles;
+    }, (error) => {
+      console.log(error);
+    })
+  }
+
+  getEstados() {
+    this._estadoGrupoService.traerEstadoGrupos().subscribe((estados) => {
+      this.estadoGrupos = estados;
+    }, (error) => {
+      console.log(error);
+    });
+  }
+
+  getTipoFormaciones() {
+    this._tipoFormacionService.traerTipoFormaciones().subscribe((tFormaciones) => {
+      this.tipoFormaciones = tFormaciones;
+    }, (error) => {
+      console.log(error);
+    })
+  }
+
+  getTipoOfertas() {
+    this._tipoOfertaService.traerTipoOfertas().subscribe((tOfertas) => {
+      this.tipoOfertas = tOfertas;
+    }, (error) => {
+      console.log(error);
+    });
+  }
+
+  getProgramas() {
+    this._programaService.traerProgramas().subscribe((programas) => {
+      this.programas = programas;
+    }, (error) => {
+      console.log(error);
+    });
+  }
+
   getInfraestructuras() {
-    this._infraestructuraService
-      .traerInfraestructuras()
-      .subscribe((infraestructuras) => {
-        this.infraestructuras = infraestructuras;
-      });
+    this._infraestructuraService.traerInfraestructuras().subscribe((infrs) => {
+      this.infraestructuras = infrs;
+    }, (error) => {
+      console.log(error);
+    });
   }
 
   getAreas() {
     this._areaService.traerAreas().subscribe((areas) => {
       this.areas = areas;
-    });
+    }, (error) => {
+      console.log(error);
+    })
   }
 
-  getSedesByCiudad(idCiudad: number) {
-    this._sedeService.sedesByCiudad(idCiudad).subscribe((sedes) => {
-      if (sedes) {
-        this.sedes = sedes;
-      } else {
-        this.sedes = [];
-      }
-    });
-  }
   getJornadas() {
     this._jornadaService.traerJornada().subscribe((jornadas) => {
       this.jornadas = jornadas;
-    });
+    }, (error) => {
+      console.log(error);
+    })
   }
+  /**Fin traer data*/
 
-  getUsuarios() {
-    this._usuarioService.traerUsuarios().subscribe((usuario) => {
-      this.usuarios = usuario;
-    });
-  }
-
-  getGruposJornadaByIdGrupo(event: number) {
-    const grupo = this.grupos.find((grupo) => grupo.id == event);
-    if (grupo) {
-      this.gruposJornada = this.gruposJornada.filter(
-        (grupoJornada) => grupoJornada.idGrupo == grupo.id
-      );
-    } else {
-      this.getGruposJornada();
+  /**Filtrar data */
+  async getGrupoById(event: number): Promise<void> {
+    try {
+      this.grupo = await this._gruposService.traerGrupo(event).toPromise();
+    } catch (error) {
+      console.log(error);
     }
   }
-  getByIdSede(event: number) {
-    const sede = this.sedes.find((sede) => sede.id == event);
 
-    if (sede) {
-      this._infraestructuraService.infrBySede(sede.id).subscribe((infrs) => {
-        this.infraestructuras = infrs;
-      });
-    } else {
-      this.getInfraestructuras();
+  async getByIdInfra(event: number): Promise<void> {
+    try {
+      this.grupos = await this._gruposService.traerGrupoByIdInfra(event).toPromise();
+    } catch (error) {
+      console.log(error);
     }
   }
-  getGruposJornadaByIdInfra(event: number) {
-    const infra = this.infraestructuras.find((infra) => infra.id === event);
-    if (infra) {
-      const grupos = this.grupos.filter(
-        (grupo) => grupo.horario_infraestructura.idInfraestructura === infra.id
-      );
-      if (grupos) {
-        let gruposJornada: AsignacionJornadaGrupoModel[] = [];
-        grupos.forEach((grupo) => {
-          gruposJornada = gruposJornada.concat(
-            this.gruposJornada.filter(
-              (grupoJornada) => grupoJornada.idGrupo == grupo.id
-            )
-          );
-        });
-        if (gruposJornada) {
-          this.gruposJornada = gruposJornada;
-        }
-      }
-    } else {
-      this.getGruposJornada();
-    }
-    this.showCalendar = true;
-  }
 
-  createCalendario() {
+  async filterBySede(event: number): Promise<void> {
+    this.infraestructuras = await this.getInfrsBySede(event);
+    if (!this.infraestructuras) {
+
+      this.grupos = [];
+      return;
+    }
+    this.grupos = await this.getByIdSede(event);
+
+  }
+  async getInfrsBySede(event: number): Promise<InfraestructuraModel[]> {
+    if (event == 0) {
+      let infrs = [];
+      return infrs;
+    }
+    try {
+      let infrs = await this._infraestructuraService.infrBySede(event).toPromise();
+      return infrs;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  async getByIdSede(event: number): Promise<GrupoModel[]> {
+    try {
+      let grupos = await this._gruposService.traerGrupoByIdSede(event).toPromise();
+      return grupos;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  /**Fin filtrar data */
+
+  /**control modales*/
+  //sede
+  async createSede():Promise<void> {
+    this.ciudades = await this.getCiudades();
+    this.getCentrosFormacion();
     this.sede = null;
     this.showFormSede = true;
   }
-  createCalendario2() {
-    this.grupo = null;
-    this.showModalGrupo = true;
+  closeFormSede() {
+    this.showFormSede = false;
   }
 
-  createCalendario3() {
+  //infraestructura
+  createInfra() {
+    this.getAreas();
+    this.showFormInfr = true;
+  }
+  closeFormInfra() {
+    this.showFormInfr = false;
+  }
+
+  //programa
+  createPrograma() {
     this.programa = null;
     this.showModalPrograma = true;
   }
-  createCalendario4() {
-    this.infraestructura = null;
-    this.showFormInfr = true;
+  closeFormPrograma() {
+    this.showModalPrograma = false;
   }
+
+  //grupos
+  async createGrupo() {
+    this.getTipoFormaciones();
+    this.getJornadas();
+    this.getProgramas();
+    this.getNiveles();
+    this.getTipoGrupos();
+    this.getEstados();
+    this.getTipoOfertas();
+    this.getInfraestructuras();
+    this.grupo = null;
+    this.showModalGrupo = true;
+  }
+  closeFormGrupo() {
+    this.showModalGrupo = false;
+  }
+
+  //jornadas
   createJornada() {
     this.jornada = null;
     this.showModalJornada = true;
   }
-
-  guardarSede(sede: SedeModel) {
-    this._sedeService.guardarSede(sede).subscribe(() => {
-      this.sede = sede;
-      this.showFormSede = false;
-    });
-  }
-  guardarGrupo(grupo: GrupoModel) {
-    if (grupo.id) {
-      this._gruposService.actualizarGrupo(grupo).subscribe((gr) => {
-        this.getGrupo();
-        this.reset();
-      });
-    } else {
-      this._gruposService.crearGrupo(grupo).subscribe((gr) => {
-        this.getGrupo();
-        this.reset();
-      });
-    }
-  }
-
-  guardarProgramas(programa: ProgramaModel) {
-    if (programa.id) {
-      this._programaService
-        .actualizarProgramas(programa)
-        .subscribe((programa) => {
-          this.getPrograma();
-          this.reset();
-        });
-    } else {
-      this._programaService.crearProgramas(programa).subscribe((programa) => {
-        this.getPrograma();
-        this.reset();
-      });
-    }
-  }
-
-  guardarJornada(event: JornadaModel) {
-    this._jornadaService.crearJornada(event).subscribe((jornada) => {
-      this.getJornadas();
-      this.reset();
-    });
-  }
-
-  guardarInfraestructura(event: InfraestructuraModel) {
-    if (event.id) {
-      this._infraestructuraService
-        .actualizarInfraestructura(event)
-        .subscribe(() => {
-          this.getInfraestructuras();
-          this.reset();
-        });
-    } else {
-      this._infraestructuraService
-        .guardarInfraestructura(event)
-        .subscribe(() => {
-          this.getInfraestructuras();
-          this.reset();
-        });
-    }
-  }
-
-  //Eliminar
-  reset() {
-    this.sede = null;
-    this.showFormSede = false;
-    this.grupo = null;
-    this.showModalGrupo = false;
-    this.programa = null;
-    this.showModalPrograma = false;
-    this.showFormInfr = false;
-    this.infraestructura = null;
-    this.jornada = null;
+  closeFormJornada() {
     this.showModalJornada = false;
   }
+  /**fin control modales*/
+
+  /**Guardar nuevos registros */
+  guardarSede(sede: SedeModel) {
+    this._sedeService.guardarSede(sede).subscribe(() => {
+      this.closeFormSede();
+    }, (error) => {
+      console.log(error)
+    });
+  }
+  guardarGrupo(grupo: GrupoModel){
+    this._gruposService.crearGrupo(grupo).subscribe(()=>{
+      this.closeFormGrupo();
+    },(error)=>{
+      this._uiNotificationService.error(error.error.error);
+    });
+  }
+  guardarProgramas(programa: ProgramaModel){
+    this._programaService.crearProgramas(programa).subscribe(()=>{
+      this.closeFormPrograma();
+    },(error)=>{
+      console.log(error);
+    })
+  }
+  guardarJornada(event: JornadaModel){
+    this._jornadaService.crearJornada(event).subscribe(()=>{
+      this.closeFormJornada();
+    },(error)=>{
+      console.log(error);
+    });
+  }
+  guardarInfraestructura(event: InfraestructuraModel){
+    this._infraestructuraService.guardarInfraestructura(event).subscribe(()=>{
+      this.closeFormInfra();
+    },(error)=>{
+      console.log(error);
+    })
+  }
+  /**Fin guardar registros */
 }

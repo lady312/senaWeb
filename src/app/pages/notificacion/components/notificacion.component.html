@@ -5,7 +5,7 @@
         <div class="card style">
           <div class="card-header style" >
             <i class="fa fa-align-justify"></i> Notificaciones
-            <select #nreg class="form-control col-lg-1" (change)="enviarNumeroRegistros($event.target.value) ">
+            <select #nreg class="form-control col-lg-1" (change)="enviarNumeroRegistros($event) ">
               <option>10</option>
               <option>15</option>
               <option>20</option>
@@ -26,7 +26,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr style="cursor: pointer;" (click)="openModal(template, not)"
+                  <tr style="cursor: pointer;" 
                     [ngClass]="{estadoNoLeido: not.estado.estado === 'ACTIVO'}" *ngFor="let not of notificacion">
                     <td>{{ not.personaRemitente.nombre1 }} {{ not.personaRemitente.apellido1 }}</td>
                     <td>{{ not.asunto }}</td>

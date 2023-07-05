@@ -3,7 +3,7 @@
     <div class="card-header style" style="font-weight: bold;">
 
       <i class="fa fa-align-justify"></i>Asignación de Permisos
-      <select #nreg class="form-control col-lg-2" (change)="enviarNumeroRegistros($event.target.value) ">
+      <select #nreg class="form-control col-lg-2" (change)="enviarNumeroRegistros($event) ">
         <option>10</option>
         <option>15</option>
         <option>20</option>
@@ -60,7 +60,7 @@
                 <td>{{ m.name }}</td>
                 <td>{{ m.description }}</td>
 
-                <app-custom-switch [(checked)]="m.checked" size="8">
+                <app-custom-switch [(checked)]="m.checked" [size]="8">
 
                 </app-custom-switch>
                 
@@ -77,9 +77,9 @@
         </div>
         <br>
         <br>
+
         <button type="submit" class="mr-2"
-          [class]="update?'btn btn-warning':'btn btn-success mr-10 btn-md'">{{update?'Actualizar':'Guardar
-          permiso'}}</button>
+          [class]="update? 'btn btn-warning':'btn btn-success mr-10 btn-md'">{{update ? 'Actualizar':'Guardar'}}</button>
       </form>
 
 
