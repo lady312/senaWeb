@@ -114,7 +114,6 @@ export class GrupoFormComponent implements OnInit {
       this.setIndexes(this.grupo);
       this.setLists(this.grupo);
       // this.cargarJornadas();
-      this.traercheckedJornadas();
 
 
       this.traerTipoGrupos();
@@ -128,6 +127,7 @@ export class GrupoFormComponent implements OnInit {
       this.setGrupo();
       this.traercheckedJornadas();
 
+      console.log('shit', this.horariosInfra)
 
     } else {
       this.grupo = {
@@ -393,6 +393,7 @@ export class GrupoFormComponent implements OnInit {
 
   setLists(grupo: GrupoModel) {
     this.horariosInfra = grupo.infraestructuras;
+    console.log('Aquiiii', this.horariosInfra)
   }
 
 
