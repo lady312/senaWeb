@@ -151,9 +151,6 @@ export class GrupoComponent implements OnInit {
         },
         (error) => {
           this._uiNotificationService.error(error.error.error);
-        },
-        (error) => {
-          this._uiNotificationService.error(error.error.error);
         }
       );
     } else {
