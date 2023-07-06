@@ -14,7 +14,7 @@
     <div class="card-body">
 
       <form [formGroup]="form" class="forms-sample" (ngSubmit)="guardarPermiso()">
-        
+
         <div class="form-group m-5" style="margin-left: -3%">
           <label for="rol" style="font-weight: bold;">Empresas</label>
           <select class="form-control border-primary " id="company" formControlName="company"
@@ -52,7 +52,7 @@
                 <th>Acciones</th>
               </tr>
             </thead>
-            
+
             <tbody>
 
               <tr *ngFor="let m of menus; let indice=index" data-aos="fade-left">
@@ -60,10 +60,10 @@
                 <td>{{ m.name }}</td>
                 <td>{{ m.description }}</td>
 
-                <app-custom-switch [(checked)]="m.checked" size="8">
+                <app-custom-switch [(checked)]="m.checked" [size]="8">
 
                 </app-custom-switch>
-                
+
 
               </tr>
             </tbody>
