@@ -2,6 +2,28 @@
   <div class="card style">
     <div class="card-header style">
       <i class="fa fa-align-justify"></i>Gestión de fichas aprendices
+      <div class="espacio">
+        <br>
+      </div>
+      <br>
+      <div class="archivoExcel">
+        <input type="file" #fileInput (change)="onFileSelected(fileInput)">
+         <button type="button" (click)="cargarArchivo()">Cargar archivo</button>
+
+      </div>
+      <br>
+      
+
+<!-- 
+      <div class="archivoExcel">
+        <input type="file" #fileInput (change)="onFileSelected(fileInput)">
+        <button type="button" (click)="subirArchivo()" [disabled]="loading">Subir archivo</button>
+        <div *ngIf="loading">
+          <div class="progress-bar">
+            <div class="progress" [style.width.%]="progressPercentage" [style.background]="'green'">{{ progressPercentage }}%</div>
+          </div>
+        </div>
+      </div> -->
       <div class="container">
         <div class="row">
           <div>

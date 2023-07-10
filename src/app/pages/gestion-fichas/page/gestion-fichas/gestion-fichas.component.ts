@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AprendicestmpService } from '@services/aprendicestmp.service';
 import { AsignacionParticipantesService } from '@services/asignacion-participantes.service';
 
 @Component({
@@ -21,13 +22,19 @@ export class GestionFichasComponent implements OnInit {
 
   mostrarGrupos: boolean = true;
   mostrarAprendices: boolean = false; // Variable para controlar la visibilidad del buscador de aprendices
+  selectedFile: File;
 
-  constructor(private asignacionParticipanteService: AsignacionParticipantesService) {}
+  constructor(
+    private asignacionParticipanteService: AsignacionParticipantesService,
+    private _aprendicestmpService: AprendicestmpService
+    ) {}
 
   ngOnInit() {
     this.obtenerProgramas();
     this.obtenerAprendicesActivos();
   }
+
+
 
   obtenerProgramas() {
     this.asignacionParticipanteService.obtenerProgramas().subscribe(
@@ -126,6 +133,25 @@ export class GestionFichasComponent implements OnInit {
       this.aprendicesFiltrados = this.aprendicesFiltrados.filter(aprendiz =>
         aprendiz.usuario.persona.identificacion.toLowerCase().includes(this.busquedaAprendiz.toLowerCase())
       );
+    }
+  }
+
+  
+  public onFileSelected(input: HTMLInputElement): void {
+    this.selectedFile = input.files[0];
+  }
+
+  public cargarArchivo(): void {
+    if (this.selectedFile) {
+      this._aprendicestmpService.cargarArchivo(this.selectedFile)
+        .then(() => {
+          console.log('Archivo cargado correctamente');
+        })
+        .catch((error) => {
+          console.error('Error al cargar el archivo:', error);
+        });
+    } else {
+      console.warn('No se ha seleccionado ningún archivo.');
     }
   }
 }
